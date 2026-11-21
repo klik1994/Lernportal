@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>CAN-Bus – Datenbus</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  @media (max-width: 700px) { #s-f7 .f7c { display: grid !important; grid-template-columns: 1fr 1fr; gap: 6px; } #s-f7 .f7c .btn { font-size: 13px; padding: 8px 6px; margin: 0; width: auto; } }
+</style>
+</head>
+<body class="t-bus">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">FAHRZEUGELEKTRONIK · DATENBUS</div>
+  <div class="symbol" style="font-size:72px">CAN</div>
+  <h1>CAN-Bus</h1>
+  <p>Zwei Leitungen, zwei Pegel, zwei Abschlusswiderstände</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">CAN-BUS</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Wie der CAN-Bus aufgebaut ist</li>
+      <li class="step from-left"><span class="num">2</span>Wie die Pegel auf CAN-High und CAN-Low aussehen</li>
+      <li class="step from-left"><span class="num">3</span>Wozu die Abschlusswiderstände dienen</li>
+      <li class="step from-left"><span class="num">4</span>Was CAN nach ISO 11898-2 und ISO 11898-3 unterscheidet</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">CAN-BUS</span><h2>Aufbau</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Zwei verdrillte Leitungen</b>CAN-High und CAN-Low sind miteinander verdrillt. Störungen wirken auf beide gleich – das Steuergerät wertet nur den Unterschied aus.</div>
+      <div class="tip step"><b>Abschlusswiderstände</b>An den beiden Enden des Busses je 120 Ω zwischen CAN-High und CAN-Low – sie verhindern Signal-Reflexionen.</div>
+      <div class="tip step"><b>Linienstruktur</b>Alle Steuergeräte hängen an denselben zwei Leitungen. Jedes kann senden und empfangen.</div>
+      <div class="tip step"><b>Geschwindigkeit</b>CAN nach ISO 11898-2 (z. B. Antrieb) bis 1 Mbit/s, meist 500 kbit/s. CAN nach ISO 11898-3 (fehlertolerant, z. B. Komfort) bis 125 kbit/s – Richtwerte.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-pg">
+  <span class="tag">CAN-BUS</span><h2>Die Pegel – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-c="hs">ISO 11898-2</button><button class="btn ghost" data-c="ls">ISO 11898-3</button></div>
+    <svg viewBox="0 0 560 200" width="900" height="320" style="display:block;margin:0 auto;max-width:100%;height:auto" id="pg-svg">
+  <rect x="40" y="10" width="510" height="160" rx="8" fill="#18283f" stroke="#94a4ba" stroke-width="2"/>
+  <g id="pg-grid"></g>
+  <path id="pg-h" d="" fill="none" stroke="#ff8f3f" stroke-width="3.5"/>
+  <path id="pg-l" d="" fill="none" stroke="#28aaf5" stroke-width="3.5"/>
+  <text x="44" y="188" font-size="14" font-weight="800" fill="#ff8f3f">CAN-High</text>
+  <text x="140" y="188" font-size="14" font-weight="800" fill="#28aaf5">CAN-Low</text>
+  <g id="pg-ax"></g><text x="8" y="22" font-size="13" font-weight="800" fill="#94a4ba">V</text>
+</svg>
+    <div class="card" id="pg-t" style="font-size:17px;font-weight:600;line-height:1.55;margin-top:8px"></div>
+    <p class="muted" style="font-size:14px;margin:8px 0 0">Beide Leitungen gegen Masse gemessen. Richtwerte – genaue Werte laut Hersteller.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">CAN-BUS</span><h2>Dominant und rezessiv</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>rezessiv = 1</b><span>Ruhezustand nach ISO 11898-2 – beide Leitungen ca. 2,5 V, kein Unterschied</span></div>
+      <div class="val step from-left"><b>dominant = 0</b><span>CAN-High steigt auf ca. 3,5 V, CAN-Low fällt auf ca. 1,5 V – Unterschied ca. 2 V</span></div>
+      <div class="val step from-left"><b>dominant gewinnt</b><span>Senden zwei gleichzeitig, setzt sich die „0“ durch – die Botschaft mit der höheren Priorität kommt zuerst</span></div>
+    </div>
+    <div class="note step">Richtwerte für CAN nach ISO 11898-2</div>
+  </div>
+</section>
+
+<section class="slide" id="s-rw">
+  <span class="tag">CAN-BUS</span><h2>Abschlusswiderstände messen – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px;flex-wrap:wrap"><button class="btn ghost on" data-r="ok">Alles in Ordnung</button><button class="btn ghost" data-r="r2">Ein Widerstand fehlt</button><button class="btn ghost" data-r="ks">CAN-H an CAN-L</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.35fr 1fr">
+      <svg viewBox="0 0 560 220" width="540" height="212" style="display:block;margin:0 auto" id="rw-svg">
+  <line x1="60" y1="70" x2="500" y2="70" stroke="#ff8f3f" stroke-width="5"/><line x1="60" y1="150" x2="500" y2="150" stroke="#28aaf5" stroke-width="5"/>
+  <g id="rw-r1"><line x1="60" y1="70" x2="60" y2="85" stroke="#ecf1f8" stroke-width="3"/><rect x="48" y="85" width="24" height="50" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/><line x1="60" y1="135" x2="60" y2="150" stroke="#ecf1f8" stroke-width="3"/><text x="82" y="116" font-size="14" font-weight="800" fill="#94a4ba">120 Ω</text></g>
+  <g id="rw-r2"><line x1="500" y1="70" x2="500" y2="85" stroke="#ecf1f8" stroke-width="3"/><rect x="488" y="85" width="24" height="50" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/><line x1="500" y1="135" x2="500" y2="150" stroke="#ecf1f8" stroke-width="3"/><text x="436" y="116" font-size="14" font-weight="800" fill="#94a4ba">120 Ω</text></g>
+  <line id="rw-ks" x1="280" y1="70" x2="280" y2="150" stroke="#f05e4e" stroke-width="5" style="display:none"/>
+  <text x="62" y="55" font-size="14" font-weight="800" fill="#94a4ba">Steuergerät A</text><text x="500" y="55" text-anchor="end" font-size="14" font-weight="800" fill="#94a4ba">Steuergerät B</text>
+  <circle cx="230" cy="70" r="6" fill="#ecf1f8"/><circle cx="230" cy="150" r="6" fill="#ecf1f8"/>
+  <path d="M230 70 V40 H200 M230 150 V190 H200" fill="none" stroke="#ecf1f8" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="196" y="44" text-anchor="end" font-size="13" font-weight="800" fill="#94a4ba">Messspitze rot</text><text x="196" y="194" text-anchor="end" font-size="13" font-weight="800" fill="#94a4ba">Messspitze schwarz</text>
+</svg>
+      <div>
+        <div class="card"><div class="muted" style="font-size:15px;font-weight:800">OHMMETER ZEIGT</div><div class="lcd2" id="rw-v" style="font-size:32px;margin-top:6px">60 Ω</div></div>
+        <div class="card" id="rw-t" style="margin-top:10px;font-size:16px;font-weight:600;line-height:1.5"></div>
+      </div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:8px 0 0">Nur am spannungsfreien Bus messen: Zündung aus, Busruhe abwarten bzw. Batterie abklemmen – nach Herstellervorgabe. Über den Prüfadapter, z. B. am OBD-Stecker (Pin 6 und 14).</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">CAN-BUS</span><h2>ISO 11898-3 und Eindrahtbetrieb</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">CAN nach ISO 11898-3 (fehlertolerant)</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>langsamer, bis 125 kbit/s – z. B. Komfortbereich</li><li>andere Pegel: CAN-High ca. 0 V ↔ 3,6 V, CAN-Low ca. 5 V ↔ 1,4 V (Richtwerte)</li><li>z. B. Türen, Sitze, Klima</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Eindrahtbetrieb</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>fällt eine Leitung aus, arbeitet der CAN nach ISO 11898-3 mit der anderen weiter</li><li>Fehlerspeicher: „Eindrahtbetrieb“</li><li>der CAN nach ISO 11898-2 kann das nicht – dort fällt die Kommunikation aus</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">CAN-BUS</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/bus-can.mp4" poster="videos/bus-can.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">CAN-BUS</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Warum sind CAN-High und CAN-Low verdrillt?</p>
+      <div class="opts"><button class="opt">Damit Störungen auf beide Leitungen gleich wirken</button><button class="opt">Damit sie besser halten</button><button class="opt">Damit sie weniger kosten</button></div>
+      <div class="fb">Ausgewertet wird nur der Unterschied zwischen den Leitungen.</div></div>
+    <div class="q" data-correct="1"><p>2. Welche Pegel hat der CAN nach ISO 11898-2 im dominanten Zustand etwa?</p>
+      <div class="opts"><button class="opt">Beide 2,5 V</button><button class="opt">CAN-H ca. 3,5 V, CAN-L ca. 1,5 V</button><button class="opt">Beide 12 V</button></div>
+      <div class="fb">Im Ruhezustand (rezessiv) liegen beide bei ca. 2,5 V.</div></div>
+    <div class="q" data-correct="2"><p>3. Was misst du zwischen CAN-High und CAN-Low am intakten, spannungsfreien Bus?</p>
+      <div class="opts"><button class="opt">120 Ω</button><button class="opt">0 Ω</button><button class="opt">ca. 60 Ω</button></div>
+      <div class="fb">Zwei Abschlusswiderstände à 120 Ω parallel ergeben 60 Ω.</div></div>
+    <div class="q" data-correct="0"><p>4. Du misst 120 Ω statt 60 Ω. Was ist wahrscheinlich?</p>
+      <div class="opts"><button class="opt">Ein Abschlusswiderstand fehlt oder eine Leitung ist unterbrochen</button><button class="opt">Alles in Ordnung</button><button class="opt">Kurzschluss zwischen CAN-H und CAN-L</button></div>
+      <div class="fb">Dann wird nur noch ein Widerstand gemessen.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">CAN-BUS</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Zwei verdrillte Leitungen: CAN-High und CAN-Low</span></li>
+        <li class="step"><span>ISO 11898-2: Ruhe 2,5 V – dominant 3,5 V / 1,5 V</span></li>
+        <li class="step"><span>2 × 120 Ω parallel = 60 Ω</span></li>
+        <li class="step"><span>ISO 11898-3 kann im Eindrahtbetrieb weiterarbeiten</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Datenbus-Systeme" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+
+function Oszi(id, opt) {
+  const H = opt.h || 240, x0 = 40, x1 = 550, y0 = 10, y1 = H - 30;
+  const vmax = opt.vmax || 5;
+  const Y = v => y1 - (v / vmax) * (y1 - y0 - 10) - 5;
+  const g = document.getElementById(id + '-grid'), ax = document.getElementById(id + '-ax');
+  g.innerHTML = ''; ax.innerHTML = '';
+  for (let v = 0; v <= vmax; v += (opt.step || 1)) {
+    g.insertAdjacentHTML('beforeend', '<line x1="' + x0 + '" y1="' + Y(v) + '" x2="' + x1 + '" y2="' + Y(v) + '" stroke="#94a4ba" stroke-width="1" stroke-dasharray="3 5" opacity=".5"/>');
+    ax.insertAdjacentHTML('beforeend', '<text x="34" y="' + (Y(v) + 4) + '" text-anchor="end" font-size="12" font-weight="800" fill="#94a4ba">' + String(v).replace('.', ',') + '</text>');
+  }
+  return function (fh, fl) {
+    let dh = '', dl = '';
+    for (let x = x0 + 4; x <= x1 - 4; x += 2) {
+      const k = (x - x0) / (x1 - x0);
+      dh += (dh ? ' L' : 'M') + x + ' ' + Y(fh(k)).toFixed(1);
+      dl += (dl ? ' L' : 'M') + x + ' ' + Y(fl(k)).toFixed(1);
+    }
+    document.getElementById(id + '-h').setAttribute('d', dh);
+    document.getElementById(id + '-l').setAttribute('d', dl);
+  };
+}
+const BITS = [1,1,0,1,0,0,1,0,1,1,0,1,1];
+const bit = k => BITS[Math.min(BITS.length - 1, Math.floor(k * BITS.length))];
+
+  const bt = document.querySelectorAll('#s-pg [data-c]');
+  const T = {
+    hs: '<b>CAN nach ISO 11898-2:</b> In Ruhe (rezessiv) liegen <span class="ora">CAN-High</span> und <span class="blu">CAN-Low</span> bei ca. 2,5 V. Bei einer „0“ (dominant) geht CAN-High auf ca. 3,5 V und CAN-Low auf ca. 1,5 V. Die beiden Signale sind spiegelbildlich.',
+    ls: '<b>CAN nach ISO 11898-3 (fehlertolerant):</b> In Ruhe liegt <span class="ora">CAN-High</span> bei ca. 0 V und <span class="blu">CAN-Low</span> bei ca. 5 V. Dominant: CAN-High ca. 3,6 V, CAN-Low ca. 1,4 V. Auch hier spiegelbildlich.'
+  };
+  function c(m) {
+    const draw = Oszi('pg', { vmax: 5, step: 1, h: 200 });
+    if (m === 'hs') draw(k => bit(k) ? 2.5 : 3.5, k => bit(k) ? 2.5 : 1.5);
+    else draw(k => bit(k) ? 0.1 : 3.6, k => bit(k) ? 4.9 : 1.4);
+    bt.forEach(b => b.classList.toggle('on', b.dataset.c === m));
+    document.getElementById('pg-t').innerHTML = T[m];
+  }
+  bt.forEach(b => b.onclick = () => c(b.dataset.c)); c('hs');
+
+  const R = {
+    ok: ['60 Ω', '<b class="grn">In Ordnung:</b> Beide 120-Ω-Widerstände sind <b>parallel</b> geschaltet – zusammen 60 Ω.', 1, 0],
+    r2: ['120 Ω', '<b class="ora">Ein Widerstand fehlt:</b> Nur noch 120 Ω – Abschlusswiderstand oder Steuergerät mit Widerstand fehlt, oder eine Leitung ist unterbrochen.', 0, 0],
+    ks: ['ca. 0 Ω', '<b class="red">Kurzschluss:</b> CAN-High und CAN-Low haben Verbindung – z. B. gequetschte Leitung. Der Bus funktioniert nicht.', 1, 1]
+  };
+  const rb = document.querySelectorAll('#s-rw [data-r]');
+  function r(m) {
+    const [v, t, r2, ks] = R[m];
+    document.getElementById('rw-v').textContent = v; document.getElementById('rw-t').innerHTML = t;
+    document.getElementById('rw-r2').style.opacity = r2 ? 1 : 0.12;
+    document.getElementById('rw-ks').style.display = ks ? '' : 'none';
+    rb.forEach(b => b.classList.toggle('on', b.dataset.r === m));
+  }
+  rb.forEach(b => b.onclick = () => r(b.dataset.r)); r('ok');
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

@@ -1857,3 +1857,178 @@ VIDEOS_MOTOR.update({
     'hv-sicher': (ORA, [(title_scene('!', 'Sicher arbeiten', 'Schutz, Unfall und Notfall', ORA, kicker=KICK9), 5.0),
                         (HSI_PSA, 8.5), (HSI_UNFALL, 8.5), (HSI_NOT, 8.5), (HSI_MERKE, 7.5)]),
 })
+
+
+# =================== DATENBUS ===================
+KICK10 = 'DATENBUS  ·  LERNVIDEO'
+CANH, CANL = ORA, BLU
+VBITS = [1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1]
+
+
+def vbit(k):
+    return VBITS[min(len(VBITS) - 1, int(k * len(VBITS)))]
+
+
+def oszi(d, t, a, box, fh, fl, vmax=5, step=1, prog=1.0):
+    x0, y0, x1, y1 = box
+    rrect(d, (x0, y0, x1, y1), 12, CARD, a)
+    Y = lambda v: y1 - 20 - (v / vmax) * (y1 - y0 - 40)
+    v = 0
+    while v <= vmax + 0.01:
+        line(d, [(x0 + 10, Y(v)), (x1 - 10, Y(v))], CARD2, 2, a, bg=CARD)
+        text(d, x0 - 10, Y(v), str(v), 18, 'Bold', MUTED, a, 'rm')
+        v += step
+    n = max(2, int(300 * prog))
+    for f, c in ((fl, CANL), (fh, CANH)):
+        if f is None:
+            continue
+        pts = [(x0 + 15 + (x1 - x0 - 30) * i / 300, Y(f(i / 300))) for i in range(n)]
+        line(d, pts, c, 5, a, bg=CARD)
+
+
+def vb_netz(d, t, dur):
+    header(d, t, 'VERNETZUNG', 'Ohne und mit Datenbus', TEA)
+    a = pr(t, 0.2, 0.8)
+    mit = t > 5.0
+    sg = [('Motor', 200, 170), ('Getriebe', 520, 170), ('ABS', 840, 170), ('Kombi', 200, 430), ('Klima', 520, 430), ('Airbag', 840, 430)]
+    if not mit:
+        for i, (_, x, y) in enumerate(sg):
+            for j, (_, x2, y2) in enumerate(sg):
+                if j > i:
+                    line(d, [(x + 90, y + 35), (x2 + 90, y2 + 35)], MUTED, 3, a)
+    else:
+        b = pr(t, 5.0, 5.6)
+        line(d, [(120, 320), (1160, 320)], CANH, 8, b)
+        line(d, [(120, 340), (1160, 340)], CANL, 8, b)
+        for _, x, y in sg:
+            line(d, [(x + 90, y + 70 if y < 300 else y), (x + 90, 320 if y < 300 else 340)], MUTED, 4, b)
+        k = ((t - 5.6) * 0.5) % 1
+        circle(d, (200 + 960 * k, 330), 12, (255, 211, 77), b)
+    for n, x, y in sg:
+        rrect(d, (x, y, x + 180, y + 70), 12, CARD2, a, outline=TXT, width=3)
+        text(d, x + 90, y + 35, n, 24, 'XB', TXT, a, 'mm', bg=CARD2)
+    caption(d, t, [(0.6, 4.9, 'Ohne Bus: viele einzelne Leitungen'), (5.0, dur, 'Mit Bus: zwei Leitungen für alle – Botschaften nacheinander')], TEA, y=630)
+
+
+VB_MERKE = merke_scene('VERNETZUNG', TEA, [
+    'Steuergeräte tauschen Botschaften aus', 'Alle hören mit – jeder nimmt, was er braucht',
+    'Gateway verbindet die Bussysteme', 'Diagnose über OBD-Stecker und Gateway'])
+
+VB_GATE = values_scene('VERNETZUNG', TEA, [], [
+    ('Antriebs-CAN', 'ISO 11898-2 – Motor, Getriebe, ABS'), ('Gateway', '„Dolmetscher“ zwischen den Bussen'),
+    ('Komfort, LIN …', 'andere Geschwindigkeiten'), ('OBD-Stecker', 'Diagnose über das Gateway')],
+    note='U-Fehlercodes = Kommunikationsfehler', title='Das Gateway', vsize=28)
+
+
+def vc_pegel(d, t, dur):
+    header(d, t, 'CAN-BUS', 'Die Pegel nach ISO 11898-2', TEA)
+    a = pr(t, 0.2, 0.8)
+    oszi(d, t, a, (140, 120, 1180, 520), lambda k: 2.5 if vbit(k) else 3.5, lambda k: 2.5 if vbit(k) else 1.5, prog=clamp((t - 0.8) / 4))
+    text(d, 160, 555, 'CAN-High', 24, 'XB', CANH, a, 'lm'); text(d, 320, 555, 'CAN-Low', 24, 'XB', CANL, a, 'lm')
+    caption(d, t, [(0.6, 5.4, 'Ruhe (rezessiv): beide ca. 2,5 V'), (5.5, dur, 'Dominant: CAN-High ca. 3,5 V, CAN-Low ca. 1,5 V')], TEA, y=630)
+
+
+def vc_60(d, t, dur):
+    header(d, t, 'CAN-BUS', 'Die Abschlusswiderstände', TEA)
+    a = pr(t, 0.2, 0.8)
+    line(d, [(160, 220), (1120, 220)], CANH, 8, a); line(d, [(160, 420), (1120, 420)], CANL, 8, a)
+    fehlt = t > 6.0
+    for x, on in ((160, True), (1120, not fehlt)):
+        b = a if on else 0.15
+        line(d, [(x, 220), (x, 270)], TXT, 4, b); line(d, [(x, 370), (x, 420)], TXT, 4, b)
+        rrect(d, (x - 22, 270, x + 22, 370), 5, CARD2, b, outline=TXT, width=4)
+        text(d, x + (40 if x < 600 else -40), 320, '120 Ω', 24, 'XB', MUTED, b, 'lm' if x < 600 else 'rm')
+    rrect(d, (480, 270, 800, 370), 16, (196, 214, 190), a)
+    text(d, 780, 320, '120 Ω' if fehlt else '60 Ω', 50, 'XB', (25, 35, 28), a, 'rm', bg=(196, 214, 190))
+    caption(d, t, [(0.6, 5.9, '2 × 120 Ω parallel = 60 Ω (spannungsfrei messen)'), (6.0, dur, '120 Ω: Ein Widerstand fehlt oder die Leitung ist unterbrochen')], TEA, y=630)
+
+
+VC_MERKE = merke_scene('CAN-BUS', TEA, [
+    'Zwei verdrillte Leitungen', 'Ruhe 2,5 V – dominant 3,5 V / 1,5 V', '2 × 120 Ω parallel = 60 Ω', 'ISO 11898-3: Eindrahtbetrieb möglich'])
+
+VS_WERTE = values_scene('BUSSYSTEME', TEA, [], [
+    ('LIN', '1 Leitung, Master und Slaves, bis 20 kbit/s'), ('CAN', '2 verdrillte Leitungen, Standard'),
+    ('FlexRay', 'bis 10 Mbit/s, feste Zeitfenster'), ('MOST', 'Lichtwellenleiter im Ring'), ('Ethernet', 'sehr schnell – Kameras, Updates')],
+    note='Richtwerte – je nach Hersteller', title='Bussysteme im Vergleich', vsize=26)
+
+
+def _lin_byte(v):
+    return [0] + [(v >> k) & 1 for k in range(8)] + [1]
+
+
+def vs_lin(d, t, dur):
+    header(d, t, 'BUSSYSTEME', 'Der LIN-Bus', TEA)
+    a = pr(t, 0.2, 0.8)
+    kopf = [1] * 5 + [0] * 13 + [1] + _lin_byte(0x55) + _lin_byte(0x8A)
+    ant = [1] + _lin_byte(0x3C) + _lin_byte(0xA6)
+    seq = kopf + (ant if t > 5 else [])
+    N = 80
+    f = lambda k: (12 if seq[int(k * N)] else 1) if int(k * N) < len(seq) else 12
+    box = (140, 120, 1000, 500)
+    oszi(d, t, a, box, f, None, vmax=14, step=2, prog=clamp((t - 0.8) / 3) if t < 5 else 1)
+    Y = lambda v: 500 - 20 - (v / 14) * 340
+    b2 = pr(t, 1.5, 2.3)
+    text(d, 1020, Y(12), 'rezessiv', 24, 'XB', TXT, b2, 'lm'); text(d, 1020, Y(12) + 30, 'ca. 12 V (Ruhe)', 20, 'Bold', MUTED, b2, 'lm')
+    text(d, 1020, Y(1) - 18, 'dominant', 24, 'XB', TXT, b2, 'lm'); text(d, 1020, Y(1) + 12, 'ca. 1 V', 20, 'Bold', MUTED, b2, 'lm')
+    text(d, 160, 540, 'LIN-Leitung', 24, 'XB', CANH, a, 'lm')
+    caption(d, t, [(0.6, 4.9, 'Der Master fragt: „Fensterheber, meldet euch!“'), (5.0, dur, 'Der angesprochene Slave hängt seine Antwort an')], TEA, y=630)
+
+
+def vs_flexray(d, t, dur):
+    header(d, t, 'BUSSYSTEME', 'FlexRay – feste Zeitfenster', TEA)
+    a = pr(t, 0.2, 0.8)
+    sl = ['Fahrwerk', 'Lenkung', 'ACC', 'ABS/ESP', 'Motor', 'Getriebe']
+    x0, w = 220, 120
+    for c, nm in enumerate(('Kanal A', 'Kanal B')):
+        y = 170 + c * 140
+        text(d, 60, y + 45, nm, 28, 'XB', TXT, a, 'lm')
+        for i, s_ in enumerate(sl):
+            b = pr(t, 0.6 + i * 0.25, 1.0 + i * 0.25)
+            rrect(d, (x0 + i * (w + 6), y, x0 + i * (w + 6) + w, y + 90), 10, CARD2, b, outline=TEA, width=3)
+            text(d, x0 + i * (w + 6) + w / 2, y + 45, s_, 20, 'XB', TXT, b, 'mm')
+        b = pr(t, 2.4, 2.9)
+        rrect(d, (x0 + 6 * (w + 6), y, 1230, y + 90), 10, None, b, outline=MUTED, width=2)
+        text(d, (x0 + 6 * (w + 6) + 1230) / 2, y + 45, 'bei Bedarf', 20, 'Bold', MUTED, b, 'mm')
+    if t > 3:
+        cx = x0 + ((t - 3) * 260) % (1230 - x0)
+        line(d, [(cx, 150), (cx, 420)], (255, 211, 77), 5, a)
+    text(d, x0, 470, 'jeder Zyklus: wenige Millisekunden', 22, 'Bold', MUTED, pr(t, 3, 3.5), 'lm')
+    caption(d, t, [(0.6, 4.5, 'Jedes Steuergerät hat sein festes Zeitfenster – wie ein Fahrplan'),
+                   (4.6, dur, 'Kanal A und B senden doppelt – fällt einer aus, läuft der andere')], TEA, y=630)
+
+
+VS_MERKE = merke_scene('BUSSYSTEME', TEA, [
+    'LIN: 1 Leitung, Master und Slaves', 'CAN: der Standard', 'FlexRay: schnell, zeitgesteuert', 'MOST: Licht – nicht knicken!'])
+
+
+def vd_fehler(d, t, dur):
+    header(d, t, 'BUS-DIAGNOSE', 'Fehlerbilder am Oszilloskop', TEA)
+    a = pr(t, 0.2, 0.8)
+    ph = 0 if t < 4 else 1 if t < 8 else 2
+    fs = [(lambda k: 2.5 if vbit(k) else 3.5, lambda k: 2.5 if vbit(k) else 1.5, 'In Ordnung', GRN),
+          (lambda k: 2.5, lambda k: 2.45, 'CAN-High an CAN-Low', RED),
+          (lambda k: 0.05, lambda k: 0.3 if vbit(k) else 0.1, 'CAN-High an Masse', RED)]
+    fh, fl, lab, c = fs[ph]
+    oszi(d, t, a, (140, 150, 1180, 520), fh, fl)
+    text(d, 640, 120, lab, 32, 'XB', c, a, 'mm')
+    caption(d, t, [(0.6, dur, 'Beide Leitungen gegen Masse messen – am Prüfadapter')], TEA, y=630)
+
+
+VD_RUHE = values_scene('BUS-DIAGNOSE', TEA, [], [
+    ('Stromzange', 'um das Minuskabel der Batterie'), ('Busruhe', 'abwarten – Zeit laut Hersteller'),
+    ('zu hoch?', 'Steuergerät hält den Bus wach'), ('nicht stören', 'Tür, Schlüssel, Tester wecken den Bus')],
+    note='Beispiel Ruhestrom nach Busruhe: einige 10 mA – Grenzwert laut Hersteller', title='Ruhestrom messen', vsize=28)
+
+VD_MERKE = merke_scene('BUS-DIAGNOSE', TEA, [
+    'Fehlerspeicher, Versorgung, Oszi, 60 Ω', 'Fehlerbilder am Oszi erkennen', 'Steuergeräte abstecken grenzt ein', 'Ruhestrom: Busruhe abwarten'])
+
+VIDEOS_MOTOR.update({
+    'bus-grundlagen': (TEA, [(title_scene('BUS', 'Grundlagen der Vernetzung', 'Warum Steuergeräte miteinander reden', TEA, size=72, kicker=KICK10), 5.0),
+                             (vb_netz, 10.0), (VB_GATE, 8.5), (VB_MERKE, 7.5)]),
+    'bus-can': (TEA, [(title_scene('CAN', 'CAN-Bus', 'Pegel und Abschlusswiderstände', TEA, size=72, kicker=KICK10), 5.0),
+                      (vc_pegel, 10.0), (vc_60, 11.0), (VC_MERKE, 7.5)]),
+    'bus-systeme': (TEA, [(title_scene('LIN', 'Weitere Bussysteme', 'LIN, FlexRay, MOST, Ethernet', TEA, size=72, kicker=KICK10), 5.0),
+                          (VS_WERTE, 9.0), (vs_lin, 10.0), (vs_flexray, 9.0), (VS_MERKE, 7.5)]),
+    'bus-diagnose': (TEA, [(title_scene('?', 'Diagnose am Datenbus', 'Oszilloskop, 60 Ω, Ruhestrom', TEA, kicker=KICK10), 5.0),
+                           (vd_fehler, 12.0), (VD_RUHE, 9.0), (VD_MERKE, 7.5)]),
+})

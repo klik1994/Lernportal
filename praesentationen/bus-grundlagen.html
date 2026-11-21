@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Grundlagen der Vernetzung – Datenbus</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  @media (max-width: 700px) { #s-f7 .f7c { display: grid !important; grid-template-columns: 1fr 1fr; gap: 6px; } #s-f7 .f7c .btn { font-size: 13px; padding: 8px 6px; margin: 0; width: auto; } }
+</style>
+</head>
+<body class="t-bus">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">FAHRZEUGELEKTRONIK · DATENBUS</div>
+  <div class="symbol" style="font-size:72px">BUS</div>
+  <h1>Grundlagen der Vernetzung</h1>
+  <p>Warum Steuergeräte miteinander „reden“</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">VERNETZUNG</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Warum moderne Fahrzeuge Datenbusse haben</li>
+      <li class="step from-left"><span class="num">2</span>Wie Steuergeräte Botschaften austauschen</li>
+      <li class="step from-left"><span class="num">3</span>Welche Aufgabe das Gateway hat</li>
+      <li class="step from-left"><span class="num">4</span>Wie die Diagnose über den Bus läuft</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" id="s-nz">
+  <span class="tag">VERNETZUNG</span><h2>Ohne und mit Datenbus – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" id="nz-a">Ohne Datenbus</button><button class="btn ghost" id="nz-b">Mit Datenbus</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.35fr 1fr">
+      <svg viewBox="0 0 600 320" width="580" height="310" style="display:block;margin:0 auto" id="nz-svg"><g id="nz-ohne"><line x1="120" y1="85" x2="300" y2="85" stroke="#94a4ba" stroke-width="2"/><line x1="120" y1="85" x2="480" y2="85" stroke="#94a4ba" stroke-width="2"/><line x1="120" y1="85" x2="120" y2="265" stroke="#94a4ba" stroke-width="2"/><line x1="120" y1="85" x2="300" y2="265" stroke="#94a4ba" stroke-width="2"/><line x1="120" y1="85" x2="480" y2="265" stroke="#94a4ba" stroke-width="2"/><line x1="300" y1="85" x2="480" y2="85" stroke="#94a4ba" stroke-width="2"/><line x1="300" y1="85" x2="120" y2="265" stroke="#94a4ba" stroke-width="2"/><line x1="300" y1="85" x2="300" y2="265" stroke="#94a4ba" stroke-width="2"/><line x1="300" y1="85" x2="480" y2="265" stroke="#94a4ba" stroke-width="2"/><line x1="480" y1="85" x2="120" y2="265" stroke="#94a4ba" stroke-width="2"/><line x1="480" y1="85" x2="300" y2="265" stroke="#94a4ba" stroke-width="2"/><line x1="480" y1="85" x2="480" y2="265" stroke="#94a4ba" stroke-width="2"/><line x1="120" y1="265" x2="300" y2="265" stroke="#94a4ba" stroke-width="2"/><line x1="120" y1="265" x2="480" y2="265" stroke="#94a4ba" stroke-width="2"/><line x1="300" y1="265" x2="480" y2="265" stroke="#94a4ba" stroke-width="2"/></g><g id="nz-mit" style="display:none"><line x1="40" y1="160" x2="560" y2="160" stroke="#ff8f3f" stroke-width="5"/><line x1="40" y1="172" x2="560" y2="172" stroke="#28aaf5" stroke-width="5"/><line x1="120" y1="110" x2="120" y2="160" stroke="#94a4ba" stroke-width="3"/><line x1="300" y1="110" x2="300" y2="160" stroke="#94a4ba" stroke-width="3"/><line x1="480" y1="110" x2="480" y2="160" stroke="#94a4ba" stroke-width="3"/><line x1="120" y1="240" x2="120" y2="172" stroke="#94a4ba" stroke-width="3"/><line x1="300" y1="240" x2="300" y2="172" stroke="#94a4ba" stroke-width="3"/><line x1="480" y1="240" x2="480" y2="172" stroke="#94a4ba" stroke-width="3"/><text x="40" y="150" font-size="14" font-weight="800" fill="#ff8f3f">CAN-High</text><text x="40" y="192" font-size="14" font-weight="800" fill="#28aaf5">CAN-Low</text><path id="nz-msg" d="M120 166 H560" fill="none" stroke="none"/></g><g class="nz-sg" data-n="Motor"><rect x="80" y="60" width="80" height="50" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="120" y="91" text-anchor="middle" font-size="14" font-weight="900" fill="#ecf1f8">Motor</text></g><g class="nz-sg" data-n="Getriebe"><rect x="260" y="60" width="80" height="50" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="300" y="91" text-anchor="middle" font-size="14" font-weight="900" fill="#ecf1f8">Getriebe</text></g><g class="nz-sg" data-n="ABS/ESP"><rect x="440" y="60" width="80" height="50" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="480" y="91" text-anchor="middle" font-size="14" font-weight="900" fill="#ecf1f8">ABS/ESP</text></g><g class="nz-sg" data-n="Kombi"><rect x="80" y="240" width="80" height="50" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="120" y="271" text-anchor="middle" font-size="14" font-weight="900" fill="#ecf1f8">Kombi</text></g><g class="nz-sg" data-n="Klima"><rect x="260" y="240" width="80" height="50" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="300" y="271" text-anchor="middle" font-size="14" font-weight="900" fill="#ecf1f8">Klima</text></g><g class="nz-sg" data-n="Airbag"><rect x="440" y="240" width="80" height="50" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="480" y="271" text-anchor="middle" font-size="14" font-weight="900" fill="#ecf1f8">Airbag</text></g></svg>
+      <div class="card" id="nz-t" style="font-size:17px;font-weight:600;line-height:1.55"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VERNETZUNG</span><h2>Wie beim Gruppenchat</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big">Ein Steuergerät <span class="c">sendet eine Botschaft</span> – z. B. „Motordrehzahl 2.000 1/min“.</div></div>
+      <div class="card step"><div class="big"><span class="c">Alle</span> Steuergeräte am Bus empfangen sie.</div></div>
+      <div class="card step"><div class="big">Jedes Steuergerät nimmt nur, <span class="c">was es braucht</span> – Kombiinstrument und Getriebe nutzen die Drehzahl.</div></div>
+      <div class="card step"><div class="big">Wichtige Botschaften haben <span class="c">Vorrang</span> – z. B. vom Airbag oder ABS.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VERNETZUNG</span><h2>Die Vorteile</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>weniger Leitungen</b><span>weniger Gewicht, weniger Stecker, weniger Fehlerquellen</span></div>
+      <div class="val step from-left"><b>ein Sensor – viele Nutzer</b><span>ein Signal, z. B. die Raddrehzahl, nutzen ABS, Motor, Navi und Kombi</span></div>
+      <div class="val step from-left"><b>neue Funktionen</b><span>Assistenzsysteme brauchen Daten aus vielen Steuergeräten</span></div>
+      <div class="val step from-left"><b>Diagnose</b><span>alle Steuergeräte über einen Stecker auslesen</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VERNETZUNG</span><h2>Das Gateway</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Antriebs-CAN</b><span>ISO 11898-2 – Motor, Getriebe, ABS</span></div><div class="flow-arrow step"></div>
+      <div class="glied step hd"><b>Gateway</b><span>„Dolmetscher“ zwischen den Bussen</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Komfort-CAN (ISO 11898-3), LIN …</b><span>andere Geschwindigkeiten</span></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <div class="tip step"><b>Verschiedene Busse</b>Im Fahrzeug gibt es mehrere Bussysteme mit unterschiedlicher Geschwindigkeit. Das Gateway gibt Botschaften gezielt weiter.</div>
+      <div class="tip step"><b>Diagnose</b>Der Diagnosetester ist am OBD-Stecker angeschlossen und spricht über das Gateway mit allen Steuergeräten.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VERNETZUNG</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>U-Fehlercodes</b>Kommunikationsfehler beginnen meist mit „U“, z. B. „keine Kommunikation mit Steuergerät …“.</div>
+      <div class="tip step"><b>Ein Fehler – viele Meldungen</b>Fällt ein Steuergerät aus, melden viele andere, dass ihnen seine Botschaften fehlen.</div>
+      <div class="warn step"><b>Spannungsversorgung</b>Eine schwache Batterie oder schlechte Masse kann viele Busfehler auslösen – zuerst prüfen.</div>
+      <div class="tip step"><b>Software</b>Steuergeräte werden über den Bus programmiert und codiert – dabei Batterie mit Ladegerät stützen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VERNETZUNG</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/bus-grundlagen.mp4" poster="videos/bus-grundlagen.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VERNETZUNG</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Warum haben moderne Fahrzeuge Datenbusse?</p>
+      <div class="opts"><button class="opt">Weniger Leitungen, gemeinsame Nutzung von Daten</button><button class="opt">Damit das Auto schneller fährt</button><button class="opt">Weil Sensoren dann keinen Strom brauchen</button></div>
+      <div class="fb">Ein Signal kann von vielen Steuergeräten genutzt werden.</div></div>
+    <div class="q" data-correct="1"><p>2. Wer empfängt eine Botschaft auf dem CAN-Bus?</p>
+      <div class="opts"><button class="opt">Nur ein Steuergerät</button><button class="opt">Alle Steuergeräte am Bus</button><button class="opt">Nur das Gateway</button></div>
+      <div class="fb">Jedes nimmt sich, was es braucht.</div></div>
+    <div class="q" data-correct="2"><p>3. Welche Aufgabe hat das Gateway?</p>
+      <div class="opts"><button class="opt">Es lädt die Batterie</button><button class="opt">Es misst die Drehzahl</button><button class="opt">Es verbindet Busse und gibt Botschaften weiter</button></div>
+      <div class="fb">Es ist der „Dolmetscher“ zwischen den Bussystemen.</div></div>
+    <div class="q" data-correct="0"><p>4. Ein Steuergerät fällt aus. Was zeigt der Fehlerspeicher oft?</p>
+      <div class="opts"><button class="opt">Viele Kommunikationsfehler bei anderen Steuergeräten</button><button class="opt">Gar nichts</button><button class="opt">Nur einen Ölstandsfehler</button></div>
+      <div class="fb">Die anderen vermissen seine Botschaften.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VERNETZUNG</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Steuergeräte tauschen Botschaften über den Bus aus</span></li>
+        <li class="step"><span>Alle hören mit – jeder nimmt, was er braucht</span></li>
+        <li class="step"><span>Gateway verbindet die Bussysteme</span></li>
+        <li class="step"><span>Diagnose über OBD-Stecker und Gateway</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Datenbus-Systeme" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script src="assets/schaltung.js"></script>
+<script>
+(function () {
+  const svg = document.getElementById('nz-svg');
+  const fl = Flow(svg, document.getElementById('nz-msg'), { spacing: 60, speed: 120, r: 7, color: '#ffd34d' });
+  const a = document.getElementById('nz-a'), b = document.getElementById('nz-b');
+  function s(mit) {
+    document.getElementById('nz-ohne').style.display = mit ? 'none' : '';
+    document.getElementById('nz-mit').style.display = mit ? '' : 'none';
+    fl.on(mit); a.classList.toggle('on', !mit); b.classList.toggle('on', mit);
+    document.getElementById('nz-t').innerHTML = mit
+      ? '<b>Mit Datenbus:</b> Alle Steuergeräte hängen an <span class="c">zwei gemeinsamen Leitungen</span> (CAN-High und CAN-Low). Die Daten laufen als Botschaften nacheinander über den Bus.'
+      : '<b>Ohne Datenbus:</b> Jedes Steuergerät bräuchte eine eigene Leitung zu jedem anderen – schon bei 6 Steuergeräten 15 Leitungen. Heutige Fahrzeuge haben oft 50 und mehr Steuergeräte.';
+  }
+  a.onclick = () => s(false); b.onclick = () => s(true); s(false);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

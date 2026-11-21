@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Diagnose am Datenbus – Datenbus</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  @media (max-width: 700px) { #s-f7 .f7c { display: grid !important; grid-template-columns: 1fr 1fr; gap: 6px; } #s-f7 .f7c .btn { font-size: 13px; padding: 8px 6px; margin: 0; width: auto; } }
+</style>
+</head>
+<body class="t-bus">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">FAHRZEUGELEKTRONIK · DATENBUS</div>
+  <div class="symbol" style="font-size:120px">?</div>
+  <h1>Diagnose am Datenbus</h1>
+  <p>Fehlerspeicher, Oszilloskop, 60 Ω und Ruhestrom</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUS-DIAGNOSE</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>In welcher Reihenfolge du Busfehler suchst</li>
+      <li class="step from-left"><span class="num">2</span>Die 7 Fehlerfälle nach ISO am Oszilloskop erkennen</li>
+      <li class="step from-left"><span class="num">3</span>Wie du die Abschlusswiderstände prüfst</li>
+      <li class="step from-left"><span class="num">4</span>Was Busruhe und Ruhestrom miteinander zu tun haben</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUS-DIAGNOSE</span><h2>Schritt für Schritt</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fehlerspeicher aller Steuergeräte lesen<small>welche Steuergeräte melden Kommunikationsfehler – und mit wem?</small></li>
+      <li class="step">Spannungsversorgung und Masse prüfen<small>Batterie, Sicherungen, Masse der betroffenen Steuergeräte</small></li>
+      <li class="step">Signal mit dem Oszilloskop ansehen<small>CAN-High und CAN-Low gegen Masse, am Prüfadapter</small></li>
+      <li class="step">Spannungsfrei: Widerstand zwischen CAN-High und CAN-Low<small>ca. 60 Ω – Steuergeräte nacheinander abstecken, um den Fehler einzugrenzen</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide" id="s-fb">
+  <span class="tag">BUS-DIAGNOSE</span><h2>Fehlerbilder – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px;flex-wrap:wrap"><button class="btn ghost on" data-f="ok">In Ordnung</button><button class="btn ghost" data-f="hl">CAN-H an CAN-L</button><button class="btn ghost" data-f="hm">CAN-H an Masse</button><button class="btn ghost" data-f="lp">CAN-L an Plus</button><button class="btn ghost" data-f="rf">Abschluss fehlt</button></div>
+    <svg viewBox="0 0 560 200" width="900" height="320" style="display:block;margin:0 auto;max-width:100%;height:auto" id="fb-svg">
+  <rect x="40" y="10" width="510" height="160" rx="8" fill="#18283f" stroke="#94a4ba" stroke-width="2"/>
+  <g id="fb-grid"></g>
+  <path id="fb-h" d="" fill="none" stroke="#ff8f3f" stroke-width="3.5"/>
+  <path id="fb-l" d="" fill="none" stroke="#28aaf5" stroke-width="3.5"/>
+  <text x="44" y="188" font-size="14" font-weight="800" fill="#ff8f3f">CAN-High</text>
+  <text x="140" y="188" font-size="14" font-weight="800" fill="#28aaf5">CAN-Low</text>
+  <g id="fb-ax"></g><text x="8" y="22" font-size="13" font-weight="800" fill="#94a4ba">V</text>
+</svg>
+    <div class="card" id="fb-t" style="font-size:17px;font-weight:600;line-height:1.55;margin-top:8px"></div>
+    <p class="muted" style="font-size:14px;margin:8px 0 0">CAN nach ISO 11898-2, vereinfacht. Richtwerte.</p>
+  </div>
+</section>
+
+<section class="slide" id="s-f7">
+  <span class="tag">BUS-DIAGNOSE</span><h2>Die 7 Fehlerfälle nach ISO – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:8px"><button class="btn ghost on" data-n="2">ISO 11898-2</button><button class="btn ghost" data-n="3">ISO 11898-3</button></div>
+    <div class="choice f7c" style="margin-bottom:10px;flex-wrap:wrap;gap:6px"><button class="btn ghost on" data-i="1">1 · CAN-H unterbrochen</button><button class="btn ghost" data-i="2">2 · CAN-L unterbrochen</button><button class="btn ghost" data-i="3">3 · CAN-H an Plus</button><button class="btn ghost" data-i="4">4 · CAN-L an Masse</button><button class="btn ghost" data-i="5">5 · CAN-H an Masse</button><button class="btn ghost" data-i="6">6 · CAN-L an Plus</button><button class="btn ghost" data-i="7">7 · CAN-H an CAN-L</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.2fr 1fr">
+      <svg viewBox="0 0 560 200" width="900" height="320" style="display:block;margin:0 auto;max-width:100%;height:auto" id="f7-svg">
+  <rect x="40" y="10" width="510" height="160" rx="8" fill="#18283f" stroke="#94a4ba" stroke-width="2"/>
+  <g id="f7-grid"></g>
+  <path id="f7-h" d="" fill="none" stroke="#ff8f3f" stroke-width="3.5"/>
+  <path id="f7-l" d="" fill="none" stroke="#28aaf5" stroke-width="3.5"/>
+  <text x="44" y="188" font-size="14" font-weight="800" fill="#ff8f3f">CAN-High</text>
+  <text x="140" y="188" font-size="14" font-weight="800" fill="#28aaf5">CAN-Low</text>
+  <g id="f7-ax"></g><text x="8" y="22" font-size="13" font-weight="800" fill="#94a4ba">V</text>
+</svg>
+      <div class="card" id="f7-t" style="font-size:16px;font-weight:600;line-height:1.5"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:8px 0 0">Vereinfachte Beispielbilder, gemessen gegen Masse am Prüfadapter. Das echte Bild hängt davon ab, wo der Fehler sitzt und wo du misst. Richtwerte.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUS-DIAGNOSE</span><h2>Die 7 Fehlerfälle – so findest du sie</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fehlerspeicher lesen<small>z. B. „Eindrahtbetrieb“, „Kurzschluss nach Masse“ oder „nach Plus“ – gibt den ersten Hinweis</small></li>
+      <li class="step">Oszilloskop: beide Leitungen gegen Masse<small>welche Leitung zeigt kein Signal, 0 V oder Batteriespannung?</small></li>
+      <li class="step">Spannungsfrei messen (Batterie abklemmen)<small>CAN-H gegen CAN-L, CAN-H und CAN-L jeweils gegen Masse und gegen Plus – ein Kurzschluss zeigt fast 0 Ω</small></li>
+      <li class="step">Eingrenzen<small>Steuergeräte und Steckverbindungen nacheinander trennen, bis der Fehler verschwindet – dann Leitung freilegen (Scheuerstelle, Korrosion)</small></li>
+    </ol>
+    <div class="tip step" style="margin-top:6px"><b>Gleiches Bild, anderer Fehler</b>Fall 1 und Fall 5 sehen bei ISO 11898-3 am Oszilloskop gleich aus (CAN-H bleibt bei 0 V). Unterscheiden kannst du sie nur mit der Widerstandsmessung gegen Masse.</div>
+  </div>
+</section>
+
+<section class="slide" id="s-rs">
+  <span class="tag">BUS-DIAGNOSE</span><h2>Busruhe und Ruhestrom – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-z="0">Alles in Ordnung</button><button class="btn ghost" data-z="1">Ein Steuergerät bleibt wach</button></div>
+    <div class="ctrl"><span style="width:300px">Zeit nach „Fahrzeug abschließen“: <span class="c" id="rs-n">0 min</span></span><input type="range" id="rs" min="0" max="60" step="1" value="0"></div>
+    <div class="grid2" style="align-items:center;margin-top:12px">
+      <div class="card"><div class="muted" style="font-size:15px;font-weight:800">RUHESTROM (STROMZANGE)</div><div class="lcd2" id="rs-v" style="font-size:32px;margin-top:6px">—</div><div id="rs-s" style="margin-top:8px;font-weight:800"></div></div>
+      <div class="card" id="rs-t" style="font-size:16px;font-weight:600;line-height:1.55"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:8px 0 0">Beispielwerte. Zeit bis zur Busruhe und zulässiger Ruhestrom laut Hersteller.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUS-DIAGNOSE</span><h2>Ruhestrom richtig messen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Stromzange um das Minuskabel der Batterie<small>so bleibt der Bordnetzspeicher erhalten – kein Abklemmen nötig</small></li>
+      <li class="step">Fahrzeug in Ruhe versetzen<small>alle Verbraucher aus, Türen zu bzw. Kontakte überlisten, Fahrzeug verriegeln</small></li>
+      <li class="step">Busruhe abwarten<small>die Steuergeräte schlafen erst nach einer Zeit ein – Zeit laut Hersteller</small></li>
+      <li class="step">Zu hoch? Verbraucher eingrenzen<small>Stromzange bleibt dran. Sicherungen nacheinander ziehen und den Ruhestrom beobachten. Fällt der Wert auf normal, steckt der Fehler in diesem Stromkreis. Danach weiter eingrenzen: Steckverbindungen oder Steuergeräte in diesem Stromkreis nacheinander trennen.</small></li>
+    </ol>
+    <div class="warn step" style="margin-top:6px"><b>Nicht stören</b>Tür öffnen, Schlüssel in der Nähe oder Diagnosetester angesteckt – das weckt den Bus wieder auf.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUS-DIAGNOSE</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Wasser im Stecker</b>Korrosion an Steckern ist ein häufiger Grund für Busfehler – Sichtprüfung lohnt sich.</div>
+      <div class="tip step"><b>Nachrüstgeräte</b>Falsch angeschlossenes Zubehör kann den Bus stören oder wach halten.</div>
+      <div class="warn step"><b>Nicht in den Stecker stechen</b>Am Bus nur über Prüfadapter messen – keine Prüflampe, keine Messspitzen in die Kontakte.</div>
+      <div class="tip step"><b>Steuergerät abstecken</b>Verschwindet die Störung, wenn ein Steuergerät abgesteckt ist, liegt der Fehler dort oder in seiner Leitung.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUS-DIAGNOSE</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/bus-diagnose.mp4" poster="videos/bus-diagnose.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUS-DIAGNOSE</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:8px">
+    <div class="q" data-correct="0"><p>1. Womit siehst du die Signale auf CAN-High und CAN-Low am besten?</p>
+      <div class="opts"><button class="opt">Mit dem Oszilloskop</button><button class="opt">Mit der Prüflampe</button><button class="opt">Mit dem Ohmmeter im Betrieb</button></div>
+      <div class="fb">Am besten zweikanalig, beide Leitungen gegen Masse.</div></div>
+    <div class="q" data-correct="1"><p>2. Beide CAN-Leitungen zeigen dauernd ca. 2,5 V, kein Signal. Was kann die Ursache sein?</p>
+      <div class="opts"><button class="opt">Alles in Ordnung</button><button class="opt">Kurzschluss zwischen CAN-High und CAN-Low</button><button class="opt">Batterie zu voll</button></div>
+      <div class="fb">Die Leitungen haben Verbindung – kein Unterschied möglich.</div></div>
+    <div class="q" data-correct="2"><p>3. Warum ist die Batterie nach einigen Tagen Standzeit leer?</p>
+      <div class="opts"><button class="opt">Weil der Bus immer zu schnell ist</button><button class="opt">Wegen des Reifendrucks</button><button class="opt">Ein Steuergerät hält den Bus wach – Ruhestrom zu hoch</button></div>
+      <div class="fb">Ruhestrom mit der Stromzange nach Busruhe messen.</div></div>
+    <div class="q" data-correct="1"><p>4. Bei einem CAN nach ISO 11898-3 liegt CAN-L an Masse. Was passiert?</p>
+      <div class="opts"><button class="opt">Der ganze Bus fällt sofort aus</button><button class="opt">Der Bus arbeitet im Eindrahtbetrieb über CAN-H weiter</button><button class="opt">Nichts, das ist normal</button></div>
+      <div class="fb">ISO 11898-3 ist fehlertolerant – Fehler wird gespeichert und muss trotzdem behoben werden.</div></div>
+    <div class="q" data-correct="0"><p>5. Was weckt den Bus während der Ruhestrommessung wieder auf?</p>
+      <div class="opts"><button class="opt">Tür öffnen oder Diagnosetester anstecken</button><button class="opt">Die Stromzange</button><button class="opt">Gar nichts</button></div>
+      <div class="fb">Darum während der Messung nichts am Fahrzeug tun.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUS-DIAGNOSE</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Fehlerspeicher, Versorgung, Oszilloskop, 60 Ω</span></li>
+        <li class="step"><span>Fehlerbilder am Oszi erkennen</span></li>
+        <li class="step"><span>Steuergeräte abstecken grenzt den Fehler ein</span></li>
+        <li class="step"><span>Ruhestrom: Stromzange, Busruhe abwarten</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Datenbus-Systeme" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+
+function Oszi(id, opt) {
+  const H = opt.h || 240, x0 = 40, x1 = 550, y0 = 10, y1 = H - 30;
+  const vmax = opt.vmax || 5;
+  const Y = v => y1 - (v / vmax) * (y1 - y0 - 10) - 5;
+  const g = document.getElementById(id + '-grid'), ax = document.getElementById(id + '-ax');
+  g.innerHTML = ''; ax.innerHTML = '';
+  for (let v = 0; v <= vmax; v += (opt.step || 1)) {
+    g.insertAdjacentHTML('beforeend', '<line x1="' + x0 + '" y1="' + Y(v) + '" x2="' + x1 + '" y2="' + Y(v) + '" stroke="#94a4ba" stroke-width="1" stroke-dasharray="3 5" opacity=".5"/>');
+    ax.insertAdjacentHTML('beforeend', '<text x="34" y="' + (Y(v) + 4) + '" text-anchor="end" font-size="12" font-weight="800" fill="#94a4ba">' + String(v).replace('.', ',') + '</text>');
+  }
+  return function (fh, fl) {
+    let dh = '', dl = '';
+    for (let x = x0 + 4; x <= x1 - 4; x += 2) {
+      const k = (x - x0) / (x1 - x0);
+      dh += (dh ? ' L' : 'M') + x + ' ' + Y(fh(k)).toFixed(1);
+      dl += (dl ? ' L' : 'M') + x + ' ' + Y(fl(k)).toFixed(1);
+    }
+    document.getElementById(id + '-h').setAttribute('d', dh);
+    document.getElementById(id + '-l').setAttribute('d', dl);
+  };
+}
+const BITS = [1,1,0,1,0,0,1,0,1,1,0,1,1];
+const bit = k => BITS[Math.min(BITS.length - 1, Math.floor(k * BITS.length))];
+
+  const F = {
+    ok: [k => bit(k) ? 2.5 : 3.5, k => bit(k) ? 2.5 : 1.5, 5, '<b class="grn">In Ordnung:</b> CAN-High und CAN-Low spiegelbildlich zwischen ca. 2,5 V und 3,5 V bzw. 1,5 V.'],
+    hl: [k => 2.5, k => 2.45, 5, '<b class="red">CAN-High an CAN-Low:</b> Beide Leitungen liegen dauernd bei ca. 2,5 V – es ist kein Unterschied mehr möglich. Der Bus fällt aus.'],
+    hm: [k => 0.05, k => bit(k) ? 0.3 : 0.1, 5, '<b class="red">CAN-High an Masse:</b> CAN-High liegt bei 0 V, das Signal bricht zusammen – beim CAN nach ISO 11898-2 keine Kommunikation.'],
+    lp: [k => 12, k => 12, 14, '<b class="red">CAN-Low an Plus:</b> Die Leitung liegt auf Batteriespannung – keine Kommunikation. Leitung freilegen und Scheuerstelle suchen.'],
+    rf: [k => (bit(k) ? 2.5 : 3.5) + 0.5 * Math.sin(k * 260) * Math.exp(-((k * 13) % 1) * 6), k => (bit(k) ? 2.5 : 1.5) - 0.5 * Math.sin(k * 260) * Math.exp(-((k * 13) % 1) * 6), 5, '<b class="ora">Abschlusswiderstand fehlt:</b> An den Flanken schwingt das Signal (Reflexionen). Widerstandsmessung zeigt ca. 120 Ω statt 60 Ω.']
+  };
+  const fb = document.querySelectorAll('#s-fb [data-f]');
+  function f(m) {
+    const [h, l, vmax, t] = F[m];
+    Oszi('fb', { vmax: vmax, step: vmax > 5 ? 2 : 1, h: 200 })(h, l);
+    fb.forEach(b => b.classList.toggle('on', b.dataset.f === m));
+    document.getElementById('fb-t').innerHTML = t;
+  }
+  fb.forEach(b => b.onclick = () => f(b.dataset.f)); f('ok');
+
+  // 7 Fehlerfälle
+  const H2 = k => bit(k) ? 2.5 : 3.5, L2 = k => bit(k) ? 2.5 : 1.5, H3 = k => bit(k) ? 0 : 3.6, L3 = k => bit(k) ? 5 : 1.4;
+  const AUS = ' <b class="red">Kommunikation fällt aus.</b>', EIN = ' <b class="grn">Der Bus arbeitet im Eindrahtbetrieb weiter</b> – Fehler wird gespeichert.';
+  const G = {
+    2: {
+      1: [k => 2.5, L2, 5, 'CAN-H ist unterbrochen. Hinter der Unterbrechung bleibt CAN-H bei ca. 2,5 V stehen, nur CAN-L zeigt noch Signal. Die abgetrennten Steuergeräte sind nicht mehr erreichbar, es gibt viele Fehlereinträge.'],
+      2: [H2, k => 2.5, 5, 'CAN-L ist unterbrochen. Hinter der Unterbrechung bleibt CAN-L bei ca. 2,5 V stehen, nur CAN-H zeigt noch Signal. Die abgetrennten Steuergeräte sind nicht mehr erreichbar.'],
+      3: [k => 12, k => 11.5, 14, 'CAN-H liegt an Batteriespannung. Über die Abschlusswiderstände wird auch CAN-L hochgezogen.' + AUS],
+      4: [k => bit(k) ? 0.1 : 1.2, k => 0.05, 5, 'CAN-L liegt an Masse (0 V). CAN-H wird mit heruntergezogen, es bleiben nur kleine Signalreste. Die Kommunikation ist stark gestört, meist fällt sie aus.'],
+      5: [k => 0.05, k => bit(k) ? 0.1 : 0.3, 5, 'CAN-H liegt an Masse (0 V). Das Signal bricht zusammen.' + AUS],
+      6: [k => 11.6, k => 12, 14, 'CAN-L liegt an Batteriespannung. Beide Leitungen werden hochgezogen.' + AUS],
+      7: [k => 2.56, k => 2.44, 5, 'CAN-H und CAN-L haben Verbindung. Beide liegen bei ca. 2,5 V, ein Unterschied ist nicht mehr möglich.' + AUS]
+    },
+    3: {
+      1: [k => 0, L3, 5, 'CAN-H ist unterbrochen. Hinter der Unterbrechung bleibt CAN-H bei 0 V, die Botschaften laufen nur noch über CAN-L.' + EIN],
+      2: [H3, k => 5, 5, 'CAN-L ist unterbrochen. Hinter der Unterbrechung bleibt CAN-L bei ca. 5 V, die Botschaften laufen nur noch über CAN-H.' + EIN],
+      3: [k => 12, L3, 14, 'CAN-H liegt an Batteriespannung. Die Steuergeräte schalten CAN-H ab und senden nur über CAN-L.' + EIN],
+      4: [H3, k => 0, 5, 'CAN-L liegt an Masse (0 V). Die Steuergeräte senden nur noch über CAN-H.' + EIN],
+      5: [k => 0, L3, 5, 'CAN-H liegt an Masse (0 V). Die Steuergeräte senden nur noch über CAN-L. Achtung: Das sieht aus wie Fall 1.' + EIN],
+      6: [H3, k => 12, 14, 'CAN-L liegt an Batteriespannung. Die Steuergeräte senden nur noch über CAN-H.' + EIN],
+      7: [k => L3(k) + 0.06, k => L3(k) - 0.06, 5, 'CAN-H und CAN-L haben Verbindung. Beide Leitungen zeigen das gleiche Bild. Die Steuergeräte schalten eine Leitung ab.' + EIN]
+    }
+  };
+  let f7n = 2, f7i = 1;
+  const f7b = document.querySelectorAll('#s-f7 [data-n]'), f7c = document.querySelectorAll('#s-f7 [data-i]');
+  function f7() {
+    const [h, l, vmax, t] = G[f7n][f7i];
+    Oszi('f7', { vmax: vmax, step: vmax > 5 ? 2 : 1, h: 200 })(h, l);
+    f7b.forEach(b => b.classList.toggle('on', +b.dataset.n === f7n));
+    f7c.forEach(b => b.classList.toggle('on', +b.dataset.i === f7i));
+    document.getElementById('f7-t').innerHTML = '<b>Fall ' + f7i + ' bei ISO 11898-' + f7n + ':</b> ' + t;
+  }
+  f7b.forEach(b => b.onclick = () => { f7n = +b.dataset.n; f7(); });
+  f7c.forEach(b => b.onclick = () => { f7i = +b.dataset.i; f7(); }); f7();
+
+  const rs = document.getElementById('rs'); let wach = 0;
+  const zb = document.querySelectorAll('#s-rs [data-z]');
+  function r() {
+    const t = +rs.value;
+    let I;
+    if (t < 1) I = 3.0; else if (t < 15) I = 0.6 - 0.5 * (t - 1) / 14; else I = 0.03;
+    if (wach && t >= 15) I = 0.45;
+    document.getElementById('rs-n').textContent = t + ' min';
+    document.getElementById('rs-v').textContent = I >= 1 ? I.toFixed(1).replace('.', ',') + ' A' : Math.round(I * 1000) + ' mA';
+    const ruhe = t >= 15 && !wach;
+    const s = document.getElementById('rs-s'); s.textContent = ruhe ? 'Busruhe – Steuergeräte schlafen' : (t >= 15 ? 'keine Busruhe!' : 'Steuergeräte schlafen ein …'); s.className = ruhe ? 'grn' : (t >= 15 ? 'red' : 'muted');
+    document.getElementById('rs-t').innerHTML = t < 15 ? 'Nach dem Abschließen laufen die Steuergeräte noch nach und schlafen nacheinander ein. Der Strom sinkt.'
+      : (wach ? '<b class="red">Zu hoch:</b> Ein Steuergerät hält den Bus wach. Die Batterie ist nach wenigen Tagen leer. Fehlerspeicher lesen, dann Sicherungen nacheinander ziehen: Fällt der Ruhestrom auf normal, steckt der Fehler in diesem Stromkreis.'
+              : '<b class="grn">Busruhe:</b> Alle Steuergeräte schlafen. Der Ruhestrom ist sehr klein (Beispiel ca. 30 mA) – Grenzwert laut Hersteller.');
+    zb.forEach(b => b.classList.toggle('on', +b.dataset.z === wach));
+  }
+  rs.addEventListener('input', r); zb.forEach(b => b.onclick = () => { wach = +b.dataset.z; r(); }); r();
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

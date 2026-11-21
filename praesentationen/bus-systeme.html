@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>LIN, FlexRay, MOST, Ethernet – Datenbus</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  @media (max-width: 700px) { #s-f7 .f7c { display: grid !important; grid-template-columns: 1fr 1fr; gap: 6px; } #s-f7 .f7c .btn { font-size: 13px; padding: 8px 6px; margin: 0; width: auto; } }
+</style>
+</head>
+<body class="t-bus">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">FAHRZEUGELEKTRONIK · DATENBUS</div>
+  <div class="symbol" style="font-size:72px">LIN</div>
+  <h1>LIN, FlexRay, MOST, Ethernet</h1>
+  <p>Welches Bussystem wofür?</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUSSYSTEME</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Welche Bussysteme es im Fahrzeug gibt</li>
+      <li class="step from-left"><span class="num">2</span>Wie LIN arbeitet</li>
+      <li class="step from-left"><span class="num">3</span>Wie FlexRay zeitgesteuert arbeitet</li>
+      <li class="step from-left"><span class="num">4</span>Worauf du bei Lichtwellenleitern achten musst</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" id="s-bs">
+  <span class="tag">BUSSYSTEME</span><h2>Bussysteme im Vergleich – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px;flex-wrap:wrap"><button class="btn ghost" data-b="lin">LIN</button><button class="btn ghost" data-b="can">CAN</button><button class="btn ghost" data-b="flex">FlexRay</button><button class="btn ghost" data-b="most">MOST</button><button class="btn ghost" data-b="eth">Automotive Ethernet</button></div>
+    <div class="grid2" style="align-items:start">
+      <div class="values" id="bs-v"></div>
+      <div class="card" id="bs-t" style="font-size:17px;font-weight:600;line-height:1.55"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:8px 0 0">Richtwerte – je nach Hersteller und Fahrzeug.</p>
+  </div>
+</section>
+
+<section class="slide" id="s-ln">
+  <span class="tag">BUSSYSTEME</span><h2>LIN-Bus – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-n="0">Master fragt</button><button class="btn ghost" data-n="1">Slave antwortet</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.35fr 1fr">
+      <svg viewBox="0 0 560 220" width="900" height="352" style="display:block;margin:0 auto;max-width:100%;height:auto" id="ln-svg">
+  <rect x="40" y="10" width="510" height="180" rx="8" fill="#18283f" stroke="#94a4ba" stroke-width="2"/>
+  <g id="ln-grid"></g>
+  <path id="ln-h" d="" fill="none" stroke="#ff8f3f" stroke-width="3.5"/>
+  <path id="ln-l" d="" fill="none" stroke="#28aaf5" stroke-width="3.5"/>
+  <text x="44" y="208" font-size="14" font-weight="800" fill="#ff8f3f">CAN-High</text>
+  <text x="140" y="208" font-size="14" font-weight="800" fill="#28aaf5">CAN-Low</text>
+  <g id="ln-ax"></g><text x="8" y="22" font-size="13" font-weight="800" fill="#94a4ba">V</text>
+</svg>
+      <div class="card" id="ln-t" style="font-size:16px;font-weight:600;line-height:1.55"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-fz">
+  <span class="tag">BUSSYSTEME</span><h2>FlexRay – zeitgesteuert, zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-m="fr">FlexRay</button><button class="btn ghost" data-m="can">Zum Vergleich: CAN</button></div>
+    <svg viewBox="0 0 900 230" style="display:block;margin:0 auto;max-width:100%;height:auto" id="fz-svg"></svg>
+    <div class="card" id="fz-t" style="font-size:17px;font-weight:600;line-height:1.55;margin-top:8px"></div>
+  </div>
+</section>
+
+<section class="slide" id="s-fp">
+  <span class="tag">BUSSYSTEME</span><h2>FlexRay – Aufbau und Pegel</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 560 200" width="900" height="320" style="display:block;margin:0 auto;max-width:100%;height:auto" id="fp-svg">
+  <rect x="40" y="10" width="510" height="160" rx="8" fill="#18283f" stroke="#94a4ba" stroke-width="2"/>
+  <g id="fp-grid"></g>
+  <path id="fp-h" d="" fill="none" stroke="#ff8f3f" stroke-width="3.5"/>
+  <path id="fp-l" d="" fill="none" stroke="#28aaf5" stroke-width="3.5"/>
+  <text x="44" y="188" font-size="14" font-weight="800" fill="#ff8f3f">CAN-High</text>
+  <text x="140" y="188" font-size="14" font-weight="800" fill="#28aaf5">CAN-Low</text>
+  <g id="fp-ax"></g><text x="8" y="22" font-size="13" font-weight="800" fill="#94a4ba">V</text>
+</svg>
+      <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0">
+        <li>Zwei verdrillte Leitungen: <b>BP</b> (Bus Plus) und <b>BM</b> (Bus Minus)</li>
+        <li>Ruhe: beide ca. 2,5 V – Daten: ca. 3 V / 2 V, spiegelbildlich</li>
+        <li>oft <b>zwei Kanäle</b> (A und B) – fällt einer aus, läuft der andere weiter</li>
+        <li>Aufbau als Linie oder Stern mit Abschlusswiderständen</li>
+        <li>z. B. adaptive Dämpfer, Aktivlenkung, Abstandsregeltempomat</li>
+      </ul>
+    </div>
+    <div class="grid2" style="margin-top:10px">
+      <div class="tip step"><b>Prüfen</b>Signal mit dem Oszilloskop (BP und BM gegen Masse) am Prüfadapter, Abschlusswiderstände nach Herstellerangabe messen.</div>
+      <div class="warn step"><b>Reparatur</b>Nur nach Herstellervorgabe – Verdrillung und Leitungslänge sind wichtig. Nach Steuergerätetausch oft codieren.</div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">Richtwerte – genaue Werte laut Hersteller.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUSSYSTEME</span><h2>Lichtwellenleiter (MOST)</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="warn step"><b>Nicht knicken</b>Mindest-Biegeradius einhalten (Richtwert ca. 25 mm) – sonst wird das Licht gedämpft oder die Faser bricht.</div>
+      <div class="warn step"><b>Nicht hineinschauen</b>Nicht direkt in leuchtende Lichtwellenleiter oder Stecker schauen.</div>
+      <div class="tip step"><b>Sauber halten</b>Steckerenden mit Schutzkappen verschließen – Schmutz dämpft das Licht.</div>
+      <div class="tip step"><b>Reparatur</b>Nur mit dem Reparaturset und Werkzeug des Herstellers. Ringbruchdiagnose mit dem Diagnosetester.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUSSYSTEME</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>LIN-Slave tauschen</b>Neue LIN-Teilnehmer müssen oft angelernt oder codiert werden.</div>
+      <div class="tip step"><b>Generator am LIN</b>Viele Generatoren werden über LIN vom Motorsteuergerät geregelt.</div>
+      <div class="tip step"><b>Ethernet</b>Für Kameras und Updates. Steckverbinder nicht beschädigen, Verdrillung bei Reparaturen erhalten.</div>
+      <div class="warn step"><b>Verdrillung</b>Bei Reparaturen an CAN- und Ethernet-Leitungen die Verdrillung erhalten – nur nach Herstellervorgabe reparieren.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUSSYSTEME</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/bus-systeme.mp4" poster="videos/bus-systeme.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUSSYSTEME</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Wie viele Leitungen hat der LIN-Bus?</p>
+      <div class="opts"><button class="opt">Eine</button><button class="opt">Zwei</button><button class="opt">Vier</button></div>
+      <div class="fb">LIN ist ein Eindraht-Bus mit einem Master.</div></div>
+    <div class="q" data-correct="1"><p>2. Womit überträgt der MOST-Bus die Daten?</p>
+      <div class="opts"><button class="opt">Mit Funk</button><button class="opt">Mit Licht über Lichtwellenleiter</button><button class="opt">Über die Stromversorgung</button></div>
+      <div class="fb">Darum: nicht knicken, Biegeradius einhalten.</div></div>
+    <div class="q" data-correct="2"><p>3. Wofür wird Automotive Ethernet vor allem genutzt?</p>
+      <div class="opts"><button class="opt">Für den Fensterheber</button><button class="opt">Für den Zigarettenanzünder</button><button class="opt">Für große Datenmengen, z. B. Kameras und Updates</button></div>
+      <div class="fb">Ethernet ist sehr schnell.</div></div>
+    <div class="q" data-correct="0"><p>4. Was ist bei FlexRay besonders?</p>
+      <div class="opts"><button class="opt">Feste Zeitfenster für jedes Steuergerät</button><button class="opt">Nur eine Leitung</button><button class="opt">Übertragung mit Licht</button></div>
+      <div class="fb">Zeitgesteuert – wichtig für sicherheitsrelevante Systeme.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">BUSSYSTEME</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>LIN: 1 Leitung, Master und Slaves, langsam</span></li>
+        <li class="step"><span>CAN: Standard, 2 verdrillte Leitungen</span></li>
+        <li class="step"><span>FlexRay: schnell und zeitgesteuert<small>MOST: Licht im Ring</small></span></li>
+        <li class="step"><span>Ethernet: sehr große Datenmengen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Datenbus-Systeme" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+
+function Oszi(id, opt) {
+  const H = opt.h || 240, x0 = 40, x1 = 550, y0 = 10, y1 = H - 30;
+  const vmax = opt.vmax || 5;
+  const Y = v => y1 - (v / vmax) * (y1 - y0 - 10) - 5;
+  const g = document.getElementById(id + '-grid'), ax = document.getElementById(id + '-ax');
+  g.innerHTML = ''; ax.innerHTML = '';
+  for (let v = 0; v <= vmax; v += (opt.step || 1)) {
+    g.insertAdjacentHTML('beforeend', '<line x1="' + x0 + '" y1="' + Y(v) + '" x2="' + x1 + '" y2="' + Y(v) + '" stroke="#94a4ba" stroke-width="1" stroke-dasharray="3 5" opacity=".5"/>');
+    ax.insertAdjacentHTML('beforeend', '<text x="34" y="' + (Y(v) + 4) + '" text-anchor="end" font-size="12" font-weight="800" fill="#94a4ba">' + String(v).replace('.', ',') + '</text>');
+  }
+  return function (fh, fl) {
+    let dh = '', dl = '';
+    for (let x = x0 + 4; x <= x1 - 4; x += 2) {
+      const k = (x - x0) / (x1 - x0);
+      dh += (dh ? ' L' : 'M') + x + ' ' + Y(fh(k)).toFixed(1);
+      dl += (dl ? ' L' : 'M') + x + ' ' + Y(fl(k)).toFixed(1);
+    }
+    document.getElementById(id + '-h').setAttribute('d', dh);
+    document.getElementById(id + '-l').setAttribute('d', dl);
+  };
+}
+const BITS = [1,1,0,1,0,0,1,0,1,1,0,1,1];
+const bit = k => BITS[Math.min(BITS.length - 1, Math.floor(k * BITS.length))];
+
+  const B = {"lin": ["LIN", "1 Leitung", "bis 20 kbit/s", "Master und Slaves (bis 16 Teilnehmer)", "Fensterheber, Regensensor, Spiegel, Generator, Klimabedienteil", "Günstig für einfache Aufgaben. Der Master fragt die Slaves der Reihe nach ab. Pegel: rezessiv ca. 12 V (Batteriespannung), dominant ca. 1 V."], "can": ["CAN", "2 Leitungen (verdrillt)", "z. B. 100 bis 500 kbit/s", "alle gleichberechtigt", "Motor, Getriebe, ABS, Komfort", "Das Standard-Bussystem im Fahrzeug. Wer die wichtigste Botschaft hat, darf zuerst senden."], "flex": ["FlexRay", "2 Leitungen, oft 2 Kanäle", "bis 10 Mbit/s", "feste Zeitfenster für jedes Steuergerät", "Fahrwerk, Lenkung, Assistenzsysteme", "Sehr schnell und zeitgesteuert: Jedes Steuergerät hat einen festen Sendeplatz – wichtig für sicherheitsrelevante Systeme."], "most": ["MOST", "Lichtwellenleiter", "bis ca. 150 Mbit/s", "Ring – Daten laufen von Gerät zu Gerät", "Radio, Navigation, Verstärker, Bildschirme", "Daten werden als Licht übertragen. Fällt ein Gerät aus oder ist der Lichtwellenleiter beschädigt, ist der ganze Ring gestört (Ringbruch)."], "eth": ["Automotive Ethernet", "2 verdrillte Leitungen", "100 Mbit/s bis über 1 Gbit/s", "Stern über Switches", "Kameras, Assistenzsysteme, Software-Updates", "Für sehr große Datenmengen – z. B. Kamerabilder für Assistenzsysteme und Updates über das Internet."]};
+  const bt = document.querySelectorAll('#s-bs [data-b]');
+  function b(k) {
+    const [n, l, v, t, a, txt] = B[k];
+    document.getElementById('bs-v').innerHTML = [['Leitung', l], ['Tempo', v], ['Aufbau', t], ['Beispiele', a]].map(x => '<div class="val"><b>' + x[0] + '</b><span>' + x[1] + '</span></div>').join('');
+    document.getElementById('bs-t').innerHTML = '<b class="c">' + n + ':</b> ' + txt;
+    bt.forEach(x => x.classList.toggle('on', x.dataset.b === k));
+  }
+  bt.forEach(x => x.onclick = () => b(x.dataset.b)); b('lin');
+
+  const lb = document.querySelectorAll('#s-ln [data-n]');
+  const LT = ['<b>Master fragt:</b> Das LIN-Master-Steuergerät (z. B. Türsteuergerät) sendet den Kopf der Botschaft: „Fensterheber, meldet euch!“ Pegel: in Ruhe (rezessiv) ca. 12 V (Batteriespannung), dominant ca. 1 V. Der Kopf beginnt mit einer langen dominanten Pause (Break), dann folgt das Synchronisationsfeld.',
+              '<b>Slave antwortet:</b> Nur der angesprochene Slave (z. B. Fensterhebermotor) hängt seine Antwort an – z. B. Position und Status. So wird ein Teilnehmer nach dem anderen abgefragt.'];
+  document.getElementById('ln-l').style.display = 'none';
+  document.querySelector('#ln-svg text[fill="#28aaf5"]').style.display = 'none';
+  document.querySelector('#ln-svg text[fill="#ff8f3f"]').textContent = 'LIN-Leitung';
+  function seq(i) {
+    const byte = v => { const o = [0]; for (let k = 0; k < 8; k++) o.push((v >> k) & 1); o.push(1); return o; };
+    let q = [1, 1, 1, 1, 1];
+    q = q.concat(Array(13).fill(0), [1], byte(0x55), byte(0x8A));
+    if (i) q = q.concat([1], byte(0x3C), byte(0xA6));
+    while (q.length < 80) q.push(1);
+    return q;
+  }
+  function l(i) {
+    const draw = Oszi('ln', { vmax: 14, step: 2, h: 220 });
+    const q = seq(i);
+    draw(k => q[Math.min(q.length - 1, Math.floor(k * q.length))] ? 12 : 1, k => 0);
+    lb.forEach(x => x.classList.toggle('on', +x.dataset.n === i));
+    document.getElementById('ln-t').innerHTML = LT[i];
+  }
+  lb.forEach(x => x.onclick = () => l(+x.dataset.n)); l(0);
+
+  // FlexRay
+  const SL = ['Fahrwerk', 'Lenkung', 'ACC', 'ABS/ESP', 'Motor', 'Getriebe'];
+  const fzb = document.querySelectorAll('#s-fz [data-m]'); let fm = 'fr', tt = 0;
+  function fzDraw() {
+    const sv = document.getElementById('fz-svg'), v = window.innerWidth < 700;
+    // Box in Zeitachse: t = Position 0..1, len = Länge, ch = Kanal 0/1
+    const W = v ? 360 : 900, H = v ? 470 : 230;
+    sv.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    const t0 = v ? 50 : 100, tL = v ? 390 : 780;
+    const box = (t, len, ch, txt, col, dash) => {
+      let x, y, w, h;
+      if (v) { x = 90 + ch * 140; w = 120; y = t0 + t * tL; h = len * tL - 6; }
+      else { y = 40 + ch * 80; h = 50; x = t0 + t * tL; w = len * tL - 5; }
+      return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="6" fill="' + (dash ? 'none' : '#213552') + '" stroke="' + col + '" stroke-width="' + (dash ? 2 : 3) + '"' + (dash ? ' stroke-dasharray="6 5"' : '') + '/>' +
+        '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 5) + '" text-anchor="middle" font-size="' + (v ? 15 : 13) + '" font-weight="900" fill="' + (dash ? '#94a4ba' : '#ecf1f8') + '">' + txt + '</text>';
+    };
+    let o = v ? '<text x="150" y="30" text-anchor="middle" font-size="16" font-weight="900" fill="#ecf1f8">Kanal A</text><text x="290" y="30" text-anchor="middle" font-size="16" font-weight="900" fill="#ecf1f8">Kanal B</text>'
+              : '<text x="10" y="70" font-size="16" font-weight="900" fill="#ecf1f8">Kanal A</text><text x="10" y="150" font-size="16" font-weight="900" fill="#ecf1f8">Kanal B</text>';
+    const lab = (t, txt) => v ? '<text x="78" y="' + (t0 + t * tL + 14) + '" text-anchor="end" font-size="12" font-weight="800" fill="#94a4ba">' + txt + '</text>'
+                               : '<text x="' + (t0 + t * tL) + '" y="215" font-size="14" font-weight="800" fill="#94a4ba">' + txt + '</text>';
+    if (fm === 'fr') {
+      for (let c = 0; c < 2; c++) { for (let i = 0; i < 6; i++) o += box(i * 0.1, 0.1, c, SL[i], '#1fc8b3'); o += box(0.6, 0.4, c, v ? 'bei Bedarf' : 'dynamisch: bei Bedarf', '#94a4ba', 1); }
+      o += v ? lab(0, 'fest') + lab(0.6, 'frei') : lab(0, 'statischer Teil: feste Zeitfenster') + lab(0.6, 'dynamischer Teil');
+      document.getElementById('fz-t').innerHTML = '<b>FlexRay:</b> Jedes Steuergerät hat in jedem Zyklus sein <span class="c">festes Zeitfenster</span> – wie ein Fahrplan. So kommt jede Botschaft garantiert pünktlich an. Die gleichen Daten laufen oft auf <span class="c">Kanal A und B</span> – doppelt sicher. Ein Zyklus dauert nur wenige Millisekunden.';
+    } else {
+      [[0, 'Motor'], [0.11, 'ABS'], [0.3, 'Klima'], [0.4, 'Motor'], [0.58, 'Lenkung'], [0.74, 'ABS'], [0.85, 'Getriebe']].forEach(([t, n]) => o += box(t, 0.1, 0, n, '#ff8f3f'));
+      o += v ? '<text x="290" y="250" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">kein zweiter</text><text x="290" y="270" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">Kanal</text>'
+             : '<text x="480" y="150" text-anchor="middle" font-size="15" font-weight="800" fill="#94a4ba">kein zweiter Kanal</text>';
+      o += v ? lab(0, 'nach Bedarf') : lab(0, 'Botschaften, wenn sie gerade anfallen');
+      document.getElementById('fz-t').innerHTML = '<b>CAN zum Vergleich:</b> Gesendet wird, wenn eine Botschaft anfällt. Wollen zwei gleichzeitig, gewinnt die wichtigere – die andere muss <span class="ora">warten</span>. Darum ist nicht genau vorhersehbar, wann eine Botschaft ankommt.';
+    }
+    o += v ? '<line id="fz-cur" x1="84" x2="356" stroke="#ffd34d" stroke-width="4"/>' : '<line id="fz-cur" y1="30" y2="190" stroke="#ffd34d" stroke-width="4"/>';
+    sv.innerHTML = o; fzb.forEach(b => b.classList.toggle('on', b.dataset.m === fm));
+  }
+  window.addEventListener('resize', fzDraw);
+  fzb.forEach(b => b.onclick = () => { fm = b.dataset.m; fzDraw(); }); fzDraw();
+  setInterval(() => { tt = (tt + 0.005) % 1; const c = document.getElementById('fz-cur'); if (!c) return; const v = window.innerWidth < 700, q = (v ? 50 : 100) + tt * (v ? 390 : 780); if (v) { c.setAttribute('y1', q); c.setAttribute('y2', q); } else { c.setAttribute('x1', q); c.setAttribute('x2', q); } }, 40);
+  const fpd = Oszi('fp', { vmax: 5, step: 1, h: 200 });
+  fpd(k => { const b = bit(k * 1.3 % 1); return k < 0.12 || k > 0.92 ? 2.5 : (b ? 3 : 2); }, k => { const b = bit(k * 1.3 % 1); return k < 0.12 || k > 0.92 ? 2.5 : (b ? 2 : 3); });
+  document.querySelector('#fp-svg text[fill="#ff8f3f"]').textContent = 'BP';
+  document.querySelector('#fp-svg text[fill="#28aaf5"]').textContent = 'BM';
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>
