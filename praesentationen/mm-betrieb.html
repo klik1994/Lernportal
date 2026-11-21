@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Betriebszustände – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .bz { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px; }
+  .bz .row { display: grid; grid-template-columns: 140px 1fr 130px; gap: 10px; align-items: center; margin-bottom: 14px; font-size: 19px; font-weight: 700; }
+  .bz .bar { height: 14px; background: var(--card2); border-radius: 99px; overflow: hidden; }
+  .bz .bar i { display: block; height: 100%; background: var(--c); border-radius: 99px; transition: width .4s; }
+  .bz .v { text-align: right; color: var(--muted); }
+  .inj { display: inline-block; padding: 4px 12px; border-radius: 99px; font-weight: 900; }
+  .inj.on { background: var(--grn); color: #0e192b; } .inj.off { background: var(--red); color: #0e192b; }
+  .detail { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  .detail ul { margin: 8px 0 0; padding-left: 20px; font-size: 18px; line-height: 1.5; }
+  @media (max-width: 820px), (max-height: 520px) {
+    .bz, .detail { grid-template-columns: 1fr !important; }
+    .bz .row { grid-template-columns: 96px 1fr 84px; font-size: 14px; }
+    .detail ul { font-size: 15px; }
+  }
+</style>
+</head>
+<body class="t-mm">
+<div id="stage-wrap"><div id="stage">
+
+<!-- 1 Titel -->
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · GRUNDLAGEN</div>
+  <div class="symbol">n</div>
+  <h1>Betriebszustände</h1>
+  <p>Was das Steuergerät in jeder Situation anders macht</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<!-- 2 Lernziele -->
+<section class="slide">
+  <span class="tag">BETRIEBSZUSTÄNDE</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Welche Betriebszustände es gibt</li>
+      <li class="step from-left"><span class="num">2</span>Was das Steuergerät bei Kaltstart und Warmlauf macht</li>
+      <li class="step from-left"><span class="num">3</span>Leerlauf, Teillast und Volllast</li>
+      <li class="step from-left"><span class="num">4</span>Beschleunigen und Schubabschaltung</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3 Interaktive Fahrt -->
+<section class="slide" id="s-fahrt">
+  <span class="tag">BETRIEBSZUSTÄNDE</span><h2>Eine Fahrt – zum Durchklicken</h2>
+  <div class="body noclick">
+    <div class="choice" id="bz-btns"></div>
+    <div class="bz">
+      <div class="card">
+        <div class="row"><span>Drehzahl</span><div class="bar"><i id="bz-n"></i></div><span class="v" id="bz-nv"></span></div>
+        <div class="row"><span>Last</span><div class="bar"><i id="bz-l"></i></div><span class="v" id="bz-lv"></span></div>
+        <div class="row"><span>Lambda</span><b id="bz-lam" style="grid-column:2/4"></b></div>
+        <div class="row"><span>Einspritzung</span><span id="bz-inj" style="grid-column:2/4"></span></div>
+        <div class="row" style="margin-bottom:0"><span>Zündung</span><span id="bz-z" style="grid-column:2/4;font-weight:600"></span></div>
+      </div>
+      <div class="card"><div class="big" style="font-size:26px" id="bz-t"></div><p style="font-size:20px;margin:8px 0 0;line-height:1.45" id="bz-x"></p></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Ottomotor, Richtwerte. Tippe auf einen Zustand.</p>
+  </div>
+</section>
+
+<!-- 4 Kaltstart und Warmlauf -->
+<section class="slide">
+  <span class="tag">BETRIEBSZUSTÄNDE</span><h2>Kaltstart und Warmlauf</h2>
+  <div class="body detail">
+    <div class="card step"><div class="big" style="font-size:22px">Warum mehr Kraftstoff?</div>
+      <ul><li>Kraftstoff schlägt sich an kalten Wänden nieder und verdampft schlecht</li><li>darum <b>Anreicherung</b> (λ &lt; 1)</li><li>je wärmer der Motor, desto weniger</li></ul></div>
+    <div class="card step"><div class="big" style="font-size:22px">Was noch?</div>
+      <ul><li>erhöhte Leerlaufdrehzahl</li><li>Kat schnell aufheizen: Zündung später</li><li>Lambdasonde noch nicht bereit: <b>Steuern</b> statt Regeln</li></ul></div>
+    <div class="tip step" style="grid-column:1/-1"><b>Wichtigster Sensor hier</b>Der Kühlmittel-Temperatursensor sagt dem Steuergerät, wie kalt der Motor ist.</div>
+  </div>
+</section>
+
+<!-- 5 Leerlauf -->
+<section class="slide">
+  <span class="tag">BETRIEBSZUSTÄNDE</span><h2>Leerlauf</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Das Steuergerät <span class="c">regelt</span> die Leerlaufdrehzahl<small>z. B. warm ca. 700–850 1/min (Richtwert)</small></li>
+      <li class="step">Die Klimaanlage wird eingeschaltet – der Motor muss mehr leisten<small>ohne Regelung würde die Drehzahl absacken</small></li>
+      <li class="step">Das Steuergerät öffnet die <span class="c">Drosselklappe</span> etwas weiter und passt die Zündung an<small>die Drehzahl bleibt konstant</small></li>
+    </ol>
+    <div class="tip step" style="margin-top:12px"><b>Das ist Regeln</b>Istwert (Drehzahl) wird ständig mit dem Sollwert verglichen – wie beim EVA-Prinzip gelernt.</div>
+  </div>
+</section>
+
+<!-- 6 Teillast und Volllast -->
+<section class="slide">
+  <span class="tag">BETRIEBSZUSTÄNDE</span><h2>Teillast und Volllast</h2>
+  <div class="body detail">
+    <div class="card step"><div class="big" style="font-size:22px">Teillast <span class="muted" style="font-size:17px">– normales Fahren</span></div>
+      <ul><li>λ = 1, die Lambda-Regelung arbeitet</li><li>Ziel: wenig Verbrauch, saubere Abgase</li><li>der häufigste Zustand im Alltag</li></ul></div>
+    <div class="card step"><div class="big" style="font-size:22px">Volllast <span class="muted" style="font-size:17px">– Gaspedal ganz durch</span></div>
+      <ul><li>leicht fett (ca. λ 0,85–0,95)</li><li>Ziel: höchste Leistung</li><li>Kraftstoff kühlt zusätzlich Kat und Turbolader</li><li>die Klopfregelung arbeitet an der Grenze</li></ul></div>
+    <div class="note step" style="grid-column:1/-1">Richtwerte</div>
+  </div>
+</section>
+
+<!-- 7 Beschleunigen und Schub -->
+<section class="slide">
+  <span class="tag">BETRIEBSZUSTÄNDE</span><h2>Beschleunigen und Schubabschaltung</h2>
+  <div class="body detail">
+    <div class="card step"><div class="big" style="font-size:22px">Beschleunigen</div>
+      <ul><li>schnell Gas geben: plötzlich viel mehr Luft</li><li>kurz mehr Kraftstoff (<b>Übergangsanreicherung</b>)</li><li>sonst würde der Motor kurz „verschlucken“</li></ul></div>
+    <div class="card step"><div class="big" style="font-size:22px">Schubabschaltung</div>
+      <ul><li>Fuß vom Gas, Gang drin, Drehzahl hoch genug</li><li>Einspritzung <b>aus</b> – Verbrauch 0 l/100 km</li><li>unter der Wiedereinsetzdrehzahl (z. B. ca. 1.200–1.500 1/min) wieder an</li></ul></div>
+    <div class="tip step" style="grid-column:1/-1"><b>Spartipp für Kunden</b>Rollen lassen mit eingelegtem Gang spart mehr als Auskuppeln – ausgekuppelt braucht der Motor Kraftstoff für den Leerlauf.</div>
+  </div>
+</section>
+
+<!-- 8 Praxis -->
+<section class="slide">
+  <span class="tag">BETRIEBSZUSTÄNDE</span><h2>Aus der Praxis</h2>
+  <div class="body grid2" style="align-content:start">
+    <div class="warn step"><b>Temperatursensor meldet „kalt“</b>Ist der Kühlmittel-Temperatursensor defekt und meldet immer „kalt“, reichert das Steuergerät ständig an: hoher Verbrauch, Ruß, verrußte Zündkerzen.</div>
+    <div class="tip step"><b>Messwerte nutzen</b>Viele Diagnosegeräte zeigen den Betriebszustand an (z. B. Leerlauf, Teillast, Schub). Passt er zur Fahrsituation?</div>
+    <div class="tip step"><b>Leerlauf schwankt</b>Mögliche Ursachen: Falschluft, verschmutzte Drosselklappe, fehlende Grundeinstellung (anlernen).</div>
+    <div class="tip step"><b>Probefahrt</b>Viele Fehler zeigen sich nur in bestimmten Zuständen – Kaltstart, Volllast oder Schub gezielt nachstellen.</div>
+  </div>
+</section>
+
+<!-- 9 Video -->
+<section class="slide">
+  <span class="tag">BETRIEBSZUSTÄNDE</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-betrieb.mp4" poster="videos/mm-betrieb.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<!-- 10 Kurztest -->
+<section class="slide">
+  <span class="tag">BETRIEBSZUSTÄNDE</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:8px">
+    <div class="q" data-correct="0"><p>1. Warum bekommt ein kalter Motor mehr Kraftstoff?</p>
+      <div class="opts"><button class="opt">Kraftstoff schlägt sich an kalten Wänden nieder</button><button class="opt">Damit er schneller warm wird</button><button class="opt">Wegen der Lambdasonde</button></div>
+      <div class="fb">Ein Teil des Kraftstoffs verbrennt nicht mit – darum Anreicherung.</div></div>
+    <div class="q" data-correct="2"><p>2. Was passiert bei der Schubabschaltung?</p>
+      <div class="opts"><button class="opt">Die Zündung wird abgeschaltet</button><button class="opt">Der Motor geht aus</button><button class="opt">Die Einspritzung wird abgeschaltet</button></div>
+      <div class="fb">Fuß vom Gas, Gang drin: keine Einspritzung, Verbrauch 0.</div></div>
+    <div class="q" data-correct="1"><p>3. Die Klimaanlage wird im Leerlauf eingeschaltet. Was macht das Steuergerät?</p>
+      <div class="opts"><button class="opt">Nichts – die Drehzahl sinkt</button><button class="opt">Es regelt nach und hält die Drehzahl konstant</button><button class="opt">Es schaltet den Motor ab</button></div>
+      <div class="fb">Leerlaufregelung: Istwert mit Sollwert vergleichen und nachregeln.</div></div>
+    <div class="q" data-correct="1"><p>4. Der Temperatursensor meldet immer „kalt“. Was ist die Folge?</p>
+      <div class="opts"><button class="opt">Der Motor läuft zu mager</button><button class="opt">Das Gemisch ist ständig zu fett – hoher Verbrauch</button><button class="opt">Keine Auswirkung</button></div>
+      <div class="fb">Das Steuergerät reichert dauerhaft an.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<!-- 11 Merke -->
+<section class="slide">
+  <span class="tag">BETRIEBSZUSTÄNDE</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Kaltstart: Anreicherung, höhere Leerlaufdrehzahl</span></li>
+        <li class="step"><span>Leerlauf: Drehzahl wird geregelt</span></li>
+        <li class="step"><span>Teillast λ = 1 · Volllast leicht fett</span></li>
+        <li class="step"><span>Schub: Einspritzung aus<small>Beschleunigen: kurz mehr Kraftstoff</small></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Grundlagen" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+
+<script>
+/* Interaktive Fahrt (Richtwerte, Ottomotor) */
+(function () {
+  const Z = [
+    ['Kaltstart', 22, 8, '1.200 1/min', 'gering', 'λ < 1 (fett)', 1, 'später – Kat heizen', 'Kaltstart', 'Kraftstoff schlägt sich an kalten Wänden nieder – darum mehr Kraftstoff. Die Lambdasonde ist noch nicht bereit.'],
+    ['Warmlauf', 17, 8, '1.000 1/min', 'gering', 'langsam Richtung 1', 1, 'später – Kat heizen', 'Warmlauf', 'Mit steigender Temperatur wird weniger angereichert, die Drehzahl sinkt langsam.'],
+    ['Leerlauf', 12, 10, '750 1/min', 'gering', 'λ = 1', 1, 'regelt die Drehzahl mit', 'Leerlauf', 'Die Leerlaufregelung hält die Drehzahl konstant – auch wenn Klima oder Licht zugeschaltet werden.'],
+    ['Teillast', 38, 40, '2.200 1/min', 'mittel', 'λ = 1', 1, 'früh – sparsam', 'Teillast', 'Normales Fahren: Die Lambda-Regelung hält λ = 1. Wenig Verbrauch, saubere Abgase.'],
+    ['Beschleunigen', 55, 80, '3.000 1/min', 'hoch', 'kurz < 1', 1, 'nach Kennfeld', 'Beschleunigen', 'Plötzlich viel mehr Luft – kurz mehr Kraftstoff (Übergangsanreicherung), damit der Motor nicht verschluckt.'],
+    ['Volllast', 85, 100, '5.500 1/min', 'voll', 'ca. 0,85–0,95', 1, 'an der Klopfgrenze', 'Volllast', 'Höchste Leistung. Etwas mehr Kraftstoff kühlt auch Kat und Turbolader.'],
+    ['Schub', 40, 0, '2.500 1/min', 'keine', 'nur Luft', 0, '–', 'Schubabschaltung', 'Fuß vom Gas, Gang drin: Die Einspritzung ist aus – 0 l/100 km. Unter der Wiedereinsetzdrehzahl geht sie wieder an.']
+  ];
+  const box = document.getElementById('bz-btns');
+  Z.forEach((z, i) => { const b = document.createElement('button'); b.className = 'btn ghost'; b.textContent = z[0]; b.onclick = () => set(i); box.appendChild(b); });
+  function set(i) {
+    const z = Z[i];
+    box.querySelectorAll('.btn').forEach((b, k) => b.classList.toggle('on', k === i));
+    document.getElementById('bz-n').style.width = z[1] + '%'; document.getElementById('bz-nv').textContent = z[3];
+    document.getElementById('bz-l').style.width = z[2] + '%'; document.getElementById('bz-lv').textContent = z[4];
+    document.getElementById('bz-lam').textContent = z[5];
+    document.getElementById('bz-inj').innerHTML = z[6] ? '<span class="inj on">AN</span>' : '<span class="inj off">AUS</span>';
+    document.getElementById('bz-z').textContent = z[7];
+    document.getElementById('bz-t').textContent = z[8];
+    document.getElementById('bz-x').textContent = z[9];
+  }
+  document.getElementById('s-fahrt').addEventListener('slideshow', () => set(0));
+  set(0);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

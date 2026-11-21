@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 6 Themen, 49 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 7 Themen, 58 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
-  assert.strictEqual(r.themen.length, 6);
-  assert.strictEqual(r.fragen.length, 49);
+  assert.strictEqual(r.themen.length, 7);
+  assert.strictEqual(r.fragen.length, 58);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
@@ -106,6 +106,19 @@ test('Echte Inhaltsdatei: Präsentationen zu Sensoren, Aktoren und EVA-Prinzip s
   assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['EVA-Prinzip', 'Sensoren', 'Aktoren']);
   t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
   ['eva', 'sensoren', 'aktoren'].forEach(n => {
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
+  });
+  assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5);
+});
+
+test('Echte Inhaltsdatei: Motormanagement Grundlagen mit Präsentationen und Videos', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  const t = r.themen.find(x => x.name === 'Motormanagement: Grundlagen');
+  assert.strictEqual(t.bereich, 'Motormanagement');
+  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Aufgaben und Steuergerät', 'Luftverhältnis Lambda', 'Betriebszustände']);
+  t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
+  ['mm-aufgaben', 'mm-lambda', 'mm-betrieb'].forEach(n => {
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
   });

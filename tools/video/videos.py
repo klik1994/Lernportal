@@ -410,6 +410,8 @@ VIDEOS = {
 
 from sensorik import VIDEOS_SENSORIK
 VIDEOS.update(VIDEOS_SENSORIK)
+from motor import VIDEOS_MOTOR
+VIDEOS.update(VIDEOS_MOTOR)
 
 
 if __name__ == '__main__':
