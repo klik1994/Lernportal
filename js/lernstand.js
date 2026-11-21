@@ -2,8 +2,8 @@ const Lernstand = (() => {
   const GRENZE = 80;
   const KEY = 'kfz-lernportal-v1';
 
-  const initialState = () => ({ eingangstestFertig: false, themen: {}, sterne: [] });
-  const copy = s => ({ eingangstestFertig: s.eingangstestFertig, themen: Object.assign({}, s.themen), sterne: s.sterne.slice() });
+  const initialState = () => ({ eingangstestFertig: false, themen: {}, sterne: [], lehrjahr: null });
+  const copy = s => ({ eingangstestFertig: s.eingangstestFertig, themen: Object.assign({}, s.themen), sterne: s.sterne.slice(), lehrjahr: s.lehrjahr || null });
 
   function applyResult(state, thema, prozent, art) {
     const s = copy(state);
@@ -19,6 +19,12 @@ const Lernstand = (() => {
   function markEingangFertig(state) {
     const s = copy(state);
     s.eingangstestFertig = true;
+    return s;
+  }
+
+  function setLehrjahr(state, n) {
+    const s = copy(state);
+    if ([1, 2, 3, 4].includes(n)) s.lehrjahr = n;
     return s;
   }
 
@@ -64,7 +70,8 @@ const Lernstand = (() => {
           return {
             eingangstestFertig: !!p.eingangstestFertig,
             themen: p.themen && typeof p.themen === 'object' ? p.themen : {},
-            sterne: Array.isArray(p.sterne) ? p.sterne : []
+            sterne: Array.isArray(p.sterne) ? p.sterne : [],
+            lehrjahr: [1, 2, 3, 4].includes(p.lehrjahr) ? p.lehrjahr : null
           };
         } catch (e) { return initialState(); }
       },
@@ -75,6 +82,6 @@ const Lernstand = (() => {
     };
   }
 
-  return { GRENZE, initialState, applyResult, markEingangFertig, statusOf, toggleStern, nextSteps, fortschritt, createStore };
+  return { GRENZE, initialState, applyResult, markEingangFertig, setLehrjahr, statusOf, toggleStern, nextSteps, fortschritt, createStore };
 })();
 if (typeof module !== 'undefined') module.exports = Lernstand;

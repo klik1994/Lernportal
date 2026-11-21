@@ -5,7 +5,7 @@ const L = require('../js/lernstand.js');
 const THEMEN = ['A', 'B', 'C', 'D'];
 
 test('initialState', () => {
-  assert.deepStrictEqual(L.initialState(), { eingangstestFertig: false, themen: {}, sterne: [] });
+  assert.deepStrictEqual(L.initialState(), { eingangstestFertig: false, themen: {}, sterne: [], lehrjahr: null });
 });
 
 test('Eingangstest: >= 80 % sitzt, sonst offen; setzt eingangstestFertig', () => {
@@ -97,4 +97,23 @@ test('createStore: gesperrter Speicher -> persistent false, kein Fehler', () => 
 test('createStore: kaputter gespeicherter Text -> Anfangszustand', () => {
   const storage = { getItem: () => '{kaputt', setItem() {} };
   assert.deepStrictEqual(L.createStore(storage).load(), L.initialState());
+});
+
+test('setLehrjahr speichert 1 bis 4, ungültige Werte werden ignoriert', () => {
+  let s = L.setLehrjahr(L.initialState(), 2);
+  assert.strictEqual(s.lehrjahr, 2);
+  assert.strictEqual(L.setLehrjahr(s, 7).lehrjahr, 2);
+  assert.strictEqual(L.setLehrjahr(s, 'x').lehrjahr, 2);
+  s = L.applyResult(s, 'A', 100, 'kurz');
+  assert.strictEqual(L.setLehrjahr(s, 3).themen.A, 'sitzt');
+});
+
+test('createStore behält das Lehrjahr, alter Stand ohne Lehrjahr -> null', () => {
+  const mem = {};
+  const storage = { getItem: k => (k in mem ? mem[k] : null), setItem: (k, v) => { mem[k] = String(v); } };
+  const st = L.createStore(storage);
+  st.save(L.setLehrjahr(L.initialState(), 3));
+  assert.strictEqual(L.createStore(storage).load().lehrjahr, 3);
+  mem['kfz-lernportal-v1'] = JSON.stringify({ eingangstestFertig: true, themen: {}, sterne: [] });
+  assert.strictEqual(L.createStore(storage).load().lehrjahr, null);
 });

@@ -35,20 +35,24 @@ const Inhalte = (() => {
   function parseInhalte(sheets) {
     const zeilen = sheets.Themen || [];
     const themen = [];
+    const ljSpalte = (zeilen[0] || []).findIndex(k => /^lehrjahr$/i.test(String(k || '').trim()));
+    const lehrjahrAus = r => { const n = parseInt(ljSpalte >= 0 ? r[ljSpalte] : '', 10); return n >= 1 && n <= 4 ? n : 1; };
     zeilen.slice(1).forEach(r => {
       const name = (r[0] || '').trim();
       if (!name || themen.some(t => t.name === name)) return;
-      themen.push({ name, bereich: (r[1] || '').trim() || 'Weitere Themen', erklaerung: (r[2] || '').trim(), video: youtubeId(r[3]), videoDatei: videoDatei(r[3]), praesentationen: parsePraesentationen(r[4]) });
+      themen.push({ name, bereich: (r[1] || '').trim() || 'Weitere Themen', erklaerung: (r[2] || '').trim(), video: youtubeId(r[3]), videoDatei: videoDatei(r[3]), praesentationen: parsePraesentationen(r[4]), lehrjahr: lehrjahrAus(r) });
     });
     const fragen = Q.rowsToQuestions(sheets.Fragen || []);
     fragen.forEach(f => {
-      if (!themen.some(t => t.name === f.thema)) themen.push({ name: f.thema, bereich: 'Weitere Themen', erklaerung: '', video: null, videoDatei: null, praesentationen: [] });
+      if (!themen.some(t => t.name === f.thema)) themen.push({ name: f.thema, bereich: 'Weitere Themen', erklaerung: '', video: null, videoDatei: null, praesentationen: [], lehrjahr: 1 });
     });
     const einstellungen = {};
     (sheets.Einstellungen || []).slice(1).forEach(r => { if (r[0]) einstellungen[r[0].trim()] = (r[1] || '').trim(); });
     return { themen, fragen, einstellungen };
   }
 
-  return { youtubeId, sichererLink, videoDatei, parsePraesentationen, parseInhalte };
+  const aktiveThemen = (themen, lehrjahr) => themen.filter(t => !lehrjahr || (t.lehrjahr || 1) <= lehrjahr);
+
+  return { youtubeId, sichererLink, videoDatei, parsePraesentationen, parseInhalte, aktiveThemen };
 })();
 if (typeof module !== 'undefined') module.exports = Inhalte;

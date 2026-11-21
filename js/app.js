@@ -6,7 +6,7 @@
   try { storage = window.localStorage; } catch (e) { storage = null; }
   const store = L.createStore(storage);
   let state = store.load();
-  let inhalt = null, themenNamen = [];
+  let inhalt = null, themenNamen = [], lehrjahrOffen = false;
   let quiz = null, resetFrage = false, videoAn = {}, metas = {};
 
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -14,7 +14,11 @@
   const badge = st => '<span class="badge b-' + st + '">' + st + '</span>';
   const themaLink = name => '#/thema/' + encodeURIComponent(name);
   const save = () => store.save(state);
-  const anzahlEingang = () => T.anzahlFuerTest(inhalt.fragen);
+  const aktiveFragen = () => inhalt.fragen.filter(f => themenNamen.includes(f.thema));
+  const anzahlEingang = () => T.anzahlFuerTest(aktiveFragen());
+  const LJ_TEXT = n => n + '. Lehrjahr';
+  function aktualisiereAktive() { themenNamen = Inhalte.aktiveThemen(inhalt.themen, state.lehrjahr).map(t => t.name); }
+  const gesperrt = t => !!state.lehrjahr && (t.lehrjahr || 1) > state.lehrjahr;
   const minuten = () => Math.max(5, Math.round(anzahlEingang() * 0.5 / 5) * 5);
 
   function route() {
@@ -29,12 +33,14 @@
 
   function render() {
     if (!inhalt) return;
+    aktualisiereAktive();
     const { r, arg } = route();
     document.querySelectorAll('#nav a[data-r]').forEach(a => a.classList.toggle('on', a.dataset.r === r || (r === 'thema' && a.dataset.r === 'themen')));
     if (r === 'impressum') return show(renderImpressum());
     if (r === 'datenschutz') return show(renderDatenschutz());
     if (r === 'test' && quiz) return show(quiz.fertig ? renderErgebnis() : renderFrage());
     if (r === 'test') { location.hash = '#/'; return; }
+    if (!state.lehrjahr) return show(renderLehrjahrWahl());
     if (!state.eingangstestFertig) return show(renderWillkommen());
     if (r === 'themen') return show(renderThemen());
     if (r === 'thema') return show(renderThema(arg));
@@ -61,6 +67,18 @@
   const anzahlFragen = name => inhalt.fragen.filter(f => f.thema === name).length;
   const plural = (n, eins, mehr) => n + ' ' + (n === 1 ? eins : mehr);
 
+  function lehrjahrKnoepfe() {
+    return '<div class="knopfgitter">' + [1, 2, 3, 4].map(n => {
+      const anz = Inhalte.aktiveThemen(inhalt.themen, n).length;
+      return '<button class="' + (state.lehrjahr === n ? 'primary' : '') + '" data-lehrjahr="' + n + '">' + LJ_TEXT(n) + '<span class="klein">' + anz + ' Themen</span></button>';
+    }).join('') + '</div>';
+  }
+
+  function renderLehrjahrWahl() {
+    return '<p class="eyebrow">Los geht\'s</p><h1>In welchem Lehrjahr bist du?</h1><p class="lead">Danach werden die Themen freigeschaltet, die laut Rahmenlehrplan bis zu deinem Lehrjahr dran sind. Du kannst das später jederzeit ändern.</p>' +
+      '<div class="card a-yel">' + lehrjahrKnoepfe() + '</div>';
+  }
+
   function renderWillkommen() {
     return '<p class="eyebrow">Los geht\'s</p><h1>Willkommen im Lernportal</h1><p class="lead">Hier lernst du die Themen deiner Ausbildung mit Präsentationen, Videos, Tests und Praxisübungen.</p>' +
       '<div class="grid"><div class="kachel a-yel">' + iconHtml('✓') + '<h3>Eingangstest</h3>' +
@@ -73,7 +91,7 @@
     const fp = L.fortschritt(state, themenNamen);
     const next = L.nextSteps(state, themenNamen);
     const sitzt = themenNamen.filter(t => L.statusOf(state, t) === 'sitzt').length;
-    let h = '<p class="eyebrow">Dein Stand</p><h1>Mein Lernstand</h1>';
+    let h = '<p class="eyebrow">Dein Stand · ' + LJ_TEXT(state.lehrjahr) + '</p><h1>Mein Lernstand</h1>';
     h += '<div class="zweispaltig"><div class="card"><p class="muted" style="margin:0 0 6px">Fortschritt</p><p class="zahl">' + fp + ' %</p><p class="muted">' + sitzt + ' von ' + themenNamen.length + ' Themen sitzen</p><div class="bar"><div style="width:' + fp + '%"></div></div></div>';
     h += '<div class="card a-roy"><p class="muted" style="margin:0 0 6px">Prüfungscheck</p><p>' + anzahlEingang() + ' Fragen, 2 pro Thema, ca. ' + minuten() + ' Min. Schwache Themen kommen wieder auf deine Liste.</p><button class="primary" data-start="pruefung">Prüfungscheck starten</button></div></div>';
     h += '<h2>Als Nächstes</h2>';
@@ -87,6 +105,8 @@
     h += '<p style="margin-top:24px">' + (resetFrage
       ? '<span class="muted">Wirklich alles löschen? </span><button class="link" data-reset="ja">Ja, löschen</button><button class="link" data-reset="nein">Abbrechen</button>'
       : '<button class="link" data-reset="frage">Lernstand zurücksetzen</button>') + '</p>';
+    h += '<div class="card"><p style="margin:0 0 8px"><b>Dein Lehrjahr:</b> ' + LJ_TEXT(state.lehrjahr) + (lehrjahrOffen ? '' : ' &nbsp;<button class="link" data-lehrjahr-aendern="1">Ändern</button>') + '</p>' +
+      (lehrjahrOffen ? '<p class="muted">Neue Themen werden freigeschaltet und stehen dann bei „Als Nächstes“. Dein bisheriger Stand bleibt erhalten.</p>' + lehrjahrKnoepfe() : '') + '</div>';
     return h;
   }
 
@@ -103,6 +123,8 @@
         inhalt.themen.filter(t => t.bereich === b).map(t => {
           const np = (t.praesentationen || []).length, nf = anzahlFragen(t.name);
           const meta = [np ? plural(np, 'Präsentation', 'Präsentationen') : '', nf ? plural(nf, 'Testfrage', 'Testfragen') : ''].filter(Boolean).join(' · ');
+          if (gesperrt(t)) return '<div class="kachel gesperrt a-' + bereichFarbe(b) + '"><div class="kachel-kopf">' + iconHtml('🔒') + '</div>' +
+            '<h3>' + esc(t.name) + '</h3><p class="meta"><span class="badge b-offen">ab ' + LJ_TEXT(t.lehrjahr) + '</span>' + (meta ? ' &nbsp;' + meta : '') + '</p></div>';
           return '<div class="kachel a-' + bereichFarbe(b) + '"><div class="kachel-kopf">' + themaIcon(t) + sternKnopf(t.name) + '</div>' +
             '<h3><a class="decklink" href="' + themaLink(t.name) + '">' + esc(t.name) + '</a></h3>' +
             (t.erklaerung ? '<p>' + esc(kurz(t.erklaerung, 130)) + '</p>' : '') +
@@ -124,6 +146,8 @@
   function renderThema(name) {
     const t = inhalt.themen.find(x => x.name === name);
     if (!t) return '<h1>Thema nicht gefunden</h1><p><a href="#/themen">Zur Themenliste</a></p>';
+    if (gesperrt(t)) return '<p class="eyebrow"><a href="#/themen" style="color:inherit;text-decoration:none">Themen</a> · ' + esc(t.bereich) + '</p><h1>' + esc(t.name) + '</h1>' +
+      '<div class="card"><p>🔒 Dieses Thema wird ab dem ' + LJ_TEXT(t.lehrjahr) + ' freigeschaltet.</p><p class="muted" style="margin:0">Dein Lehrjahr kannst du unter „Lernstand“ ändern.</p></div>';
     const farbe = bereichFarbe(t.bereich);
     const anzahl = anzahlFragen(t.name);
     let h = '<p class="eyebrow"><a href="#/themen" style="color:inherit;text-decoration:none">Themen</a> · ' + esc(t.bereich) + '</p>';
@@ -193,7 +217,7 @@
 
   function starte(art, thema) {
     let liste = [];
-    if (art === 'eingang' || art === 'pruefung') liste = T.pickEingang(inhalt.fragen, anzahlEingang());
+    if (art === 'eingang' || art === 'pruefung') liste = T.pickEingang(aktiveFragen(), anzahlEingang());
     if (art === 'kurz') liste = T.pickKurz(inhalt.fragen, thema, 5);
     if (art === 'uebung') {
       const gewaehlt = Array.from(app.querySelectorAll('[data-wahl]')).filter(c => c.checked).map(c => themenNamen[+c.dataset.wahl]);
@@ -271,6 +295,8 @@
       else beende();
     } else if (d.abbrechen) { const z = quiz.zurueck; quiz = null; location.hash = z === '#/test' ? '#/' : z; }
     else if (d.fertig) { quiz = null; location.hash = '#/'; }
+    else if (d.lehrjahr) { state = L.setLehrjahr(state, +d.lehrjahr); save(); lehrjahrOffen = false; render(); window.scrollTo(0, 0); }
+    else if (d.lehrjahrAendern) { lehrjahrOffen = true; render(); }
     else if (d.reset === 'frage') { resetFrage = true; render(); }
     else if (d.reset === 'ja') { state = L.initialState(); save(); resetFrage = false; render(); }
     else if (d.reset === 'nein') { resetFrage = false; render(); }
@@ -279,6 +305,7 @@
   window.addEventListener('hashchange', () => {
     if (route().r !== 'test') quiz = null;
     resetFrage = false;
+    lehrjahrOffen = false;
     render();
     window.scrollTo(0, 0);
   });
@@ -317,7 +344,7 @@
       const res = await fetch(DATEI + '?v=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       inhalt = Inhalte.parseInhalte(await Xlsx.readXlsx(await res.arrayBuffer()));
-      themenNamen = inhalt.themen.map(t => t.name);
+      aktualisiereAktive();
       if (inhalt.einstellungen['Portal-Name']) {
         document.getElementById('titel').textContent = inhalt.einstellungen['Portal-Name'];
         document.title = inhalt.einstellungen['Portal-Name'];

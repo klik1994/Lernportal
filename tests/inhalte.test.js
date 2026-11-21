@@ -235,3 +235,17 @@ test('Echte Inhaltsdatei: Datenbus-Systeme mit Präsentationen und Videos', asyn
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
   });
 });
+
+test('Lehrjahr-Spalte wird über die Überschrift gefunden, Standard 1', () => {
+  const sheets = { Themen: [['Thema', 'Bereich', 'Erklärung', 'Video-Link', 'Präsentationen', 'Lehrjahr'], ['A', '', '', '', '', '2'], ['B', '', '', '', '', ''], ['C', '', '', '', '', '3. Lehrjahr'], ['D', '', '', '', '', '9']] };
+  const r = I.parseInhalte(sheets);
+  assert.deepStrictEqual(r.themen.map(t => t.lehrjahr), [2, 1, 3, 1]);
+  assert.strictEqual(I.parseInhalte({ Themen: [['Thema'], ['X']] }).themen[0].lehrjahr, 1);
+});
+
+test('aktiveThemen: nur Themen bis zum gewählten Lehrjahr', () => {
+  const themen = [{ name: 'A', lehrjahr: 1 }, { name: 'B', lehrjahr: 2 }, { name: 'C', lehrjahr: 4 }];
+  assert.deepStrictEqual(I.aktiveThemen(themen, 2).map(t => t.name), ['A', 'B']);
+  assert.deepStrictEqual(I.aktiveThemen(themen, 4).map(t => t.name), ['A', 'B', 'C']);
+  assert.deepStrictEqual(I.aktiveThemen(themen, null).map(t => t.name), ['A', 'B', 'C']);
+});

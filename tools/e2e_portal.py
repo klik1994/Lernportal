@@ -20,7 +20,12 @@ with sync_playwright() as p:
     page = b.new_context(viewport={'width': 375, 'height': 800}).new_page()
     page.on('pageerror', lambda e: errors.append(str(e)))
     page.goto(base + '/index.html')
+    page.wait_for_selector('[data-lehrjahr="1"]')
+    assert 'In welchem Lehrjahr' in page.inner_text('#app')
+    page.screenshot(path=str(shots / 'p0-lehrjahr.png'), full_page=True)
+    page.click('[data-lehrjahr="1"]')
     page.wait_for_selector('[data-start="eingang"]')
+    assert '12 Fragen · 6 Themen' in page.inner_text('#app'), page.inner_text('#app')
     import re
     m = re.search(r'(\d+) Fragen · (\d+) Themen', page.inner_text('#app'))
     assert m and int(m.group(1)) == 2 * int(m.group(2)), page.inner_text('#app')
@@ -38,6 +43,8 @@ with sync_playwright() as p:
     page.click('#nav a[data-r="themen"]')
     page.wait_for_selector('.abschnitt')
     assert 'Elektrik-Grundlagen' in page.inner_text('#app')
+    assert page.locator('.kachel.gesperrt').count() == 10
+    assert 'ab 2. Lehrjahr' in page.inner_text('#app')
     page.locator('[data-stern]').nth(0).click()
     page.screenshot(path=str(shots / 'p4-themen.png'), full_page=True)
     page.locator('a.decklink').nth(0).click()
@@ -83,6 +90,14 @@ with sync_playwright() as p:
     page.goto(base + '/index.html#/')
     page.wait_for_selector('text=Als Nächstes')
     assert page.evaluate("localStorage.getItem('kfz-lernportal-v1')") == before and before
+    page.click('[data-lehrjahr-aendern]')
+    page.click('[data-lehrjahr="2"]')
+    page.wait_for_selector('text=2. Lehrjahr')
+    page.goto(base + '/index.html#/themen')
+    page.wait_for_selector('.abschnitt')
+    assert page.locator('.kachel.gesperrt').count() == 2
+    page.goto(base + '/index.html#/thema/Hochvolt%20im%20Kfz')
+    page.wait_for_selector('text=freigeschaltet')
     page.goto(base + '/multimeter.html')
     page.click('[data-dreh="V="]'); page.click('[data-punkt="B+"]'); page.click('[data-punkt="Masse"]')
     assert '12,6 V' in page.inner_text('#mm')

@@ -86,3 +86,8 @@ label.check input{width:22px;height:22px;accent-color:var(--roy)}
 #overlay .box{width:100%;max-width:900px}
 #overlay .zu{display:flex;justify-content:flex-end;margin-bottom:8px}
 @media (max-width:600px){h1{font-size:28px}.kachel{padding:20px 18px 18px}.titel{font-size:21px}main,header,footer{padding-left:14px;padding-right:14px}}
+.gesperrt{opacity:.55}
+.gesperrt .icon{background:var(--card2);color:var(--muted)}
+.knopfgitter{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.knopfgitter button{flex-direction:column;min-height:72px;font-size:17px}
+.knopfgitter .klein{font-size:13px;font-weight:600;opacity:.75}
