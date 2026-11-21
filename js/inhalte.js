@@ -1,5 +1,6 @@
 const Inhalte = (() => {
   const Q = typeof Questions !== 'undefined' ? Questions : require('./questions.js');
+  const LX = typeof Lexikon !== 'undefined' ? Lexikon : require('./lexikon.js');
 
   function youtubeId(url) {
     const m = String(url || '').match(/(?:youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
@@ -48,7 +49,8 @@ const Inhalte = (() => {
     });
     const einstellungen = {};
     (sheets.Einstellungen || []).slice(1).forEach(r => { if (r[0]) einstellungen[r[0].trim()] = (r[1] || '').trim(); });
-    return { themen, fragen, einstellungen };
+    const lexikon = LX.parse(sheets.Lexikon || []);
+    return { themen, fragen, einstellungen, lexikon };
   }
 
   const aktiveThemen = (themen, lehrjahr) => themen.filter(t => !lehrjahr || (t.lehrjahr || 1) <= lehrjahr);

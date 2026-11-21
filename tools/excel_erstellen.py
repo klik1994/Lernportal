@@ -69,6 +69,14 @@ with open(ROOT / 'tools' / 'fragen-start.csv', encoding='utf-8') as f:
 for row in wf.iter_rows(min_row=2):
     for c in row: c.alignment = WRAP
 
+wl = wb.create_sheet('Lexikon')
+kopf(wl, ['Begriff', 'Bereich', 'Erklärung', 'Beispiel', 'Auch gesucht unter'], [26, 22, 70, 50, 30])
+with open(ROOT / 'tools' / 'lexikon-start.csv', encoding='utf-8') as f:
+    for i, r in enumerate(csv.reader(f)):
+        if i: wl.append(r)
+for row in wl.iter_rows(min_row=2):
+    for c in row: c.alignment = WRAP
+
 we = wb.create_sheet('Einstellungen')
 kopf(we, ['Einstellung', 'Wert'], [28, 60])
 for k, v in [('Portal-Name', 'Lernportal Kfz'), ('Impressum Name', ''), ('Impressum Anschrift', ''), ('Impressum E-Mail', ''), ('Impressum Telefon (freiwillig)', '')]:
@@ -84,6 +92,8 @@ for zeile in [
     'Blatt „Fragen“: eine Zeile pro Frage. Der Name in der Spalte „Thema“ muss genau so geschrieben sein wie im Blatt „Themen“.',
     'Spalte „Richtig“: Buchstabe der richtigen Antwort (A, B, C oder D). Für Ja/Nein-Fragen Antwort C und D leer lassen.',
     'Pro Thema mindestens 5 Fragen, weil der Kurztest 5 Fragen hat.',
+    'Blatt „Lexikon“: eine Zeile pro Fachbegriff. Erklärung einfach halten, Beispiel aus der Werkstatt. Bereich wie im Blatt „Themen“ (für den Filter).',
+    'Spalte „Auch gesucht unter“: andere Schreibweisen, Mehrzahl oder Abkürzungen, mit Komma getrennt (z. B. „Lichtmaschine, Lima“). Diese Wörter werden auf den Themenseiten markiert und beim Antippen erklärt.',
     'Blatt „Einstellungen“: Name des Portals und deine Angaben für das Impressum.',
     'Erste Zeile der Blätter und die Blattnamen nicht ändern.',
     'Danach die Datei auf github.com im Ordner „inhalte“ hochladen (gleicher Dateiname). Nach 1–2 Minuten ist alles online.',

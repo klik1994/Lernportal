@@ -40,6 +40,7 @@
     if (r === 'datenschutz') return show(renderDatenschutz());
     if (r === 'test' && quiz) return show(quiz.fertig ? renderErgebnis() : renderFrage());
     if (r === 'test') { location.hash = '#/'; return; }
+    if (r === 'lexikon') { if (arg) lexBereich = ''; show(renderLexikon()); return lexikonFertig(arg); }
     if (!state.lehrjahr) return show(renderLehrjahrWahl());
     if (!state.eingangstestFertig) return show(renderWillkommen());
     if (r === 'themen') return show(renderThemen());
@@ -165,7 +166,8 @@
         : '<div class="card"><p class="muted">Beim Abspielen wird das Video von YouTube geladen.</p><button data-video="' + t.video + '">▶ Video abspielen</button></div>';
     }
     h += '<div class="zweispaltig" style="margin-top:22px">';
-    if (t.erklaerung) h += '<div class="card text"><h3 style="margin-top:0">Kurz erklärt</h3>' + absaetze(t.erklaerung) + '</div>';
+    if (t.erklaerung) h += '<div class="card text"><h3 style="margin-top:0">Kurz erklärt</h3>' + absaetzeMitLexikon(t.erklaerung) +
+      (inhalt.lexikon.length ? '<p class="muted" style="margin:12px 0 0">Unterstrichene Fachbegriffe kannst du antippen. Alle Begriffe findest du im <a href="#/lexikon">Lexikon</a>.</p>' : '') + '</div>';
     h += '<div class="card a-' + farbe + '"><h3 style="margin-top:0">Kurztest</h3>';
     h += anzahl
       ? '<p class="muted">' + Math.min(5, anzahl) + ' Fragen. Ab 80 % sitzt das Thema.</p><button class="primary" data-kurz="' + esc(t.name) + '">Kurztest starten</button>'
@@ -213,6 +215,85 @@
       '<p>Rechtsgrundlage ist deine Einwilligung durch das Antippen (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Ohne Antippen werden keine Daten an YouTube übertragen. Weitere Informationen: ' + g + '.</p>' +
       '<h2>6. Deine Rechte</h2><p>Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21). Eine erteilte Einwilligung kannst du jederzeit für die Zukunft widerrufen. Außerdem hast du das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO). Für Fragen genügt eine E-Mail an die oben genannte Adresse. Für die Server-Logfiles von GitHub wende dich direkt an GitHub.</p>' +
       '<h2>7. Stand</h2><p>November 2026</p></div>';
+  }
+
+
+  // ---------------------------------------------------------------- Lexikon
+  const lexId = b => 'lex-' + Lexikon.norm(b).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  let lexBereich = '';
+
+  function absaetzeMitLexikon(text) {
+    const schon = new Set();
+    return text.split(/\n+/).filter(x => x.trim()).map(x => '<p>' + Lexikon.markiere(x, inhalt.lexikon, schon).map(t =>
+      t.begriff ? '<button class="lexwort" data-lex="' + esc(t.begriff) + '">' + esc(t.text) + '</button>' : esc(t.text)).join('') + '</p>').join('');
+  }
+
+  function lexEintrag(e) {
+    return '<div class="card lexeintrag" id="' + lexId(e.begriff) + '" data-begriff="' + esc(e.begriff) + '" data-bereich="' + esc(e.bereich) + '">' +
+      '<div class="lexkopf"><h3>' + esc(e.begriff) + '</h3><span class="lexbereich a-' + bereichFarbeLex(e.bereich) + '">' + esc(e.bereich) + '</span></div>' +
+      '<p>' + esc(e.erklaerung) + '</p>' +
+      (e.beispiel ? '<p class="lexbsp"><b>Beispiel:</b> ' + esc(e.beispiel) + '</p>' : '') +
+      (e.alias.length ? '<p class="muted" style="margin:0">Auch: ' + e.alias.map(esc).join(', ') + '</p>' : '') + '</div>';
+  }
+  function bereichFarbeLex(b) {
+    return inhalt.themen.some(t => t.bereich === b) ? bereichFarbe(b) : 'roy';
+  }
+
+  function renderLexikon() {
+    const L = inhalt.lexikon;
+    if (!L.length) return '<p class="eyebrow">Nachschlagen</p><h1>Lexikon</h1><div class="card"><p style="margin:0">Noch keine Begriffe. Trage sie in der Excel-Datei im Blatt „Lexikon“ ein.</p></div>';
+    const bereiche = [];
+    inhalt.themen.forEach(t => { if (L.some(e => e.bereich === t.bereich) && !bereiche.includes(t.bereich)) bereiche.push(t.bereich); });
+    L.forEach(e => { if (!bereiche.includes(e.bereich)) bereiche.push(e.bereich); });
+    const buchst = [];
+    L.forEach(e => { const b = Lexikon.buchstabe(e.begriff); if (!buchst.includes(b)) buchst.push(b); });
+    let h = '<p class="eyebrow">Nachschlagen</p><h1>Lexikon</h1><p class="lead">' + L.length + ' Fachbegriffe, einfach erklärt – mit Beispiel aus der Werkstatt.</p>';
+    h += '<div class="lexsuche"><input type="search" id="lex-q" placeholder="Begriff suchen, z. B. Lambda" autocomplete="off" aria-label="Begriff suchen"></div>';
+    h += '<div class="lexfilter"><button class="chip' + (lexBereich ? '' : ' on') + '" data-lexbereich="">Alle</button>' +
+      bereiche.map(b => '<button class="chip a-' + bereichFarbeLex(b) + (lexBereich === b ? ' on' : '') + '" data-lexbereich="' + esc(b) + '">' + esc(b) + '</button>').join('') + '</div>';
+    h += '<div class="az" id="lex-az">' + buchst.map(b => '<button data-az="' + b + '">' + b + '</button>').join('') + '</div>';
+    h += '<div id="lex-liste">' + buchst.map(b => '<div class="lexgruppe" data-gruppe="' + b + '" id="lexg-' + b + '"><h2>' + b + '</h2>' +
+      L.filter(e => Lexikon.buchstabe(e.begriff) === b).map(lexEintrag).join('') + '</div>').join('') + '</div>';
+    h += '<div class="card" id="lex-leer" hidden><p style="margin:0">Kein Begriff gefunden. Versuch es mit einem anderen Wort.</p></div>';
+    return h;
+  }
+
+  function lexFiltern() {
+    const q = (document.getElementById('lex-q') || {}).value || '';
+    const treffer = new Set(Lexikon.suche(inhalt.lexikon, q).filter(e => !lexBereich || e.bereich === lexBereich).map(e => e.begriff));
+    app.querySelectorAll('.lexeintrag').forEach(el => { el.hidden = !treffer.has(el.dataset.begriff); });
+    const sichtbar = new Set();
+    app.querySelectorAll('.lexgruppe').forEach(g => {
+      const an = !!g.querySelector('.lexeintrag:not([hidden])');
+      g.hidden = !an; if (an) sichtbar.add(g.dataset.gruppe);
+    });
+    app.querySelectorAll('#lex-az [data-az]').forEach(b => { b.disabled = !sichtbar.has(b.dataset.az); });
+    document.getElementById('lex-leer').hidden = treffer.size > 0;
+  }
+
+  function lexikonFertig(arg) {
+    if (!inhalt.lexikon.length) return;
+    const q = document.getElementById('lex-q');
+    q.addEventListener('input', lexFiltern);
+    lexFiltern();
+    if (arg) {
+      const e = Lexikon.finde(inhalt.lexikon, arg);
+      const el = e && document.getElementById(lexId(e.begriff));
+      if (el) { el.classList.add('markiert'); setTimeout(() => el.scrollIntoView({ block: 'center' }), 0); }
+    }
+  }
+
+  function zeigeBegriff(name) {
+    const e = Lexikon.finde(inhalt.lexikon, name);
+    if (!e) return;
+    schliesseVideo();
+    const o = document.createElement('div');
+    o.id = 'overlay';
+    o.innerHTML = '<div class="box lexbox" role="dialog" aria-label="' + esc(e.begriff) + '">' + lexEintrag(e).replace(' id="' + lexId(e.begriff) + '"', '') +
+      '<div class="lexknoepfe"><a class="btn" href="#/lexikon/' + encodeURIComponent(e.begriff) + '" id="lex-mehr">Im Lexikon öffnen</a><button class="primary" id="video-zu" style="--c:var(--roy)">Schließen</button></div></div>';
+    o.addEventListener('click', ev => { if (ev.target === o || ev.target.closest('#video-zu') || ev.target.closest('#lex-mehr')) schliesseVideo(); });
+    document.body.appendChild(o);
+    o.querySelector('#video-zu').focus();
   }
 
   function starte(art, thema) {
@@ -286,6 +367,9 @@
     else if (d.stern) { state = L.toggleStern(state, d.stern); save(); render(); }
     else if (d.video) { videoAn[d.video] = true; render(); }
     else if (d.nurvideo) zeigeVideo(d.nurvideo);
+    else if (d.lex) zeigeBegriff(d.lex);
+    else if (d.lexbereich !== undefined) { lexBereich = d.lexbereich; app.querySelectorAll('[data-lexbereich]').forEach(x => x.classList.toggle('on', x.dataset.lexbereich === lexBereich)); lexFiltern(); }
+    else if (d.az) { const g = document.getElementById('lexg-' + d.az); if (g) g.scrollIntoView({ block: 'start' }); }
     else if (d.antwort !== undefined && quiz && !quiz.geprueft) { quiz.auswahl = +d.antwort; quiz.fehler = ''; render(); }
     else if (d.pruefen) {
       if (quiz.auswahl === null) { quiz.fehler = 'Wähle zuerst eine Antwort aus.'; render(); return; }

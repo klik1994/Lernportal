@@ -91,3 +91,25 @@ label.check input{width:22px;height:22px;accent-color:var(--roy)}
 .knopfgitter{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
 .knopfgitter button{flex-direction:column;min-height:72px;font-size:17px}
 .knopfgitter .klein{font-size:13px;font-weight:600;opacity:.75}
+/* Lexikon */
+.lexsuche input{width:100%;font:inherit;font-size:17px;min-height:50px;padding:12px 16px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--txt);box-shadow:var(--shadow)}
+.lexsuche input:focus{outline:none;border-color:var(--roy)}
+.lexfilter{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 6px}
+.chip{min-height:38px;padding:7px 14px;border-radius:999px;font-size:14px;background:var(--card);color:var(--muted);box-shadow:var(--shadow);border:2px solid transparent}
+.chip.on{background:var(--c);color:var(--on-c)}
+.az{display:flex;flex-wrap:wrap;gap:4px;margin:10px 0 4px;position:sticky;top:0;z-index:2;background:var(--page);padding:8px 0}
+.az button{min-height:36px;min-width:36px;padding:4px 6px;border-radius:9px;font-size:15px;background:var(--card);box-shadow:var(--shadow)}
+.az button:disabled{opacity:.3;cursor:default}
+.lexgruppe h2{color:var(--roy-t);margin:22px 0 10px;scroll-margin-top:60px}
+.lexgruppe{scroll-margin-top:56px}
+.lexeintrag{scroll-margin-top:70px}
+.lexeintrag.markiert{outline:3px solid var(--roy)}
+.lexkopf{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.lexkopf h3{margin:0;font-size:20px}
+.lexbereich{font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;background:var(--card2);color:var(--ct);white-space:nowrap}
+.lexbsp{background:var(--card2);border-radius:10px;padding:8px 12px}
+.lexwort{display:inline;min-height:0;padding:0;margin:0;border-radius:0;background:none;color:inherit;font:inherit;font-weight:inherit;text-decoration:underline dotted var(--roy-t);text-decoration-thickness:2px;text-underline-offset:3px;cursor:help}
+.lexwort:active{transform:none}
+#overlay .lexbox{max-width:560px}
+#overlay .lexbox .card{margin:0 0 10px}
+.lexknoepfe{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
