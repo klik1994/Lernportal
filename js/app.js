@@ -35,7 +35,7 @@
     if (!inhalt) return;
     aktualisiereAktive();
     const { r, arg } = route();
-    document.querySelectorAll('#nav a[data-r]').forEach(a => a.classList.toggle('on', a.dataset.r === r || (r === 'thema' && a.dataset.r === 'themen')));
+    document.querySelectorAll('#nav a[data-r]').forEach(a => a.classList.toggle('on', a.dataset.r === r || ((r === 'thema' || r === 'bereich') && a.dataset.r === 'themen')));
     if (r === 'impressum') return show(renderImpressum());
     if (r === 'datenschutz') return show(renderDatenschutz());
     if (r === 'test' && quiz) return show(quiz.fertig ? renderErgebnis() : renderFrage());
@@ -45,6 +45,7 @@
     if (!state.eingangstestFertig) return show(renderWillkommen());
     if (r === 'themen') return show(renderThemen());
     if (r === 'thema') return show(renderThema(arg));
+    if (r === 'bereich') return show(renderBereich(arg));
     if (r === 'ueben') return show(renderUeben());
     return show(renderLernstand());
   }
@@ -116,22 +117,83 @@
     return '<button class="star' + (on ? ' on' : '') + '" data-stern="' + esc(t) + '" aria-label="' + (on ? 'Merken aufheben' : 'Merken') + '">' + (on ? '★' : '☆') + '</button>';
   }
 
+  const bereichLink = name => '#/bereich/' + encodeURIComponent(name);
+  const ICONS = {
+    blitz: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+    chip: '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>',
+    motor: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1"/>',
+    hv: '<path d="M12 3 2 20h20z"/><path d="m13 8-3 5h4l-3 5"/>',
+    schloss: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>'
+  };
+  function bereichIcon(name, zu) {
+    const n = name.toLowerCase();
+    const key = zu ? 'schloss' : /hochvolt/.test(n) ? 'hv' : /elektronik|bus|vernetz/.test(n) ? 'chip' : /elektri/.test(n) ? 'blitz' : /motor|antrieb/.test(n) ? 'motor' : null;
+    if (!key) return iconHtml(name.trim().charAt(0).toUpperCase());
+    return '<div class="icon" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' + ICONS[key] + '</svg></div>';
+  }
+  const sitzen = namen => namen.filter(n => L.statusOf(state, n) === 'sitzt').length;
+  const prozent = namen => namen.length ? Math.round(sitzen(namen) / namen.length * 100) : 0;
+
+  function bereichKachel(bereich, themen, zu, untertitel) {
+    const namen = themen.map(t => t.name);
+    const angef = namen.filter(n => L.statusOf(state, n) === 'angefangen').length;
+    const meta = zu ? plural(themen.length, 'Thema', 'Themen') + ' · ab ' + LJ_TEXT(themen[0].lehrjahr || 1)
+      : plural(themen.length, 'Thema', 'Themen') + ' · ' + sitzen(namen) + ' sitzen' + (angef ? ' · ' + angef + ' angefangen' : '');
+    const innen = bereichIcon(bereich, zu) + '<div class="bk-text"><span class="bk-name">' + esc(bereich) + '</span>' +
+      (untertitel ? '<span class="bk-unter">' + esc(untertitel) + '</span>' : '') + '<span class="bk-meta">' + meta + '</span>' +
+      (zu ? '' : '<span class="bar"><span style="width:' + prozent(namen) + '%"></span></span>') + '</div>' +
+      (zu ? '' : '<svg class="bk-pfeil" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg>');
+    return zu ? '<div class="bereich-kachel gesperrt a-' + bereichFarbe(bereich) + '">' + innen + '</div>'
+      : '<a class="bereich-kachel a-' + bereichFarbe(bereich) + '" href="' + bereichLink(bereich) + '">' + innen + '</a>';
+  }
+
   function renderThemen() {
-    const bereiche = [];
-    inhalt.themen.forEach(t => { if (!bereiche.includes(t.bereich)) bereiche.push(t.bereich); });
-    return '<p class="eyebrow">Alle Themen</p><h1>Themen</h1><p class="lead">Tippe auf ein Thema für Präsentation, Erklärung und Kurztest. Mit dem Stern merkst du dir Themen.</p>' +
-      bereiche.map(b => '<div class="abschnitt"><h2>' + esc(b) + '</h2></div><div class="grid">' +
-        inhalt.themen.filter(t => t.bereich === b).map(t => {
-          const np = (t.praesentationen || []).length, nf = anzahlFragen(t.name);
-          const meta = [np ? plural(np, 'Präsentation', 'Präsentationen') : '', nf ? plural(nf, 'Testfrage', 'Testfragen') : ''].filter(Boolean).join(' · ');
-          if (gesperrt(t)) return '<div class="kachel gesperrt a-' + bereichFarbe(b) + '"><div class="kachel-kopf">' + iconHtml('🔒') + '</div>' +
-            '<h3>' + esc(t.name) + '</h3><p class="meta"><span class="badge b-offen">ab ' + LJ_TEXT(t.lehrjahr) + '</span>' + (meta ? ' &nbsp;' + meta : '') + '</p></div>';
-          return '<div class="kachel a-' + bereichFarbe(b) + '"><div class="kachel-kopf">' + themaIcon(t) + sternKnopf(t.name) + '</div>' +
-            '<h3><a class="decklink" href="' + themaLink(t.name) + '">' + esc(t.name) + '</a></h3>' +
-            (t.erklaerung ? '<p>' + esc(kurz(t.erklaerung, 130)) + '</p>' : '') +
-            '<p class="meta">' + badge(L.statusOf(state, t.name)) + (meta ? ' &nbsp;' + meta : '') + '</p>' +
-            '<div class="knoepfe"><a class="btn primary" href="' + themaLink(t.name) + '">Thema öffnen</a></div></div>';
-        }).join('') + '</div>').join('');
+    const lj = state.lehrjahr || 1;
+    let h = '<p class="eyebrow">Dein Lernpfad · ' + LJ_TEXT(lj) + '</p><h1>Themen</h1><p class="lead">Die Bereiche in der Reihenfolge deiner Ausbildung. Tippe auf einen Bereich, um seine Themen zu sehen.</p><div class="pfad">';
+    [1, 2, 3, 4].forEach(jahr => {
+      const imJahr = inhalt.themen.filter(t => (t.lehrjahr || 1) === jahr);
+      const zu = jahr > lj;
+      const alleSitzen = imJahr.length && imJahr.every(t => L.statusOf(state, t.name) === 'sitzt');
+      const zustand = zu ? 'zu' : alleSitzen ? 'fertig' : jahr === lj ? 'aktuell' : 'frei';
+      const label = { zu: 'gesperrt', fertig: 'alles sitzt', aktuell: 'dein Lehrjahr', frei: 'freigeschaltet' }[zustand];
+      const bereiche = [];
+      imJahr.forEach(t => { if (!bereiche.includes(t.bereich)) bereiche.push(t.bereich); });
+      h += '<div class="pfad-jahr p-' + zustand + '"><div class="pfad-linie"><span class="pfad-punkt"></span></div><div class="pfad-inhalt">' +
+        '<div class="pfad-kopf"><span class="pfad-titel">' + LJ_TEXT(jahr) + '</span><span class="pfad-label">' + label + '</span></div>';
+      h += bereiche.length ? bereiche.map(b => {
+        const th = imJahr.filter(t => t.bereich === b);
+        const gesamt = inhalt.themen.filter(t => t.bereich === b).length;
+        return bereichKachel(b, th, zu, gesamt > th.length && th.length <= 3 ? th.map(t => t.name.replace(/^.*?:\s*/, '')).join(', ') : '');
+      }).join('') : '<p class="muted" style="margin:0">Noch keine Themen</p>';
+      h += '</div></div>';
+    });
+    return h + '</div>';
+  }
+
+  function renderBereich(name) {
+    const themen = inhalt.themen.filter(t => t.bereich === name).sort((a, b) => (a.lehrjahr || 1) - (b.lehrjahr || 1));
+    if (!themen.length) return '<h1>Bereich nicht gefunden</h1><p><a href="#/themen">Zu den Themen</a></p>';
+    const frei = themen.filter(t => !gesperrt(t));
+    const namen = frei.map(t => t.name);
+    const fragen = inhalt.fragen.filter(f => namen.includes(f.thema));
+    let h = '<a class="zurueck" href="#/themen"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m15 6-6 6 6 6"/></svg>Alle Bereiche</a>';
+    h += '<div class="kachel bereich-kopf a-' + bereichFarbe(name) + '"><div style="display:flex;align-items:center;gap:14px">' + bereichIcon(name, false) +
+      '<div><p class="eyebrow" style="margin:0">Bereich</p><h1 style="margin:2px 0 0">' + esc(name) + '</h1></div></div>';
+    if (frei.length) {
+      h += '<p class="muted" style="margin:12px 0 6px">' + sitzen(namen) + ' von ' + plural(frei.length, 'Thema', 'Themen') + ' sitzen' + (frei.length < themen.length ? ' · ' + (themen.length - frei.length) + ' noch gesperrt' : '') + '</p><div class="bar"><div style="width:' + prozent(namen) + '%"></div></div>';
+      if (fragen.length) h += '<div class="knoepfe" style="margin-top:14px"><button class="primary" data-bereichstest="' + esc(name) + '">Bereichstest starten</button><span class="muted">' + T.anzahlFuerTest(fragen) + ' Fragen aus diesem Bereich</span></div>';
+    } else h += '<p class="muted" style="margin:12px 0 0">Dieser Bereich wird ab dem ' + LJ_TEXT(themen[0].lehrjahr || 1) + ' freigeschaltet.</p>';
+    h += '</div><div class="themenliste">';
+    h += themen.map(t => {
+      const zu = gesperrt(t);
+      const np = (t.praesentationen || []).length, nf = anzahlFragen(t.name);
+      const meta = [np ? plural(np, 'Präsentation', 'Präsentationen') : '', nf ? plural(nf, 'Frage', 'Fragen') : ''].filter(Boolean).join(' · ');
+      const innen = (zu ? bereichIcon(name, true) : themaIcon(t)) + '<div class="tz-text"><span class="tz-name">' + esc(t.name.replace(/^Motormanagement:\s*/, '')) + '</span><span class="tz-meta">' +
+        (zu ? '<span class="badge b-offen">ab ' + LJ_TEXT(t.lehrjahr) + '</span>' : badge(L.statusOf(state, t.name))) + (meta ? '<span>' + meta + '</span>' : '') + '</span></div>';
+      return zu ? '<div class="themazeile gesperrt a-' + bereichFarbe(name) + '">' + innen + '</div>'
+        : '<a class="themazeile a-' + bereichFarbe(name) + '" href="' + themaLink(t.name) + '">' + innen + '<svg class="bk-pfeil" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></a>';
+    }).join('');
+    return h + '</div>';
   }
 
   function deckKachel(p, standardFarbe) {
@@ -151,7 +213,7 @@
       '<div class="card"><p>🔒 Dieses Thema wird ab dem ' + LJ_TEXT(t.lehrjahr) + ' freigeschaltet.</p><p class="muted" style="margin:0">Dein Lehrjahr kannst du unter „Lernstand“ ändern.</p></div>';
     const farbe = bereichFarbe(t.bereich);
     const anzahl = anzahlFragen(t.name);
-    let h = '<p class="eyebrow"><a href="#/themen" style="color:inherit;text-decoration:none">Themen</a> · ' + esc(t.bereich) + '</p>';
+    let h = '<p class="eyebrow"><a href="#/themen" style="color:inherit;text-decoration:none">Themen</a> · <a href="' + bereichLink(t.bereich) + '" style="color:inherit;text-decoration:none">' + esc(t.bereich) + '</a></p>';
     h += '<div style="display:flex;align-items:center;gap:6px"><h1 style="flex:1;margin:6px 0">' + esc(t.name) + '</h1>' + sternKnopf(t.name) + '</div>';
     h += '<p>' + badge(L.statusOf(state, t.name)) + '</p>';
     if (t.praesentationen && t.praesentationen.length) {
@@ -300,6 +362,11 @@
     let liste = [];
     if (art === 'eingang' || art === 'pruefung') liste = T.pickEingang(aktiveFragen(), anzahlEingang());
     if (art === 'kurz') liste = T.pickKurz(inhalt.fragen, thema, 5);
+    if (art === 'bereich') {
+      const namen = inhalt.themen.filter(t => t.bereich === thema && !gesperrt(t)).map(t => t.name);
+      const fr = inhalt.fragen.filter(f => namen.includes(f.thema));
+      liste = T.pickEingang(fr, T.anzahlFuerTest(fr));
+    }
     if (art === 'uebung') {
       const gewaehlt = Array.from(app.querySelectorAll('[data-wahl]')).filter(c => c.checked).map(c => themenNamen[+c.dataset.wahl]);
       if (!gewaehlt.length) { app.querySelector('#err').textContent = 'Wähle mindestens ein Thema aus.'; return; }
@@ -315,7 +382,7 @@
 
   function renderFrage() {
     const f = quiz.liste[quiz.i];
-    const titel = { eingang: 'Eingangstest', pruefung: 'Prüfungscheck', kurz: 'Kurztest: ' + quiz.thema, uebung: 'Übungstest' }[quiz.art];
+    const titel = { eingang: 'Eingangstest', pruefung: 'Prüfungscheck', kurz: 'Kurztest: ' + quiz.thema, bereich: 'Bereichstest: ' + quiz.thema, uebung: 'Übungstest' }[quiz.art];
     let h = '<p class="muted">' + esc(titel) + ' · Frage ' + (quiz.i + 1) + ' von ' + quiz.liste.length + '</p>';
     h += '<div class="bar" style="margin-bottom:16px"><div style="width:' + Math.round((quiz.i / quiz.liste.length) * 100) + '%;background:var(--roy)"></div></div>';
     h += '<div class="card"><p class="muted" style="margin:0 0 4px">' + esc(f.thema) + '</p><h2 style="margin:0 0 14px">' + esc(f.frage) + '</h2>';
@@ -364,6 +431,7 @@
     const d = b.dataset;
     if (d.start) starte(d.start);
     else if (d.kurz) starte('kurz', d.kurz);
+    else if (d.bereichstest) starte('bereich', d.bereichstest);
     else if (d.stern) { state = L.toggleStern(state, d.stern); save(); render(); }
     else if (d.video) { videoAn[d.video] = true; render(); }
     else if (d.nurvideo) zeigeVideo(d.nurvideo);

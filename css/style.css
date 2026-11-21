@@ -113,3 +113,38 @@ label.check input{width:22px;height:22px;accent-color:var(--roy)}
 #overlay .lexbox{max-width:560px}
 #overlay .lexbox .card{margin:0 0 10px}
 .lexknoepfe{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.pfad{display:flex;flex-direction:column;margin-top:10px;max-width:760px}
+.pfad-jahr{display:flex;gap:14px}
+.pfad-linie{display:flex;flex-direction:column;align-items:center;width:22px;flex:none}
+.pfad-linie::after{content:"";flex:1;width:3px;background:var(--line);margin-top:4px}
+.pfad-jahr:last-child .pfad-linie::after{display:none}
+.pfad-punkt{width:18px;height:18px;border-radius:50%;box-sizing:border-box;margin-top:5px;border:3px solid var(--line);background:var(--page)}
+.p-aktuell .pfad-punkt{border-color:var(--roy)}
+.p-fertig .pfad-punkt{border-color:var(--grn);background:var(--grn)}
+.p-frei .pfad-punkt{border-color:var(--muted)}
+.pfad-inhalt{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;padding-bottom:22px}
+.pfad-kopf{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pfad-titel{font-size:20px;font-weight:900}
+.pfad-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.p-aktuell .pfad-label{color:var(--roy-t)}.p-fertig .pfad-label{color:var(--grn-t)}
+.bereich-kachel{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:16px;padding:16px 18px;border-top:6px solid var(--c);text-decoration:none;color:var(--txt);box-shadow:var(--shadow)}
+.bereich-kachel .icon{width:56px;height:56px}
+.bereich-kachel.gesperrt{border-top-color:var(--line)}
+.bk-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.bk-name{font-size:19px;font-weight:800;line-height:1.25}
+.bk-unter{font-size:14px;color:var(--txt);opacity:.85}
+.bk-meta{font-size:13px;font-weight:600;color:var(--muted)}
+.bk-text .bar{display:block;height:8px}
+.bk-text .bar>span{display:block;height:100%;background:var(--grn)}
+.bk-pfeil{color:var(--muted);flex:none}
+.zurueck{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-weight:700;font-size:15px;text-decoration:none;min-height:44px;margin-bottom:6px}
+.bereich-kopf{margin-bottom:16px}
+.bereich-kopf .knoepfe{flex-direction:row;flex-wrap:wrap;align-items:center}
+.themenliste{display:flex;flex-direction:column;gap:8px;max-width:760px}
+.themazeile{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:14px;padding:12px 14px;text-decoration:none;color:var(--txt);min-height:44px;box-shadow:var(--shadow)}
+.themazeile .icon{width:42px;height:42px;font-size:19px}
+.themazeile .icon svg{width:22px;height:22px}
+.tz-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.tz-name{font-weight:700;font-size:16px}
+.tz-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:13px;font-weight:600}
+.themazeile .icon.lang{font-size:12px;letter-spacing:-.02em}
