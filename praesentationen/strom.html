@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Strom – Grundlagen Elektrik</title>
+<link rel="stylesheet" href="assets/praesentation.css">
+</head>
+<body class="t-strom">
+<div id="stage-wrap"><div id="stage">
+
+<!-- 1 Titel -->
+<section class="slide title-slide">
+  <div class="kicker">GRUNDLAGEN ELEKTRIK · KFZ-MECHATRONIK</div>
+  <div class="symbol">I</div>
+  <h1>Strom</h1>
+  <p>Bewegte Ladung im Stromkreis</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<!-- 2 Lernziele -->
+<section class="slide">
+  <span class="tag">STROM</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Was elektrischer Strom ist – erklärt mit Wasser</li>
+      <li class="step from-left"><span class="num">2</span>Warum Strom nur im geschlossenen Stromkreis fließt</li>
+      <li class="step from-left"><span class="num">3</span>Formelzeichen, Einheit und typische Werte im Kfz</li>
+      <li class="step from-left"><span class="num">4</span>Strom richtig messen – mit Multimeter und Stromzange</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3 Wasser-Vergleich -->
+<section class="slide">
+  <span class="tag">STROM</span><h2>Der Wasser-Vergleich</h2>
+  <div class="body">
+    <svg viewBox="0 0 1136 300" width="1136" height="300" id="pipes-svg">
+      <text x="40" y="36" font-size="24" font-weight="800" fill="#28aaf5">wenig Strom</text>
+      <rect x="40" y="52" width="1056" height="80" fill="#348ce6" fill-opacity=".5"/>
+      <line x1="40" y1="50" x2="1096" y2="50" stroke="#ecf1f8" stroke-width="4"/><line x1="40" y1="134" x2="1096" y2="134" stroke="#ecf1f8" stroke-width="4"/>
+      <text x="40" y="190" font-size="24" font-weight="800" fill="#28aaf5">viel Strom</text>
+      <rect x="40" y="206" width="1056" height="80" fill="#348ce6" fill-opacity=".5"/>
+      <line x1="40" y1="204" x2="1096" y2="204" stroke="#ecf1f8" stroke-width="4"/><line x1="40" y1="288" x2="1096" y2="288" stroke="#ecf1f8" stroke-width="4"/>
+      <path id="p1a" d="M40 72 H1096" /><path id="p1b" d="M40 92 H1096" /><path id="p1c" d="M40 112 H1096" />
+      <path id="p2a" d="M40 226 H1096" /><path id="p2b" d="M40 246 H1096" /><path id="p2c" d="M40 266 H1096" />
+      <line x1="860" y1="40" x2="860" y2="298" stroke="#28aaf5" stroke-width="3" stroke-dasharray="10 8"/>
+      <text x="876" y="172" font-size="18" font-weight="800" fill="#28aaf5">Messstelle</text>
+    </svg>
+    <div class="grid2" style="margin-top:22px">
+      <div class="card step"><div class="big">Strom = die <span class="c">Menge</span> an Ladung, die <span class="c">pro Sekunde</span> durch den Leiter fließt.</div></div>
+      <div class="card step"><div class="big">Mehr Teilchen pro Sekunde an der Messstelle → <span class="c">größerer Strom</span>.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 Stromkreis (interaktiv) -->
+<section class="slide" id="s-kreis">
+  <span class="tag">STROM</span><h2>Strom im Stromkreis</h2>
+  <div class="body" style="display:grid;grid-template-columns:740px 1fr;gap:30px">
+    <div>
+      <div id="circ1" style="height:400px;width:740px"></div>
+      <div style="display:flex;gap:14px;align-items:center;margin-top:12px">
+        <button class="btn" id="sw-btn">Schalter schließen</button>
+        <span class="muted" style="font-size:19px;font-weight:600" id="sw-txt">Stromkreis offen – kein Strom</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card step"><div class="big" style="font-size:24px">Strom fließt nur im <span class="c">geschlossenen</span> Stromkreis.</div></div>
+      <div class="card step">
+        <div style="font-size:21px;font-weight:800;margin-bottom:10px">Stromrichtung</div>
+        <div style="font-size:20px;font-weight:600;line-height:1.5">Der Strom fließt vom <span class="red">Pluspol</span> über den Verbraucher zum <span class="c">Minuspol</span>:<br>
+        <span class="yel" style="font-weight:900">+ → −</span> (technische Stromrichtung)</div>
+      </div>
+      <div class="tip step"><b>Gut zu wissen</b>In Schaltplänen und in der Werkstatt gilt immer die technische Stromrichtung: von Plus nach Minus.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 Formelzeichen & Einheit -->
+<section class="slide">
+  <span class="tag">STROM</span><h2>Formelzeichen und Einheit</h2>
+  <div class="body">
+    <div class="unit-row">
+      <div class="unit-box step pop"><div class="lbl">Formelzeichen</div><div class="sym">I</div><div class="name">Stromstärke</div></div>
+      <div class="unit-box step pop"><div class="lbl">Einheit</div><div class="sym">A</div><div class="name">Ampere</div></div>
+    </div>
+    <div class="conv step">
+      <span>1 A = 1000 mA</span><span>Beispiel: 0,05 A = 50 mA</span><span>1 kA = 1000 A</span>
+    </div>
+  </div>
+</section>
+
+<!-- 6 Werte im Kfz -->
+<section class="slide">
+  <span class="tag">STROM</span><h2>Typische Ströme im Kfz</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>ca. 20 mA</b><span>eine einzelne LED</span></div>
+      <div class="val step from-left"><b>&lt; 50 mA</b><span>Ruhestrom bei abgestelltem, verriegeltem Fahrzeug</span></div>
+      <div class="val step from-left"><b>ca. 4,6 A</b><span>Halogenlampe H7 mit 55 W</span></div>
+      <div class="val step from-left"><b>150–300 A</b><span>Anlasser beim Starten (Pkw)</span></div>
+    </div>
+    <div class="note step">Richtwerte – genaue Werte immer laut Herstellerangabe</div>
+  </div>
+</section>
+
+<!-- 7 Strom messen -->
+<section class="slide" id="s-mess">
+  <span class="tag">STROM</span><h2>Strom messen</h2>
+  <div class="body">
+    <div id="circ2" style="height:330px"></div>
+    <ol class="steps-list" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px">
+      <li class="step">Stromkreis <span class="c">auftrennen</span><small>z. B. Sicherung ziehen</small></li>
+      <li class="step">Bereich <span class="c">A</span>, Rot in <span class="c">A</span><small>Schwarz bleibt in COM</small></li>
+      <li class="step">Messgerät <span class="c">in Reihe</span><small>der Strom fließt hindurch</small></li>
+      <li class="step">Ablesen: <span class="c">4,58 A</span><small>danach Rot zurück in VΩ!</small></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 8 Praxis -->
+<section class="slide">
+  <span class="tag">STROM</span><h2>Aus der Praxis</h2>
+  <div class="body grid2" style="align-content:start">
+    <div class="tip step"><b>Stromzange</b>Große Ströme (z. B. Anlasser) mit der Stromzange messen: Zange um <u>ein</u> Kabel legen – der Kreis muss nicht aufgetrennt werden.</div>
+    <div class="warn step"><b>Sicherung im Messgerät</b>Der A-Eingang ist meist nur bis 10 A abgesichert – und das oft nur kurzzeitig. Mehr Strom zerstört die Sicherung.</div>
+    <div class="warn step"><b>Nicht vergessen</b>Nach der Strommessung die rote Leitung zurück in VΩ stecken. Sonst gibt es bei der nächsten Spannungsmessung einen Kurzschluss.</div>
+    <div class="tip step"><b>Ruhestrom messen</b>Fahrzeug abstellen, verriegeln und warten, bis die Steuergeräte „eingeschlafen“ sind. Erst dann ablesen.</div>
+  </div>
+</section>
+
+<!-- 9 Video -->
+<section class="slide">
+  <span class="tag">STROM</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/strom.mp4" poster="videos/strom.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<!-- 10 Kurztest -->
+<section class="slide">
+  <span class="tag">STROM</span><h2>Kurztest</h2>
+  <div class="body quiz">
+    <div class="q" data-correct="2"><p>1. In welcher Einheit wird die Stromstärke angegeben?</p>
+      <div class="opts"><button class="opt">Volt (V)</button><button class="opt">Ohm (Ω)</button><button class="opt">Ampere (A)</button></div>
+      <div class="fb">Stromstärke I wird in Ampere (A) angegeben.</div></div>
+    <div class="q" data-correct="0"><p>2. Wie schließt du das Multimeter zum Strommessen an?</p>
+      <div class="opts"><button class="opt">In Reihe – Stromkreis auftrennen</button><button class="opt">Parallel zum Bauteil</button><button class="opt">Nur an Masse</button></div>
+      <div class="fb">Der Strom muss durch das Messgerät fließen – also in Reihe schalten.</div></div>
+    <div class="q" data-correct="1"><p>3. Womit misst du den Strom des Anlassers beim Starten?</p>
+      <div class="opts"><button class="opt">Multimeter im 10-A-Bereich</button><button class="opt">Stromzange</button><button class="opt">Ohmmeter</button></div>
+      <div class="fb">Mehrere hundert Ampere – das schafft nur die Stromzange.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<!-- 11 Merke -->
+<section class="slide">
+  <span class="tag">STROM</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step">Strom I in Ampere (A)</li>
+        <li class="step"><span>Strom fließt nur im geschlossenen Stromkreis<small>Technische Stromrichtung: von + nach −</small></span></li>
+        <li class="step"><span>Immer in Reihe messen<small>Stromkreis auftrennen, Messgerät dazwischen</small></span></li>
+        <li class="step"><span>Große Ströme mit der Stromzange<small>A-Eingang am Multimeter meist nur bis 10 A</small></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Spannung%2C%20Strom%20und%20Widerstand" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+
+<script src="assets/schaltung.js"></script>
+<script>
+/* Wasser-Rohre */
+(function () {
+  const svg = document.getElementById('pipes-svg');
+  ['p1a', 'p1b', 'p1c'].forEach((id, i) => {
+    const f = Flow(svg, document.getElementById(id), { spacing: 130, speed: 50, r: 7, color: '#e1f0ff' });
+  });
+  ['p2a', 'p2b', 'p2c'].forEach((id) => {
+    Flow(svg, document.getElementById(id), { spacing: 34, speed: 160, r: 7, color: '#e1f0ff' });
+  });
+})();
+
+/* Stromkreis mit Schalter */
+(function () {
+  const host = document.getElementById('circ1');
+  const c = Schaltung(host, { gap: 'switch-open' });
+  host.querySelector('svg').setAttribute("viewBox", "0 60 740 420");
+  let closed = false;
+  const btn = document.getElementById('sw-btn'), txt = document.getElementById('sw-txt');
+  function set() {
+    c.gap(closed ? 'switch-closed' : 'switch-open');
+    c.flow(closed); c.lamp(closed ? 1 : 0);
+    btn.textContent = closed ? 'Schalter öffnen' : 'Schalter schließen';
+    txt.textContent = closed ? 'Stromkreis geschlossen – die Lampe leuchtet' : 'Stromkreis offen – kein Strom';
+  }
+  btn.addEventListener('click', () => { closed = !closed; set(); });
+  // Beim Aufdecken des ersten Schritts automatisch schließen
+  const s = document.getElementById('s-kreis');
+  s.addEventListener('stepon', (e) => { if (e.target === s.querySelector('.step')) { closed = true; set(); } });
+  s.addEventListener('slideshow', () => { closed = s.querySelector('.step').classList.contains('on'); set(); });
+  set();
+})();
+
+/* Strom messen */
+(function () {
+  const c = Schaltung(document.getElementById('circ2'), { meter: true, color: '#28aaf5', gap: 'wire' });
+  const red = c.addLead('A', 370, 120, 'red', 110);
+  const blk = c.addLead('COM', 470, 120, 'black', 70);
+  const s = document.getElementById('s-mess');
+  function upd() {
+    const n = s.querySelectorAll('.steps-list .step.on').length;
+    const running = n === 0 || n >= 4;
+    c.gap(n === 0 ? 'wire' : (n >= 4 ? 'meter' : 'open'));
+    c.lamp(running ? 1 : 0); c.flow(running);
+    c.meter(n >= 1, n >= 2 ? 'A' : 'OFF', n >= 2 ? (n >= 4 ? '4,58 A' : '0,00 A') : '', n >= 2 ? 'A DC' : '');
+    c.lead(red, n >= 3); c.lead(blk, n >= 3);
+  }
+  s.addEventListener('stepon', upd); s.addEventListener('stepoff', upd); s.addEventListener('slideshow', upd);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

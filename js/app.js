@@ -85,6 +85,11 @@
     let h = '<p class="muted"><a href="#/themen">Themen</a> · ' + esc(t.bereich) + '</p>';
     h += '<div style="display:flex;align-items:center;gap:6px"><h1 style="flex:1;margin:0">' + esc(t.name) + '</h1>' + sternKnopf(t.name) + '</div>';
     h += '<p>' + badge(L.statusOf(state, t.name)) + '</p>';
+    if (t.praesentationen && t.praesentationen.length) {
+      h += '<div class="card"><p style="margin:0 0 8px"><b>Präsentation' + (t.praesentationen.length > 1 ? 'en' : '') + '</b></p><p class="muted">Mit Animationen, Lernvideo und Kurztest. Tippen oder wischen zum Weiterblättern.</p><div class="liste">' +
+        t.praesentationen.map(p => '<a class="btn full" href="' + esc(p.link) + '">▶ ' + esc(p.titel) + '</a>').join('') + '</div></div>';
+    }
+    if (t.videoDatei) h += '<div class="video"><video src="' + esc(t.videoDatei) + '" controls preload="metadata" playsinline></video></div>';
     if (t.video) {
       h += videoAn[t.video]
         ? '<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/' + t.video + '?autoplay=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="Video"></iframe></div>'

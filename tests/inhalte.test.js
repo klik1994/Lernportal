@@ -70,3 +70,31 @@ test('Echte Inhaltsdatei: 5 Themen, 36 gültige Fragen, je Thema >= 5', async ()
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
+
+test('parsePraesentationen: "Titel | Link" pro Zeile, Titel optional, unsichere Links werden verworfen', () => {
+  const r = I.parsePraesentationen('Spannung | praesentationen/spannung.html\npraesentationen/mein-thema.html\n\njavascript:alert(1)\nX | ../geheim.html\nY | //fremd.de/a.html\nWeb | https://example.com/a.html');
+  assert.deepStrictEqual(r, [
+    { titel: 'Spannung', link: 'praesentationen/spannung.html' },
+    { titel: 'mein thema', link: 'praesentationen/mein-thema.html' },
+    { titel: 'Web', link: 'https://example.com/a.html' }
+  ]);
+  assert.deepStrictEqual(I.parsePraesentationen(''), []);
+  assert.deepStrictEqual(I.parsePraesentationen(undefined), []);
+});
+
+test('videoDatei erkennt eigene Videodateien, YouTube bleibt YouTube', () => {
+  assert.strictEqual(I.videoDatei('videos/strom.mp4'), 'videos/strom.mp4');
+  assert.strictEqual(I.videoDatei('https://example.com/v.webm'), 'https://example.com/v.webm');
+  assert.strictEqual(I.videoDatei('https://youtu.be/abcDEF12345'), null);
+  assert.strictEqual(I.videoDatei('javascript:x.mp4'), null);
+  assert.strictEqual(I.videoDatei(''), null);
+});
+
+test('Echte Inhaltsdatei: Präsentationen zu Spannung, Strom und Widerstand sind verlinkt und vorhanden', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  const t = r.themen.find(x => x.name === 'Spannung, Strom und Widerstand');
+  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Spannung', 'Strom', 'Widerstand']);
+  t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
+  ['spannung', 'strom', 'widerstand'].forEach(n => assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n));
+  assert.ok(!t.erklaerung.includes('Elektronen'));
+});
