@@ -31,6 +31,7 @@
     const { r, arg } = route();
     document.querySelectorAll('#nav a[data-r]').forEach(a => a.classList.toggle('on', a.dataset.r === r || (r === 'thema' && a.dataset.r === 'themen')));
     if (r === 'impressum') return show(renderImpressum());
+    if (r === 'datenschutz') return show(renderDatenschutz());
     if (r === 'test' && quiz) return show(quiz.fertig ? renderErgebnis() : renderFrage());
     if (r === 'test') { location.hash = '#/'; return; }
     if (!state.eingangstestFertig) return show(renderWillkommen());
@@ -105,15 +106,37 @@
       '<div class="card"><p><b>Praxis</b><br><span class="muted">Messen und Fehlersuche am Stromkreis.</span></p><a class="btn full" href="multimeter.html">Multimeter-Übung öffnen</a></div>';
   }
 
-  function renderImpressum() {
+  function anbieter() {
     const e = inhalt.einstellungen;
     const feld = k => e[k] ? esc(e[k]) : '<span class="muted">[in der Excel-Datei unter „Einstellungen“ eintragen]</span>';
-    return '<h1>Impressum</h1><div class="card"><p>' + feld('Impressum Name') + '<br>' + feld('Impressum Anschrift') + '<br>E-Mail: ' + feld('Impressum E-Mail') + '</p>' +
-      '<p class="muted" style="margin:0">Privates, kostenloses Lernangebot ohne Werbung.</p></div>' +
-      '<h2>Datenschutz</h2><div class="card text">' +
-      '<p>Diese Seite wird über GitHub Pages (GitHub Inc.) bereitgestellt. Beim Aufruf verarbeitet GitHub technisch notwendige Daten wie deine IP-Adresse.</p>' +
-      '<p>Das Lernportal selbst setzt keine Cookies und verwendet kein Tracking. Dein Lernstand wird nur im Browser auf deinem eigenen Gerät gespeichert und nicht übertragen. Du kannst ihn unter „Mein Lernstand“ jederzeit löschen.</p>' +
-      '<p>Videos werden erst geladen, wenn du auf „Video abspielen“ tippst. Dann werden Daten an YouTube (Google) übertragen.</p></div>';
+    const tel = e['Impressum Telefon (freiwillig)'] ? '<br>Telefon: ' + esc(e['Impressum Telefon (freiwillig)']) : '';
+    return '<p>' + feld('Impressum Name') + '<br>' + feld('Impressum Anschrift').replace(/\n/g, '<br>') + '<br>E-Mail: ' + feld('Impressum E-Mail') + tel + '</p>';
+  }
+
+  function renderImpressum() {
+    const name = inhalt.einstellungen['Impressum Name'] ? esc(inhalt.einstellungen['Impressum Name']) : 'der oben genannte Anbieter';
+    return '<h1>Impressum</h1><div class="card text"><h2 style="margin-top:0">Angaben gemäß § 5 DDG</h2>' + anbieter() +
+      '<h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2><p>' + name + ' (Anschrift wie oben)</p>' +
+      '<h2>Über dieses Angebot</h2><p>Privates, kostenloses Lernangebot für Auszubildende im Kfz-Handwerk. Es gibt keine Werbung und keine kostenpflichtigen Inhalte.</p>' +
+      '<h2>Haftung für Inhalte</h2><p>Die Inhalte wurden mit Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität wird jedoch keine Gewähr übernommen. Die Lerninhalte ersetzen nicht die Herstellerangaben, Werkstattliteratur und Sicherheitsvorschriften.</p>' +
+      '<h2>Haftung für Links</h2><p>Für Inhalte verlinkter externer Seiten (z. B. YouTube) sind ausschließlich deren Betreiber verantwortlich. Bei Bekanntwerden von Rechtsverletzungen werden entsprechende Links umgehend entfernt.</p>' +
+      '<h2>Urheberrecht</h2><p>Die Texte, Fragen und Übungen dieses Portals dürfen nur für die Ausbildung genutzt werden. Eine Weitergabe oder Veröffentlichung an anderer Stelle bedarf der Zustimmung des Anbieters.</p></div>' +
+      '<p><a href="#/datenschutz">Zur Datenschutzerklärung</a></p>';
+  }
+
+  function renderDatenschutz() {
+    const a = '<a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Datenschutzerklärung von GitHub</a>';
+    const g = '<a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener">Datenschutzerklärung von Google</a>';
+    return '<h1>Datenschutzerklärung</h1><div class="card text">' +
+      '<h2 style="margin-top:0">1. Verantwortlicher</h2>' + anbieter() +
+      '<h2>2. Kurz gesagt</h2><p>Dieses Lernportal braucht keine Anmeldung, setzt keine Cookies, verwendet kein Tracking und keine Analyse-Tools. Der Anbieter selbst sammelt keine personenbezogenen Daten.</p>' +
+      '<h2>3. Hosting über GitHub Pages</h2><p>Die Seite wird bei GitHub Pages bereitgestellt (GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). Beim Aufruf der Seite verarbeitet GitHub automatisch technisch notwendige Daten, insbesondere deine IP-Adresse, Datum und Uhrzeit des Zugriffs, die aufgerufene Seite sowie Browser- und Gerätetyp (Server-Logfiles). GitHub speichert die IP-Adresse aus Sicherheitsgründen. Der Anbieter dieses Portals hat auf diese Daten keinen Zugriff.</p>' +
+      '<p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Das berechtigte Interesse liegt in der sicheren und zuverlässigen Bereitstellung der Seite. Dabei können Daten in die USA übermittelt werden. GitHub ist nach dem EU-US Data Privacy Framework zertifiziert (Angemessenheitsbeschluss der EU-Kommission vom 10.07.2023). Weitere Informationen: ' + a + '.</p>' +
+      '<h2>4. Dein Lernstand auf deinem Gerät</h2><p>Dein Lernstand (Ergebnisse, Status der Themen, gemerkte Themen) wird nur im lokalen Speicher deines Browsers (localStorage) auf deinem eigenen Gerät abgelegt. Er wird nicht übertragen, und der Anbieter kann ihn nicht einsehen. Die Speicherung ist für die von dir gewünschte Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Du kannst den Lernstand jederzeit unter „Lernstand“ → „Lernstand zurücksetzen“ oder über die Browsereinstellungen löschen.</p>' +
+      '<h2>5. YouTube-Videos</h2><p>Videos sind im erweiterten Datenschutzmodus (youtube-nocookie.com) eingebunden und werden erst geladen, wenn du auf „Video abspielen“ tippst. Erst dann wird eine Verbindung zu YouTube (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) hergestellt. Dabei werden unter anderem deine IP-Adresse und die aufgerufene Seite an Google übermittelt, eventuell auch in die USA. Google ist nach dem EU-US Data Privacy Framework zertifiziert.</p>' +
+      '<p>Rechtsgrundlage ist deine Einwilligung durch das Antippen (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Ohne Antippen werden keine Daten an YouTube übertragen. Weitere Informationen: ' + g + '.</p>' +
+      '<h2>6. Deine Rechte</h2><p>Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21). Eine erteilte Einwilligung kannst du jederzeit für die Zukunft widerrufen. Außerdem hast du das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO). Für Fragen genügt eine E-Mail an die oben genannte Adresse. Für die Server-Logfiles von GitHub wende dich direkt an GitHub.</p>' +
+      '<h2>7. Stand</h2><p>November 2026</p></div>';
   }
 
   function starte(art, thema) {

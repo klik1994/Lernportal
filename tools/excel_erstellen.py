@@ -44,7 +44,7 @@ for row in wf.iter_rows(min_row=2):
 
 we = wb.create_sheet('Einstellungen')
 kopf(we, ['Einstellung', 'Wert'], [28, 60])
-for k, v in [('Portal-Name', 'Lernportal Kfz'), ('Impressum Name', ''), ('Impressum Anschrift', ''), ('Impressum E-Mail', '')]:
+for k, v in [('Portal-Name', 'Lernportal Kfz'), ('Impressum Name', ''), ('Impressum Anschrift', ''), ('Impressum E-Mail', ''), ('Impressum Telefon (freiwillig)', '')]:
     we.append([k, v])
 
 ws_h = wb.create_sheet('Hilfe')
