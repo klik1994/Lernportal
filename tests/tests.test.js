@@ -59,3 +59,17 @@ test('score gesamt und pro Thema, gerundet', () => {
 test('themenListe in Reihenfolge des ersten Vorkommens', () => {
   assert.deepStrictEqual(T.themenListe(bank({ B: 1, A: 2 })), ['B', 'A']);
 });
+
+test('anzahlFuerTest: 2 Fragen pro Thema mit Fragen, höchstens alle vorhandenen', () => {
+  assert.strictEqual(T.anzahlFuerTest(bank({ A: 5, B: 5, C: 5 })), 6);
+  assert.strictEqual(T.anzahlFuerTest(bank({ A: 1, B: 5 })), 4);
+  assert.strictEqual(T.anzahlFuerTest(bank({ A: 1 })), 1);
+  assert.strictEqual(T.anzahlFuerTest(bank({ A: 5, B: 5 }), 3), 6);
+  assert.strictEqual(T.anzahlFuerTest([]), 0);
+});
+
+test('pickEingang mit 2 pro Thema: jedes Thema genau zweimal', () => {
+  const q = bank({ A: 6, B: 6, C: 6, D: 6 });
+  const p = T.pickEingang(q, T.anzahlFuerTest(q), seeded(9));
+  Object.values(count(p)).forEach(n => assert.strictEqual(n, 2));
+});

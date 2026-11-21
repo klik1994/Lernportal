@@ -14,7 +14,8 @@
   const badge = st => '<span class="badge b-' + st + '">' + st + '</span>';
   const themaLink = name => '#/thema/' + encodeURIComponent(name);
   const save = () => store.save(state);
-  const anzahlEingang = () => Math.min(18, inhalt.fragen.length);
+  const anzahlEingang = () => T.anzahlFuerTest(inhalt.fragen);
+  const minuten = () => Math.max(5, Math.round(anzahlEingang() * 0.5 / 5) * 5);
 
   function route() {
     const h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
@@ -64,7 +65,7 @@
     return '<p class="eyebrow">Los geht\'s</p><h1>Willkommen im Lernportal</h1><p class="lead">Hier lernst du die Themen deiner Ausbildung mit Präsentationen, Videos, Tests und Praxisübungen.</p>' +
       '<div class="grid"><div class="kachel a-yel">' + iconHtml('✓') + '<h3>Eingangstest</h3>' +
       '<p>Mach zuerst den Eingangstest. Danach siehst du, welche Themen schon sitzen und was du noch lernen musst.</p>' +
-      '<p class="meta">' + anzahlEingang() + ' Fragen · ' + themenNamen.length + ' Themen · ca. 10 Min. · keine Note</p>' +
+      '<p class="meta">' + anzahlEingang() + ' Fragen · ' + themenNamen.length + ' Themen · ca. ' + minuten() + ' Min. · keine Note</p>' +
       '<div class="knoepfe"><button class="primary" data-start="eingang">Eingangstest starten</button></div></div></div>';
   }
 
@@ -74,7 +75,7 @@
     const sitzt = themenNamen.filter(t => L.statusOf(state, t) === 'sitzt').length;
     let h = '<p class="eyebrow">Dein Stand</p><h1>Mein Lernstand</h1>';
     h += '<div class="zweispaltig"><div class="card"><p class="muted" style="margin:0 0 6px">Fortschritt</p><p class="zahl">' + fp + ' %</p><p class="muted">' + sitzt + ' von ' + themenNamen.length + ' Themen sitzen</p><div class="bar"><div style="width:' + fp + '%"></div></div></div>';
-    h += '<div class="card a-roy"><p class="muted" style="margin:0 0 6px">Prüfungscheck</p><p>' + anzahlEingang() + ' Fragen quer durch alle Themen. Schwache Themen kommen wieder auf deine Liste.</p><button class="primary" data-start="pruefung">Prüfungscheck starten</button></div></div>';
+    h += '<div class="card a-roy"><p class="muted" style="margin:0 0 6px">Prüfungscheck</p><p>' + anzahlEingang() + ' Fragen, 2 pro Thema, ca. ' + minuten() + ' Min. Schwache Themen kommen wieder auf deine Liste.</p><button class="primary" data-start="pruefung">Prüfungscheck starten</button></div></div>';
     h += '<h2>Als Nächstes</h2>';
     h += next.length
       ? '<div class="grid">' + next.map(n => {
@@ -153,7 +154,7 @@
       '<div class="card a-roy"><h3 style="margin-top:0">Eigener Übungstest</h3><p class="muted">Wähle die Themen, die du üben willst.</p>' +
       themenNamen.map((t, i) => '<label class="check"><input type="checkbox" data-wahl="' + i + '"> ' + esc(t) + '</label>').join('') +
       '<div class="err" id="err"></div><button class="primary" data-start="uebung">Übungstest starten (bis zu 10 Fragen)</button></div>' +
-      '<div><div class="kachel a-yel" style="margin-bottom:16px">' + iconHtml('✓') + '<h3>Prüfungscheck</h3><p>' + anzahlEingang() + ' Fragen quer durch alle Themen.</p><div class="knoepfe"><button class="primary" data-start="pruefung">Prüfungscheck starten</button></div></div>' +
+      '<div><div class="kachel a-yel" style="margin-bottom:16px">' + iconHtml('✓') + '<h3>Prüfungscheck</h3><p>' + anzahlEingang() + ' Fragen, 2 pro Thema, ca. ' + minuten() + ' Min.</p><div class="knoepfe"><button class="primary" data-start="pruefung">Prüfungscheck starten</button></div></div>' +
       '<div class="kachel a-tea">' + iconHtml('V') + '<h3>Multimeter-Übung</h3><p>Messen und Fehlersuche am Stromkreis.</p><div class="knoepfe"><a class="btn primary" href="multimeter.html">Übung öffnen</a></div></div></div></div>';
   }
 
@@ -192,7 +193,7 @@
 
   function starte(art, thema) {
     let liste = [];
-    if (art === 'eingang' || art === 'pruefung') liste = T.pickEingang(inhalt.fragen, 18);
+    if (art === 'eingang' || art === 'pruefung') liste = T.pickEingang(inhalt.fragen, anzahlEingang());
     if (art === 'kurz') liste = T.pickKurz(inhalt.fragen, thema, 5);
     if (art === 'uebung') {
       const gewaehlt = Array.from(app.querySelectorAll('[data-wahl]')).filter(c => c.checked).map(c => themenNamen[+c.dataset.wahl]);

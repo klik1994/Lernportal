@@ -34,6 +34,8 @@ const Tests = (() => {
   const pickKurz = (questions, thema, n = 5, rng = Math.random) =>
     shuffle(questions.filter(q => q.thema === thema), rng).slice(0, n);
 
+  const anzahlFuerTest = (questions, proThema = 2) => Math.min(questions.length, proThema * themenListe(questions).length);
+
   function score(fragen, antworten) {
     if (!fragen.length) return { gesamt: 0, proThema: {} };
     const pro = {};
@@ -50,6 +52,6 @@ const Tests = (() => {
     return { gesamt: Math.round((richtig / fragen.length) * 100), proThema };
   }
 
-  return { shuffle, themenListe, pickEingang, pickThemen, pickKurz, score };
+  return { shuffle, themenListe, pickEingang, pickThemen, pickKurz, score, anzahlFuerTest };
 })();
 if (typeof module !== 'undefined') module.exports = Tests;
