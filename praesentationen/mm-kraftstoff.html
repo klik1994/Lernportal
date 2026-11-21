@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Kraftstoffsystem – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 96px; }
+</style>
+</head>
+<body class="t-mm2">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · GEMISCHBILDUNG OTTO</div>
+  <div class="symbol" style="font-size:96px">⛽</div>
+  <h1>Kraftstoffsystem</h1>
+  <p>Vom Tank bis zum Einspritzventil</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">KRAFTSTOFFSYSTEM</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Welchen Weg der Kraftstoff nimmt</li>
+      <li class="step from-left"><span class="num">2</span>Saugrohr- und Direkteinspritzung im Vergleich</li>
+      <li class="step from-left"><span class="num">3</span>Kraftstoffpumpe, Hochdruck und Tankentlüftung</li>
+      <li class="step from-left"><span class="num">4</span>Sicher arbeiten und richtig prüfen</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" id="s-weg">
+  <span class="tag">KRAFTSTOFFSYSTEM</span><h2>Der Weg des Kraftstoffs – zum Umschalten</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:18px"><button class="btn ghost on" id="w-s">Saugrohreinspritzung</button><button class="btn ghost" id="w-d">Direkteinspritzung</button></div>
+    <div class="kette" id="weg"></div>
+    <div class="card" style="margin-top:20px;font-size:19px;font-weight:600" id="weg-t"></div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Drücke: Richtwerte – genaue Werte laut Herstellerangabe.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KRAFTSTOFFSYSTEM</span><h2>Die Kraftstoffpumpe</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Elektrische Pumpe <span class="c">im Tank</span> (Fördermodul)<small>sie wird vom Kraftstoff gekühlt – darum nicht leer fahren</small></li>
+      <li class="step">Beim Öffnen der Tür oder bei Zündung an läuft sie <span class="c">kurz vor</span><small>so ist sofort Druck da – du hörst ein kurzes Summen</small></li>
+      <li class="step">Moderne Systeme: <span class="c">bedarfsgeregelt</span> per PWM<small>nur so viel Förderung wie nötig – spart Energie</small></li>
+      <li class="step">Motor steht oder Unfall erkannt: Pumpe <span class="c">aus</span><small>Sicherheitsabschaltung</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KRAFTSTOFFSYSTEM</span><h2>Hochdruck bei der Direkteinspritzung</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Niederdruck</b><span>Pumpe im Tank</span></div><div class="flow-arrow step"></div>
+      <div class="glied hd step"><b>Hochdruckpumpe</b><span>angetrieben von der Nockenwelle</span></div><div class="flow-arrow step"></div>
+      <div class="glied hd step"><b>Rail</b><span>Raildrucksensor meldet den Ist-Druck</span></div><div class="flow-arrow step"></div>
+      <div class="glied hd step"><b>Hochdruck-Einspritzventile</b><span>direkt im Brennraum</span></div>
+    </div>
+    <div class="card step" style="margin-top:20px;font-size:19px;font-weight:600">Das Steuergerät regelt den Druck über das <span class="c">Mengensteuerventil</span> an der Hochdruckpumpe: Ist-Druck (Raildrucksensor) wird ständig mit dem Soll-Druck verglichen.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KRAFTSTOFFSYSTEM</span><h2>Tankentlüftung</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Tank</b><span>Kraftstoff verdunstet</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Aktivkohlebehälter</b><span>speichert die Dämpfe</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Tankentlüftungsventil</b><span>Steuergerät öffnet es per PWM</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Saugrohr</b><span>die Dämpfe werden verbrannt</span></div>
+    </div>
+    <div class="tip step" style="margin-top:20px"><b>Warum?</b>Kraftstoffdämpfe sollen nicht in die Umwelt. Ein klemmendes Tankentlüftungsventil kann zu unruhigem Leerlauf und Fehlerspeichereinträgen führen.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KRAFTSTOFFSYSTEM</span><h2>Typische Drücke</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>ca. 3–5 bar</b><span>Saugrohreinspritzung</span></div>
+      <div class="val step from-left"><b>ca. 4–6 bar</b><span>Direkteinspritzung, Niederdruck (Vorförderung)</span></div>
+      <div class="val step from-left"><b>ca. 200–350 bar</b><span>Direkteinspritzung, Hochdruck im Rail</span></div>
+      <div class="val step from-left"><b>über 2.000 bar</b><span>zum Vergleich: Diesel Common-Rail</span></div>
+    </div>
+    <div class="note step">Richtwerte – Sollwerte immer aus dem Reparaturleitfaden</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KRAFTSTOFFSYSTEM</span><h2>Sicher arbeiten</h2>
+  <div class="body">
+    <div class="warn step"><b>Kraftstoff steht unter Druck</b>Vor dem Öffnen den Druck abbauen – wie der Hersteller es vorgibt. Schutzbrille tragen, Lappen um die Verbindung legen.</div>
+    <div class="warn step" style="margin-top:12px"><b>Hochdruck</b>Hochdrucksystem nie bei laufendem Motor öffnen. Hochdruckleitungen nach dem Lösen oft erneuern – Herstellervorgabe beachten.</div>
+    <div class="warn step" style="margin-top:12px"><b>Brandgefahr</b>Kein Feuer, keine Funken. Auslaufenden Kraftstoff sofort auffangen, Feuerlöscher bereithalten.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KRAFTSTOFFSYSTEM</span><h2>Kraftstoffsystem prüfen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fehlerspeicher und Messwerte lesen<small>Raildruck Soll und Ist im Diagnosegerät vergleichen</small></li>
+      <li class="step">Pumpe hörbar? Ansteuerung prüfen<small>Vorlauf bei Zündung an, Sicherung und Relais</small></li>
+      <li class="step">Niederdruck messen<small>mit Manometer am Prüfanschluss</small></li>
+      <li class="step">Fördermenge oder Stromaufnahme prüfen<small>Fördermenge in Zeit X laut Vorgabe, Pumpenstrom mit der Stromzange</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KRAFTSTOFFSYSTEM</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-kraftstoff.mp4" poster="videos/mm-kraftstoff.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KRAFTSTOFFSYSTEM</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Wo sitzt die elektrische Kraftstoffpumpe meistens?</p>
+      <div class="opts"><button class="opt">Im Motorraum</button><button class="opt">Im Tank</button><button class="opt">Am Einspritzventil</button></div>
+      <div class="fb">Im Tank (Fördermodul) – dort wird sie vom Kraftstoff gekühlt.</div></div>
+    <div class="q" data-correct="2"><p>2. Wer erzeugt bei der Direkteinspritzung den Hochdruck?</p>
+      <div class="opts"><button class="opt">Die Pumpe im Tank</button><button class="opt">Der Turbolader</button><button class="opt">Die Hochdruckpumpe an der Nockenwelle</button></div>
+      <div class="fb">Die mechanische Hochdruckpumpe wird von der Nockenwelle angetrieben.</div></div>
+    <div class="q" data-correct="0"><p>3. Wozu dient der Aktivkohlebehälter?</p>
+      <div class="opts"><button class="opt">Er speichert Kraftstoffdämpfe aus dem Tank</button><button class="opt">Er filtert die Ansaugluft</button><button class="opt">Er kühlt den Kraftstoff</button></div>
+      <div class="fb">Die Dämpfe werden später über das Tankentlüftungsventil verbrannt.</div></div>
+    <div class="q" data-correct="1"><p>4. Was musst du vor dem Öffnen einer Kraftstoffleitung tun?</p>
+      <div class="opts"><button class="opt">Motor laufen lassen</button><button class="opt">Druck abbauen laut Herstellervorgabe</button><button class="opt">Nichts</button></div>
+      <div class="fb">Kraftstoff steht unter Druck – Verletzungs- und Brandgefahr.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KRAFTSTOFFSYSTEM</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Tank → Pumpe → Filter → Rail → Einspritzventile</span></li>
+        <li class="step"><span>Saugrohr ca. 3–5 bar<small>Direkteinspritzung: Hochdruck ca. 200–350 bar (Richtwerte)</small></span></li>
+        <li class="step"><span>Tankentlüftung: Dämpfe werden verbrannt</span></li>
+        <li class="step"><span>Vor dem Öffnen: Druck abbauen!</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Gemischbildung%20Otto" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const W = {
+    s: [['Tank', '', 0], ['Kraftstoffpumpe', 'im Tank', 0], ['Filter', '', 0], ['Rail', 'ca. 3–5 bar', 0], ['Einspritzventile', 'im Saugrohr', 0]],
+    d: [['Tank', '', 0], ['Kraftstoffpumpe', 'ca. 4–6 bar', 0], ['Hochdruckpumpe', 'an der Nockenwelle', 1], ['Rail', 'ca. 200–350 bar', 1], ['Einspritzventile', 'im Brennraum', 1]]
+  };
+  const T = { s: 'Saugrohreinspritzung: Der Kraftstoff wird vor das Einlassventil gespritzt. Ein Druck reicht – die elektrische Pumpe schafft das allein.',
+              d: 'Direkteinspritzung: Der Kraftstoff wird direkt in den Brennraum gespritzt. Dafür braucht es sehr hohen Druck – den erzeugt die Hochdruckpumpe.' };
+  function set(m) {
+    const k = document.getElementById('weg'); k.innerHTML = '';
+    W[m].forEach((g, i) => {
+      if (i) { const a = document.createElement('div'); a.className = 'flow-arrow'; k.appendChild(a); }
+      const d = document.createElement('div'); d.className = 'glied' + (g[2] ? ' hd' : '');
+      d.innerHTML = '<b>' + g[0] + '</b>' + (g[1] ? '<span>' + g[1] + '</span>' : ''); k.appendChild(d);
+    });
+    document.getElementById('weg-t').textContent = T[m];
+    document.getElementById('w-s').classList.toggle('on', m === 's');
+    document.getElementById('w-d').classList.toggle('on', m === 'd');
+  }
+  document.getElementById('w-s').onclick = () => set('s');
+  document.getElementById('w-d').onclick = () => set('d');
+  set('s');
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

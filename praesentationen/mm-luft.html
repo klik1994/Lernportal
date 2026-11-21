@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Luft und Last – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 96px; }
+</style>
+</head>
+<body class="t-mm2">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · GEMISCHBILDUNG OTTO</div>
+  <div class="symbol" style="font-size:96px">🌬️</div>
+  <h1>Luft und Last</h1>
+  <p>Wie das Steuergerät die angesaugte Luft erfasst</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">LUFT UND LAST</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Warum das Steuergerät die Luftmenge kennen muss</li>
+      <li class="step from-left"><span class="num">2</span>Luftmassenmesser und Saugrohrdrucksensor</li>
+      <li class="step from-left"><span class="num">3</span>Das elektronische Gaspedal (E-Gas)</li>
+      <li class="step from-left"><span class="num">4</span>Typische Fehler und wie du sie findest</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" id="s-gp">
+  <span class="tag">LUFT UND LAST</span><h2>Erst die Luft, dann der Kraftstoff – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="ctrl"><span style="width:240px">Gaspedal: <span class="c" id="gp-v">20 %</span></span><input type="range" id="gp" min="0" max="100" step="5" value="20"></div>
+    <div class="grid2" style="margin-top:16px;align-items:center">
+      <svg viewBox="0 0 400 220" width="400" height="220" style="display:block;margin:0 auto">
+        <rect x="20" y="70" width="360" height="80" fill="#213552"/>
+        <line x1="20" y1="68" x2="380" y2="68" stroke="#ecf1f8" stroke-width="4"/><line x1="20" y1="152" x2="380" y2="152" stroke="#ecf1f8" stroke-width="4"/>
+        <g id="dk" style="transform-origin:200px 110px;transition:transform .3s"><line x1="200" y1="72" x2="200" y2="148" stroke="#5b8cff" stroke-width="8" stroke-linecap="round"/></g>
+        <circle cx="200" cy="110" r="6" fill="#ecf1f8"/>
+        <text x="200" y="190" text-anchor="middle" font-size="16" font-weight="800" fill="#94a4ba">Drosselklappe</text>
+        <path id="dk-path" d="M20 110 H380" fill="none"/>
+      </svg>
+      <div>
+        <div class="card"><div class="muted" style="font-size:15px;font-weight:800">LUFTMASSE</div><div class="lcd2" id="gp-l" style="font-size:34px;margin-top:6px">—</div></div>
+        <div class="card" style="margin-top:12px"><div class="muted" style="font-size:15px;font-weight:800">KRAFTSTOFF FÜR λ = 1</div><div class="lcd2" id="gp-k" style="font-size:34px;margin-top:6px">—</div></div>
+      </div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Beispielwerte bei 2.500 1/min. Kraftstoff = Luftmasse : 14,7.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LUFT UND LAST</span><h2>Zwei Wege, die Luft zu erfassen</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Luftmassenmesser (LMM)</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>sitzt nach dem Luftfilter</li><li>misst die <b>Luftmasse direkt</b> (kg/h) mit einem beheizten Sensorelement</li><li>oft mit eingebautem Ansauglufttemperatursensor</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Saugrohrdrucksensor</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>sitzt am Saugrohr</li><li>misst den <b>Druck</b> im Saugrohr</li><li>das Steuergerät <b>berechnet</b> daraus mit Drehzahl und Temperatur die Luftmenge</li></ul></div>
+      <div class="tip step" style="grid-column:1/-1"><b>Gut zu wissen</b>Viele Motoren haben beides – dann prüft das Steuergerät, ob die Werte zusammenpassen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LUFT UND LAST</span><h2>Saugrohrdruck – typische Werte</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>ca. 1 bar</b><span>Motor aus: Saugrohrdruck = Umgebungsdruck</span></div>
+      <div class="val step from-left"><b>ca. 0,3 bar</b><span>Leerlauf: Drosselklappe fast zu, starker Unterdruck</span></div>
+      <div class="val step from-left"><b>ca. 1 bar</b><span>Volllast beim Saugmotor</span></div>
+      <div class="val step from-left"><b>über 1 bar</b><span>Volllast mit Turbo (Ladedruck)</span></div>
+    </div>
+    <div class="note step">Absolutdruck, Richtwerte</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LUFT UND LAST</span><h2>Das elektronische Gaspedal (E-Gas)</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step" style="border-top-color:var(--grn)"><b>Fahrpedalsensor</b><span>2 Sensoren – doppelt zur Sicherheit</span></div><div class="flow-arrow step k-e"></div>
+      <div class="glied step" style="border-top-color:var(--pur)"><b>Steuergerät</b><span>prüft, ob beide Werte zusammenpassen</span></div><div class="flow-arrow step k-v"></div>
+      <div class="glied step" style="border-top-color:var(--ora)"><b>Drosselklappensteller</b><span>Elektromotor + 2 Positionssensoren</span></div>
+    </div>
+    <div class="warn step" style="margin-top:20px"><b>Notlauf</b>Passen die beiden Sensorwerte nicht zusammen, geht die Drosselklappe in Notlaufstellung – das Auto fährt nur noch mit wenig Leistung.</div>
+    <div class="tip step" style="margin-top:12px"><b>Nach Reinigung oder Tausch</b>Die Drosselklappe muss oft mit dem Diagnosegerät angelernt werden (Grundeinstellung).</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LUFT UND LAST</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Falschluft</b>Ein Leck nach dem Luftmassenmesser: Diese Luft wird nicht gemessen – das Gemisch wird mager.</div>
+      <div class="tip step"><b>Verschmutzter LMM</b>misst zu wenig Luft: Das Steuergerät spritzt zu wenig ein – Leistungsmangel.</div>
+      <div class="tip step"><b>Verschmutzte Drosselklappe</b>unruhiger Leerlauf, Motor geht aus: reinigen und anlernen.</div>
+      <div class="tip step"><b>Schneller Plausibilitätstest</b>Zündung an, Motor aus: Der Saugrohrdruck muss etwa dem Umgebungsdruck entsprechen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LUFT UND LAST</span><h2>Luftsystem prüfen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fehlerspeicher und Messwerte lesen<small>Luftmasse, Saugrohrdruck, Ansaugtemperatur, Drosselklappenwinkel</small></li>
+      <li class="step">Sichtprüfung<small>Luftfilter, Schläuche, Schellen: Risse und Lecks (Falschluft)</small></li>
+      <li class="step">Luftmasse mit Sollwert vergleichen<small>im Leerlauf und bei Volllast auf der Probefahrt</small></li>
+      <li class="step">Saugrohrdruck bei Motor aus prüfen<small>muss etwa dem Umgebungsdruck entsprechen</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LUFT UND LAST</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-luft.mp4" poster="videos/mm-luft.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LUFT UND LAST</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Warum muss das Steuergerät die angesaugte Luftmenge kennen?</p>
+      <div class="opts"><button class="opt">Um die passende Kraftstoffmenge zu berechnen</button><button class="opt">Für die Tankanzeige</button><button class="opt">Für die Klimaanlage</button></div>
+      <div class="fb">Für λ = 1 braucht es zu jeder Luftmenge die passende Kraftstoffmenge.</div></div>
+    <div class="q" data-correct="1"><p>2. Was misst ein Luftmassenmesser?</p>
+      <div class="opts"><button class="opt">Den Druck im Saugrohr</button><button class="opt">Die angesaugte Luftmasse</button><button class="opt">Den Restsauerstoff im Abgas</button></div>
+      <div class="fb">Er misst die Luftmasse direkt, z. B. in kg/h.</div></div>
+    <div class="q" data-correct="2"><p>3. Ein Schlauch nach dem Luftmassenmesser hat einen Riss. Wie wird das Gemisch?</p>
+      <div class="opts"><button class="opt">Fett</button><button class="opt">Unverändert</button><button class="opt">Mager</button></div>
+      <div class="fb">Die Falschluft wird nicht gemessen – zu viel Luft.</div></div>
+    <div class="q" data-correct="0"><p>4. Warum hat der Fahrpedalsensor zwei Sensoren?</p>
+      <div class="opts"><button class="opt">Damit das Steuergerät die Werte vergleichen kann (Sicherheit)</button><button class="opt">Für mehr Leistung</button><button class="opt">Für die Kickdown-Funktion</button></div>
+      <div class="fb">Passen die Werte nicht zusammen, geht das System in den Notlauf.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LUFT UND LAST</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Erst die Luft messen, dann den Kraftstoff berechnen</span></li>
+        <li class="step"><span>LMM misst Luftmasse · Saugrohrdrucksensor misst Druck</span></li>
+        <li class="step"><span>E-Gas: doppelte Sensoren, bei Fehler Notlauf</span></li>
+        <li class="step"><span>Falschluft → mager<small>Drosselklappe nach Reinigung anlernen</small></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Gemischbildung%20Otto" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script src="assets/schaltung.js"></script>
+<script>
+(function () {
+  const svg = document.querySelector('#s-gp svg');
+  const f = Flow(svg, document.getElementById('dk-path'), { spacing: 40, speed: 60, r: 6, color: '#cfe6ff' });
+  const gp = document.getElementById('gp');
+  function upd() {
+    const p = +gp.value / 100;
+    const winkel = 8 + 80 * p;
+    document.getElementById('dk').style.transform = 'rotate(' + winkel + 'deg)';
+    const lm = 12 + 210 * p;
+    f.speed = 20 + 260 * p;
+    document.getElementById('gp-v').textContent = Math.round(p * 100) + ' %';
+    document.getElementById('gp-l').textContent = Math.round(lm) + ' kg/h';
+    document.getElementById('gp-k').textContent = (lm / 14.7).toFixed(1).replace('.', ',') + ' kg/h';
+  }
+  gp.addEventListener('input', upd); upd();
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

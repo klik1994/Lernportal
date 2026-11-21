@@ -339,3 +339,195 @@ VIDEOS_MOTOR = {
     'mm-betrieb': (TEA, [(title_scene('n', 'Betriebszustände', 'Was das Steuergerät in jeder Situation anders macht', TEA, kicker=KICK), 5.0),
                          (bz_drive, 20.0), (BZ_VALUES, 10.0), (bz_schub, 11.5), (BZ_MERKE, 7.5)]),
 }
+
+
+# =================== GEMISCHBILDUNG OTTO ===================
+ROY = (91, 140, 255)
+KICK2 = 'GEMISCHBILDUNG OTTO  ·  LERNVIDEO'
+
+
+def kette_boxes(d, t, items, y, h, col, a_start=0.4, step=0.5, flow=True, hd=()):
+    n = len(items)
+    gap = 40
+    w = (1100 - gap * (n - 1)) / n
+    xs = []
+    for i, (ti, sub) in enumerate(items):
+        x = 90 + i * (w + gap)
+        xs.append(x)
+        a = pr(t, a_start + i * step, a_start + i * step + 0.5)
+        c = RED if i in hd else col
+        rrect(d, (x, y, x + w, y + h), 16, CARD, a)
+        rect(d, (x + 12, y, x + w - 12, y + 6), c, a, bg=CARD)
+        text(d, x + w / 2, y + h / 2 - (14 if sub else 0), ti, 22, 'Bold', TXT, a, 'mm', bg=CARD)
+        if sub:
+            text(d, x + w / 2, y + h / 2 + 20, sub, 17, 'Semi', c if i in hd else MUTED, a, 'mm', bg=CARD)
+        if i and flow:
+            ap = pr(t, a_start + i * step, a_start + i * step + 0.5)
+            x0 = x - gap + 4
+            poly(d, [(x - 4, y + h / 2), (x - 16, y + h / 2 - 9), (x - 16, y + h / 2 + 9)], c, ap)
+            if t > a_start + n * step:
+                pulse(d, (x0, y + h / 2), (x - 18, y + h / 2), c, t, ap, k=2, speed=1.5, r=4)
+    return xs, w
+
+
+def gk_saug(d, t, dur):
+    header(d, t, 'KRAFTSTOFFSYSTEM', 'Saugrohreinspritzung', ROY)
+    kette_boxes(d, t, [('Tank', ''), ('Pumpe', 'im Tank'), ('Filter', ''), ('Rail', 'ca. 3–5 bar'), ('Einspritz-', 'ventile')], 230, 130, ROY)
+    caption(d, t, [(0.6, 5.5, 'Die Pumpe im Tank erzeugt den Druck'), (5.7, dur, 'Eingespritzt wird vor das Einlassventil')], ROY)
+
+
+def gk_direkt(d, t, dur):
+    header(d, t, 'KRAFTSTOFFSYSTEM', 'Direkteinspritzung', ROY)
+    kette_boxes(d, t, [('Tank', ''), ('Pumpe', 'ca. 4–6 bar'), ('Hochdruck-', 'pumpe'), ('Rail', 'ca. 200–350 bar'), ('Einspritz-', 'ventile')], 230, 130, ROY, hd=(2, 3, 4))
+    caption(d, t, [(0.6, 5.5, 'Die Hochdruckpumpe wird von der Nockenwelle angetrieben'),
+                   (5.7, dur, 'Eingespritzt wird direkt in den Brennraum – Richtwerte')], ROY)
+
+
+GK_DRUCK = values_scene('KRAFTSTOFFSYSTEM', ROY, [], [
+    ('ca. 3–5 bar', 'Saugrohreinspritzung'), ('ca. 4–6 bar', 'Direkteinspritzung, Niederdruck'),
+    ('ca. 200–350 bar', 'Direkteinspritzung, Hochdruck'), ('über 2.000 bar', 'zum Vergleich: Diesel Common-Rail')],
+    note='Richtwerte – vor dem Öffnen immer Druck abbauen!', title='Typische Drücke', vsize=26)
+
+
+def gk_tank(d, t, dur):
+    header(d, t, 'KRAFTSTOFFSYSTEM', 'Tankentlüftung', ROY)
+    kette_boxes(d, t, [('Tank', 'Dämpfe'), ('Aktivkohle-', 'behälter'), ('Tankentlüftungs-', 'ventil'), ('Saugrohr', 'verbrannt')], 230, 130, GRN)
+    caption(d, t, [(0.6, dur, 'Kraftstoffdämpfe kommen nicht in die Umwelt – sie werden verbrannt')], ROY)
+
+
+GK_MERKE = merke_scene('KRAFTSTOFFSYSTEM', ROY, [
+    'Tank → Pumpe → Filter → Rail → Einspritzventile', 'Direkteinspritzung: Hochdruckpumpe\nRichtwert ca. 200–350 bar',
+    'Tankentlüftung: Dämpfe werden verbrannt', 'Vor dem Öffnen: Druck abbauen!'])
+
+
+def zylinder(d, x, t, direkt, a):
+    # Zylinder mit Kolben, Einlasskanal, Einspritzventil und Spruehstrahl
+    line(d, [(x, 470), (x, 260), (x + 220, 260), (x + 220, 470)], TXT, 5, a)
+    kol = 400 + 30 * math.sin(t * 2.5)
+    rrect(d, (x + 10, kol, x + 210, kol + 60), 8, CARD2, a, outline=MUTED, width=3)
+    line(d, [(x - 140, 190), (x + 40, 190), (x + 70, 258)], MUTED, 4, a)
+    line(d, [(x - 140, 235), (x + 20, 235), (x + 45, 258)], MUTED, 4, a)
+    text(d, x - 130, 170, 'Saugrohr', 17, 'Bold', MUTED, a, 'lm')
+    puls = (t * 1.2) % 1 < 0.35
+    if direkt:
+        rrect(d, (x + 98, 200, x + 122, 262), 4, ROY, a)
+        if puls:
+            poly(d, [(x + 110, 264), (x + 70, 340), (x + 150, 340)], mix(ROY, 0.6), a)
+    else:
+        rrect(d, (x - 40, 140, x - 16, 196), 4, ROY, a)
+        if puls:
+            poly(d, [(x - 22, 198), (x + 40, 225), (x + 20, 240)], mix(ROY, 0.6), a)
+
+
+def ge_zyl(d, t, dur):
+    header(d, t, 'EINSPRITZUNG', 'Wo wird eingespritzt?', ROY)
+    a1 = pr(t, 0.3, 0.9)
+    a2 = pr(t, 5.2, 5.8)
+    zylinder(d, 260, t, False, a1)
+    zylinder(d, 900, t, True, a2)
+    text(d, 370, 520, 'Saugrohreinspritzung', 26, 'XB', TXT, a1, 'mm')
+    text(d, 1010, 520, 'Direkteinspritzung', 26, 'XB', TXT, a2, 'mm')
+    caption(d, t, [(0.6, 5.0, 'Saugrohr: vor das Einlassventil'), (5.2, dur, 'Direkt: in den Brennraum – unter hohem Druck')], ROY, y=612)
+
+
+def ge_ventil(d, t, dur):
+    header(d, t, 'EINSPRITZUNG', 'So arbeitet ein Einspritzventil', ROY)
+    a = pr(t, 0.2, 0.8)
+    cyc = (t % 2.0) < 0.9 and t > 2
+    x = 420
+    rrect(d, (x - 70, 130, x + 70, 470), 16, CARD2, a, outline=MUTED, width=3)
+    rrect(d, (x - 55, 180, x + 55, 300), 8, mix(ORA, 0.9 if cyc else 0.25, CARD2), a, outline=ORA, width=4, bg=CARD2)
+    text(d, x, 240, 'Spule', 22, 'Bold', BG if cyc else ORA, a, 'mm', bg=mix(ORA, 0.9 if cyc else 0.25, CARD2))
+    lift = 18 if cyc else 0
+    rrect(d, (x - 10, 310 - lift, x + 10, 470 - lift), 6, TXT, a, bg=CARD2)
+    poly(d, [(x - 16, 470), (x + 16, 470), (x + 8, 495), (x - 8, 495)], MUTED, a)
+    if cyc:
+        poly(d, [(x, 497), (x - 50, 560), (x + 50, 560)], mix(ROY, 0.7), a)
+    rrect(d, (700, 200, 1180, 300), 16, CARD, a)
+    text(d, 730, 250, 'Spannung', 28, 'Bold', TXT, a, 'lm', bg=CARD)
+    rrect(d, (1000, 225, 1150, 275), 25, GRN if cyc else CARD2, a, bg=CARD)
+    text(d, 1075, 250, 'AN' if cyc else 'AUS', 24, 'XB', BG if cyc else MUTED, a, 'mm', bg=GRN if cyc else CARD2)
+    rrect(d, (700, 320, 1180, 420), 16, CARD, a)
+    text(d, 730, 370, 'Nadel', 28, 'Bold', TXT, a, 'lm', bg=CARD)
+    text(d, 1150, 370, 'offen' if cyc else 'zu', 28, 'XB', ROY if cyc else MUTED, a, 'rm', bg=CARD)
+    caption(d, t, [(0.6, 6.0, 'Spannung an: Die Spule zieht die Nadel hoch – der Kraftstoff spritzt'),
+                   (6.2, dur, 'Spannung aus: Die Feder drückt die Nadel zu')], ROY, y=618)
+
+
+def ge_ti(d, t, dur):
+    header(d, t, 'EINSPRITZUNG', 'Die Einspritzzeit bestimmt die Menge', ROY)
+    a = pr(t, 0.2, 0.8)
+    ti = 2 + 6 * pr(t, 1.5, 7.5)
+    rrect(d, (120, 200, 1160, 250), 25, CARD, a)
+    rrect(d, (120, 200, 120 + 1040 * ti / 10, 250), 25, ROY, a)
+    text(d, 120, 170, f'Einspritzzeit: {ti:.1f} ms'.replace('.', ','), 30, 'XB', ROY, a, 'lm')
+    rrect(d, (420, 310, 860, 420), 14, (196, 214, 190), a)
+    text(d, 840, 365, f'ca. {ti * 4:.0f} mg', 50, 'Bold', (25, 35, 28), a, 'rm', bg=(196, 214, 190))
+    text(d, 640, 450, 'Beispielwerte', 18, 'Med', MUTED, a, 'mm')
+    caption(d, t, [(0.6, dur, 'Doppelte Einspritzzeit = doppelte Menge (bei gleichem Druck)')], ROY, y=612)
+
+
+GE_MERKE = merke_scene('EINSPRITZUNG', ROY, [
+    'Saugrohr: vor das Einlassventil', 'Direkt: in den Brennraum, Hochdruck',
+    'Menge über die Einspritzzeit', 'Hochdruck-Ventile: ca. 65 V – keine Prüflampe'])
+
+
+def gl_gas(d, t, dur):
+    header(d, t, 'LUFT UND LAST', 'Erst die Luft, dann der Kraftstoff', ROY)
+    a = pr(t, 0.2, 0.8)
+    p = 0.1 + 0.85 * pr(t, 2.0, 9.0)
+    rect(d, (80, 230, 700, 350), CARD2, a)
+    line(d, [(80, 228), (700, 228)], TXT, 4, a)
+    line(d, [(80, 352), (700, 352)], TXT, 4, a)
+    flow_dots(d, Path([(80, 290), (700, 290)]), t, 40 + 300 * p, 44, 7, (207, 230, 255), a, bg=CARD2)
+    ang = math.radians(8 + 80 * p)
+    cx, cy = 390, 290
+    L = 56
+    line(d, [(cx - L * math.sin(ang), cy - L * math.cos(ang)), (cx + L * math.sin(ang), cy + L * math.cos(ang))], ROY, 10, a, bg=CARD2)
+    circle(d, (cx, cy), 7, TXT, a, bg=CARD2)
+    text(d, 390, 390, 'Drosselklappe', 20, 'Bold', MUTED, a, 'mm')
+    text(d, 80, 180, f'Gaspedal: {p * 100:.0f} %', 30, 'XB', ROY, a, 'lm')
+    lm = 12 + 210 * p
+    for k, (lab, val) in enumerate([('LUFTMASSE', f'{lm:.0f} kg/h'), ('KRAFTSTOFF FÜR λ = 1', f'{lm / 14.7:.1f} kg/h'.replace('.', ','))]):
+        y = 190 + k * 130
+        text(d, 780, y, lab, 15, 'Bold', MUTED, a, 'lm')
+        rrect(d, (780, y + 16, 1180, y + 96), 10, (196, 214, 190), a)
+        text(d, 1164, y + 56, val, 40, 'Bold', (25, 35, 28), a, 'rm', bg=(196, 214, 190))
+    caption(d, t, [(0.6, 6.0, 'Mehr Gas: Die Drosselklappe öffnet, mehr Luft strömt'),
+                   (6.2, dur, 'Das Steuergerät berechnet daraus die Kraftstoffmenge')], ROY, y=612)
+
+
+def gl_sensoren(d, t, dur):
+    header(d, t, 'LUFT UND LAST', 'Zwei Wege, die Luft zu erfassen', ROY)
+    for i, (ti, l1, l2, l3) in enumerate([('Luftmassenmesser', 'misst die Luftmasse', 'direkt (kg/h)', 'sitzt nach dem Luftfilter'),
+                                           ('Saugrohrdrucksensor', 'misst den Druck', 'im Saugrohr', 'Luftmenge wird berechnet')]):
+        st = 0.4 + i * 2.6
+        a = pr(t, st, st + 0.6)
+        x = 80 + i * 580
+        card(d, (x, 130, x + 540, 520), a, ROY)
+        text(d, x + 270, 200, ti, 34, 'XB', TXT, a, 'mm', bg=CARD)
+        text(d, x + 270, 300, l1, 30, 'Bold', ROY, a, 'mm', bg=CARD)
+        text(d, x + 270, 345, l2, 30, 'Bold', ROY, a, 'mm', bg=CARD)
+        text(d, x + 270, 440, l3, 22, 'Semi', MUTED, a, 'mm', bg=CARD)
+    caption(d, t, [(5.8, dur, 'Viele Motoren haben beides – das Steuergerät vergleicht')], ROY, y=612)
+
+
+def gl_egas(d, t, dur):
+    header(d, t, 'LUFT UND LAST', 'Das elektronische Gaspedal (E-Gas)', ROY)
+    kette_boxes(d, t, [('Fahrpedal', '2 Sensoren'), ('Steuergerät', 'vergleicht'), ('Drosselklappe', 'Motor + 2 Sensoren')], 220, 140, ROY)
+    caption(d, t, [(0.6, 5.5, 'Doppelte Sensoren zur Sicherheit'),
+                   (5.7, dur, 'Passen die Werte nicht zusammen: Notlauf mit wenig Leistung')], ROY)
+
+
+GL_MERKE = merke_scene('LUFT UND LAST', ROY, [
+    'Erst die Luft messen, dann den Kraftstoff berechnen', 'LMM: Luftmasse · Saugrohrdrucksensor: Druck',
+    'E-Gas: doppelte Sensoren, sonst Notlauf', 'Falschluft → mager'])
+
+VIDEOS_MOTOR.update({
+    'mm-kraftstoff': (ROY, [(title_scene('K', 'Kraftstoffsystem', 'Vom Tank bis zum Einspritzventil', ROY, kicker=KICK2), 5.0),
+                            (gk_saug, 10.0), (gk_direkt, 11.0), (GK_DRUCK, 9.0), (gk_tank, 8.5), (GK_MERKE, 7.5)]),
+    'mm-einspritzung': (ROY, [(title_scene('ti', 'Einspritzung', 'Saugrohr- und Direkteinspritzung', ROY, size=96, kicker=KICK2), 5.0),
+                              (ge_zyl, 11.0), (ge_ventil, 11.5), (ge_ti, 10.0), (GE_MERKE, 7.5)]),
+    'mm-luft': (ROY, [(title_scene('L', 'Luft und Last', 'Wie das Steuergerät die Luft erfasst', ROY, kicker=KICK2), 5.0),
+                      (gl_gas, 12.5), (gl_sensoren, 10.0), (gl_egas, 10.0), (GL_MERKE, 7.5)]),
+})

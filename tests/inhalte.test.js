@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 7 Themen, 58 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 8 Themen, 67 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
-  assert.strictEqual(r.themen.length, 7);
-  assert.strictEqual(r.fragen.length, 58);
+  assert.strictEqual(r.themen.length, 8);
+  assert.strictEqual(r.fragen.length, 67);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
@@ -123,4 +123,16 @@ test('Echte Inhaltsdatei: Motormanagement Grundlagen mit Präsentationen und Vid
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
   });
   assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5);
+});
+
+test('Echte Inhaltsdatei: Motormanagement Gemischbildung Otto mit Präsentationen und Videos', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  const t = r.themen.find(x => x.name === 'Motormanagement: Gemischbildung Otto');
+  assert.strictEqual(t.bereich, 'Motormanagement');
+  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Kraftstoffsystem', 'Einspritzung', 'Luft und Last']);
+  t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
+  ['mm-kraftstoff', 'mm-einspritzung', 'mm-luft'].forEach(n => {
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
+  });
 });
