@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 8 Themen, 67 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 9 Themen, 77 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
-  assert.strictEqual(r.themen.length, 8);
-  assert.strictEqual(r.fragen.length, 67);
+  assert.strictEqual(r.themen.length, 9);
+  assert.strictEqual(r.fragen.length, 77);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
@@ -132,6 +132,18 @@ test('Echte Inhaltsdatei: Motormanagement Gemischbildung Otto mit Präsentatione
   assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Kraftstoffsystem', 'Einspritzung', 'Luft und Last']);
   t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
   ['mm-kraftstoff', 'mm-einspritzung', 'mm-luft'].forEach(n => {
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
+  });
+});
+
+test('Echte Inhaltsdatei: Motormanagement Zündung mit Präsentationen und Videos', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  const t = r.themen.find(x => x.name === 'Motormanagement: Zündung');
+  assert.strictEqual(t.bereich, 'Motormanagement');
+  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Zündanlage', 'Zündkerze', 'Zündzeitpunkt']);
+  t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
+  ['mm-zuendanlage', 'mm-zuendkerze', 'mm-zuendzeitpunkt'].forEach(n => {
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
   });

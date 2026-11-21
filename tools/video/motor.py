@@ -531,3 +531,219 @@ VIDEOS_MOTOR.update({
     'mm-luft': (ROY, [(title_scene('L', 'Luft und Last', 'Wie das Steuergerät die Luft erfasst', ROY, kicker=KICK2), 5.0),
                       (gl_gas, 12.5), (gl_sensoren, 10.0), (gl_egas, 10.0), (GL_MERKE, 7.5)]),
 })
+
+
+# =================== ZÜNDUNG ===================
+KICK3 = 'ZÜNDUNG  ·  LERNVIDEO'
+YLW = (255, 211, 77)
+CORE = (59, 66, 80)
+
+
+def blitz(d, x, y, s, a, bg=BG):
+    line(d, [(x + 4 * s, y - 14 * s), (x - 6 * s, y), (x + 6 * s, y + 2 * s), (x - 4 * s, y + 16 * s)], YLW, 5 * s, a, bg)
+
+
+def za_kette(d, t, dur):
+    header(d, t, 'ZÜNDANLAGE', 'Aufgabe der Zündanlage', ORA)
+    kette_boxes(d, t, [('Steuergerät', 'Zündzeitpunkt'), ('Zündspule', '12 V → Hochspannung'), ('Zündkerze', 'Funke im Brennraum')], 220, 140, ORA, hd=(2,))
+    if t > 2.2 and (t * 1.3) % 1 < 0.3:
+        blitz(d, 1010, 420, 2.2, pr(t, 2.2, 2.6))
+    caption(d, t, [(0.6, 5.5, 'Zünden – zum richtigen Zeitpunkt'), (5.7, dur, 'Aus 12 Volt werden viele tausend Volt')], ORA)
+
+
+def za_spule(d, t, dur):
+    header(d, t, 'ZÜNDANLAGE', 'So entsteht die Hochspannung', ORA)
+    a = pr(t, 0.2, 0.8)
+    ein = 1.5 < t < 6.5
+    funke = 6.5 <= t < 8.2 and (t * 8) % 1 < 0.6
+    text(d, 70, 160, '+ 12 V', 24, 'XB', RED, a, 'lm')
+    prim = [(90, 190), (300, 190), (300, 470), (210, 470), (210, 500)]
+    line(d, prim, TXT, 4, a)
+    rrect(d, (130, 500, 290, 556), 12, CARD2, a, outline=MUTED, width=2)
+    text(d, 210, 528, 'Steuergerät', 20, 'Bold', TXT, a, 'mm', bg=CARD2)
+    rrect(d, (318, 170, 418, 470), 8, CORE, a)
+    if ein:
+        fa = pr(t, 1.5, 2.5)
+        for k, (rx, ry) in enumerate([(95, 170), (130, 200)]):
+            for i in range(36):
+                if i % 2:
+                    continue
+                a0, a1 = i / 36 * 2 * math.pi, (i + 1) / 36 * 2 * math.pi
+                line(d, [(368 + rx * math.cos(a0), 320 + ry * math.sin(a0)), (368 + rx * math.cos(a1), 320 + ry * math.sin(a1))], PUR, 3, fa * (1 - 0.4 * k) * a)
+        flow_dots(d, Path(prim), t, 120, 40, 7, BLU, a)
+    for i in range(4):
+        y = 205 + i * 80
+        d.ellipse([P(312), P(y - 12), P(372), P(y + 12)], outline=mix(ORA, a), width=P(8))
+    for i in range(16):
+        y = 185 + i * 18
+        d.ellipse([P(370), P(y - 6), P(424), P(y + 6)], outline=mix(ROY, a), width=P(3))
+    line(d, [(424, 185), (620, 185), (620, 260)], TXT, 3, a)
+    line(d, [(424, 455), (560, 455), (560, 520), (620, 520), (620, 380)], TXT, 3, a)
+    rrect(d, (604, 260, 636, 330), 5, MUTED, a)
+    rect(d, (614, 330, 626, 350), MUTED, a)
+    rect(d, (600, 370, 640, 382), MUTED, a)
+    if funke:
+        blitz(d, 620, 360, 1.0, a)
+    rrect(d, (720, 200, 1190, 300), 16, CARD, a)
+    text(d, 750, 250, 'Primärstrom', 28, 'Bold', TXT, a, 'lm', bg=CARD)
+    rrect(d, (1030, 225, 1170, 275), 25, GRN if ein else CARD2, a, bg=CARD)
+    text(d, 1100, 250, 'EIN' if ein else 'AUS', 24, 'XB', BG if ein else MUTED, a, 'mm', bg=GRN if ein else CARD2)
+    text(d, 750, 340, 'SPANNUNG AN DER ZÜNDKERZE', 16, 'Bold', MUTED, a, 'lm')
+    rrect(d, (750, 360, 1170, 450), 12, (196, 214, 190), a)
+    v = 'ca. 30.000 V' if 6.5 <= t < 8.2 else '0 V'
+    text(d, 1150, 405, v, 44, 'Bold', (25, 35, 28), a, 'rm', bg=(196, 214, 190))
+    caption(d, t, [(1.0, 6.4, 'Einschalten: Strom fließt, das Magnetfeld baut sich auf'),
+                   (6.5, dur, 'Abschalten: Das Feld bricht zusammen – Hochspannung, Funke!')], ORA, y=618)
+
+
+ZA_WERTE = values_scene('ZÜNDANLAGE', ORA, [], [
+    ('12 V', 'Primärseite – aus dem Bordnetz'), ('wenige ms', 'Schließzeit – das Magnetfeld baut sich auf'),
+    ('ca. 10.000–30.000 V', 'Zündspannung, die der Funke braucht'), ('bis ca. 40.000 V', 'was die Zündspule liefern kann')],
+    note='Richtwerte – Hochspannung: Lebensgefahr!', title='Typische Werte', vsize=26)
+
+ZA_MERKE = merke_scene('ZÜNDANLAGE', ORA, [
+    'Steuergerät → Zündspule → Zündkerze', 'Einschalten: Magnetfeld baut sich auf',
+    'Abschalten: Hochspannung, der Funke springt', 'Fehler finden: Zündspule quertauschen'])
+
+
+def kerze_big(d, x, y, s, a, tip=(201, 195, 182), mas=(107, 118, 134)):
+    def R(x0, y0, x1, y1, c, o=None):
+        rrect(d, (x + x0 * s, y + y0 * s, x + x1 * s, y + y1 * s), 3 * s, c, a, outline=o, width=2 if o else 0)
+    R(110, 8, 130, 38, (169, 179, 193))
+    R(98, 38, 142, 198, (244, 241, 234), (138, 148, 163))
+    R(84, 196, 156, 242, (107, 118, 134))
+    R(96, 242, 144, 254, (198, 161, 90))
+    R(98, 254, 142, 334, (169, 179, 193))
+    for k in range(4):
+        line(d, [(x + 98 * s, y + (264 + k * 16) * s), (x + 142 * s, y + (274 + k * 16) * s)], (107, 118, 134), 3, a)
+    R(114, 334, 126, 358, tip)
+    line(d, [(x + 142 * s, y + 334 * s), (x + 142 * s, y + 382 * s), (x + 112 * s, y + 382 * s)], mas, 9 * s / 1.3, a)
+
+
+def zk_aufbau(d, t, dur):
+    header(d, t, 'ZÜNDKERZE', 'Aufbau einer Zündkerze', ORA)
+    a = pr(t, 0.2, 0.8)
+    kerze_big(d, 230, 95, 1.3, a)
+    lab = [(24, 'Anschluss'), (120, 'Isolator aus Keramik'), (220, 'Sechskant'), (294, 'Gewinde mit Dichtring'), (346, 'Mittelelektrode'), (382, 'Masseelektrode')]
+    for i, (yy, s) in enumerate(lab):
+        b = pr(t, 1.0 + i * 1.1, 1.5 + i * 1.1)
+        y = 95 + yy * 1.3
+        line(d, [(230 + 165 * 1.3, y), (600, y)], MUTED, 2, b)
+        text(d, 620, y, s, 28, 'Bold', TXT, b, 'lm')
+    if t > 8 and (t * 1.4) % 1 < 0.3:
+        blitz(d, 230 + 128 * 1.3, 95 + 370 * 1.3, 0.8, 1)
+    caption(d, t, [(8.0, dur, 'Zwischen den Elektroden springt der Funke')], ORA, y=612)
+
+
+def zk_bild(d, t, dur):
+    header(d, t, 'ZÜNDKERZE', 'Das Kerzenbild lesen', ORA)
+    items = [((184, 138, 90), 'Rehbraun', 'in Ordnung', GRN), ((29, 29, 31), 'Verrußt', 'zu fett, Kurzstrecke', ORA),
+             ((42, 36, 24), 'Verölt', 'Öl im Brennraum', ORA), ((242, 242, 242), 'Weiß', 'zu heiß – Gefahr!', RED)]
+    for i, (c, ti, sub, col) in enumerate(items):
+        st = 0.4 + i * 1.8
+        a = pr(t, st, st + 0.6)
+        x = 70 + i * 290
+        card(d, (x, 120, x + 270, 540), a, col)
+        rrect(d, (x + 95, 170, x + 175, 230), 4, (169, 179, 193), a, bg=CARD)
+        rrect(d, (x + 125, 230, x + 145, 290), 3, c, a, bg=CARD)
+        line(d, [(x + 172, 230), (x + 172, 330), (x + 120, 330)], c, 14, a, bg=CARD)
+        text(d, x + 135, 400, ti, 32, 'XB', TXT, a, 'mm', bg=CARD)
+        text(d, x + 135, 450, sub, 22, 'Semi', col, a, 'mm', bg=CARD)
+    caption(d, t, [(7.8, dur, 'Das Kerzenbild verrät, wie der Motor arbeitet')], ORA, y=612)
+
+
+ZK_WECHSEL = values_scene('ZÜNDKERZE', ORA, [], [
+    ('kalt', 'Motor – sonst reißt das Alu-Gewinde'), ('von Hand', 'eindrehen – nicht verkanten'),
+    ('Drehmoment', 'mit dem Drehmomentschlüssel laut Hersteller'), ('ca. 0,7–1,1 mm', 'Elektrodenabstand (Richtwert)')],
+    note='Typ, Wärmewert und Abstand immer laut Hersteller', title='Zündkerzen wechseln', vsize=26)
+
+ZK_MERKE = merke_scene('ZÜNDKERZE', ORA, [
+    'Isolator, Mittel- und Masseelektrode', 'Abstand und Wärmewert laut Hersteller',
+    'Rehbraun = in Ordnung', 'Wechseln: kalt, von Hand, Drehmomentschlüssel'])
+
+
+def zz_kolben(d, t, dur):
+    header(d, t, 'ZÜNDZEITPUNKT', 'Warum vor OT zünden?', ORA)
+    a = pr(t, 0.2, 0.8)
+    cx, cy, r, L = 330, 450, 70, 190
+    ang = (t - 1.0) * 1.0 * math.pi if t > 1 else 0
+    px, py = cx + r * math.sin(ang), cy - r * math.cos(ang)
+    ky = py - math.sqrt(L * L - (px - cx) ** 2)
+    line(d, [(220, 120), (220, 330), (440, 330), (440, 120), (220, 120)], TXT, 5, a)
+    rrect(d, (226, ky - 50, 434, ky + 10), 8, CARD2, a, outline=MUTED, width=3)
+    line(d, [(cx, ky - 20), (px, py)], MUTED, 10, a)
+    circle(d, (cx, cy), r, None, a, outline=MUTED, width=3)
+    circle(d, (px, py), 10, TXT, a)
+    phase = (math.degrees(ang) % 720)
+    vor = 690 <= phase or phase < 2
+    if t > 1 and 650 <= phase < 712:
+        blitz(d, 330, 140, 1.4, a)
+    brennt = t > 1 and (phase >= 690 or phase < 60)
+    if brennt:
+        rect(d, (224, 124, 436, ky - 52), mix(ORA, 0.45), a)
+    text(d, 330, 100, 'OT', 24, 'XB', TXT, a, 'mm')
+    rrect(d, (640, 210, 1190, 420), 18, CARD, a)
+    text(d, 670, 260, 'Die Verbrennung braucht Zeit', 28, 'Bold', TXT, a, 'lm', bg=CARD)
+    text(d, 670, 320, 'Zündung: vor OT', 30, 'XB', ORA, a, 'lm', bg=CARD)
+    text(d, 670, 375, 'höchster Druck: kurz nach OT', 30, 'XB', ORA, a, 'lm', bg=CARD)
+    caption(d, t, [(1.0, dur, 'Darum wird schon vor dem oberen Totpunkt gezündet')], ORA, y=612)
+
+
+def zz_frueh(d, t, dur):
+    header(d, t, 'ZÜNDZEITPUNKT', 'Frühverstellung', ORA)
+    a = pr(t, 0.2, 0.8)
+    k = pr(t, 1.5, 8.0)
+    n = 800 + 5200 * k
+    w = 6 + 24 * k
+    cx, cy, r = 360, 340, 170
+    circle(d, (cx, cy), r, None, a, outline=MUTED, width=4)
+    pts = [(cx + r * math.sin(math.radians(-q)), cy - r * math.cos(math.radians(-q))) for q in [w * i / 30 for i in range(31)]]
+    line(d, pts, ORA, 14, a)
+    line(d, [(cx, cy - r - 20), (cx, cy - r + 25)], TXT, 5, a)
+    text(d, cx, cy - r - 40, 'OT', 26, 'XB', TXT, a, 'mm')
+    circle(d, pts[-1], 14, YLW, a)
+    text(d, cx, cy - 6, f'ca. {w:.0f}°', 56, 'XB', ORA, a, 'mm')
+    text(d, cx, cy + 46, 'vor OT', 24, 'Bold', MUTED, a, 'mm')
+    rrect(d, (700, 230, 1190, 330), 16, CARD, a)
+    text(d, 730, 280, 'Drehzahl', 28, 'Bold', TXT, a, 'lm', bg=CARD)
+    text(d, 1160, 280, f'{n:,.0f} 1/min'.replace(',', '.'), 30, 'XB', ORA, a, 'rm', bg=CARD)
+    text(d, 940, 380, 'Beispielwerte', 18, 'Med', MUTED, a, 'mm')
+    caption(d, t, [(0.6, dur, 'Mehr Drehzahl: früher zünden – die Verbrennung braucht gleich lange')], ORA, y=612)
+
+
+def zz_klopf(d, t, dur):
+    header(d, t, 'ZÜNDZEITPUNKT', 'Klopfen und Klopfregelung', ORA)
+    a = pr(t, 0.2, 0.8)
+    rrect(d, (80, 130, 1200, 400), 18, CARD, a)
+    text(d, 110, 165, 'Signal Klopfsensor', 20, 'Bold', MUTED, a, 'lm', bg=CARD)
+    later = t > 6.0
+    pts = []
+    for i in range(0, 1061, 3):
+        x = 110 + i
+        tt = i / 60 + t * 3
+        y = 270 + 14 * math.sin(tt * 3.1) * math.sin(tt * 0.7)
+        if 2.0 < t < 6.0 and (int(tt) % 3 == 0):
+            y += 60 * math.sin(tt * 25) * math.exp(-((tt % 1) * 3))
+        pts.append((x, y))
+    line(d, pts, GRN if not (2.0 < t < 6.0) else RED, 3, a, bg=CARD)
+    if 2.0 < t < 6.0:
+        text(d, 1170, 165, 'KLOPFEN!', 24, 'XB', RED, pr(t, 2.0, 2.4), 'rm', bg=CARD)
+    b = pr(t, 6.0, 6.6)
+    rrect(d, (300, 430, 980, 520), 16, CARD, b)
+    text(d, 640, 475, 'Zündung dieses Zylinders später', 30, 'XB', ORA, b, 'mm', bg=CARD)
+    caption(d, t, [(0.6, 5.8, 'Der Klopfsensor erkennt die harten Schwingungen'),
+                   (6.0, dur, 'Das Steuergerät zündet später – dann wieder Schritt für Schritt früher')], ORA, y=612)
+
+
+ZZ_MERKE = merke_scene('ZÜNDZEITPUNKT', ORA, [
+    'Zündung vor OT – die Verbrennung braucht Zeit', 'Mehr Drehzahl → früher zünden',
+    'Klopfen → Zündung später', 'Aussetzer: Kat in Gefahr, Quertausch'])
+
+VIDEOS_MOTOR.update({
+    'mm-zuendanlage': (ORA, [(title_scene('Z', 'Zündanlage', 'Wie aus 12 Volt ein Zündfunke wird', ORA, kicker=KICK3), 5.0),
+                             (za_kette, 10.0), (za_spule, 12.5), (ZA_WERTE, 9.0), (ZA_MERKE, 7.5)]),
+    'mm-zuendkerze': (ORA, [(title_scene('ZK', 'Zündkerze', 'Aufbau, Kerzenbild und richtig wechseln', ORA, size=96, kicker=KICK3), 5.0),
+                            (zk_aufbau, 11.0), (zk_bild, 11.5), (ZK_WECHSEL, 9.0), (ZK_MERKE, 7.5)]),
+    'mm-zuendzeitpunkt': (ORA, [(title_scene('OT', 'Zündzeitpunkt', 'Früh, spät und Klopfen', ORA, size=96, kicker=KICK3), 5.0),
+                                (zz_kolben, 11.0), (zz_frueh, 10.0), (zz_klopf, 11.0), (ZZ_MERKE, 7.5)]),
+})

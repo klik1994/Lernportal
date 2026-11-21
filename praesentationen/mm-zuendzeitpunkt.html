@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Zündzeitpunkt – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 96px; }
+  .funke { animation: fk 1.2s infinite; }
+  @keyframes fk { 0%, 60% { opacity: 0; } 65%, 80% { opacity: 1; } 100% { opacity: 0; } }
+</style>
+</head>
+<body class="t-mm3">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · ZÜNDUNG</div>
+  <div class="symbol" style="font-size:72px">OT</div>
+  <h1>Zündzeitpunkt</h1>
+  <p>Früh, spät, Klopfen und Zündaussetzer</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">ZÜNDZEITPUNKT</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Warum vor dem oberen Totpunkt gezündet wird</li>
+      <li class="step from-left"><span class="num">2</span>Wie Drehzahl und Last den Zündzeitpunkt verändern</li>
+      <li class="step from-left"><span class="num">3</span>Klopfen und Klopfregelung</li>
+      <li class="step from-left"><span class="num">4</span>Zündaussetzer erkennen und finden</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" id="s-dr">
+  <span class="tag">ZÜNDZEITPUNKT</span><h2>Warum vor OT zünden? – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost" data-z="0">Zu früh</button><button class="btn ghost on" data-z="1">Richtig</button><button class="btn ghost" data-z="2">Zu spät</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.4fr 1fr">
+      <svg viewBox="0 0 600 300" width="560" height="280" style="display:block;margin:0 auto">
+  <line x1="50" y1="250" x2="570" y2="250" stroke="#94a4ba" stroke-width="2"/>
+  <line x1="260" y1="30" x2="260" y2="250" stroke="#94a4ba" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="260" y="276" text-anchor="middle" font-size="16" font-weight="800" fill="#ecf1f8">OT</text>
+  <text x="70" y="276" font-size="14" font-weight="700" fill="#94a4ba">vor OT</text>
+  <text x="550" y="276" text-anchor="end" font-size="14" font-weight="700" fill="#94a4ba">nach OT</text>
+  <text x="56" y="40" font-size="14" font-weight="700" fill="#94a4ba">Druck im Zylinder</text>
+  <path id="dr-kurve" d="" fill="none" stroke="#ff8f3f" stroke-width="5" stroke-linejoin="round"/>
+  <g id="dr-z"><path d="M0 -14 l-7 12 h8 l-6 14" fill="none" stroke="#ffd34d" stroke-width="4" stroke-linecap="round"/><text y="-22" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">Zündung</text></g>
+</svg>
+      <div class="card" id="dr-t" style="font-size:18px;font-weight:600;line-height:1.5"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Die Verbrennung braucht Zeit. Der höchste Druck soll kurz nach OT entstehen – darum wird vorher gezündet. Vereinfachte Darstellung.</p>
+  </div>
+</section>
+
+<section class="slide" id="s-fv">
+  <span class="tag">ZÜNDZEITPUNKT</span><h2>Frühverstellung – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="ctrl"><span style="width:280px">Drehzahl: <span class="c" id="fv-n">2.000 1/min</span></span><input type="range" id="fv" min="800" max="6000" step="200" value="2000"></div>
+    <div class="choice" style="margin:12px 0"><button class="btn ghost on" data-l="t">Teillast</button><button class="btn ghost" data-l="v">Volllast</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:260px 1fr">
+      <svg class="klein" viewBox="0 0 260 260" width="240" height="240" style="display:block;margin:0 auto">
+  <circle cx="130" cy="130" r="95" fill="none" stroke="#94a4ba" stroke-width="3"/>
+  <path id="fv-bogen" d="" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round"/>
+  <line x1="130" y1="22" x2="130" y2="48" stroke="#ecf1f8" stroke-width="4"/>
+  <text x="130" y="16" text-anchor="middle" font-size="15" font-weight="800" fill="#ecf1f8">OT</text>
+  <g id="fv-z"><circle r="9" fill="#ffd34d"/></g>
+  <text x="130" y="138" text-anchor="middle" font-size="26" font-weight="900" fill="#ff8f3f" id="fv-w">—</text>
+  <text x="130" y="162" text-anchor="middle" font-size="14" font-weight="700" fill="#94a4ba">vor OT</text>
+</svg>
+      <div class="card" style="font-size:18px;font-weight:600;line-height:1.5">
+        <p style="margin:0 0 10px"><span class="c">Mehr Drehzahl → früher zünden:</span> Der Kolben ist schneller, die Verbrennung braucht aber gleich lange.</p>
+        <p style="margin:0"><span class="c">Volllast → später zünden:</span> Viel Füllung brennt schneller, und die Klopfgefahr steigt.</p>
+      </div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Beispielwerte – das Steuergerät nimmt den Wert aus dem Zündkennfeld.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ZÜNDZEITPUNKT</span><h2>Was das Steuergerät berücksichtigt</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step" style="border-top-color:var(--grn)"><b>Drehzahl und Last</b><span>Grundwert aus dem Zündkennfeld</span></div><div class="flow-arrow step k-e"></div>
+      <div class="glied step" style="border-top-color:var(--grn)"><b>Korrekturen</b><span>Motortemperatur, Ansauglufttemperatur, Klopfen</span></div><div class="flow-arrow step k-v"></div>
+      <div class="glied step" style="border-top-color:var(--ora)"><b>Zündzeitpunkt</b><span>für jeden Zylinder</span></div>
+    </div>
+    <div class="tip step" style="margin-top:20px"><b>Gut zu wissen</b>Den Zündzeitpunkt stellt man heute nicht mehr ein – du kannst ihn aber im Diagnosegerät als Messwert ablesen (Grad vor OT).</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ZÜNDZEITPUNKT</span><h2>Klopfen</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Was ist Klopfen?</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Das Gemisch entzündet sich an mehreren Stellen <b>von selbst</b></li><li>es entstehen harte Druckspitzen</li><li>man hört ein helles Klingeln</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Ursachen</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Zündung zu früh</li><li>Kraftstoff mit zu niedriger Oktanzahl</li><li>Motor zu heiß, Ablagerungen im Brennraum</li></ul></div>
+      <div class="warn step" style="grid-column:1/-1"><b>Folgen</b>Dauerhaftes Klopfen zerstört Kolben, Kolbenringe und Zylinderkopfdichtung.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ZÜNDZEITPUNKT</span><h2>Die Klopfregelung</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step" style="border-top-color:var(--grn)"><b>Klopfsensor</b><span>am Motorblock – erzeugt bei Klopfschwingungen eine Spannung</span></div><div class="flow-arrow step k-e"></div>
+      <div class="glied step" style="border-top-color:var(--pur)"><b>Steuergerät</b><span>erkennt, welcher Zylinder klopft</span></div><div class="flow-arrow step k-v"></div>
+      <div class="glied step" style="border-top-color:var(--ora)"><b>Zündung später</b><span>nur bei diesem Zylinder, danach Schritt für Schritt wieder früher</span></div>
+    </div>
+    <div class="tip step" style="margin-top:20px"><b>Klopfsensor einbauen</b>Genau mit dem Anzugsdrehmoment laut Hersteller anziehen, keine Unterlegscheiben – sonst meldet er falsch. Prüfen mit Diagnosegerät oder Oszilloskop.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ZÜNDZEITPUNKT</span><h2>Zündaussetzer</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">So erkennt sie das Steuergerät</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>der Kurbelwellensensor meldet die Drehzahl sehr genau</li><li>fehlt eine Verbrennung, wird die Kurbelwelle kurz langsamer</li><li>Eintrag im Fehlerspeicher, Aussetzerzähler pro Zylinder</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Folgen</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Ruckeln, Leistungsverlust</li><li>unverbrannter Kraftstoff gelangt in den Katalysator</li><li>der Kat überhitzt und kann zerstört werden</li></ul></div>
+      <div class="warn step" style="grid-column:1/-1"><b>Motorkontrollleuchte blinkt</b>Starke Aussetzer, Gefahr für den Kat: Leistung wegnehmen und das Fahrzeug bald in die Werkstatt bringen. Oft wird der Zylinder abgeschaltet.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ZÜNDZEITPUNKT</span><h2>Zündaussetzer finden</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fehlerspeicher und Aussetzerzähler lesen<small>welcher Zylinder ist betroffen?</small></li>
+      <li class="step">Zündspule quertauschen<small>wandert der Fehler mit, ist die Zündspule defekt</small></li>
+      <li class="step">Zündkerze prüfen oder quertauschen<small>Kerzenbild, Elektrodenabstand, Risse im Isolator</small></li>
+      <li class="step">Fehler bleibt am Zylinder?<small>Einspritzventil und Kompression prüfen</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ZÜNDZEITPUNKT</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-zuendzeitpunkt.mp4" poster="videos/mm-zuendzeitpunkt.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ZÜNDZEITPUNKT</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Warum wird vor dem oberen Totpunkt gezündet?</p>
+      <div class="opts"><button class="opt">Weil die Verbrennung Zeit braucht</button><button class="opt">Damit der Anlasser entlastet wird</button><button class="opt">Weil die Zündspule sonst zu heiß wird</button></div>
+      <div class="fb">Der höchste Druck soll kurz nach OT entstehen – darum muss vorher gezündet werden.</div></div>
+    <div class="q" data-correct="1"><p>2. Was macht das Steuergerät bei steigender Drehzahl?</p>
+      <div class="opts"><button class="opt">Später zünden</button><button class="opt">Früher zünden</button><button class="opt">Nichts</button></div>
+      <div class="fb">Der Kolben ist schneller, die Verbrennung braucht gleich lange – also früher zünden.</div></div>
+    <div class="q" data-correct="2"><p>3. Was macht die Klopfregelung, wenn ein Zylinder klopft?</p>
+      <div class="opts"><button class="opt">Sie erhöht den Ladedruck</button><button class="opt">Sie spritzt mehr Öl ein</button><button class="opt">Sie zündet diesen Zylinder später</button></div>
+      <div class="fb">Danach wird der Zündzeitpunkt Schritt für Schritt wieder früher gestellt.</div></div>
+    <div class="q" data-correct="0"><p>4. Die Motorkontrollleuchte blinkt. Was bedeutet das?</p>
+      <div class="opts"><button class="opt">Starke Zündaussetzer – Gefahr für den Katalysator</button><button class="opt">Ölwechsel fällig</button><button class="opt">Alles in Ordnung</button></div>
+      <div class="fb">Leistung wegnehmen und bald in die Werkstatt.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ZÜNDZEITPUNKT</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Zündung vor OT – die Verbrennung braucht Zeit</span></li>
+        <li class="step"><span>Mehr Drehzahl → früher<small>Volllast → später</small></span></li>
+        <li class="step"><span>Klopfen: Zündung später (Klopfregelung)</span></li>
+        <li class="step"><span>Aussetzer: Quertausch, Kat schützen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Z%C3%BCndung" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const X = a => 50 + (a + 60) * 3.5;
+  const Z = [
+    [-42, -4, 140, true, '<b class="red">Zu früh:</b> Der Druck steigt, während der Kolben noch nach oben läuft. Er arbeitet gegen den Kolben – <b>Klopfgefahr</b>, Motorschaden möglich.'],
+    [-20, 14, 165, false, '<b class="grn">Richtig:</b> Der höchste Druck entsteht kurz nach OT. Der Kolben wird kräftig nach unten gedrückt – <b>volle Leistung</b>, wenig Verbrauch.'],
+    [6, 42, 85, false, '<b class="ora">Zu spät:</b> Der Kolben läuft schon nach unten, der Druck bleibt niedrig. <b>Weniger Leistung</b>, mehr Verbrauch, heißes Abgas.']
+  ];
+  const bt = document.querySelectorAll('#s-dr [data-z]');
+  function z(i) {
+    const [az, pk, h, klopf] = Z[i];
+    let d = '';
+    for (let a = -60; a <= 80; a += 1) {
+      let p = 55 * Math.exp(-Math.pow(a / 32, 2)) + h * Math.exp(-Math.pow((a - pk) / 15, 2)) * (a > az ? 1 : 0.0);
+      if (a > az) p = 55 * Math.exp(-Math.pow(a / 32, 2)) + h * Math.exp(-Math.pow((a - pk) / 15, 2)) * Math.min(1, (a - az) / 10);
+      if (klopf && a > pk - 6 && a < pk + 16) p += 12 * Math.sin(a * 2.2);
+      d += (d ? ' L' : 'M') + X(a).toFixed(1) + ' ' + (250 - p).toFixed(1);
+    }
+    document.getElementById('dr-kurve').setAttribute('d', d);
+    document.getElementById('dr-z').setAttribute('transform', 'translate(' + X(az) + ' ' + 200 + ')');
+    document.getElementById('dr-t').innerHTML = Z[i][4];
+    bt.forEach(x => x.classList.toggle('on', +x.dataset.z === i));
+  }
+  bt.forEach(x => x.onclick = () => z(+x.dataset.z)); z(1);
+
+  const fv = document.getElementById('fv'); let last = 't';
+  const lb = document.querySelectorAll('#s-fv [data-l]');
+  function f() {
+    const n = +fv.value;
+    const w = Math.round(6 + (n - 800) / 5200 * 24 + (last === 't' ? 10 : 0));
+    document.getElementById('fv-n').textContent = n.toLocaleString('de-DE') + ' 1/min';
+    document.getElementById('fv-w').textContent = 'ca. ' + w + '°';
+    const r = 95, cx = 130, cy = 130, rad = -w * Math.PI / 180;
+    const px = cx + r * Math.sin(rad), py = cy - r * Math.cos(rad);
+    document.getElementById('fv-z').setAttribute('transform', 'translate(' + px.toFixed(1) + ' ' + py.toFixed(1) + ')');
+    document.getElementById('fv-bogen').setAttribute('d', 'M' + px.toFixed(1) + ' ' + py.toFixed(1) + ' A' + r + ' ' + r + ' 0 0 1 ' + cx + ' ' + (cy - r));
+    lb.forEach(x => x.classList.toggle('on', x.dataset.l === last));
+  }
+  fv.addEventListener('input', f);
+  lb.forEach(x => x.onclick = () => { last = x.dataset.l; f(); });
+  f();
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

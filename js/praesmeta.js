@@ -1,5 +1,5 @@
 const PraesMeta = (() => {
-  const FARBEN = { 't-strom': 'blu', 't-widerstand': 'red', 't-eva': 'pur', 't-sensoren': 'grn', 't-aktoren': 'ora', 't-mm': 'tea', 't-mm2': 'roy' };
+  const FARBEN = { 't-strom': 'blu', 't-widerstand': 'red', 't-eva': 'pur', 't-sensoren': 'grn', 't-aktoren': 'ora', 't-mm': 'tea', 't-mm2': 'roy', 't-mm3': 'ora' };
   const ohneTags = s => s.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 
   function parseMeta(html) {
