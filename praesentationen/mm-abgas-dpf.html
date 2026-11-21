@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>DPF und AdBlue – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+</style>
+</head>
+<body class="t-mm5">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · ABGAS</div>
+  <div class="symbol" style="font-size:72px">DPF</div>
+  <h1>DPF und AdBlue</h1>
+  <p>Abgasreinigung beim Diesel – und der Partikelfilter beim Benziner</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">DPF UND ADBLUE</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Wie die Abgasanlage eines modernen Diesels aufgebaut ist</li>
+      <li class="step from-left"><span class="num">2</span>Wie der Partikelfilter Ruß sammelt und freibrennt</li>
+      <li class="step from-left"><span class="num">3</span>Wie AdBlue die Stickoxide verringert</li>
+      <li class="step from-left"><span class="num">4</span>Sicher arbeiten und typische Fehler</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DPF UND ADBLUE</span><h2>Aufbau der Abgasanlage</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Oxidations-Kat</b><span>wandelt CO und HC um</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Partikelfilter (DPF)</b><span>hält den Ruß zurück</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>AdBlue-Einspritzung</b><span>Dosierventil vor dem SCR-Kat</span></div><div class="flow-arrow step"></div>
+      <div class="glied step hd"><b>SCR-Kat</b><span>wandelt Stickoxide um</span></div>
+    </div>
+    <div class="tip step" style="margin-top:18px"><b>Warum kein Dreiwege-Kat?</b>Der Diesel arbeitet mit Luftüberschuss (Lambda größer 1). Dabei kann ein Dreiwege-Kat die Stickoxide nicht umwandeln – darum gibt es eigene Bauteile.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DPF UND ADBLUE</span><h2>Der Partikelfilter</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Das Abgas strömt durch <span class="c">poröse Wände</span><small>die Kanäle sind wechselseitig verschlossen – der Ruß bleibt hängen</small></li>
+      <li class="step">Der Filter <span class="c">füllt sich</span><small>ein Differenzdrucksensor misst den Druck vor und nach dem Filter</small></li>
+      <li class="step">Der Ruß wird <span class="c">verbrannt</span> (Regeneration)<small>passiv bei langer Fahrt, aktiv durch Nacheinspritzung bei ca. 550–650 °C (Richtwert)</small></li>
+      <li class="step">Übrig bleibt <span class="c">Asche</span><small>sie verbrennt nicht – nach sehr hoher Laufleistung muss der Filter gereinigt oder getauscht werden</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide" id="s-dp">
+  <span class="tag">DPF UND ADBLUE</span><h2>Beladung und Regeneration – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost" data-f="stadt">Kurzstrecke</button><button class="btn ghost" data-f="bahn">Autobahn</button><button class="btn ghost" data-f="reg">Aktive Regeneration</button></div>
+    <div class="grid2" style="align-items:center">
+      <div class="card">
+        <div class="muted" style="font-size:15px;font-weight:800">RUSSBELADUNG</div><div class="lcd2" id="dp-v" style="font-size:32px;margin-top:6px">30 %</div>
+        <div style="height:20px;background:var(--card2);border-radius:8px;margin-top:12px;overflow:hidden"><div id="dp-bar" style="height:100%;width:30%;background:var(--muted);transition:width .2s"></div></div>
+        <div class="muted" style="font-size:15px;font-weight:800;margin-top:14px">ABGASTEMPERATUR <span id="dp-temp" class="c">ca. 200 °C</span></div>
+      </div>
+      <div class="card" id="dp-t" style="font-size:18px;font-weight:600;line-height:1.5"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Vereinfacht, Beispielwerte.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DPF UND ADBLUE</span><h2>AdBlue und SCR-Kat</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step" style="border-top-color:var(--blu)"><b>AdBlue-Tank</b><span>Harnstoff-Wasser-Lösung, beheizt</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Dosierventil</b><span>spritzt fein ins heiße Abgas – daraus wird Ammoniak</span></div><div class="flow-arrow step"></div>
+      <div class="glied step hd"><b>SCR-Kat</b><span>Stickoxide + Ammoniak → Stickstoff + Wasser</span></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <div class="tip step"><b>NOx-Sensoren</b>vor und nach dem SCR-Kat – das Steuergerät dosiert und überwacht damit die Menge.</div>
+      <div class="tip step"><b>Gefriert bei ca. −11 °C</b>Darum sind Tank und Leitungen beheizt (Richtwert).</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DPF UND ADBLUE</span><h2>Sicher arbeiten und Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="warn step"><b>Heiß!</b>Bei der Regeneration wird die Abgasanlage sehr heiß. Zwangsregeneration nur nach Herstellervorgabe, nicht über trockenem Gras, Abgasabsaugung hitzefest.</div>
+      <div class="warn step"><b>AdBlue leer</b>Rechtzeitig nachfüllen – ist der Tank leer, startet der Motor nach dem Abstellen nicht mehr.</div>
+      <div class="tip step"><b>Nur AdBlue in den AdBlue-Tank</b>Kein Wasser, kein Diesel. AdBlue nie in den Dieseltank – das zerstört die Einspritzanlage.</div>
+      <div class="tip step"><b>Weiße Kristalle</b>Getrocknetes AdBlue an Dosierventil oder Leitungen: auf Undichtigkeit prüfen.</div>
+      <div class="tip step"><b>DPF voll trotz Fahrt?</b>Differenzdrucksensor und seine Schläuche prüfen – ein abgerutschter Schlauch täuscht falsche Werte vor.</div>
+      <div class="tip step"><b>Ottopartikelfilter (OPF)</b>Auch moderne Benzin-Direkteinspritzer haben einen Partikelfilter. Er brennt meist im normalen Betrieb frei.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DPF UND ADBLUE</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-abgas-dpf.mp4" poster="videos/mm-abgas-dpf.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DPF UND ADBLUE</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Was macht der Dieselpartikelfilter (DPF)?</p>
+      <div class="opts"><button class="opt">Er hält den Ruß zurück</button><button class="opt">Er wandelt Stickoxide um</button><button class="opt">Er kühlt das Abgas</button></div>
+      <div class="fb">Der Ruß wird gesammelt und später verbrannt.</div></div>
+    <div class="q" data-correct="1"><p>2. Warum füllt sich der DPF bei vielen Kurzstrecken?</p>
+      <div class="opts"><button class="opt">Weil der Tank zu voll ist</button><button class="opt">Weil das Abgas nicht heiß genug zum Freibrennen wird</button><button class="opt">Weil die Batterie schwach ist</button></div>
+      <div class="fb">Für die Regeneration braucht es hohe Abgastemperaturen.</div></div>
+    <div class="q" data-correct="2"><p>3. Was macht AdBlue im SCR-Kat?</p>
+      <div class="opts"><button class="opt">Es reinigt den DPF</button><button class="opt">Es kühlt den Turbolader</button><button class="opt">Es wandelt Stickoxide in Stickstoff und Wasser um</button></div>
+      <div class="fb">Aus AdBlue entsteht Ammoniak, das mit den Stickoxiden reagiert.</div></div>
+    <div class="q" data-correct="0"><p>4. Was passiert, wenn der AdBlue-Tank leer ist?</p>
+      <div class="opts"><button class="opt">Der Motor startet nach dem Abstellen nicht mehr</button><button class="opt">Nichts</button><button class="opt">Der Motor läuft mit mehr Leistung</button></div>
+      <div class="fb">Darum warnt das Fahrzeug frühzeitig – rechtzeitig nachfüllen.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DPF UND ADBLUE</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Oxi-Kat → DPF → AdBlue → SCR-Kat</span></li>
+        <li class="step"><span>DPF sammelt Ruß, Regeneration verbrennt ihn<small>Kurzstrecke füllt den Filter</small></span></li>
+        <li class="step"><span>AdBlue: Stickoxide → Stickstoff + Wasser</span></li>
+        <li class="step"><span>Regeneration: heiß! AdBlue nie leer fahren</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Abgas" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  let bel = 30, mode = 'stadt', temp = 200;
+  const bt = document.querySelectorAll('#s-dp [data-f]');
+  const TX = {
+    stadt: '<b class="ora">Kurzstrecke:</b> Das Abgas wird nicht heiß genug. Der Ruß sammelt sich – der Filter füllt sich.',
+    bahn: '<b class="grn">Autobahn:</b> Hohe Abgastemperatur – ein Teil des Rußes verbrennt von selbst (passive Regeneration).',
+    reg: '<b class="grn">Aktive Regeneration:</b> Das Steuergerät spritzt nach. Das Abgas wird ca. 600 °C heiß und der Ruß verbrennt. Dabei möglichst nicht abstellen.',
+    voll: '<b class="red">Filter voll:</b> Warnleuchte, weniger Leistung. Jetzt hilft eine längere Fahrt nach Bordbuch – oder die Werkstatt.'
+  };
+  function setm(m) { mode = m; bt.forEach(x => x.classList.toggle('on', x.dataset.f === m)); }
+  bt.forEach(x => x.onclick = () => setm(x.dataset.f));
+  setm('stadt');
+  setInterval(() => {
+    if (!document.getElementById('s-dp').classList.contains('active')) return;
+    let tz;
+    if (mode === 'stadt') { bel = Math.min(100, bel + 0.6); tz = 200; }
+    else if (mode === 'bahn') { bel = Math.max(20, bel - 0.2); tz = 400; }
+    else { bel = Math.max(3, bel - 1.2); tz = 600; if (bel <= 3) setm('bahn'); }
+    temp += (tz - temp) * 0.08;
+    document.getElementById('dp-v').textContent = Math.round(bel) + ' %';
+    const b = document.getElementById('dp-bar'); b.style.width = bel + '%'; b.style.background = bel > 85 ? 'var(--red)' : 'var(--muted)';
+    document.getElementById('dp-temp').textContent = 'ca. ' + Math.round(temp / 10) * 10 + ' °C';
+    document.getElementById('dp-t').innerHTML = (bel >= 95 && mode === 'stadt') ? TX.voll : TX[mode];
+  }, 100);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

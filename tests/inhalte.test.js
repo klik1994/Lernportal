@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 10 Themen, 87 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 11 Themen, 97 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
-  assert.strictEqual(r.themen.length, 10);
-  assert.strictEqual(r.fragen.length, 87);
+  assert.strictEqual(r.themen.length, 11);
+  assert.strictEqual(r.fragen.length, 97);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
@@ -156,6 +156,18 @@ test('Echte Inhaltsdatei: Motormanagement Dieselmanagement mit Präsentationen u
   assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Diesel-Grundlagen', 'Common-Rail', 'Turbo und AGR']);
   t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
   ['mm-diesel-grundlagen', 'mm-common-rail', 'mm-diesel-turbo'].forEach(n => {
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
+  });
+});
+
+test('Echte Inhaltsdatei: Motormanagement Abgas mit Präsentationen und Videos', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  const t = r.themen.find(x => x.name === 'Motormanagement: Abgas');
+  assert.strictEqual(t.bereich, 'Motormanagement');
+  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Lambdasonde', 'Katalysator', 'DPF und AdBlue']);
+  t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
+  ['mm-abgas-lambda', 'mm-abgas-kat', 'mm-abgas-dpf'].forEach(n => {
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
   });

@@ -935,3 +935,195 @@ VIDEOS_MOTOR.update({
     'mm-diesel-turbo': (PUR, [(title_scene('T', 'Turbo und AGR', 'Aufladung und Abgasrückführung', PUR, kicker=KICK4), 5.0),
                               (dt_turbo, 10.0), (dt_agr, 10.0), (DT_WERTE, 9.0), (DT_MERKE, 7.5)]),
 })
+
+
+# =================== ABGAS ===================
+KICK5 = 'ABGAS  ·  LERNVIDEO'
+
+
+def trace(d, x0, y0, w, h, fn, col, a, bg=BG, n=170):
+    pts = [(x0 + w * i / n, y0 + h - h * clamp(fn(i / n))) for i in range(n + 1)]
+    line(d, pts, col, 4, a, bg)
+
+
+def al_stoffe(d, t, dur):
+    header(d, t, 'ABGAS', 'Was ist im Abgas?', GRN)
+    l = [('CO', 'Kohlenmonoxid – giftig', RED), ('HC', 'unverbrannter Kraftstoff', RED), ('NOx', 'Stickoxide', RED), ('Ruß', 'Partikel', RED)]
+    r = [('N₂', 'Stickstoff', GRN), ('H₂O', 'Wasserdampf', GRN), ('CO₂', 'klimaschädlich, nicht giftig', ORA)]
+    a = pr(t, 0.3, 0.8)
+    text(d, 340, 130, 'Schadstoffe', 30, 'XB', RED, a, 'mm')
+    text(d, 940, 130, 'Ungiftig', 30, 'XB', GRN, pr(t, 4.5, 5.0), 'mm')
+    for i, (s, sub, c) in enumerate(l):
+        b = pr(t, 0.8 + i * 0.7, 1.3 + i * 0.7)
+        y = 170 + i * 90
+        rrect(d, (90, y, 590, y + 74), 14, CARD, b)
+        text(d, 120, y + 37, s, 30, 'XB', c, b, 'lm', bg=CARD)
+        text(d, 230, y + 37, sub, 22, 'Semi', MUTED, b, 'lm', bg=CARD)
+    for i, (s, sub, c) in enumerate(r):
+        b = pr(t, 5.0 + i * 0.7, 5.5 + i * 0.7)
+        y = 170 + i * 90
+        rrect(d, (690, y, 1190, y + 74), 14, CARD, b)
+        text(d, 720, y + 37, s, 30, 'XB', c, b, 'lm', bg=CARD)
+        text(d, 830, y + 37, sub, 22, 'Semi', MUTED, b, 'lm', bg=CARD)
+    caption(d, t, [(8.0, dur, 'Kohlenmonoxid: unsichtbar und tödlich – Abgasabsaugung!')], GRN)
+
+
+def sprung(x, f=4, amp=1.0, ph=0):
+    return 0.5 + 0.42 * amp * math.tanh(5 * math.sin(2 * math.pi * f * x + ph))
+
+
+def al_sonde(d, t, dur):
+    header(d, t, 'LAMBDASONDE', 'Signal der Sprungsonde', GRN)
+    a = pr(t, 0.2, 0.8)
+    rrect(d, (90, 130, 1190, 470), 18, CARD, a)
+    x0, y0, w, h = 190, 160, 880, 280
+    line(d, [(x0, y0 + h), (x0 + w, y0 + h)], MUTED, 2, a, bg=CARD)
+    for v, lab in [(0.08, '0,1 V'), (0.92, '0,9 V')]:
+        text(d, x0 - 16, y0 + h - h * v, lab, 18, 'Bold', MUTED, a, 'rm', bg=CARD)
+    k = clamp((t - 0.8) / (4.0 - 0.8))
+    trace(d, x0, y0, w * k, h, lambda x: sprung(x * k + t * 0.15), GRN, a, CARD, n=max(2, int(170 * k)))
+    text(d, 1160, y0 + 20, 'fett', 22, 'XB', ORA, pr(t, 4.0, 4.5), 'rm', bg=CARD)
+    text(d, 1160, y0 + h - 20, 'mager', 22, 'XB', BLU, pr(t, 4.0, 4.5), 'rm', bg=CARD)
+    caption(d, t, [(0.6, 5.5, 'Mager: ca. 0,1 V – fett: ca. 0,8–0,9 V'), (5.6, dur, 'Gleichmäßiger Wechsel: Die Regelung hält Lambda bei 1')], GRN)
+
+
+def al_regel(d, t, dur):
+    header(d, t, 'LAMBDA-REGELUNG', 'Falschluft', GRN)
+    a = pr(t, 0.2, 0.8)
+    rrect(d, (90, 130, 700, 470), 18, CARD, a)
+    x0, y0, w, h = 120, 160, 550, 280
+    sw = 3.0
+    def fn(x):
+        tt = x * 6
+        return sprung(x * 1.5) if tt < sw else 0.1
+    trace(d, x0, y0, w * clamp((t - 0.6) / (6.0 - 0.6)), h, fn, GRN, a, CARD, n=200)
+    korr = 0 if t < 3.9 else min(25, (t - 3.9) * 6)
+    rrect(d, (760, 160, 1190, 300), 16, CARD, a)
+    text(d, 790, 195, 'Korrektur Einspritzmenge', 22, 'Bold', MUTED, a, 'lm', bg=CARD)
+    text(d, 1160, 255, f'+{korr:.0f} %', 48, 'XB', ORA if korr > 10 else GRN, a, 'rm', bg=CARD)
+    if korr >= 25:
+        rrect(d, (760, 330, 1190, 420), 16, CARD, 1)
+        text(d, 975, 375, 'Grenze – Fehlerspeicher', 26, 'XB', RED, 1, 'mm', bg=CARD)
+    caption(d, t, [(0.6, 3.8, 'Alles in Ordnung: Das Signal wechselt'),
+                   (3.9, dur, 'Falschluft: Die Sonde meldet „mager“ – das Steuergerät fettet an')], GRN)
+
+
+AL_WERTE = values_scene('LAMBDASONDE', GRN, [], [
+    ('vor Kat', 'Regelsonde: misst das Gemisch'), ('nach Kat', 'Diagnosesonde: überwacht den Kat'),
+    ('ab ca. 300 °C', 'arbeitet die Sonde – darum beheizt'), ('nahe 0 %', 'Korrekturwerte: Gemisch in Ordnung')],
+    note='Richtwerte – genaue Werte laut Hersteller', title='Gut zu wissen', vsize=26)
+
+AL_MERKE = merke_scene('LAMBDASONDE', GRN, [
+    'Schadstoffe: CO, HC, NOx, Ruß', 'Sonde vor Kat regelt, nach Kat überwacht',
+    'Sprungsonde: mager 0,1 V, fett 0,8–0,9 V', 'Korrekturwerte nahe 0 % sind gut'])
+
+
+def ak_umwandlung(d, t, dur):
+    header(d, t, 'KATALYSATOR', 'Der Dreiwege-Kat', GRN)
+    rows = [('CO', 'CO₂'), ('HC', 'CO₂ + H₂O'), ('NOx', 'N₂')]
+    for i, (s, z) in enumerate(rows):
+        b = pr(t, 0.6 + i * 1.6, 1.2 + i * 1.6)
+        y = 150 + i * 120
+        rrect(d, (150, y, 450, y + 90), 16, CARD, b)
+        text(d, 300, y + 45, s, 40, 'XB', RED, b, 'mm', bg=CARD)
+        arrow(d, (480, y + 45), (780, y + 45), GRN, 6, 20, b)
+        rrect(d, (810, y, 1130, y + 90), 16, CARD, b)
+        text(d, 970, y + 45, z, 36, 'XB', GRN, b, 'mm', bg=CARD)
+    caption(d, t, [(5.4, dur, 'Edelmetalle im Kat machen aus Schadstoffen ungiftige Stoffe')], GRN)
+
+
+def ak_fenster(d, t, dur):
+    header(d, t, 'KATALYSATOR', 'Das Lambdafenster', GRN)
+    a = pr(t, 0.2, 0.8)
+    k = clamp((t - 1.0) / (9.0 - 1.0))
+    lam = 0.92 + 0.16 * (0.5 - 0.5 * math.cos(k * 2 * math.pi)) if k < 1 else 1.0
+    lam = 0.92 + 0.16 * k if t < 9 else 1.0
+    if t > 9:
+        lam = lerp(1.08, 1.0, pr(t, 9.0, 10.0))
+    c = lambda x: max(5, min(98, x))
+    vals = [('CO', c(98 - (1 - lam) * 900 if lam < 1 else 98)), ('HC', c(96 - (1 - lam) * 700 if lam < 1 else 96)), ('NOx', c(97 - (lam - 1) * 1100 if lam > 1 else 97))]
+    rrect(d, (90, 130, 1190, 220), 16, CARD, a)
+    text(d, 120, 175, 'Lambda', 28, 'Bold', TXT, a, 'lm', bg=CARD)
+    win = abs(lam - 1) <= 0.015
+    text(d, 1160, 175, f'{lam:.2f}'.replace('.', ','), 40, 'XB', GRN if win else ORA, a, 'rm', bg=CARD)
+    for i, (n, v) in enumerate(vals):
+        y = 260 + i * 90
+        text(d, 90, y, n, 26, 'Bold', TXT, a, 'lm')
+        rrect(d, (220, y - 20, 1190, y + 20), 10, CARD, a)
+        rrect(d, (220, y - 20, 220 + 9.7 * v, y + 20), 10, GRN if v > 80 else ORA, a)
+    caption(d, t, [(0.6, dur, 'Nur bei Lambda = 1 werden alle drei Schadstoffe gut umgewandelt')], GRN)
+
+
+def ak_ueberwachung(d, t, dur):
+    header(d, t, 'KATALYSATOR', 'Kat-Überwachung', GRN)
+    alt = t > 5.5
+    a = pr(t, 0.2, 0.8)
+    for j, (lab, y0) in enumerate([('Sonde vor Kat', 140), ('Sonde nach Kat', 320)]):
+        rrect(d, (90, y0, 1190, y0 + 160), 16, CARD, a)
+        text(d, 120, y0 + 26, lab, 20, 'Bold', MUTED, a, 'lm', bg=CARD)
+        if j == 0:
+            trace(d, 120, y0 + 40, 1040, 110, lambda x: sprung(x + t * 0.1), GRN, a, CARD)
+        elif alt:
+            trace(d, 120, y0 + 40, 1040, 110, lambda x: sprung(x + t * 0.1 - 0.02), ORA, a, CARD)
+        else:
+            trace(d, 120, y0 + 40, 1040, 110, lambda x: 0.7 + 0.02 * math.sin(x * 20), ORA, a, CARD)
+    caption(d, t, [(0.6, 5.4, 'Guter Kat: Das Signal nach dem Kat bleibt ruhig'),
+                   (5.5, dur, 'Verbrauchter Kat: Es schwankt wie vorne – Fehlerspeicher')], GRN)
+
+
+AK_MERKE = merke_scene('KATALYSATOR', GRN, [
+    'CO, HC und NOx werden umgewandelt', 'Funktioniert nur bei Lambda = 1',
+    'Arbeitet erst warm – ab ca. 250 °C', 'Zündaussetzer zerstören den Kat'])
+
+
+def ad_kette(d, t, dur):
+    header(d, t, 'DIESEL-ABGAS', 'Aufbau der Abgasanlage', GRN)
+    kette_boxes(d, t, [('Oxi-Kat', 'CO, HC'), ('DPF', 'Ruß'), ('AdBlue', 'Dosierventil'), ('SCR-Kat', 'Stickoxide')], 220, 140, GRN, step=0.8, hd=(3,))
+    caption(d, t, [(0.6, dur, 'Jedes Bauteil hat seine eigene Aufgabe')], GRN)
+
+
+def ad_dpf(d, t, dur):
+    header(d, t, 'PARTIKELFILTER', 'Beladung und Regeneration', GRN)
+    a = pr(t, 0.2, 0.8)
+    if t < 6:
+        bel = 20 + 70 * clamp((t - 0.8) / (5.8 - 0.8)); temp = 200
+    else:
+        bel = 90 - 85 * clamp((t - 6.5) / (10.0 - 6.5)); temp = lerp(200, 600, pr(t, 6.0, 7.0))
+    rrect(d, (90, 140, 1190, 250), 16, CARD, a)
+    text(d, 120, 195, 'Rußbeladung', 28, 'Bold', TXT, a, 'lm', bg=CARD)
+    text(d, 1160, 195, f'{bel:.0f} %', 40, 'XB', RED if bel > 85 else TXT, a, 'rm', bg=CARD)
+    rrect(d, (90, 270, 1190, 310), 10, CARD, a)
+    rrect(d, (90, 270, 90 + 11 * bel, 310), 10, RED if bel > 85 else MUTED, a)
+    rrect(d, (90, 350, 1190, 450), 16, CARD, a)
+    text(d, 120, 400, 'Abgastemperatur', 28, 'Bold', TXT, a, 'lm', bg=CARD)
+    text(d, 1160, 400, f'ca. {round(temp / 10) * 10:.0f} °C', 36, 'XB', ORA if temp > 450 else MUTED, a, 'rm', bg=CARD)
+    caption(d, t, [(0.6, 5.9, 'Kurzstrecke: Der Filter füllt sich mit Ruß'),
+                   (6.0, dur, 'Regeneration: ca. 600 °C – der Ruß verbrennt')], GRN)
+
+
+def ad_adblue(d, t, dur):
+    header(d, t, 'ADBLUE', 'AdBlue und SCR-Kat', GRN)
+    kette_boxes(d, t, [('AdBlue-Tank', 'beheizt'), ('Dosierventil', 'ins heiße Abgas'), ('SCR-Kat', 'NOx → N₂ + H₂O')], 200, 140, GRN, step=0.8, hd=(2,))
+    b = pr(t, 3.5, 4.1)
+    rrect(d, (240, 400, 1040, 490), 16, CARD, b)
+    text(d, 640, 445, 'Stickoxide + Ammoniak → Stickstoff + Wasser', 28, 'XB', GRN, b, 'mm', bg=CARD)
+    caption(d, t, [(0.6, dur, 'AdBlue rechtzeitig nachfüllen – sonst startet der Motor nicht mehr')], GRN)
+
+
+AD_WERTE = values_scene('DIESEL-ABGAS', GRN, [], [
+    ('ca. 550–650 °C', 'aktive Regeneration des DPF'), ('Asche', 'verbrennt nicht – bleibt im Filter'),
+    ('ca. −11 °C', 'AdBlue gefriert – darum beheizt'), ('nie', 'AdBlue in den Dieseltank')],
+    note='Richtwerte – Regeneration: Abgasanlage sehr heiß!', title='Gut zu wissen', vsize=26)
+
+AD_MERKE = merke_scene('DPF UND ADBLUE', GRN, [
+    'Oxi-Kat → DPF → AdBlue → SCR-Kat', 'DPF sammelt Ruß, Regeneration verbrennt ihn',
+    'AdBlue: Stickoxide → Stickstoff + Wasser', 'Regeneration: heiß! AdBlue nie leer fahren'])
+
+VIDEOS_MOTOR.update({
+    'mm-abgas-lambda': (GRN, [(title_scene('λ', 'Lambdasonde', 'Schadstoffe und Lambda-Regelung', GRN, kicker=KICK5), 5.0),
+                              (al_stoffe, 10.5), (al_sonde, 9.0), (al_regel, 9.5), (AL_WERTE, 8.5), (AL_MERKE, 7.5)]),
+    'mm-abgas-kat': (GRN, [(title_scene('KAT', 'Katalysator', 'Dreiwege-Kat und Lambdafenster', GRN, size=80, kicker=KICK5), 5.0),
+                           (ak_umwandlung, 9.0), (ak_fenster, 10.5), (ak_ueberwachung, 10.5), (AK_MERKE, 7.5)]),
+    'mm-abgas-dpf': (GRN, [(title_scene('DPF', 'DPF und AdBlue', 'Abgasreinigung beim Diesel', GRN, size=80, kicker=KICK5), 5.0),
+                           (ad_kette, 7.0), (ad_dpf, 10.5), (ad_adblue, 9.0), (AD_WERTE, 8.5), (AD_MERKE, 7.5)]),
+})

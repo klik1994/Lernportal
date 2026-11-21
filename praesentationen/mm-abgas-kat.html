@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Katalysator – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+</style>
+</head>
+<body class="t-mm5">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · ABGAS</div>
+  <div class="symbol" style="font-size:72px">KAT</div>
+  <h1>Katalysator</h1>
+  <p>Dreiwege-Kat, Lambdafenster und Überwachung</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">KATALYSATOR</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Was der Dreiwege-Katalysator macht</li>
+      <li class="step from-left"><span class="num">2</span>Warum er Lambda = 1 braucht</li>
+      <li class="step from-left"><span class="num">3</span>Ab welcher Temperatur er arbeitet</li>
+      <li class="step from-left"><span class="num">4</span>Wie er überwacht wird und was ihn zerstört</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KATALYSATOR</span><h2>Der Dreiwege-Katalysator</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>CO → CO₂</b><span>giftiges Kohlenmonoxid wird zu Kohlendioxid</span></div>
+      <div class="val step from-left"><b>HC → CO₂ + H₂O</b><span>unverbrannter Kraftstoff wird zu Kohlendioxid und Wasser</span></div>
+      <div class="val step from-left"><b>NOx → N₂</b><span>Stickoxide werden zu Stickstoff</span></div>
+    </div>
+    <div class="tip step" style="margin-top:14px"><b>Wie geht das?</b>Im Kat steckt ein Wabenkörper mit einer dünnen Schicht aus Edelmetallen (Platin, Palladium, Rhodium). An ihr laufen die Umwandlungen ab – der Kat selbst verbraucht sich dabei nicht.</div>
+  </div>
+</section>
+
+<section class="slide" id="s-lf">
+  <span class="tag">KATALYSATOR</span><h2>Das Lambdafenster – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="ctrl"><span style="width:240px">Lambda: <span class="c" id="lf-v">1,00</span></span><input type="range" id="lf" min="0.9" max="1.1" step="0.005" value="1"></div>
+    <div class="grid2" style="margin-top:16px;align-items:center">
+      <div class="card" id="lf-bars"></div>
+      <div class="card" id="lf-t" style="font-size:18px;font-weight:600;line-height:1.5"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Umwandlung der Schadstoffe im warmen Kat. Vereinfacht, Beispielwerte.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KATALYSATOR</span><h2>Temperatur</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>unter ca. 250 °C</b><span>kalt – der Kat arbeitet kaum (Kaltstart!)</span></div>
+      <div class="val step from-left"><b>ca. 400–800 °C</b><span>bester Bereich</span></div>
+      <div class="val step from-left"><b>über ca. 1.000 °C</b><span>der Kat wird zerstört – z. B. durch Zündaussetzer</span></div>
+    </div>
+    <div class="note step">Richtwerte. Darum heizt das Steuergerät den Kat nach dem Kaltstart schnell auf (z. B. spätere Zündung).</div>
+  </div>
+</section>
+
+<section class="slide" id="s-ku">
+  <span class="tag">KATALYSATOR</span><h2>Kat-Überwachung – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-k="0">Kat in Ordnung</button><button class="btn ghost" data-k="1">Kat verbraucht</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 560 260" width="540" height="252" style="display:block;margin:0 auto">
+        <text x="40" y="22" font-size="14" font-weight="800" fill="#94a4ba">Sonde vor Kat</text>
+        <path id="ku-v" d="" fill="none" stroke="#34c778" stroke-width="4"/>
+        <line x1="40" y1="128" x2="550" y2="128" stroke="#94a4ba" stroke-width="1" stroke-dasharray="5 6"/>
+        <text x="40" y="152" font-size="14" font-weight="800" fill="#94a4ba">Sonde nach Kat</text>
+        <path id="ku-h" d="" fill="none" stroke="#ff8f3f" stroke-width="4"/>
+      </svg>
+      <div class="card" id="ku-t" style="font-size:18px;font-weight:600;line-height:1.5"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KATALYSATOR</span><h2>Was den Kat zerstört</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="warn step"><b>Zündaussetzer</b>Unverbrannter Kraftstoff verbrennt im Kat – er überhitzt und schmilzt.</div>
+      <div class="warn step"><b>Öl und Kühlmittel</b>Ölverbrauch oder defekte Zylinderkopfdichtung überziehen die Edelmetallschicht.</div>
+      <div class="warn step"><b>Mechanisch</b>Aufsetzen, Steinschlag oder Anschleppen – der Keramikkörper bricht und klappert.</div>
+      <div class="tip step"><b>Vor dem Tausch</b>Immer die Ursache finden und beheben – sonst ist der neue Kat schnell wieder kaputt.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KATALYSATOR</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fehlerspeicher: „Wirkungsgrad Katalysator zu niedrig“<small>erst Sonde nach Kat, Abgasanlage auf Undichtigkeit und Aussetzer prüfen</small></li>
+      <li class="step">Abgasuntersuchung (AU)<small>Lambda und CO werden gemessen, dazu die OBD-Daten – Werte laut Vorgabe</small></li>
+      <li class="step">Klappern beim Gasgeben oder Abstellen<small>Hinweis auf gebrochenen Keramikkörper</small></li>
+      <li class="step">Nach Unfall oder Aufsetzen<small>Kat und Abgasanlage auf Beschädigung prüfen</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KATALYSATOR</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-abgas-kat.mp4" poster="videos/mm-abgas-kat.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KATALYSATOR</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Was macht der Dreiwege-Katalysator aus Stickoxiden (NOx)?</p>
+      <div class="opts"><button class="opt">Kohlendioxid</button><button class="opt">Stickstoff</button><button class="opt">Ruß</button></div>
+      <div class="fb">NOx wird zu Stickstoff (N₂).</div></div>
+    <div class="q" data-correct="0"><p>2. Bei welchem Lambda reinigt der Dreiwege-Kat alle drei Schadstoffe gut?</p>
+      <div class="opts"><button class="opt">Lambda = 1</button><button class="opt">Lambda = 0,8</button><button class="opt">Lambda = 1,3</button></div>
+      <div class="fb">Nur im engen Lambdafenster um 1.</div></div>
+    <div class="q" data-correct="2"><p>3. Wie überwacht das Steuergerät den Kat?</p>
+      <div class="opts"><button class="opt">Mit einem Temperatursensor im Innenraum</button><button class="opt">Über die Drehzahl</button><button class="opt">Es vergleicht die Sonden vor und nach dem Kat</button></div>
+      <div class="fb">Bei gutem Kat ist das Signal nach dem Kat ruhig.</div></div>
+    <div class="q" data-correct="1"><p>4. Was kann den Kat durch Überhitzung zerstören?</p>
+      <div class="opts"><button class="opt">Zu viel Reifendruck</button><button class="opt">Zündaussetzer</button><button class="opt">Eine volle Batterie</button></div>
+      <div class="fb">Unverbrannter Kraftstoff verbrennt im Kat.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">KATALYSATOR</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>CO, HC und NOx werden umgewandelt</span></li>
+        <li class="step"><span>Funktioniert nur bei Lambda = 1</span></li>
+        <li class="step"><span>Arbeitet erst warm – ab ca. 250 °C</span></li>
+        <li class="step"><span>Sonde nach Kat ruhig = Kat gut<small>Aussetzer zerstören den Kat</small></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Abgas" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const lf = document.getElementById('lf');
+  const c = (x) => Math.max(5, Math.min(98, x));
+  function f() {
+    const l = +lf.value;
+    const co = c(l < 1 ? 98 - (1 - l) * 900 : 98), hc = c(l < 1 ? 96 - (1 - l) * 700 : 96), nox = c(l > 1 ? 97 - (l - 1) * 1100 : 97);
+    document.getElementById('lf-v').textContent = l.toFixed(2).replace('.', ',');
+    const bar = (n, v, col) => '<div style="font-weight:800;margin:10px 0 6px">' + n + ' <span class="muted">' + Math.round(v) + ' %</span></div><div style="height:20px;background:var(--card2);border-radius:8px;overflow:hidden"><div style="height:100%;width:' + v + '%;background:' + col + '"></div></div>';
+    document.getElementById('lf-bars').innerHTML = bar('CO', co, 'var(--grn)') + bar('HC', hc, 'var(--grn)') + bar('NOx', nox, 'var(--grn)');
+    let t;
+    if (l < 0.985) t = '<b class="ora">Zu fett:</b> Es fehlt Sauerstoff – CO und HC werden nicht mehr richtig umgewandelt.';
+    else if (l <= 1.015) t = '<b class="grn">Lambdafenster:</b> Alle drei Schadstoffe werden gut umgewandelt. Darum regelt der Benziner auf Lambda = 1.';
+    else t = '<b class="ora">Zu mager:</b> Zu viel Sauerstoff – die Stickoxide (NOx) werden nicht mehr umgewandelt.';
+    document.getElementById('lf-t').innerHTML = t;
+  }
+  lf.addEventListener('input', f); f();
+
+  const kb = document.querySelectorAll('#s-ku [data-k]');
+  function k(i) {
+    let dv = '', dh = '';
+    for (let x = 0; x <= 510; x += 3) {
+      const s = Math.tanh(5 * Math.sin(x / 510 * 2 * Math.PI * 4));
+      dv += (x ? ' L' : 'M') + (40 + x) + ' ' + (75 - 40 * s).toFixed(1);
+      const h = i ? 205 - 38 * Math.tanh(5 * Math.sin((x - 18) / 510 * 2 * Math.PI * 4)) : 190 + 3 * Math.sin(x / 40);
+      dh += (x ? ' L' : 'M') + (40 + x) + ' ' + h.toFixed(1);
+    }
+    document.getElementById('ku-v').setAttribute('d', dv);
+    document.getElementById('ku-h').setAttribute('d', dh);
+    document.getElementById('ku-t').innerHTML = i ? '<b class="ora">Kat verbraucht:</b> Er kann keinen Sauerstoff mehr speichern. Das Signal nach dem Kat schwankt genauso wie vorne – Fehlerspeicher „Wirkungsgrad zu niedrig“.' : '<b class="grn">Kat in Ordnung:</b> Er speichert Sauerstoff und gleicht aus. Das Signal nach dem Kat bleibt ruhig.';
+    kb.forEach(x => x.classList.toggle('on', +x.dataset.k === i));
+  }
+  kb.forEach(x => x.onclick = () => k(+x.dataset.k)); k(0);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

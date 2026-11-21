@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Lambdasonde – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+</style>
+</head>
+<body class="t-mm5">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · ABGAS</div>
+  <div class="symbol">λ</div>
+  <h1>Lambdasonde</h1>
+  <p>Schadstoffe, Lambdasonden und Lambda-Regelung</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">LAMBDASONDE</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Welche Schadstoffe im Abgas sind</li>
+      <li class="step from-left"><span class="num">2</span>Wo die Lambdasonden sitzen und was sie messen</li>
+      <li class="step from-left"><span class="num">3</span>Sprungsonde und Breitbandsonde</li>
+      <li class="step from-left"><span class="num">4</span>Wie die Lambda-Regelung arbeitet und wie du prüfst</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LAMBDASONDE</span><h2>Was ist im Abgas?</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step" style="border-top:4px solid var(--red)"><div class="big" style="font-size:22px">Schadstoffe</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li><b>CO</b> – Kohlenmonoxid, giftig</li><li><b>HC</b> – unverbrannte Kohlenwasserstoffe</li><li><b>NOx</b> – Stickoxide</li><li><b>Partikel</b> – Ruß</li></ul></div>
+      <div class="card step" style="border-top:4px solid var(--grn)"><div class="big" style="font-size:22px">Ungiftig</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li><b>N₂</b> – Stickstoff (aus der Luft)</li><li><b>H₂O</b> – Wasserdampf</li><li><b>CO₂</b> – Kohlendioxid: nicht giftig, aber klimaschädlich</li></ul></div>
+    </div>
+    <div class="warn step" style="margin-top:14px"><b>Kohlenmonoxid</b>Unsichtbar, ohne Geruch und tödlich. Motor in der Werkstatt nur mit Abgasabsaugung laufen lassen.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LAMBDASONDE</span><h2>Wo sitzen die Lambdasonden?</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Motor</b><span>Abgas mit Restsauerstoff</span></div><div class="flow-arrow step"></div>
+      <div class="glied step" style="border-top-color:var(--grn)"><b>Sonde vor Kat</b><span>Regelsonde: misst das Gemisch</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Katalysator</b><span>reinigt das Abgas</span></div><div class="flow-arrow step"></div>
+      <div class="glied step" style="border-top-color:var(--grn)"><b>Sonde nach Kat</b><span>Diagnosesonde: überwacht den Kat</span></div>
+    </div>
+    <div class="tip step" style="margin-top:18px"><b>Was misst die Sonde?</b>Den Restsauerstoff im Abgas. Daraus erkennt das Steuergerät, ob das Gemisch fett (zu wenig Luft) oder mager (zu viel Luft) war.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LAMBDASONDE</span><h2>Sprungsonde und Breitbandsonde</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Sprungsonde</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>erzeugt selbst eine Spannung</li><li>mager: ca. 0,1 V – fett: ca. 0,8–0,9 V</li><li>springt genau bei Lambda = 1</li><li>zeigt nur „fett“ oder „mager“, nicht wie viel</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Breitbandsonde</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>misst den genauen Lambda-Wert, z. B. 0,92 oder 1,30</li><li>auch für Diesel und Magerbetrieb</li><li>Auswertung im Steuergerät</li><li>im Diagnosegerät als Lambda-Wert ablesen</li></ul></div>
+      <div class="tip step" style="grid-column:1/-1"><b>Beide brauchen Hitze</b>Erst ab ca. 300 °C arbeiten sie richtig (Richtwert). Darum sind sie elektrisch beheizt – sonst würde die Regelung lange nach dem Kaltstart nicht arbeiten.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-lr">
+  <span class="tag">LAMBDASONDE</span><h2>Lambda-Regelung – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-m="0">Regelung in Ordnung</button><button class="btn ghost" data-m="1">Falschluft</button><button class="btn ghost" data-m="2">Sonde gealtert</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 560 240" width="540" height="232" style="display:block;margin:0 auto">
+  <line x1="40" y1="210" x2="550" y2="210" stroke="#94a4ba" stroke-width="2"/>
+  <line x1="40" y1="20" x2="40" y2="210" stroke="#94a4ba" stroke-width="2"/>
+  <text x="34" y="197" text-anchor="end" font-size="13" font-weight="700" fill="#94a4ba">0,1</text>
+  <text x="34" y="55" text-anchor="end" font-size="13" font-weight="700" fill="#94a4ba">0,9</text>
+  <text x="34" y="135" text-anchor="end" font-size="13" font-weight="700" fill="#94a4ba">0,45</text>
+  <line x1="40" y1="130" x2="550" y2="130" stroke="#94a4ba" stroke-width="1" stroke-dasharray="5 6"/>
+  <text x="50" y="16" font-size="13" font-weight="700" fill="#94a4ba">Spannung in V</text>
+  
+  <path id="lr-k" d="" fill="none" stroke="#34c778" stroke-width="4" stroke-linejoin="round"/>
+</svg>
+      <div>
+        <div class="card"><div class="muted" style="font-size:15px;font-weight:800">KORREKTUR EINSPRITZMENGE</div><div class="lcd2" id="lr-v" style="font-size:32px;margin-top:6px">0 %</div></div>
+        <div class="card" id="lr-t" style="margin-top:12px;font-size:17px;font-weight:600;line-height:1.5"></div>
+      </div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Sprungsonde vor Kat, vereinfacht. Beispielwerte.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LAMBDASONDE</span><h2>Korrekturwerte im Diagnosegerät</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>Kurzzeit</b><span>schnelle Korrektur der Lambda-Regelung – schwankt ständig um 0 %</span></div>
+      <div class="val step from-left"><b>Langzeit</b><span>Adaption: was sich das Steuergerät dauerhaft gemerkt hat</span></div>
+      <div class="val step from-left"><b>nahe 0 %</b><span>gut – Gemischbildung in Ordnung</span></div>
+      <div class="val step from-left"><b>z. B. über ±10 %</b><span>auffällig: Falschluft, Kraftstoffdruck, Einspritzventile, Luftmassenmesser prüfen</span></div>
+    </div>
+    <div class="note step">Plus = Steuergerät spritzt mehr ein (Gemisch war mager). Minus = weniger (war fett). Richtwerte – Grenzen laut Hersteller.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LAMBDASONDE</span><h2>Lambdasonde prüfen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fehlerspeicher und Messwerte lesen<small>Lambda-Wert, Sondenspannung, Korrekturwerte – bei warmem Motor</small></li>
+      <li class="step">Sprungsonde mit dem Oszilloskop<small>Signal muss gleichmäßig zwischen ca. 0,1 und 0,8 V wechseln – am Prüfadapter abgreifen</small></li>
+      <li class="step">Sondenheizung prüfen<small>Heizwiderstand spannungsfrei messen oder Heizstrom mit der Stromzange – Werte laut Hersteller</small></li>
+      <li class="step">Vor dem Tausch: Ursache suchen<small>Falschluft vor der Sonde (Krümmer undicht) täuscht ein mageres Gemisch vor</small></li>
+    </ol>
+    <div class="warn step" style="margin-top:6px"><b>Signalleitung nicht belasten</b>Keine Prüflampe, kein Ohmmeter an der Signalleitung – die Sonde erzeugt selbst eine kleine Spannung. Breitbandsonden nur mit dem Diagnosegerät prüfen.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LAMBDASONDE</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Einbau</b>Gewinde nur mit der Spezialpaste, die der Sonde beiliegt. Kein Kupferfett auf den Sondenkopf.</div>
+      <div class="tip step"><b>Silikon</b>Silikonhaltige Dichtmittel am Motor können die Sonde vergiften.</div>
+      <div class="warn step"><b>Undichter Krümmer</b>Angesaugte Falschluft vor der Sonde: Sie meldet „mager“, das Steuergerät fettet an – hoher Verbrauch, Fehlerspeicher.</div>
+      <div class="tip step"><b>Kabel</b>Sondenkabel nicht knicken und nicht an heiße Teile legen – über das Kabel bekommt die Sonde Referenzluft.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LAMBDASONDE</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-abgas-lambda.mp4" poster="videos/mm-abgas-lambda.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LAMBDASONDE</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Was misst die Lambdasonde?</p>
+      <div class="opts"><button class="opt">Den Restsauerstoff im Abgas</button><button class="opt">Die Abgastemperatur</button><button class="opt">Den Abgasdruck</button></div>
+      <div class="fb">Daraus erkennt das Steuergerät, ob das Gemisch fett oder mager war.</div></div>
+    <div class="q" data-correct="1"><p>2. Welche Spannung liefert eine Sprungsonde bei fettem Gemisch etwa?</p>
+      <div class="opts"><button class="opt">ca. 0,1 V</button><button class="opt">ca. 0,8–0,9 V</button><button class="opt">ca. 12 V</button></div>
+      <div class="fb">Fett = hohe Spannung, mager = ca. 0,1 V.</div></div>
+    <div class="q" data-correct="2"><p>3. Wozu dient die Lambdasonde nach dem Katalysator?</p>
+      <div class="opts"><button class="opt">Sie regelt das Gemisch</button><button class="opt">Sie heizt den Kat</button><button class="opt">Sie überwacht den Katalysator</button></div>
+      <div class="fb">Sie ist die Diagnosesonde für den Kat.</div></div>
+    <div class="q" data-correct="0"><p>4. Die Langzeitkorrektur steht bei +18 %. Was ist eine mögliche Ursache?</p>
+      <div class="opts"><button class="opt">Falschluft – das Gemisch war zu mager</button><button class="opt">Alles in Ordnung</button><button class="opt">Zu fettes Gemisch</button></div>
+      <div class="fb">Plus heißt: Das Steuergerät muss mehr einspritzen – oft wegen Falschluft.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LAMBDASONDE</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Schadstoffe: CO, HC, NOx, Ruß</span></li>
+        <li class="step"><span>Sonde vor Kat regelt, nach Kat überwacht</span></li>
+        <li class="step"><span>Sprungsonde: mager 0,1 V, fett 0,8–0,9 V<small>springt bei Lambda = 1</small></span></li>
+        <li class="step"><span>Korrekturwerte nahe 0 % sind gut</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Abgas" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const H = 240, Y = v => H - 30 - (v - 0.0) * 200, N = 255;
+  let mode = 0, buf = [], tt = 0, korr = 0;
+  const bt = document.querySelectorAll('#s-lr [data-m]');
+  const TX = [
+    '<b class="grn">In Ordnung:</b> Das Signal wechselt gleichmäßig zwischen mager und fett. Das Steuergerät korrigiert ständig ein wenig – Lambda bleibt im Mittel bei 1.',
+    '<b class="ora">Falschluft:</b> Die Sonde meldet dauernd „mager“. Das Steuergerät spritzt immer mehr ein, bis es an die Grenze kommt – Eintrag im Fehlerspeicher.',
+    '<b class="ora">Sonde gealtert:</b> Das Signal wechselt langsam und schwach. Die Regelung wird ungenau – Verbrauch und Abgaswerte steigen.'
+  ];
+  function setm(m) { mode = m; buf = []; korr = 0; bt.forEach(x => x.classList.toggle('on', +x.dataset.m === m)); document.getElementById('lr-t').innerHTML = TX[m]; }
+  bt.forEach(x => x.onclick = () => setm(+x.dataset.m));
+  setm(0);
+  setInterval(() => {
+    tt += 0.05; let v, k;
+    if (mode === 0) { const s = Math.tanh(5 * Math.sin(tt * 2 * Math.PI * 1.0)); v = 0.47 + 0.37 * s; k = -3 * s; korr = k; }
+    else if (mode === 1) { korr = Math.min(25, korr + 0.35); v = 0.1 + 0.03 * Math.sin(tt * 9) + (korr >= 25 ? 0 : 0); k = korr; }
+    else { const s = Math.sin(tt * 2 * Math.PI * 0.3); v = 0.45 + 0.17 * s; k = -6 * s; korr = k; }
+    buf.push(v); if (buf.length > N) buf.shift();
+    let d = ''; buf.forEach((b, i) => d += (i ? ' L' : 'M') + (40 + i * 2).toFixed(0) + ' ' + Y(b).toFixed(1));
+    document.getElementById('lr-k').setAttribute('d', d);
+    document.getElementById('lr-v').textContent = (k > 0 ? '+' : '') + k.toFixed(0) + ' %' + (mode === 1 && korr >= 25 ? '  Grenze!' : '');
+  }, 50);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>
