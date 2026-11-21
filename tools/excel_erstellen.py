@@ -12,6 +12,7 @@ THEMEN = [
     ('Messen mit dem Multimeter', 'Schwarz immer in COM.\nSpannung misst man parallel zum Bauteil, Wahlschalter auf V⎓, Rot in VΩ.\nWiderstand nur stromlos messen, Bauteil abklemmen.\nStrom misst man in Reihe: Stromkreis auftrennen, Rot in die A-Buchse. Niemals mit Rot in der A-Buchse an eine Spannung gehen, das ist ein Kurzschluss.\n„OL“ heißt: Wert zu groß für den Messbereich. Beim manuellen Multimeter den Bereich schrittweise hochstellen – erst wenn im höchsten Bereich noch OL steht, ist es eine Unterbrechung. Ein Minuszeichen heißt: Messspitzen vertauscht.'),
     ('Reihenschaltung', 'Es gibt nur einen Stromweg. Der Strom ist überall gleich. Die Widerstände werden addiert.\nDie Spannung teilt sich auf, am größten Widerstand fällt die meiste Spannung ab.\nFällt ein Bauteil aus, ist der ganze Kreis unterbrochen.\nPraxis: Eine korrodierte Masse ist ein zusätzlicher Widerstand in Reihe. Die Lampe leuchtet dann schwächer.'),
     ('Parallelschaltung', 'An allen Zweigen liegt dieselbe Spannung. Der Gesamtstrom ist die Summe der Zweigströme.\nDer Gesamtwiderstand ist kleiner als der kleinste Einzelwiderstand.\nDarum sind die Verbraucher im Kfz parallel geschaltet: Jeder bekommt 12 V und arbeitet unabhängig. Jeder zusätzliche Verbraucher erhöht den Gesamtstrom.'),
+    ('Sensoren, Aktoren und EVA-Prinzip', 'EVA-Prinzip: Eingabe – Verarbeitung – Ausgabe. Sensoren liefern die Eingabe, das Steuergerät verarbeitet, Aktoren führen aus. Wie beim Menschen: Sinnesorgan → Gehirn → Muskel.\nSensoren wandeln eine physikalische Größe (z. B. Temperatur, Druck, Drehzahl) in ein elektrisches Signal um: analog, digital oder induktiv. Viele Sensoren bekommen 5 V vom Steuergerät. NTC-Temperatursensor: wärmer → kleinerer Widerstand.\nAktoren wandeln ein elektrisches Signal in Bewegung, Wärme, Licht oder Ton um, z. B. Elektromotor, Magnetventil, Relais. Ein Relais schaltet mit kleinem Steuerstrom einen großen Laststrom. Mit PWM steuert das Steuergerät Aktoren stufenlos an.\nFehlersuche: Liegt es an E, V oder A? Erst prüfen, dann tauschen. Am Steuergerät nur LED-Prüflampe oder Oszilloskop verwenden.', 'Fahrzeugelektronik'),
 ]
 KOPF = Font(bold=True, color='FFFFFF')
 FUELL = PatternFill('solid', fgColor='1A5FB4')
@@ -29,9 +30,12 @@ wb = Workbook()
 ws = wb.active
 ws.title = 'Themen'
 kopf(ws, ['Thema', 'Bereich', 'Erklärung', 'Video-Link', 'Präsentationen'], [32, 22, 90, 40, 48])
-PRAES = {'Spannung, Strom und Widerstand': 'Spannung | praesentationen/spannung.html\nStrom | praesentationen/strom.html\nWiderstand | praesentationen/widerstand.html'}
-for name, text in THEMEN:
-    ws.append([name, BEREICH, text, '', PRAES.get(name, '')])
+PRAES = {'Spannung, Strom und Widerstand': 'Spannung | praesentationen/spannung.html\nStrom | praesentationen/strom.html\nWiderstand | praesentationen/widerstand.html',
+         'Sensoren, Aktoren und EVA-Prinzip': 'EVA-Prinzip | praesentationen/eva.html\nSensoren | praesentationen/sensoren.html\nAktoren | praesentationen/aktoren.html'}
+for eintrag in THEMEN:
+    name, text = eintrag[0], eintrag[1]
+    bereich = eintrag[2] if len(eintrag) > 2 else BEREICH
+    ws.append([name, bereich, text, '', PRAES.get(name, '')])
 for row in ws.iter_rows(min_row=2):
     for c in row: c.alignment = WRAP
 

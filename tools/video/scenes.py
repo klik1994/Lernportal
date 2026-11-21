@@ -3,7 +3,7 @@ import math
 from engine import *
 
 
-def title_scene(sym, title, sub, color):
+def title_scene(sym, title, sub, color, size=120, kicker='GRUNDLAGEN ELEKTRIK  ·  LERNVIDEO'):
     def fn(d, t, dur):
         k = pr(t, 0.1, 1.0, eout)
         # dekorativer Ring
@@ -14,20 +14,20 @@ def title_scene(sym, title, sub, color):
             line(d, [(640 + r0 * math.cos(ang), 250 + r0 * math.sin(ang)),
                      (640 + r1 * math.cos(ang), 250 + r1 * math.sin(ang))], color, 3, a)
         circle(d, (640, 250), 105 * k, color, 1)
-        text(d, 640, 250, sym, 120 * max(k, 0.01), 'Black', BG, k, 'mm', bg=color)
+        text(d, 640, 250, sym, size * max(k, 0.01), 'Black', BG, k, 'mm', bg=color)
         a2 = pr(t, 0.8, 1.6)
         text(d, 640, 470 + (1 - a2) * 20, title, 76, 'XB', TXT, a2, 'mm')
         a3 = pr(t, 1.3, 2.1)
         text(d, 640, 540 + (1 - a3) * 14, sub, 30, 'Med', MUTED, a3, 'mm')
         a4 = pr(t, 1.8, 2.6)
-        text(d, 640, 50, 'GRUNDLAGEN ELEKTRIK  ·  LERNVIDEO', 16, 'Bold', color, a4, 'mm')
+        text(d, 640, 50, kicker, 16, 'Bold', color, a4, 'mm')
     return fn
 
 
-def values_scene(tag, color, chips, rows, note=None):
+def values_scene(tag, color, chips, rows, note=None, title='Formelzeichen, Einheit und typische Werte', vsize=32):
     """rows: Liste (wert, beschreibung)."""
     def fn(d, t, dur):
-        header(d, t, tag, 'Formelzeichen, Einheit und typische Werte', color)
+        header(d, t, tag, title, color)
         x = 160
         for i, (k, v) in enumerate(chips):
             a = pr(t, 0.4 + i * 0.3, 1.0 + i * 0.3)
@@ -38,18 +38,19 @@ def values_scene(tag, color, chips, rows, note=None):
             x += w + 16
         n = len(rows)
         step = min(84, 400 / max(n, 1))
+        y0r = 186 if chips else 120
         for i, (val, desc) in enumerate(rows):
             st = 1.6 + i * 1.5
             a = pr(t, st, st + 0.6)
             dx = (1 - eout((t - st) / 0.6)) * 40
-            y = 186 + i * step
+            y = y0r + i * step
             rrect(d, (160 + dx, y, 1120 + dx, y + step - 14), 14, CARD, a)
             rrect(d, (160 + dx, y, 420 + dx, y + step - 14), 14, CARD2, a)
-            text(d, 290 + dx, y + (step - 14) / 2, val, 32, 'XB', color, a, 'mm', bg=CARD2)
+            text(d, 290 + dx, y + (step - 14) / 2, val, vsize, 'XB', color, a, 'mm', bg=CARD2)
             text(d, 450 + dx, y + (step - 14) / 2, desc, 26, 'Semi', TXT, a, 'lm', bg=CARD)
         if note:
             a = pr(t, 1.6 + n * 1.5 + 0.4, 1.6 + n * 1.5 + 1.0)
-            text(d, 640, 186 + n * step + 26, note, 20, 'Med', MUTED, a, 'mm')
+            text(d, 640, y0r + n * step + 26, note, 20, 'Med', MUTED, a, 'mm')
     return fn
 
 

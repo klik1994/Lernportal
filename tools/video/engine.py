@@ -18,6 +18,8 @@ RED = (240, 94, 78)
 GRN = (52, 199, 120)
 BLACK = (20, 22, 26)
 WATER = (52, 140, 230)
+PUR = (160, 124, 245)
+ORA = (255, 143, 63)
 
 FD = '/usr/share/fonts/opentype/inter/'
 _fc = {}
@@ -320,3 +322,18 @@ def still(fn, dur, t, path):
     d = ImageDraw.Draw(im)
     fn(d, t, dur)
     im.reduce(S).save(path)
+
+
+def fan(d, c, r, ang, color=ORA, a=1.0, bg=BG):
+    """Luefter: Kreis mit drei Fluegeln, ang in Grad."""
+    x, y = c
+    circle(d, c, r, CARD2, a, outline=TXT, width=4, bg=bg)
+    for k in range(3):
+        base = math.radians(ang + k * 120)
+        # Fluegel als Tropfen: aussen breit, innen spitz
+        p1 = [(x, y)]
+        for i in range(0, 11):
+            w = math.radians(-30 + 6 * i)
+            p1.append((x + r * 0.82 * math.cos(base + w), y + r * 0.82 * math.sin(base + w)))
+        poly(d, p1, color, a, bg=CARD2)
+    circle(d, c, r * 0.14, TXT, a, bg=CARD2)

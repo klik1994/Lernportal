@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 5 Themen, 36 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 6 Themen, 45 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
-  assert.strictEqual(r.themen.length, 5);
-  assert.strictEqual(r.fragen.length, 36);
+  assert.strictEqual(r.themen.length, 6);
+  assert.strictEqual(r.fragen.length, 45);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
@@ -97,4 +97,17 @@ test('Echte Inhaltsdatei: Präsentationen zu Spannung, Strom und Widerstand sind
   t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
   ['spannung', 'strom', 'widerstand'].forEach(n => assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n));
   assert.ok(!t.erklaerung.includes('Elektronen'));
+});
+
+test('Echte Inhaltsdatei: Präsentationen zu Sensoren, Aktoren und EVA-Prinzip sind verlinkt und vorhanden', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  const t = r.themen.find(x => x.name === 'Sensoren, Aktoren und EVA-Prinzip');
+  assert.strictEqual(t.bereich, 'Fahrzeugelektronik');
+  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['EVA-Prinzip', 'Sensoren', 'Aktoren']);
+  t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
+  ['eva', 'sensoren', 'aktoren'].forEach(n => {
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
+  });
+  assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5);
 });

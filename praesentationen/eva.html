@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>EVA-Prinzip – Sensoren und Aktoren</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol.lang { font-size: 78px; }
+  .human { display: grid; grid-template-columns: 1fr 80px 1fr 80px 1fr; align-items: stretch; }
+  .human .card { text-align: center; }
+  .human .ico { font-size: 64px; line-height: 1.1; }
+  .human h4 { margin: 8px 0 4px; font-size: 24px; }
+  .human p { margin: 0; font-size: 18px; color: var(--muted); }
+  .sort { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 22px; }
+  .sort-row { display: flex; align-items: center; gap: 10px; background: var(--card); border-radius: 14px; padding: 8px 10px 8px 16px; }
+  .sort-row span { flex: 1; font-size: 18px; font-weight: 700; }
+  .sort-row .opt { padding: 8px 14px; min-width: 46px; font-weight: 900; }
+  .chain { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+  .chain b { background: var(--card2); border-radius: 10px; padding: 6px 12px; font-size: 17px; }
+  .chain i { font-style: normal; color: var(--muted); font-weight: 900; }
+  .loop { color: var(--ct); font-weight: 900; font-size: 17px; }
+  @media (max-width: 820px), (max-height: 520px) {
+    .symbol.lang { font-size: 46px; }
+    .human { grid-template-columns: 1fr !important; }
+    .human .ico { font-size: 44px; }
+    .sort { grid-template-columns: 1fr !important; }
+    .sort-row span { font-size: 15px; }
+  }
+</style>
+</head>
+<body class="t-eva">
+<div id="stage-wrap"><div id="stage">
+
+<!-- 1 Titel -->
+<section class="slide title-slide">
+  <div class="kicker">SENSOREN UND AKTOREN · KFZ-MECHATRONIK</div>
+  <div class="symbol lang">EVA</div>
+  <h1>Das EVA-Prinzip</h1>
+  <p>Eingabe – Verarbeitung – Ausgabe</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<!-- 2 Lernziele -->
+<section class="slide">
+  <span class="tag">EVA-PRINZIP</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Was das EVA-Prinzip ist – erklärt am Menschen</li>
+      <li class="step from-left"><span class="num">2</span>Wie Sensor, Steuergerät und Aktor im Kfz zusammenarbeiten</li>
+      <li class="step from-left"><span class="num">3</span>Den Unterschied zwischen Steuern und Regeln</li>
+      <li class="step from-left"><span class="num">4</span>Wie dir EVA bei der Fehlersuche hilft</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3 Vergleich Mensch -->
+<section class="slide">
+  <span class="tag">EVA-PRINZIP</span><h2>So macht es dein Körper</h2>
+  <div class="body">
+    <p class="sub" style="margin:0 0 18px">Du fasst aus Versehen an einen heißen Auspuff …</p>
+    <div class="human">
+      <div class="card step k-e" style="border-top:6px solid var(--k)"><div class="ico">✋</div><h4 class="grn">Eingabe</h4><p>Die Haut fühlt: <b style="color:var(--txt)">heiß!</b></p></div>
+      <div class="flow-arrow step k-e"></div>
+      <div class="card step k-v" style="border-top:6px solid var(--k)"><div class="ico">🧠</div><h4 class="pur">Verarbeitung</h4><p>Das Gehirn entscheidet: <b style="color:var(--txt)">Hand weg!</b></p></div>
+      <div class="flow-arrow step k-v"></div>
+      <div class="card step k-a" style="border-top:6px solid var(--k)"><div class="ico">💪</div><h4 class="ora">Ausgabe</h4><p>Die Muskeln ziehen <b style="color:var(--txt)">die Hand zurück.</b></p></div>
+    </div>
+    <div class="tip step" style="margin-top:22px"><b>Im Auto genauso</b>Sensoren sind die Sinnesorgane, das Steuergerät ist das Gehirn, Aktoren sind die Muskeln.</div>
+  </div>
+</section>
+
+<!-- 4 EVA im Kfz (interaktiv) -->
+<section class="slide" id="s-kfz">
+  <span class="tag">EVA-PRINZIP</span><h2>EVA im Kfz</h2>
+  <div class="body">
+    <div class="choice noclick" id="szenen" style="margin-bottom:18px">
+      <button class="btn ghost" data-s="0">Kühlerlüfter</button>
+      <button class="btn ghost" data-s="1">Scheibenwischer</button>
+      <button class="btn ghost" data-s="2">ABS</button>
+      <button class="btn ghost" data-s="3">Gaspedal</button>
+    </div>
+    <div class="eva-row">
+      <div class="eva-box k-e" id="b-e"><div class="eva-l">Eingabe</div><div class="eva-b">E</div><div class="eva-n">Sensor</div><div class="eva-x" id="x-e"></div></div>
+      <div class="flow-arrow k-e"></div>
+      <div class="eva-box k-v" id="b-v"><div class="eva-l">Verarbeitung</div><div class="eva-b">V</div><div class="eva-n">Steuergerät</div><div class="eva-x" id="x-v"></div></div>
+      <div class="flow-arrow k-v"></div>
+      <div class="eva-box k-a" id="b-a"><div class="eva-l">Ausgabe</div><div class="eva-b">A</div><div class="eva-n">Aktor</div><div class="eva-x" id="x-a"></div></div>
+    </div>
+    <div class="card" style="margin-top:20px"><div class="big" id="x-satz" style="font-size:22px"></div></div>
+    <p class="muted" style="font-size:17px;margin-top:10px">Tippe auf ein Beispiel.</p>
+  </div>
+</section>
+
+<!-- 5 Das Steuergerät -->
+<section class="slide">
+  <span class="tag">EVA-PRINZIP</span><h2>Das Steuergerät – die Verarbeitung</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span><span>Liest die Signale der <span class="grn">Sensoren</span> ein</span></li>
+      <li class="step from-left"><span class="num">2</span><span>Vergleicht sie mit gespeicherten Sollwerten und Kennfeldern</span></li>
+      <li class="step from-left"><span class="num">3</span><span>Entscheidet und steuert die <span class="ora">Aktoren</span> an</span></li>
+      <li class="step from-left"><span class="num">4</span><span>Tauscht Daten mit anderen Steuergeräten aus (CAN-Bus) und speichert Fehler im Fehlerspeicher</span></li>
+    </ul>
+    <div class="tip step"><b>Gut zu wissen</b>Viele Sensoren bekommen ihre Versorgungsspannung (meist 5 V) direkt vom Steuergerät.</div>
+  </div>
+</section>
+
+<!-- 6 Steuern oder Regeln -->
+<section class="slide">
+  <span class="tag">EVA-PRINZIP</span><h2>Steuern oder Regeln?</h2>
+  <div class="body grid2" style="align-items:start">
+    <div class="card step">
+      <div class="big">Steuern</div>
+      <p class="muted" style="font-size:18px;margin:4px 0 0">ohne Rückmeldung</p>
+      <div class="chain"><b class="grn">E</b><i>→</i><b class="pur">V</b><i>→</i><b class="ora">A</b></div>
+      <p style="font-size:19px;margin:0">Beispiel: <b>Fensterheber</b> – Taster drücken, die Scheibe fährt. Ob sie oben ist, wird nicht zurückgemeldet.</p>
+    </div>
+    <div class="card step">
+      <div class="big">Regeln</div>
+      <p class="muted" style="font-size:18px;margin:4px 0 0">mit Rückmeldung: Istwert wird ständig mit dem Sollwert verglichen</p>
+      <div class="chain"><b class="grn">E</b><i>→</i><b class="pur">V</b><i>→</i><b class="ora">A</b><span class="loop">↺ Rückmeldung</span></div>
+      <p style="font-size:19px;margin:0">Beispiel: <b>Lambda-Regelung</b> – die Lambdasonde misst das Abgas, das Steuergerät korrigiert laufend die Einspritzmenge.</p>
+    </div>
+    <div class="tip step" style="grid-column:1/-1"><b>Weitere Regelungen im Kfz</b>Klimaautomatik (Innenraumtemperatur), Leerlaufdrehzahl, Ladedruck.</div>
+  </div>
+</section>
+
+<!-- 7 Fehlersuche -->
+<section class="slide">
+  <span class="tag">EVA-PRINZIP</span><h2>EVA hilft bei der Fehlersuche</h2>
+  <div class="body">
+    <p class="sub" style="margin:0 0 16px">Beispiel: Der Kühlerlüfter läuft nicht. Frag dich: Liegt es an E, V oder A?</p>
+    <ol class="steps-list">
+      <li class="step"><span class="grn">Eingabe prüfen:</span> Kommt das Signal an?<small>Messwerte im Diagnosegerät ansehen – ist die Kühlmitteltemperatur plausibel?</small></li>
+      <li class="step"><span class="ora">Ausgabe prüfen:</span> Arbeitet der Aktor?<small>Aktortest (Stellglieddiagnose) mit dem Diagnosegerät – läuft der Lüfter?</small></li>
+      <li class="step"><span class="pur">Dazwischen prüfen:</span> Leitungen, Stecker, Sicherungen, Relais<small>Spannung, Masse und Leitungen messen</small></li>
+    </ol>
+    <div class="warn step" style="margin-top:12px"><b>Erst prüfen, dann tauschen</b>Ein Eintrag im Fehlerspeicher zeigt, wo es hakt – aber nicht automatisch, welches Teil defekt ist.</div>
+  </div>
+</section>
+
+<!-- 8 Zuordnen -->
+<section class="slide" id="s-sort">
+  <span class="tag">EVA-PRINZIP</span><h2>Übung: E, V oder A?</h2>
+  <div class="body noclick">
+    <p class="sub" style="margin:0 0 14px">Ordne jedes Bauteil zu: <span class="grn">E</span> = Sensor, <span class="pur">V</span> = Steuergerät, <span class="ora">A</span> = Aktor</p>
+    <div class="sort" id="sort"></div>
+    <div class="score" id="sort-score" style="margin-top:12px">0 von 8 richtig</div>
+  </div>
+</section>
+
+<!-- 9 Video -->
+<section class="slide">
+  <span class="tag">EVA-PRINZIP</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/eva.mp4" poster="videos/eva.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<!-- 10 Kurztest -->
+<section class="slide">
+  <span class="tag">EVA-PRINZIP</span><h2>Kurztest</h2>
+  <div class="body quiz">
+    <div class="q" data-correct="1"><p>1. Wofür steht EVA?</p>
+      <div class="opts"><button class="opt">Elektrik – Ventile – Anlasser</button><button class="opt">Eingabe – Verarbeitung – Ausgabe</button><button class="opt">Einspritzung – Verdichtung – Abgas</button></div>
+      <div class="fb">Sensoren liefern die Eingabe, das Steuergerät verarbeitet, Aktoren führen aus.</div></div>
+    <div class="q" data-correct="2"><p>2. Welcher Teil des EVA-Prinzips ist das Steuergerät?</p>
+      <div class="opts"><button class="opt">Eingabe</button><button class="opt">Ausgabe</button><button class="opt">Verarbeitung</button></div>
+      <div class="fb">Das Steuergerät verarbeitet die Sensorsignale und steuert die Aktoren an.</div></div>
+    <div class="q" data-correct="0"><p>3. Was unterscheidet Regeln vom Steuern?</p>
+      <div class="opts"><button class="opt">Beim Regeln gibt es eine Rückmeldung (Istwert mit Sollwert vergleichen)</button><button class="opt">Regeln geht nur ohne Steuergerät</button><button class="opt">Es gibt keinen Unterschied</button></div>
+      <div class="fb">Regeln = Steuern mit Rückmeldung, z. B. die Lambda-Regelung.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<!-- 11 Merke -->
+<section class="slide">
+  <span class="tag">EVA-PRINZIP</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>EVA = Eingabe – Verarbeitung – Ausgabe</span></li>
+        <li class="step"><span>Sensor → Steuergerät → Aktor<small>Sinnesorgan → Gehirn → Muskel</small></span></li>
+        <li class="step"><span>Regeln = Steuern mit Rückmeldung<small>z. B. Lambda-Regelung, Klimaautomatik</small></span></li>
+        <li class="step"><span>Fehlersuche: Liegt es an E, V oder A?<small>Erst prüfen, dann tauschen</small></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Sensoren%2C%20Aktoren%20und%20EVA-Prinzip" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+
+<script>
+/* EVA im Kfz: Beispiele */
+(function () {
+  const S = [
+    ['Kühlmittel-Temperatursensor meldet 105 °C', 'Motorsteuergerät: zu warm!', 'Kühlerlüfter läuft an', 'Der Temperatursensor meldet „zu warm“, das Motorsteuergerät schaltet den Kühlerlüfter ein.'],
+    ['Regensensor erkennt Tropfen', 'Bordnetzsteuergerät wertet aus', 'Wischermotor wischt', 'Der Regensensor erkennt Regen, das Steuergerät startet den Wischermotor – je stärker der Regen, desto schneller.'],
+    ['Raddrehzahlsensor: Rad blockiert gleich', 'ABS-Steuergerät erkennt Blockieren', 'Hydraulikventile senken den Bremsdruck', 'Ein Rad droht zu blockieren: Das ABS-Steuergerät senkt über die Ventile kurz den Bremsdruck.'],
+    ['Fahrpedalsensor: Pedal halb getreten', 'Motorsteuergerät berechnet Leistung', 'Drosselklappe öffnet, Einspritzventile spritzen mehr', 'Der Fahrpedalsensor meldet den Fahrerwunsch, das Motorsteuergerät öffnet die Drosselklappe und erhöht die Einspritzmenge.']
+  ];
+  const btns = document.querySelectorAll('#szenen .btn');
+  let timer;
+  function set(i) {
+    btns.forEach((b, k) => b.classList.toggle('on', k === i));
+    document.getElementById('x-e').textContent = S[i][0];
+    document.getElementById('x-v').textContent = S[i][1];
+    document.getElementById('x-a').textContent = S[i][2];
+    document.getElementById('x-satz').textContent = S[i][3];
+    const boxes = ['b-e', 'b-v', 'b-a'].map(id => document.getElementById(id));
+    clearTimeout(timer);
+    boxes.forEach(b => b.classList.remove('hot'));
+    boxes.forEach((b, k) => setTimeout(() => { boxes.forEach(x => x.classList.remove('hot')); b.classList.add('hot'); }, k * 700));
+    timer = setTimeout(() => boxes.forEach(x => x.classList.remove('hot')), 2600);
+  }
+  btns.forEach((b, i) => b.addEventListener('click', () => set(i)));
+  document.getElementById('s-kfz').addEventListener('slideshow', () => set(0));
+  set(0);
+})();
+
+/* Zuordnen-Übung */
+(function () {
+  const items = [['Kühlmittel-Temperatursensor', 0], ['Einspritzventil', 2], ['Motorsteuergerät', 1], ['Lambdasonde', 0],
+                 ['Kühlerlüfter', 2], ['Raddrehzahlsensor', 0], ['ABS-Steuergerät', 1], ['Wischermotor', 2]];
+  const box = document.getElementById('sort'), score = document.getElementById('sort-score');
+  let right = 0, done = 0;
+  items.forEach(([name, ok]) => {
+    const row = document.createElement('div'); row.className = 'sort-row';
+    row.innerHTML = '<span>' + name + '</span>' + ['E', 'V', 'A'].map((l, k) => '<button class="opt" data-k="' + k + '">' + l + '</button>').join('');
+    row.querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => {
+      if (row.dataset.done) return;
+      row.dataset.done = 1; done++;
+      const k = +b.dataset.k;
+      if (k === ok) { b.classList.add('right'); right++; }
+      else { b.classList.add('wrong'); row.querySelectorAll('.opt')[ok].classList.add('right'); }
+      score.textContent = right + ' von ' + items.length + ' richtig' + (done === items.length ? (right === items.length ? ' – super!' : ' – grün zeigt die richtige Lösung.') : '');
+    }));
+    box.appendChild(row);
+  });
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

@@ -408,6 +408,10 @@ VIDEOS = {
 }
 
 
+from sensorik import VIDEOS_SENSORIK
+VIDEOS.update(VIDEOS_SENSORIK)
+
+
 if __name__ == '__main__':
     name = sys.argv[1]
     mode = sys.argv[2] if len(sys.argv) > 2 else 'render'
