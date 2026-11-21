@@ -23,6 +23,9 @@
   .coil { transition: fill .3s; }
   .lever { transition: transform .35s ease; transform-origin: 650px 140px; transform-box: view-box; }
   .pwm { display: grid; grid-template-columns: 1fr 300px; gap: 30px; align-items: center; }
+  .oszi { background: #0d1117; border: 6px solid #3a404c; border-radius: 16px; padding: 10px 12px; }
+  .oszi-top { display: flex; justify-content: space-between; color: #9fb3a6; font-size: 14px; font-weight: 800; letter-spacing: .06em; margin-bottom: 6px; }
+  .oszi svg { display: block; background: #07120b; border-radius: 6px; }
   .pr { display: grid; grid-template-columns: 360px 1fr; gap: 36px; align-items: start; }
   .pr .lcd2 { font-size: 40px; min-height: 84px; display: flex; align-items: center; justify-content: flex-end; }
   .hl2 svg { display: block; margin: 6px auto 0; }
@@ -32,6 +35,7 @@
     .cmp .ico { font-size: 46px; } .cmp h4 { font-size: 20px; } .cmp p { font-size: 15px; }
     .pr .lcd2 { font-size: 30px; min-height: 60px; }
     #relais-box { height: auto !important; }
+    .slide .body[style*="700px 1fr"], .slide .body[style*="600px 1fr"] { grid-template-columns: 1fr !important; }
   }
 </style>
 </head>
@@ -194,6 +198,7 @@
         <text x="315" y="186" text-anchor="middle" font-size="15" font-weight="700" fill="#94a4ba">Zeit</text>
       </svg>
       <div class="card" style="margin-top:12px;font-size:19px;font-weight:600" id="pwm-txt"></div>
+      <div class="tip step" style="margin-top:12px;font-size:17px"><b>Warum PWM?</b>Stufenlos und fast ohne Wärmeverlust – ein Vorwiderstand würde die Energie verheizen. Im Kfz z. B. Kühlerlüfter, Kraftstoffpumpe (bedarfsgeregelt), Ladedruckregelventil, LED-Dimmung (Tagfahrlicht als Standlicht).</div>
     </div>
     <div style="text-align:center">
       <svg class="klein" viewBox="0 0 220 220" width="260" height="260">
@@ -202,6 +207,56 @@
         <circle cx="110" cy="110" r="12" fill="#ecf1f8"/>
       </svg>
       <div class="muted" style="font-size:17px;font-weight:700">Kühlerlüfter</div>
+    </div>
+  </div>
+</section>
+
+<!-- PWM-Begriffe -->
+<section class="slide">
+  <span class="tag">AKTOREN</span><h2>PWM: die Begriffe</h2>
+  <div class="body" style="display:grid;grid-template-columns:700px 1fr;gap:30px;align-items:start">
+    <svg viewBox="0 0 720 290" width="700" height="282">
+      <text x="10" y="66" font-size="16" font-weight="800" fill="#94a4ba">12 V</text>
+      <text x="10" y="206" font-size="16" font-weight="800" fill="#94a4ba">0 V</text>
+      <line x1="56" y1="200" x2="700" y2="200" stroke="#94a4ba" stroke-width="2"/>
+      <path d="M60 200 V60 H180 V200 H360 V60 H480 V200 H660 V60" fill="none" stroke="#ff8f3f" stroke-width="5" stroke-linejoin="round"/>
+      <g class="step">
+        <line x1="62" y1="38" x2="178" y2="38" stroke="#ff8f3f" stroke-width="3"/><path d="M60 38 l12 -7 v14z M180 38 l-12 -7 v14z" fill="#ff8f3f"/>
+        <text x="120" y="26" text-anchor="middle" font-size="17" font-weight="800" fill="#ff8f3f">t ein = 4 ms</text>
+      </g>
+      <g class="step">
+        <line x1="182" y1="225" x2="358" y2="225" stroke="#94a4ba" stroke-width="3"/><path d="M180 225 l12 -7 v14z M360 225 l-12 -7 v14z" fill="#94a4ba"/>
+        <text x="270" y="216" text-anchor="middle" font-size="17" font-weight="800" fill="#94a4ba">t aus = 6 ms</text>
+      </g>
+      <g class="step">
+        <line x1="62" y1="265" x2="358" y2="265" stroke="#ecf1f8" stroke-width="3"/><path d="M60 265 l12 -7 v14z M360 265 l-12 -7 v14z" fill="#ecf1f8"/>
+        <text x="210" y="288" text-anchor="middle" font-size="17" font-weight="800" fill="#ecf1f8">Periodendauer T = 10 ms</text>
+      </g>
+    </svg>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card step"><div style="font-size:21px;font-weight:800">Tastverhältnis = t<sub>ein</sub> : T × 100 %</div><div class="muted" style="font-size:17px;margin-top:6px">4 ms : 10 ms × 100 % = <span class="c" style="font-weight:800">40 %</span></div></div>
+      <div class="card step"><div style="font-size:21px;font-weight:800">Frequenz f = 1 : T</div><div class="muted" style="font-size:17px;margin-top:6px">1 : 0,01 s = <span class="c" style="font-weight:800">100 Hz</span> (100 Perioden pro Sekunde)</div></div>
+      <div class="tip step" style="font-size:17px"><b>Gut zu wissen</b>Die Frequenz bleibt meist gleich. Das Steuergerät verändert nur die Einschaltzeit.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PWM messen (interaktiv) -->
+<section class="slide" id="s-pwm-mess">
+  <span class="tag">AKTOREN</span><h2>PWM messen: Oszilloskop oder Multimeter?</h2>
+  <div class="body noclick" style="display:grid;grid-template-columns:600px 1fr;gap:30px;align-items:start">
+    <div>
+      <div class="oszi">
+        <div class="oszi-top"><span>OSZILLOSKOP</span><span id="o-info">5 V/Div · 2 ms/Div</span></div>
+        <svg viewBox="0 0 560 260" width="560" height="260" id="oszi-svg"><g id="o-grid"></g><path id="o-trace" fill="none" stroke="#6dff9e" stroke-width="4" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="ctrl" style="margin-top:14px"><span style="width:230px">Tastverhältnis: <span class="c" id="o-duty">40 %</span></span><input type="range" id="o-s" min="10" max="90" step="5" value="40"></div>
+      <div class="choice" style="margin-top:10px"><button class="btn ghost on" id="o-plus">Plus geschaltet</button><button class="btn ghost" id="o-masse">Masse geschaltet</button></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card"><div class="muted" style="font-size:15px;font-weight:800">MULTIMETER (V DC) ZEIGT</div><div class="lcd2" style="font-size:40px;margin-top:8px" id="o-mm">4,8 V</div><div class="muted" style="font-size:15px;margin-top:6px">nur den Mittelwert – kein Tastverhältnis</div></div>
+      <div class="card" style="font-size:18px;font-weight:600" id="o-txt"></div>
+      <div class="warn" style="font-size:16px"><b>Darum</b>PWM mit dem Oszilloskop prüfen. Manche Multimeter haben eine Funktion für Frequenz (Hz) und Tastverhältnis (%).</div>
     </div>
   </div>
 </section>
@@ -272,6 +327,9 @@
     <div class="q" data-correct="2"><p>4. Womit prüfst du einen Steuergeräte-Ausgang?</p>
       <div class="opts"><button class="opt">Glühlampen-Prüflampe</button><button class="opt">Kurzschlussbrücke gegen Masse</button><button class="opt">LED-Prüflampe oder Oszilloskop</button></div>
       <div class="fb">Eine Glühlampe zieht zu viel Strom und kann den Ausgang beschädigen.</div></div>
+    <div class="q" data-correct="1"><p>5. Ein Lüfter wird plusgeschaltet mit 12 V und 25 % Tastverhältnis angesteuert. Was zeigt das Multimeter (V DC) ungefähr?</p>
+      <div class="opts"><button class="opt">12 V</button><button class="opt">3 V</button><button class="opt">9 V</button></div>
+      <div class="fb">Das Multimeter zeigt den Mittelwert: 12 V × 25 % = 3 V. Das Tastverhältnis sieht man nur mit dem Oszilloskop.</div></div>
     <div class="score">Klicke auf eine Antwort.</div>
   </div>
 </section>
@@ -285,7 +343,7 @@
       <ul>
         <li class="step"><span>Aktor = Ausgabe im EVA-Prinzip<small>Bewegung, Wärme, Licht oder Ton</small></span></li>
         <li class="step"><span>Relais: klein steuert groß<small>85/86 Spule, 30 → 87 Laststrom</small></span></li>
-        <li class="step"><span>Ansteuerung über Plus, Masse oder PWM</span></li>
+        <li class="step"><span>Ansteuerung über Plus, Masse oder PWM<small>Tastverhältnis = Einschaltzeit : Periodendauer – messen mit dem Oszilloskop</small></span></li>
         <li class="step"><span>Prüfen: Aktortest, Versorgung, Wicklung, Ansteuerung<small>nur LED-Prüflampe oder Oszilloskop am Steuergerät</small></span></li>
       </ul>
     </div>
@@ -350,6 +408,37 @@
       : 'Das Steuergerät schaltet sehr schnell ein und aus. Eingeschaltet: <span class="c">' + Math.round(d * 100) + ' %</span> der Zeit – der Lüfter läuft mit etwa ' + Math.round(d * 100) + ' % Leistung.';
   }
   s.addEventListener('input', upd); upd();
+})();
+
+/* PWM messen: Oszilloskop + Multimeter */
+(function () {
+  const g = document.getElementById('o-grid');
+  for (let i = 0; i <= 10; i++) svgEl('line', { x1: i * 56, y1: 0, x2: i * 56, y2: 260, stroke: '#1d3b2a', 'stroke-width': i % 5 ? 1 : 2 }, g);
+  for (let j = 0; j <= 8; j++) svgEl('line', { x1: 0, y1: j * 32.5, x2: 560, y2: j * 32.5, stroke: '#1d3b2a', 'stroke-width': j % 4 ? 1 : 2 }, g);
+  let masse = false;
+  const s = document.getElementById('o-s'), fmt = (v) => v.toFixed(1).replace('.', ',');
+  function upd() {
+    const d = +s.value / 100, hi = 50, lo = 210, per = 112;
+    let p = '';
+    for (let i = 0; i < 5; i++) {
+      const x0 = i * per, x1 = x0 + per * d;
+      const on = masse ? lo : hi, off = masse ? hi : lo;
+      p += (i === 0 ? 'M0 ' + on : '') + ' H' + x1.toFixed(1) + ' V' + off + ' H' + (x0 + per) + ' V' + on;
+    }
+    document.getElementById('o-trace').setAttribute('d', p);
+    document.getElementById('o-duty').textContent = Math.round(d * 100) + ' %';
+    const um = masse ? 12 * (1 - d) : 12 * d;
+    document.getElementById('o-mm').textContent = 'ca. ' + fmt(um) + ' V';
+    document.getElementById('o-plus').classList.toggle('on', !masse);
+    document.getElementById('o-masse').classList.toggle('on', masse);
+    document.getElementById('o-txt').innerHTML = masse
+      ? 'Masse geschaltet, gemessen am Aktor-Anschluss zum Steuergerät: Das Bild ist <span class="c">umgedreht</span>. Eingeschaltet ist der Aktor, wenn das Signal auf <b>0 V</b> liegt.'
+      : 'Plus geschaltet, gemessen am Aktor gegen Masse: Eingeschaltet ist der Aktor, wenn das Signal auf <b>12 V</b> liegt.';
+  }
+  s.addEventListener('input', upd);
+  document.getElementById('o-plus').onclick = () => { masse = false; upd(); };
+  document.getElementById('o-masse').onclick = () => { masse = true; upd(); };
+  upd();
 })();
 
 /* Aktor prüfen: Anzeige je Schritt */
