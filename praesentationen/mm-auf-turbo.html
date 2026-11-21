@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Abgasturbolader – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+  .drehen-t, .drehen-v { animation: dreh 1.2s linear infinite; }
+  .drehen-t { transform-origin: 120px 130px; } .drehen-v { transform-origin: 440px 130px; }
+  @keyframes dreh { to { transform: rotate(360deg); } }
+  .suv-rad { animation: dreh .8s linear infinite; transform-origin: 150px 200px; }
+</style>
+</head>
+<body class="t-mm7">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · AUFLADUNG</div>
+  <div class="symbol">T</div>
+  <h1>Abgasturbolader</h1>
+  <p>Mehr Leistung aus dem Abgas</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBOLADER</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Warum Motoren aufgeladen werden</li>
+      <li class="step from-left"><span class="num">2</span>Wie ein Abgasturbolader aufgebaut ist und arbeitet</li>
+      <li class="step from-left"><span class="num">3</span>Wozu der Ladeluftkühler dient</li>
+      <li class="step from-left"><span class="num">4</span>Wie der Lader geschmiert und gekühlt wird</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBOLADER</span><h2>Warum aufladen?</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Mehr Luft im Zylinder<small>dann kann mehr Kraftstoff verbrannt werden</small></li>
+      <li class="step">Mehr Leistung aus kleinem Hubraum<small>„Downsizing“: kleiner Motor, gleiche Leistung</small></li>
+      <li class="step">Weniger Verbrauch<small>der kleine Motor hat weniger Reibung und arbeitet öfter im günstigen Bereich</small></li>
+    </ol>
+    <div class="tip step" style="margin-top:8px"><b>Zwei Wege</b>Abgasturbolader (angetrieben vom Abgas) oder Kompressor (angetrieben vom Motor). Heute haben fast alle Diesel und die meisten Benziner einen Turbo.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBOLADER</span><h2>Aufbau und Funktion</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 560 260" width="540" height="250" style="display:block;margin:0 auto">
+  <rect x="190" y="110" width="180" height="40" rx="8" fill="#3b4250" stroke="#94a4ba" stroke-width="2"/>
+  <text x="280" y="136" text-anchor="middle" font-size="14" font-weight="800" fill="#ecf1f8">Welle + Lager</text>
+  <g class="drehen-t"><circle cx="120" cy="130" r="70" fill="none" stroke="#ff8f3f" stroke-width="5"/>
+    <path d="M120 130 L120 66 M120 130 L175 98 M120 130 L175 162 M120 130 L120 194 M120 130 L65 162 M120 130 L65 98" stroke="#ff8f3f" stroke-width="6"/></g>
+  <g class="drehen-v"><circle cx="440" cy="130" r="70" fill="none" stroke="#28aaf5" stroke-width="5"/>
+    <path d="M440 130 L440 66 M440 130 L495 98 M440 130 L495 162 M440 130 L440 194 M440 130 L385 162 M440 130 L385 98" stroke="#28aaf5" stroke-width="6"/></g>
+  <text x="120" y="230" text-anchor="middle" font-size="16" font-weight="800" fill="#ff8f3f">Turbine</text>
+  <text x="120" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="#94a4ba">heißes Abgas treibt an</text>
+  <text x="440" y="230" text-anchor="middle" font-size="16" font-weight="800" fill="#28aaf5">Verdichter</text>
+  <text x="440" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="#94a4ba">drückt Luft in den Motor</text>
+</svg>
+      <ol class="steps-list">
+        <li class="step">Das Abgas treibt die <span class="c">Turbine</span></li>
+        <li class="step">Über die <span class="c">Welle</span> dreht der Verdichter mit<small>bis über 200.000 1/min (Richtwert)</small></li>
+        <li class="step">Der <span class="c">Verdichter</span> drückt Luft in den Motor</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBOLADER</span><h2>Der Ladeluftkühler</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Verdichter</b><span>Luft wird verdichtet – und dabei heiß</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Ladeluftkühler</b><span>kühlt die Luft wieder ab</span></div><div class="flow-arrow step"></div>
+      <div class="glied step hd"><b>Motor</b><span>kühle Luft ist dichter – mehr Sauerstoff</span></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <div class="tip step"><b>Luft-Luft-Kühler</b>Sitzt vorne im Fahrtwind, meist vor dem Kühler.</div>
+      <div class="tip step"><b>Wassergekühlt</b>Ein eigener Kühlkreislauf kühlt die Ladeluft – oft direkt im Saugrohr.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBOLADER</span><h2>Schmierung und Kühlung</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>Motoröl</b><span>schmiert die Lager der Welle – eine Ölzulauf- und eine Ölrücklaufleitung</span></div>
+      <div class="val step from-left"><b>Kühlmittel</b><span>beim Benziner meist zusätzlich – das Abgas ist dort heißer</span></div>
+      <div class="val step from-left"><b>bis ca. 1.000 °C</b><span>Abgastemperatur an der Turbine beim Benziner (Diesel weniger)</span></div>
+    </div>
+    <div class="note step">Richtwerte. Ohne sauberes Öl hält kein Turbo – Ölwechsel nach Vorgabe ist Pflicht.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBOLADER</span><h2>Turbo schonen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Kalt nicht voll belasten<small>das Öl muss erst warm werden und überall hinkommen</small></li>
+      <li class="step">Nach starker Belastung kurz nachlaufen lassen<small>damit der heiße Lader abkühlt und das Öl nicht verkokt</small></li>
+      <li class="step">Ölwechsel nach Vorgabe, richtiges Öl<small>die Lagerung braucht sauberes Öl</small></li>
+      <li class="step">Luftfilter regelmäßig tauschen<small>Schmutz und Fremdkörper beschädigen das Verdichterrad</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBOLADER</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-auf-turbo.mp4" poster="videos/mm-auf-turbo.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBOLADER</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Was treibt die Turbine des Abgasturboladers an?</p>
+      <div class="opts"><button class="opt">Der Keilriemen</button><button class="opt">Das Abgas</button><button class="opt">Ein Elektromotor</button></div>
+      <div class="fb">Auf derselben Welle sitzt der Verdichter.</div></div>
+    <div class="q" data-correct="0"><p>2. Wozu dient der Ladeluftkühler?</p>
+      <div class="opts"><button class="opt">Kühle Luft ist dichter – mehr Sauerstoff im Zylinder</button><button class="opt">Er kühlt das Motoröl</button><button class="opt">Er wärmt den Motor schneller auf</button></div>
+      <div class="fb">Beim Verdichten wird die Luft warm – gekühlt passt mehr hinein.</div></div>
+    <div class="q" data-correct="2"><p>3. Womit werden die Lager des Turboladers geschmiert?</p>
+      <div class="opts"><button class="opt">Mit Fett</button><button class="opt">Mit Kühlmittel</button><button class="opt">Mit Motoröl</button></div>
+      <div class="fb">Darum sind Ölzulauf, Ölrücklauf und sauberes Öl so wichtig.</div></div>
+    <div class="q" data-correct="0"><p>4. Warum soll man den Motor nach starker Belastung kurz nachlaufen lassen?</p>
+      <div class="opts"><button class="opt">Damit der heiße Lader abkühlt und das Öl nicht verkokt</button><button class="opt">Damit die Batterie lädt</button><button class="opt">Damit der Tank leer wird</button></div>
+      <div class="fb">Verkoktes Öl verstopft die Lager.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBOLADER</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Abgas → Turbine → Welle → Verdichter → Luft</span></li>
+        <li class="step"><span>Ladeluftkühler: kühle Luft ist dichter</span></li>
+        <li class="step"><span>Lager werden mit Motoröl geschmiert</span></li>
+        <li class="step"><span>Warm fahren, nachlaufen lassen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Aufladung" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

@@ -289,10 +289,84 @@ dpf_js = '''<script>
 })();
 </script>'''
 
+# ---------------------------------------------------------------- AGR
+T = 'AGR'
+agr = [
+    titel_folie(K, 'AGR', 'Abgasrückführung', 'Weniger Stickoxide durch zurückgeführtes Abgas', 'font-size:72px'),
+    lernziele(T, ['Warum Abgas zurückgeführt wird', 'Wie die AGR aufgebaut ist',
+                  'Wann die AGR arbeitet – und wann nicht', 'Typische Fehler und Prüfen']),
+    folie(T, 'Warum Abgas zurückführen?', """    <ol class="steps-list">
+      <li class="step">Bei sehr heißer Verbrennung entstehen viele <span class="c">Stickoxide (NOx)</span><small>vor allem beim Diesel mit seinem Luftüberschuss</small></li>
+      <li class="step">Ein Teil des Abgases wird der <span class="c">Ansaugluft</span> beigemischt<small>Abgas enthält kaum noch Sauerstoff</small></li>
+      <li class="step">Die Verbrennung wird <span class="c">kühler</span><small>weniger Sauerstoff, mehr träges Gas im Zylinder</small></li>
+      <li class="step">Es entstehen <span class="c">weniger Stickoxide</span><small>beim Benziner sinkt zusätzlich der Verbrauch in der Teillast</small></li>
+    </ol>"""),
+    folie(T, 'Aufbau', """    <div class="kette">
+      <div class="glied step"><b>Abgas</b><span>ein Teil wird abgezweigt</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>AGR-Kühler</b><span>kühlt das Abgas mit Kühlmittel</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>AGR-Ventil</b><span>das Steuergerät bestimmt die Menge</span></div><div class="flow-arrow step"></div>
+      <div class="glied step hd"><b>Ansaugluft</b><span>weniger Sauerstoff, kühlere Verbrennung</span></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <div class="tip step"><b>Hochdruck-AGR</b>Abgas wird vor dem Turbolader entnommen und ins Saugrohr geführt.</div>
+      <div class="tip step"><b>Niederdruck-AGR</b>Abgas wird nach dem Partikelfilter entnommen und vor dem Verdichter zugeführt – sauberer und kühler.</div>
+    </div>"""),
+    folie(T, 'AGR-Menge – zum Ausprobieren', """    <div class="ctrl"><span style="width:280px">AGR-Rate: <span class="c" id="agr-v">20 %</span></span><input type="range" id="agr" min="0" max="50" step="5" value="20"></div>
+    <div class="grid2" style="margin-top:16px;align-items:center">
+      <div class="card">
+        <div style="font-weight:800;margin-bottom:6px">Stickoxide (NOx)</div>
+        <div style="height:22px;background:var(--card2);border-radius:8px;overflow:hidden"><div id="agr-nox" style="height:100%;background:var(--red);transition:width .2s"></div></div>
+        <div style="font-weight:800;margin:16px 0 6px">Ruß</div>
+        <div style="height:22px;background:var(--card2);border-radius:8px;overflow:hidden"><div id="agr-russ" style="height:100%;background:var(--muted);transition:width .2s"></div></div>
+      </div>
+      <div class="card" id="agr-t" style="font-size:18px;font-weight:600;line-height:1.5"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Beispiel Diesel, vereinfacht – das Steuergerät sucht immer den besten Mittelweg.</p>""", sid='s-agr', body_cls='body noclick'),
+    folie(T, 'Wann arbeitet die AGR?', """    <div class="values">
+      <div class="val step from-left"><b>Teillast, warm</b><span>AGR aktiv – hier entstehen viele Stickoxide</span></div>
+      <div class="val step from-left"><b>Volllast</b><span>AGR zu – der Motor braucht jeden Sauerstoff für die Leistung</span></div>
+      <div class="val step from-left"><b>Kaltstart</b><span>AGR meist zu – sonst unruhiger Lauf und viel Ruß</span></div>
+    </div>
+    <div class="tip step" style="margin-top:14px"><b>Innere AGR beim Benziner</b>Über die Nockenwellenverstellung bleibt etwas Abgas im Zylinder (Ventilüberschneidung) – ganz ohne AGR-Ventil.</div>"""),
+    folie(T, 'Typische Fehler und Prüfen', """    <div class="grid2" style="align-content:start">
+      <div class="warn step"><b>AGR-Ventil verkokt</b>Klemmt offen: Ruckeln, schwarzer Rauch, Leistungsverlust. Klemmt zu: hohe Stickoxide, Fehlerspeicher.</div>
+      <div class="warn step"><b>AGR-Kühler undicht</b>Kühlmittelverlust ohne sichtbares Leck, weißer Rauch – Kühlmittel gelangt in den Ansaugtrakt.</div>
+      <div class="tip step"><b>Messwerte</b>AGR-Ventil: Soll- und Ist-Stellung vergleichen. Öffnet die AGR, muss die gemessene Luftmasse sinken.</div>
+      <div class="tip step"><b>Aktortest</b>Ventil im Aktortest bewegen lassen und Stellung beobachten – nach dem Tausch oft anlernen.</div>
+    </div>"""),
+    video(T, 'mm-abgas-agr'),
+    kurztest(T, [
+        ('Was bewirkt die Abgasrückführung?', ['Mehr Leistung', 'Weniger Stickoxide (NOx)', 'Mehr Ladedruck'], 1, 'Die Verbrennung wird kühler – es entstehen weniger Stickoxide.'),
+        ('Wann ist die AGR geschlossen?', ['Bei Volllast', 'In der warmen Teillast', 'Immer'], 0, 'Bei Volllast braucht der Motor allen Sauerstoff für die Leistung.'),
+        ('Was passiert bei zu viel AGR?', ['Mehr Stickoxide', 'Weniger Verbrauch, sonst nichts', 'Es entsteht viel Ruß'], 2, 'Es fehlt Sauerstoff für eine saubere Verbrennung.'),
+        ('Woran erkennst du im Messwert, dass die AGR öffnet?', ['Die gemessene Luftmasse sinkt', 'Die Drehzahl steigt stark', 'Die Batteriespannung sinkt'], 0, 'Ein Teil der Füllung ist dann Abgas – der Luftmassenmesser misst weniger Frischluft.'),
+    ]),
+    merke(T, ['AGR: weniger Stickoxide durch kühlere Verbrennung', 'Kühler + Ventil, Steuergerät bestimmt die Menge',
+              'Aktiv in der warmen Teillast|zu bei Volllast', 'Verkokt? Soll/Ist-Stellung und Luftmasse prüfen']),
+]
+agr_js = """<script>
+(function () {
+  const a = document.getElementById('agr');
+  function g() {
+    const r = +a.value;
+    document.getElementById('agr-v').textContent = r + ' %';
+    document.getElementById('agr-nox').style.width = (95 - r * 1.6) + '%';
+    document.getElementById('agr-russ').style.width = (8 + Math.pow(r / 50, 2.2) * 87) + '%';
+    let t;
+    if (r < 10) t = '<b class="red">Kaum AGR:</b> sehr heiße Verbrennung – viele Stickoxide.';
+    else if (r <= 30) t = '<b class="grn">Mittelweg:</b> deutlich weniger Stickoxide, noch wenig Ruß.';
+    else t = '<b class="ora">Zu viel AGR:</b> Es fehlt Sauerstoff – viel Ruß, schwarzer Rauch, der Partikelfilter füllt sich schnell.';
+    document.getElementById('agr-t').innerHTML = t;
+  }
+  a.addEventListener('input', g); g();
+})();
+</script>"""
+
 STYLE = '  .symbol { font-size: 110px; }'
 
 if __name__ == '__main__':
     seite('mm-abgas-lambda.html', 'Lambdasonde – Motormanagement', 't-mm5', THEMA, lambdas, STYLE, lambdas_js)
     seite('mm-abgas-kat.html', 'Katalysator – Motormanagement', 't-mm5', THEMA, kat, STYLE, kat_js)
     seite('mm-abgas-dpf.html', 'DPF und AdBlue – Motormanagement', 't-mm5', THEMA, dpf, STYLE, dpf_js)
+    seite('mm-abgas-agr.html', 'Abgasrückführung – Motormanagement', 't-mm5', THEMA, agr, STYLE, agr_js)
     print('ok')

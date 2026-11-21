@@ -881,8 +881,8 @@ def rad(d, c, r, ang, col, a):
     circle(d, c, 10, col, a)
 
 
-def dt_turbo(d, t, dur):
-    header(d, t, 'TURBO', 'So arbeitet der Turbolader', PUR)
+def dt_turbo(d, t, dur, col=PUR):
+    header(d, t, 'TURBO', 'So arbeitet der Turbolader', col)
     a = pr(t, 0.2, 0.8)
     sp = pr(t, 1.0, 4.0)
     ang = t * t * 2.0 * sp
@@ -900,11 +900,11 @@ def dt_turbo(d, t, dur):
         arrow(d, (1000 + 120 * k, 200), (1080 + 120 * k, 200), BLU, 5, 14, a * sp * (1 - k))
     text(d, 200, 160, 'Abgas', 22, 'Bold', ORA, a, 'mm')
     text(d, 1080, 160, 'Ladeluft', 22, 'Bold', BLU, a, 'mm')
-    caption(d, t, [(0.6, 5.5, 'Das Abgas treibt die Turbine an'), (5.6, dur, 'Mehr Luft im Zylinder = mehr Leistung')], PUR)
+    caption(d, t, [(0.6, 5.5, 'Das Abgas treibt die Turbine an'), (5.6, dur, 'Mehr Luft im Zylinder = mehr Leistung')], col)
 
 
-def dt_agr(d, t, dur):
-    header(d, t, 'AGR', 'Abgasrückführung', PUR)
+def dt_agr(d, t, dur, col=PUR):
+    header(d, t, 'AGR', 'Abgasrückführung', col)
     a = pr(t, 0.2, 0.8)
     r = 50 * clamp((t - 1.0) / 7.0)
     rrect(d, (90, 150, 1190, 250), 16, CARD, a)
@@ -915,7 +915,7 @@ def dt_agr(d, t, dur):
         text(d, 90, y, lab, 26, 'Bold', TXT, a, 'lm')
         rrect(d, (90, y + 24, 1190, y + 64), 10, CARD, a)
         rrect(d, (90, y + 24, 90 + 11 * val, y + 64), 10, col, a)
-    caption(d, t, [(0.6, 5.0, 'Mehr AGR: weniger Stickoxide'), (5.1, dur, 'Zu viel AGR: viel Ruß – der Mittelweg zählt')], PUR)
+    caption(d, t, [(0.6, 5.0, 'Mehr AGR: weniger Stickoxide'), (5.1, dur, 'Zu viel AGR: viel Ruß – der Mittelweg zählt')], col)
 
 
 DT_WERTE = values_scene('TURBO', PUR, [], [
@@ -932,8 +932,6 @@ VIDEOS_MOTOR.update({
                                    (dg_verdichten, 11.0), (dg_vergleich, 9.0), (dg_gluehen, 11.0), (DG_MERKE, 7.5)]),
     'mm-common-rail': (PUR, [(title_scene('CR', 'Common-Rail', 'Hochdruck und Einspritzverlauf', PUR, size=96, kicker=KICK4), 5.0),
                              (cr_kette, 9.0), (CR_DRUCK, 9.0), (cr_verlauf, 10.0), (CR_MERKE, 7.5)]),
-    'mm-diesel-turbo': (PUR, [(title_scene('T', 'Turbo und AGR', 'Aufladung und Abgasrückführung', PUR, kicker=KICK4), 5.0),
-                              (dt_turbo, 10.0), (dt_agr, 10.0), (DT_WERTE, 9.0), (DT_MERKE, 7.5)]),
 })
 
 
@@ -1255,4 +1253,189 @@ VIDEOS_MOTOR.update({
                                 (dm_datenstrom, 9.0), (dm_aktor, 9.0), (DM_WERTE, 8.5), (DM_MERKE, 7.5)]),
     'mm-diag-fehlersuche': (BLU, [(title_scene('?', 'Systematische Fehlersuche', 'Schritt für Schritt', BLU, kicker=KICK6), 5.0),
                                   (df_weg, 10.0), (df_messen, 9.0), (DF_MERKE, 7.5)]),
+})
+
+
+# =================== PUMPE-DÜSE, AGR, AUFLADUNG ===================
+KICK7 = 'AUFLADUNG  ·  LERNVIDEO'
+
+
+def pd_ablauf(d, t, dur):
+    header(d, t, 'PUMPE-DÜSE', 'So entsteht der Druck', PUR)
+    a = pr(t, 0.2, 0.8)
+    ph = 0 if t < 2.5 else 1 if t < 5 else 2 if t < 8 else 3
+    ky = [180, 215, 250, 270][ph]
+    if ph == 0:
+        ky = lerp(270, 180, pr(t, 0.5, 2.3))
+    elif ph == 1:
+        ky = lerp(180, 215, pr(t, 2.5, 4.5))
+    elif ph == 2:
+        ky = lerp(215, 255, pr(t, 5.0, 7.5))
+    else:
+        ky = lerp(255, 270, pr(t, 8.0, 9.0))
+    rrect(d, (400, 170, 520, 470), 10, CARD2, a, outline=MUTED, width=2)
+    rect(d, (408, ky + 110, 512, 460), ORA if ph == 2 else BLU, a, bg=CARD2)
+    rrect(d, (415, ky - 40, 505, ky + 110), 6, (201, 195, 182), a, bg=CARD2)
+    poly(d, [(440, 470), (480, 470), (470, 520), (450, 520)], MUTED, a)
+    if ph == 2:
+        for dx in (-50, 0, 50):
+            line(d, [(460, 525), (460 + dx, 580)], (230, 210, 120), 5, a)
+    rrect(d, (520, 360, 640, 430), 12, CARD, a)
+    text(d, 580, 395, 'Ventil ' + ('zu' if ph == 2 else 'offen'), 22, 'XB', RED if ph == 2 else GRN, a, 'mm', bg=CARD)
+    names = ['1. Saughub', '2. Vorhub', '3. Einspritzung', '4. Ende']
+    for i, n in enumerate(names):
+        on = i == ph
+        y = 190 + i * 64
+        rrect(d, (760, y, 1150, y + 50), 12, PUR if on else CARD, a)
+        text(d, 785, y + 25, n, 24, 'Bold', BG if on else MUTED, a, 'lm', bg=PUR if on else CARD)
+    if ph == 2:
+        text(d, 955, 480, 'bis ca. 2.000 bar', 30, 'XB', ORA, a, 'mm')
+    caption(d, t, [(0.5, 4.9, 'Nocke und Kipphebel drücken den Kolben nach unten'),
+                   (5.0, dur, 'Erst wenn das Magnetventil schließt, wird eingespritzt')], PUR)
+
+
+PD_WERTE = values_scene('PUMPE-DÜSE', PUR, [], [
+    ('1 Einheit', 'pro Zylinder, im Zylinderkopf'), ('bis ca. 2.000 bar', 'Einspritzdruck (Richtwert)'),
+    ('Ventil zu', '= Einspritzung, Dauer = Menge'), ('Ölstand steigt?', 'O-Ringe der Einheiten prüfen')],
+    note='Richtwerte – genaue Werte laut Hersteller', title='Gut zu wissen', vsize=26)
+
+PD_MERKE = merke_scene('PUMPE-DÜSE', PUR, [
+    'Pumpe, Magnetventil und Düse in einem Bauteil', 'Nocke + Kipphebel erzeugen den Druck',
+    'Ventil zu = Einspritzung', 'Ölstand steigt? O-Ringe prüfen'])
+
+AG_WERTE = values_scene('AGR', GRN, [], [
+    ('Teillast, warm', 'AGR aktiv'), ('Volllast', 'AGR zu – Sauerstoff für die Leistung'),
+    ('Kaltstart', 'AGR meist zu'), ('Luftmasse sinkt', 'wenn die AGR öffnet – gut zum Prüfen')],
+    note='Verkoktes AGR-Ventil: Ruckeln, schwarzer Rauch', title='Wann arbeitet die AGR?', vsize=26)
+
+AG_MERKE = merke_scene('AGR', GRN, [
+    'AGR: weniger Stickoxide durch kühlere Verbrennung', 'Kühler + Ventil, Steuergerät bestimmt die Menge',
+    'Aktiv in der warmen Teillast, zu bei Volllast', 'Prüfen: Soll/Ist-Stellung und Luftmasse'])
+
+
+def au_llk(d, t, dur):
+    header(d, t, 'TURBOLADER', 'Der Ladeluftkühler', YEL)
+    xs, w = kette_boxes(d, t, [('Verdichter', 'Luft wird heiß'), ('Ladeluftkühler', 'kühlt die Luft'), ('Motor', 'mehr Sauerstoff')], 200, 130, YEL, step=0.8, hd=(2,))
+    for i, (tmp, col) in enumerate([('ca. 150 °C', ORA), ('ca. 50 °C', BLU)]):
+        b = pr(t, 2.5 + i * 1.0, 3.0 + i * 1.0)
+        text(d, xs[i] + w / 2, 400, tmp, 34, 'XB', col, b, 'mm')
+    text(d, 640, 460, 'Beispielwerte', 18, 'Med', MUTED, pr(t, 3, 3.5), 'mm')
+    caption(d, t, [(0.6, dur, 'Kühle Luft ist dichter – noch mehr Sauerstoff im Zylinder')], YEL)
+
+
+AU_WERTE = values_scene('TURBOLADER', YEL, [], [
+    ('über 200.000', 'Umdrehungen pro Minute (Richtwert)'), ('Motoröl', 'schmiert die Lager der Welle'),
+    ('Kühlmittel', 'beim Benziner meist zusätzlich'), ('nachlaufen', 'lassen nach starker Belastung')],
+    note='Ohne sauberes Öl hält kein Turbo', title='Gut zu wissen', vsize=26)
+
+AU_MERKE = merke_scene('TURBOLADER', YEL, [
+    'Abgas → Turbine → Welle → Verdichter', 'Ladeluftkühler: kühle Luft ist dichter',
+    'Lager werden mit Motoröl geschmiert', 'Warm fahren, nachlaufen lassen'])
+
+
+def ar_wastegate(d, t, dur):
+    header(d, t, 'LADEDRUCK', 'Das Wastegate', YEL)
+    a = pr(t, 0.2, 0.8)
+    n = 1000 + 5000 * clamp((t - 0.8) / 8.0)
+    ohne = 1 + min(2.4, max(0, (n - 1100) / 1500))
+    p = min(ohne, 2.2)
+    auf = clamp((ohne - 2.2) / 1.2)
+    for i, (lab, val, col) in enumerate([('Drehzahl', f'{n:,.0f} 1/min'.replace(',', '.'), TXT), ('Ladedruck', 'ca. ' + f'{p:.1f}'.replace('.', ',') + ' bar', YEL)]):
+        y = 140 + i * 110
+        rrect(d, (90, y, 1190, y + 90), 16, CARD, a)
+        text(d, 120, y + 45, lab, 28, 'Bold', TXT, a, 'lm', bg=CARD)
+        text(d, 1160, y + 45, val, 36, 'XB', col, a, 'rm', bg=CARD)
+    text(d, 90, 390, 'Wastegate geöffnet', 26, 'Bold', TXT, a, 'lm')
+    rrect(d, (90, 415, 1190, 455), 10, CARD, a)
+    if auf > 0.01:
+        rrect(d, (90, 415, 90 + 1100 * auf, 455), 10, YEL, a)
+    caption(d, t, [(0.6, 5.0, 'Mehr Drehzahl, mehr Abgas, mehr Ladedruck'),
+                   (5.1, dur, 'Sollwert erreicht: Das Wastegate leitet Abgas vorbei')], YEL)
+
+
+def ar_schub(d, t, dur):
+    header(d, t, 'LADEDRUCK', 'Das Schubumluftventil', YEL)
+    kette_boxes(d, t, [('Gas weg', 'Drosselklappe zu'), ('Druckstoß', 'vor der Klappe'), ('Ventil öffnet', 'Luft zurück vor den Verdichter')], 200, 140, YEL, step=0.9, hd=(1,))
+    caption(d, t, [(0.6, dur, 'Der Lader dreht weiter – beim Gasgeben ist der Druck schnell wieder da')], YEL)
+
+
+AR_MERKE = merke_scene('LADEDRUCK', YEL, [
+    'Ladedrucksensor → Steuergerät → Steller', 'Wastegate: Abgas an der Turbine vorbei',
+    'VTG: eng bei niedriger, weit bei hoher Drehzahl', 'Schubumluftventil: Druckstoß abbauen'])
+
+
+def ak_vergleich(d, t, dur):
+    header(d, t, 'KOMPRESSOR', 'Turbo oder Kompressor?', YEL)
+    a = pr(t, 0.2, 0.8)
+    n = 800 + 5200 * clamp((t - 0.8) / 8.0)
+    turbo = 1 + 1.2 * max(0, min(1, (n - 1300) / 1500))
+    komp = 1.15 + 0.7 * min(1, (n - 800) / 1500)
+    rrect(d, (90, 140, 1190, 230), 16, CARD, a)
+    text(d, 120, 185, 'Drehzahl', 28, 'Bold', TXT, a, 'lm', bg=CARD)
+    text(d, 1160, 185, f'{n:,.0f} 1/min'.replace(',', '.'), 36, 'XB', TXT, a, 'rm', bg=CARD)
+    for i, (lab, p, col) in enumerate([('Kompressor', komp, BLU), ('Turbo', turbo, ORA)]):
+        y = 290 + i * 110
+        text(d, 90, y, f'{lab}  ca. ' + f'{p:.1f}'.replace('.', ',') + ' bar', 26, 'Bold', TXT, a, 'lm')
+        rrect(d, (90, y + 24, 1190, y + 64), 10, CARD, a)
+        w = 1100 * (p - 1) / 1.3
+        if w > 4:
+            rrect(d, (90, y + 24, 90 + w, y + 64), 10, col, a)
+    caption(d, t, [(0.6, 4.0, 'Unten: Der Kompressor liefert sofort Druck'),
+                   (4.1, dur, 'Oben: Der Turbo – ohne Motorleistung zu kosten')], YEL)
+
+
+def ak_antrieb(d, t, dur):
+    header(d, t, 'KOMPRESSOR', 'Antrieb', YEL)
+    kette_boxes(d, t, [('Kurbelwelle', 'Riemenscheibe'), ('Riemen', 'Übersetzung'), ('Magnetkupplung', 'zu- und abschalten'), ('Kompressor', 'drückt Luft')], 210, 130, YEL, step=0.8, hd=(3,))
+    caption(d, t, [(0.6, dur, 'Vom Motor angetrieben – kostet Leistung, aber kein Turboloch')], YEL)
+
+
+AK2_MERKE = merke_scene('KOMPRESSOR', YEL, [
+    'Kompressor: vom Motor angetrieben', 'Sofort Ladedruck, kein Turboloch',
+    'Nachteil: kostet Motorleistung', 'Kombination mit Turbo oder E-Verdichter'])
+
+AD2_URSACHEN = values_scene('TURBO-DIAGNOSE', YEL, [], [
+    ('Ölmangel', 'verstopfte Zulaufleitung, zu wenig Öl'), ('Schmutz im Öl', 'Wechselintervall überzogen'),
+    ('Rücklauf zu', 'Öl wird über die Dichtungen gedrückt'), ('Fremdkörper', 'Schmutz im Ansaugweg')],
+    note='Ein Turbo geht fast nie „einfach so“ kaputt', title='Ursachen für Turboschäden', vsize=26)
+
+AD2_TAUSCH = values_scene('TURBO-DIAGNOSE', YEL, [], [
+    ('1.', 'Ursache finden und beheben'), ('2.', 'Ölzulauf neu, Ölwechsel, Luftfilter neu'),
+    ('3.', 'neuen Lader mit Öl befüllen, neue Dichtungen'), ('4.', 'Öldruck aufbauen laut Hersteller')],
+    note='Sonst ist der neue Lader schnell wieder kaputt', title='Turbo richtig tauschen', vsize=30)
+
+AD2_MERKE = merke_scene('TURBO-DIAGNOSE', YEL, [
+    'Ladedruck Soll/Ist bei Volllast vergleichen', 'Undicht? Ladeluftsystem abdrücken',
+    'Turboschaden: meist Ölversorgung', 'Beim Tausch: Ursache beheben'])
+
+
+def ad2_pruefen(d, t, dur):
+    header(d, t, 'TURBO-DIAGNOSE', 'Ladedruck Soll und Ist', YEL)
+    a = pr(t, 0.2, 0.8)
+    rrect(d, (90, 130, 1190, 470), 18, CARD, a)
+    x0, y0, w, h = 140, 170, 1000, 260
+    k = clamp((t - 0.8) / 5.0)
+    soll = lambda x: 0.15 + 0.7 * clamp((x - 0.15) / 0.25)
+    ist = lambda x: 0.15 + 0.42 * clamp((x - 0.2) / 0.3)
+    trace(d, x0, y0, w * k, h, lambda x: soll(x * k), YEL, a, CARD)
+    trace(d, x0, y0, w * k, h, lambda x: ist(x * k), BLU, a, CARD)
+    text(d, 1160, 160, 'Soll', 22, 'XB', YEL, a, 'rm', bg=CARD)
+    text(d, 1160, 190, 'Ist', 22, 'XB', BLU, a, 'rm', bg=CARD)
+    caption(d, t, [(0.6, 5.5, 'Volllast-Probefahrt: Soll und Ist aufzeichnen'),
+                   (5.6, dur, 'Ist zu niedrig: Undichtigkeit oder Steller prüfen')], YEL)
+
+
+VIDEOS_MOTOR.update({
+    'mm-pumpe-duese': (PUR, [(title_scene('PD', 'Pumpe-Düse', 'Pumpe und Düse in einem Bauteil', PUR, size=90, kicker=KICK4), 5.0),
+                             (pd_ablauf, 11.0), (PD_WERTE, 8.5), (PD_MERKE, 7.5)]),
+    'mm-abgas-agr': (GRN, [(title_scene('AGR', 'Abgasrückführung', 'Weniger Stickoxide', GRN, size=72, kicker=KICK5), 5.0),
+                           (lambda d, t, dur: dt_agr(d, t, dur, GRN), 10.0), (AG_WERTE, 8.5), (AG_MERKE, 7.5)]),
+    'mm-auf-turbo': (YEL, [(title_scene('T', 'Abgasturbolader', 'Mehr Leistung aus dem Abgas', YEL, kicker=KICK7), 5.0),
+                           (lambda d, t, dur: dt_turbo(d, t, dur, YEL), 10.0), (au_llk, 8.0), (AU_WERTE, 8.5), (AU_MERKE, 7.5)]),
+    'mm-auf-regelung': (YEL, [(title_scene('p', 'Ladedruckregelung', 'Wastegate und Schubumluftventil', YEL, kicker=KICK7), 5.0),
+                              (ar_wastegate, 10.0), (ar_schub, 8.0), (AR_MERKE, 7.5)]),
+    'mm-auf-kompressor': (YEL, [(title_scene('K', 'Kompressor', 'Mechanische Aufladung', YEL, kicker=KICK7), 5.0),
+                                (ak_antrieb, 8.0), (ak_vergleich, 10.0), (AK2_MERKE, 7.5)]),
+    'mm-auf-diagnose': (YEL, [(title_scene('!', 'Turbo-Diagnose', 'Fehler finden, richtig tauschen', YEL, kicker=KICK7), 5.0),
+                              (ad2_pruefen, 9.0), (AD2_URSACHEN, 8.5), (AD2_TAUSCH, 8.5), (AD2_MERKE, 7.5)]),
 })

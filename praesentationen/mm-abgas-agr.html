@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Abgasrückführung – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+</style>
+</head>
+<body class="t-mm5">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · ABGAS</div>
+  <div class="symbol" style="font-size:72px">AGR</div>
+  <h1>Abgasrückführung</h1>
+  <p>Weniger Stickoxide durch zurückgeführtes Abgas</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">AGR</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Warum Abgas zurückgeführt wird</li>
+      <li class="step from-left"><span class="num">2</span>Wie die AGR aufgebaut ist</li>
+      <li class="step from-left"><span class="num">3</span>Wann die AGR arbeitet – und wann nicht</li>
+      <li class="step from-left"><span class="num">4</span>Typische Fehler und Prüfen</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AGR</span><h2>Warum Abgas zurückführen?</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Bei sehr heißer Verbrennung entstehen viele <span class="c">Stickoxide (NOx)</span><small>vor allem beim Diesel mit seinem Luftüberschuss</small></li>
+      <li class="step">Ein Teil des Abgases wird der <span class="c">Ansaugluft</span> beigemischt<small>Abgas enthält kaum noch Sauerstoff</small></li>
+      <li class="step">Die Verbrennung wird <span class="c">kühler</span><small>weniger Sauerstoff, mehr träges Gas im Zylinder</small></li>
+      <li class="step">Es entstehen <span class="c">weniger Stickoxide</span><small>beim Benziner sinkt zusätzlich der Verbrauch in der Teillast</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AGR</span><h2>Aufbau</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Abgas</b><span>ein Teil wird abgezweigt</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>AGR-Kühler</b><span>kühlt das Abgas mit Kühlmittel</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>AGR-Ventil</b><span>das Steuergerät bestimmt die Menge</span></div><div class="flow-arrow step"></div>
+      <div class="glied step hd"><b>Ansaugluft</b><span>weniger Sauerstoff, kühlere Verbrennung</span></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <div class="tip step"><b>Hochdruck-AGR</b>Abgas wird vor dem Turbolader entnommen und ins Saugrohr geführt.</div>
+      <div class="tip step"><b>Niederdruck-AGR</b>Abgas wird nach dem Partikelfilter entnommen und vor dem Verdichter zugeführt – sauberer und kühler.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-agr">
+  <span class="tag">AGR</span><h2>AGR-Menge – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="ctrl"><span style="width:280px">AGR-Rate: <span class="c" id="agr-v">20 %</span></span><input type="range" id="agr" min="0" max="50" step="5" value="20"></div>
+    <div class="grid2" style="margin-top:16px;align-items:center">
+      <div class="card">
+        <div style="font-weight:800;margin-bottom:6px">Stickoxide (NOx)</div>
+        <div style="height:22px;background:var(--card2);border-radius:8px;overflow:hidden"><div id="agr-nox" style="height:100%;background:var(--red);transition:width .2s"></div></div>
+        <div style="font-weight:800;margin:16px 0 6px">Ruß</div>
+        <div style="height:22px;background:var(--card2);border-radius:8px;overflow:hidden"><div id="agr-russ" style="height:100%;background:var(--muted);transition:width .2s"></div></div>
+      </div>
+      <div class="card" id="agr-t" style="font-size:18px;font-weight:600;line-height:1.5"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Beispiel Diesel, vereinfacht – das Steuergerät sucht immer den besten Mittelweg.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AGR</span><h2>Wann arbeitet die AGR?</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>Teillast, warm</b><span>AGR aktiv – hier entstehen viele Stickoxide</span></div>
+      <div class="val step from-left"><b>Volllast</b><span>AGR zu – der Motor braucht jeden Sauerstoff für die Leistung</span></div>
+      <div class="val step from-left"><b>Kaltstart</b><span>AGR meist zu – sonst unruhiger Lauf und viel Ruß</span></div>
+    </div>
+    <div class="tip step" style="margin-top:14px"><b>Innere AGR beim Benziner</b>Über die Nockenwellenverstellung bleibt etwas Abgas im Zylinder (Ventilüberschneidung) – ganz ohne AGR-Ventil.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AGR</span><h2>Typische Fehler und Prüfen</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="warn step"><b>AGR-Ventil verkokt</b>Klemmt offen: Ruckeln, schwarzer Rauch, Leistungsverlust. Klemmt zu: hohe Stickoxide, Fehlerspeicher.</div>
+      <div class="warn step"><b>AGR-Kühler undicht</b>Kühlmittelverlust ohne sichtbares Leck, weißer Rauch – Kühlmittel gelangt in den Ansaugtrakt.</div>
+      <div class="tip step"><b>Messwerte</b>AGR-Ventil: Soll- und Ist-Stellung vergleichen. Öffnet die AGR, muss die gemessene Luftmasse sinken.</div>
+      <div class="tip step"><b>Aktortest</b>Ventil im Aktortest bewegen lassen und Stellung beobachten – nach dem Tausch oft anlernen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AGR</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-abgas-agr.mp4" poster="videos/mm-abgas-agr.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AGR</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Was bewirkt die Abgasrückführung?</p>
+      <div class="opts"><button class="opt">Mehr Leistung</button><button class="opt">Weniger Stickoxide (NOx)</button><button class="opt">Mehr Ladedruck</button></div>
+      <div class="fb">Die Verbrennung wird kühler – es entstehen weniger Stickoxide.</div></div>
+    <div class="q" data-correct="0"><p>2. Wann ist die AGR geschlossen?</p>
+      <div class="opts"><button class="opt">Bei Volllast</button><button class="opt">In der warmen Teillast</button><button class="opt">Immer</button></div>
+      <div class="fb">Bei Volllast braucht der Motor allen Sauerstoff für die Leistung.</div></div>
+    <div class="q" data-correct="2"><p>3. Was passiert bei zu viel AGR?</p>
+      <div class="opts"><button class="opt">Mehr Stickoxide</button><button class="opt">Weniger Verbrauch, sonst nichts</button><button class="opt">Es entsteht viel Ruß</button></div>
+      <div class="fb">Es fehlt Sauerstoff für eine saubere Verbrennung.</div></div>
+    <div class="q" data-correct="0"><p>4. Woran erkennst du im Messwert, dass die AGR öffnet?</p>
+      <div class="opts"><button class="opt">Die gemessene Luftmasse sinkt</button><button class="opt">Die Drehzahl steigt stark</button><button class="opt">Die Batteriespannung sinkt</button></div>
+      <div class="fb">Ein Teil der Füllung ist dann Abgas – der Luftmassenmesser misst weniger Frischluft.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AGR</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>AGR: weniger Stickoxide durch kühlere Verbrennung</span></li>
+        <li class="step"><span>Kühler + Ventil, Steuergerät bestimmt die Menge</span></li>
+        <li class="step"><span>Aktiv in der warmen Teillast<small>zu bei Volllast</small></span></li>
+        <li class="step"><span>Verkokt? Soll/Ist-Stellung und Luftmasse prüfen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Abgas" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const a = document.getElementById('agr');
+  function g() {
+    const r = +a.value;
+    document.getElementById('agr-v').textContent = r + ' %';
+    document.getElementById('agr-nox').style.width = (95 - r * 1.6) + '%';
+    document.getElementById('agr-russ').style.width = (8 + Math.pow(r / 50, 2.2) * 87) + '%';
+    let t;
+    if (r < 10) t = '<b class="red">Kaum AGR:</b> sehr heiße Verbrennung – viele Stickoxide.';
+    else if (r <= 30) t = '<b class="grn">Mittelweg:</b> deutlich weniger Stickoxide, noch wenig Ruß.';
+    else t = '<b class="ora">Zu viel AGR:</b> Es fehlt Sauerstoff – viel Ruß, schwarzer Rauch, der Partikelfilter füllt sich schnell.';
+    document.getElementById('agr-t').innerHTML = t;
+  }
+  a.addEventListener('input', g); g();
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

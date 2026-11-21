@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 12 Themen, 107 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 13 Themen, 119 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
-  assert.strictEqual(r.themen.length, 12);
-  assert.strictEqual(r.fragen.length, 107);
+  assert.strictEqual(r.themen.length, 13);
+  assert.strictEqual(r.fragen.length, 119);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
@@ -153,9 +153,9 @@ test('Echte Inhaltsdatei: Motormanagement Dieselmanagement mit Präsentationen u
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
   const t = r.themen.find(x => x.name === 'Motormanagement: Dieselmanagement');
   assert.strictEqual(t.bereich, 'Motormanagement');
-  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Diesel-Grundlagen', 'Common-Rail', 'Turbo und AGR']);
+  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Diesel-Grundlagen', 'Common-Rail', 'Pumpe-Düse']);
   t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
-  ['mm-diesel-grundlagen', 'mm-common-rail', 'mm-diesel-turbo'].forEach(n => {
+  ['mm-diesel-grundlagen', 'mm-common-rail', 'mm-pumpe-duese'].forEach(n => {
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
   });
@@ -165,9 +165,9 @@ test('Echte Inhaltsdatei: Motormanagement Abgas mit Präsentationen und Videos',
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
   const t = r.themen.find(x => x.name === 'Motormanagement: Abgas');
   assert.strictEqual(t.bereich, 'Motormanagement');
-  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Lambdasonde', 'Katalysator', 'DPF und AdBlue']);
+  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Lambdasonde', 'Katalysator', 'DPF und AdBlue', 'Abgasrückführung']);
   t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
-  ['mm-abgas-lambda', 'mm-abgas-kat', 'mm-abgas-dpf'].forEach(n => {
+  ['mm-abgas-lambda', 'mm-abgas-kat', 'mm-abgas-dpf', 'mm-abgas-agr'].forEach(n => {
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
   });
@@ -183,4 +183,17 @@ test('Echte Inhaltsdatei: Motormanagement Diagnose mit Präsentationen und Video
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
   });
+});
+
+test('Echte Inhaltsdatei: Motormanagement Aufladung mit Präsentationen und Videos', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  const t = r.themen.find(x => x.name === 'Motormanagement: Aufladung');
+  assert.strictEqual(t.bereich, 'Motormanagement');
+  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Abgasturbolader', 'Ladedruckregelung', 'Kompressor', 'Turbo-Diagnose']);
+  t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
+  ['mm-auf-turbo', 'mm-auf-regelung', 'mm-auf-kompressor', 'mm-auf-diagnose'].forEach(n => {
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
+  });
+  assert.ok(r.fragen.filter(f => f.thema === 'Motormanagement: Aufladung').length >= 5);
 });

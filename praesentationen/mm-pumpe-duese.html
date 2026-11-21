@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Pumpe-Düse – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+</style>
+</head>
+<body class="t-mm4">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · DIESEL</div>
+  <div class="symbol" style="font-size:90px">PD</div>
+  <h1>Pumpe-Düse</h1>
+  <p>Pumpe und Einspritzdüse in einem Bauteil</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">PUMPE-DÜSE</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Wie eine Pumpe-Düse-Einheit aufgebaut ist</li>
+      <li class="step from-left"><span class="num">2</span>Wie der Druck erzeugt wird</li>
+      <li class="step from-left"><span class="num">3</span>Vor- und Nachteile gegenüber Common-Rail</li>
+      <li class="step from-left"><span class="num">4</span>Einbau, Prüfen und typische Fehler</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">PUMPE-DÜSE</span><h2>Aufbau</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Nockenwelle</b><span>eine zusätzliche Nocke pro Zylinder</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Rollenkipphebel</b><span>drückt den Pumpenkolben nach unten</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Pumpe-Düse-Einheit</b><span>Pumpe, Magnetventil und Düse in einem Bauteil</span></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <div class="tip step"><b>Jeder Zylinder hat seine eigene Einheit</b>Sie sitzt im Zylinderkopf. Hochdruckleitungen gibt es nicht.</div>
+      <div class="tip step"><b>Kraftstoffversorgung</b>Eine Kraftstoffpumpe liefert den Diesel mit Vordruck über Kanäle im Zylinderkopf zu den Einheiten.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-pd">
+  <span class="tag">PUMPE-DÜSE</span><h2>So entsteht der Druck – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost" data-p="0">1. Saughub</button><button class="btn ghost" data-p="1">2. Vorhub</button><button class="btn ghost" data-p="2">3. Einspritzung</button><button class="btn ghost" data-p="3">4. Ende</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.1fr 1fr">
+      <svg viewBox="0 0 420 340" width="400" height="324" style="display:block;margin:0 auto">
+  <g id="pd-hebel" style="transition:transform .5s;transform-origin:160px 110px"><rect x="90" y="102" width="240" height="16" rx="8" fill="#a9b3c1"/><circle cx="115" cy="122" r="9" fill="#6b7686"/></g>
+  <circle cx="160" cy="110" r="7" fill="#3b4250" stroke="#ecf1f8" stroke-width="2"/>
+  <text x="160" y="90" text-anchor="middle" font-size="13" font-weight="800" fill="#94a4ba">Kipphebel</text>
+  <circle cx="115" cy="165" r="26" fill="#3b4250" stroke="#94a4ba" stroke-width="3"/>
+  <g id="pd-nocke" style="transition:transform .5s;transform-origin:115px 165px"><path d="M93 178 Q115 210 137 178 Z" fill="#6b7686"/></g>
+  <text x="115" y="214" text-anchor="middle" font-size="13" font-weight="800" fill="#94a4ba">Nocke</text>
+  <rect x="270" y="125" width="60" height="155" rx="6" fill="#213552" stroke="#94a4ba" stroke-width="2"/>
+  <rect id="pd-kammer" x="276" y="198" width="48" height="72" fill="#28aaf5" style="transition:fill .4s"/>
+  <rect id="pd-kolben" x="280" y="118" width="40" height="80" rx="4" fill="#c9c3b6"/>
+  <rect x="330" y="215" width="60" height="40" rx="8" fill="#213552" stroke="#94a4ba" stroke-width="2"/>
+  <text x="360" y="240" text-anchor="middle" font-size="12" font-weight="800" fill="#ecf1f8">Ventil</text>
+  <text id="pd-vz" x="360" y="272" text-anchor="middle" font-size="13" font-weight="800" fill="#34c778">offen</text>
+  <path d="M290 280 L310 280 L304 310 L296 310 Z" fill="#94a4ba"/>
+  <g id="pd-spray" style="opacity:0;transition:opacity .3s"><path d="M300 312 L270 340 M300 312 L300 340 M300 312 L330 340" stroke="#e6d27a" stroke-width="4" stroke-linecap="round"/></g>
+  <text x="240" y="300" text-anchor="end" font-size="13" font-weight="800" fill="#94a4ba">Düse</text>
+</svg>
+      <div>
+        <div class="card"><div class="muted" style="font-size:15px;font-weight:800">DRUCK IN DER EINHEIT</div><div class="lcd2" id="pd-d" style="font-size:32px;margin-top:6px">—</div></div>
+        <div class="card" id="pd-t" style="margin-top:12px;font-size:17px;font-weight:600;line-height:1.5"></div>
+      </div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Vereinfachte Darstellung, Richtwert.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">PUMPE-DÜSE</span><h2>Pumpe-Düse und Common-Rail</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Pumpe-Düse</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>sehr hoher Druck – bis ca. 2.000 bar (Richtwert)</li><li>keine Hochdruckleitungen</li><li>Druck hängt von der Nockenwelle und der Drehzahl ab</li><li>lauter, weniger Einspritzungen pro Takt möglich</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Common-Rail</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Druck immer verfügbar – unabhängig von der Drehzahl</li><li>viele Einspritzungen pro Takt</li><li>leiser, sauberere Abgase</li><li>hat die Pumpe-Düse abgelöst</li></ul></div>
+    </div>
+    <div class="note step">Pumpe-Düse findest du vor allem bei älteren TDI-Motoren – sie kommen aber noch oft in die Werkstatt.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">PUMPE-DÜSE</span><h2>Einbau und Einstellen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Neue Dichtringe und Schrauben<small>immer laut Teileliste – alte O-Ringe nicht wiederverwenden</small></li>
+      <li class="step">Einheit gerade einsetzen, Spannpratze nach Vorgabe anziehen<small>Drehmoment und Drehwinkel laut Hersteller</small></li>
+      <li class="step">Grundeinstellung am Kipphebel<small>Einstellschraube nach Herstellervorgabe einstellen, z. B. mit Messuhr</small></li>
+      <li class="step">Fehlerspeicher, Messwerte, Probefahrt<small>Laufruhe der Zylinder kontrollieren</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">PUMPE-DÜSE</span><h2>Prüfen und typische Fehler</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Messwerte</b>Laufruhe- bzw. Mengenabweichung pro Zylinder vergleichen – ein Ausreißer zeigt die auffällige Einheit.</div>
+      <div class="warn step"><b>Ölstand steigt</b>Undichte O-Ringe: Diesel gelangt ins Motoröl. Ölstand und Ölgeruch prüfen – Motorschaden möglich.</div>
+      <div class="tip step"><b>Kabelbaum im Zylinderkopf</b>Scheuerstellen oder Öl im Stecker führen zu Aussetzern – Kabel und Stecker prüfen.</div>
+      <div class="warn step"><b>Magnetventil</b>Hohe Ansteuerspannung – keine Prüflampe, nicht in den Stecker stechen. Prüfen mit Diagnosegerät und Prüfadapter.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">PUMPE-DÜSE</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-pumpe-duese.mp4" poster="videos/mm-pumpe-duese.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">PUMPE-DÜSE</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Wodurch wird bei der Pumpe-Düse der Druck erzeugt?</p>
+      <div class="opts"><button class="opt">Durch die Nockenwelle über einen Kipphebel</button><button class="opt">Durch eine Hochdruckpumpe am Rail</button><button class="opt">Durch den Turbolader</button></div>
+      <div class="fb">Eine zusätzliche Nocke drückt über den Rollenkipphebel den Pumpenkolben nach unten.</div></div>
+    <div class="q" data-correct="1"><p>2. Wann beginnt die Einspritzung?</p>
+      <div class="opts"><button class="opt">Wenn das Magnetventil öffnet</button><button class="opt">Wenn das Magnetventil schließt</button><button class="opt">Beim Saughub</button></div>
+      <div class="fb">Erst wenn das Ventil schließt, kann sich der Druck aufbauen und die Düse öffnet.</div></div>
+    <div class="q" data-correct="2"><p>3. Der Ölstand steigt bei einem Pumpe-Düse-Motor. Was kann die Ursache sein?</p>
+      <div class="opts"><button class="opt">Zu viel AdBlue</button><button class="opt">Neue Zündkerzen</button><button class="opt">Undichte O-Ringe an den Pumpe-Düse-Einheiten</button></div>
+      <div class="fb">Diesel gelangt ins Öl – das verdünnt das Motoröl.</div></div>
+    <div class="q" data-correct="0"><p>4. Was ist ein Vorteil von Common-Rail gegenüber Pumpe-Düse?</p>
+      <div class="opts"><button class="opt">Der Druck ist unabhängig von der Drehzahl verfügbar</button><button class="opt">Es gibt keine Injektoren</button><button class="opt">Es braucht keinen Kraftstofffilter</button></div>
+      <div class="fb">Darum sind viele Einspritzungen pro Takt möglich.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">PUMPE-DÜSE</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Pumpe, Magnetventil und Düse in einem Bauteil</span></li>
+        <li class="step"><span>Nocke + Kipphebel erzeugen den Druck<small>bis ca. 2.000 bar</small></span></li>
+        <li class="step"><span>Ventil zu = Einspritzung</span></li>
+        <li class="step"><span>Ölstand steigt? O-Ringe prüfen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Dieselmanagement" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const P = [
+    [118, '#28aaf5', 'offen', '#34c778', 0, 0, 0, 'ca. Vordruck', '<b>Saughub:</b> Die Feder drückt den Kolben nach oben. Diesel strömt in den Raum unter dem Kolben.'],
+    [133, '#28aaf5', 'offen', '#34c778', 0, 140, 6.2, 'ca. Vordruck', '<b>Vorhub:</b> Die Nocke drückt den Kolben nach unten. Das Ventil ist offen – der Diesel wird zurück in den Zulauf gedrückt. Noch keine Einspritzung.'],
+    [148, '#ff8f3f', 'zu', '#f05e4e', 1, 170, 12.4, 'bis ca. 2.000 bar', '<b>Einspritzung:</b> Das Steuergerät schließt das Magnetventil. Der Druck steigt stark an, die Düsennadel öffnet – der Diesel wird eingespritzt. Wie lange das Ventil zu bleibt, bestimmt die Menge.'],
+    [158, '#28aaf5', 'offen', '#34c778', 0, 190, 16.6, 'fällt ab', '<b>Ende:</b> Das Magnetventil öffnet wieder. Der Druck bricht zusammen, die Düse schließt.']
+  ];
+  const bt = document.querySelectorAll('#s-pd [data-p]');
+  function p(i) {
+    const s = P[i];
+    document.getElementById('pd-kolben').setAttribute('y', s[0]);
+    const k = document.getElementById('pd-kammer'); k.setAttribute('y', s[0] + 80); k.setAttribute('height', Math.max(6, 270 - (s[0] + 80))); k.setAttribute('fill', s[1]);
+    const vz = document.getElementById('pd-vz'); vz.textContent = s[2]; vz.setAttribute('fill', s[3]);
+    document.getElementById('pd-spray').style.opacity = s[4];
+    document.getElementById('pd-nocke').style.transform = 'rotate(' + s[5] + 'deg)';
+    document.getElementById('pd-hebel').style.transform = 'rotate(' + s[6] + 'deg)';
+    document.getElementById('pd-d').textContent = s[7];
+    document.getElementById('pd-t').innerHTML = s[8];
+    bt.forEach(x => x.classList.toggle('on', +x.dataset.p === i));
+  }
+  bt.forEach(x => x.onclick = () => p(+x.dataset.p));
+  document.getElementById('s-pd').addEventListener('slideshow', () => p(0));
+  p(0);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

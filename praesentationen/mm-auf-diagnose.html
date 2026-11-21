@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Turbo-Diagnose – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+  .drehen-t, .drehen-v { animation: dreh 1.2s linear infinite; }
+  .drehen-t { transform-origin: 120px 130px; } .drehen-v { transform-origin: 440px 130px; }
+  @keyframes dreh { to { transform: rotate(360deg); } }
+  .suv-rad { animation: dreh .8s linear infinite; transform-origin: 150px 200px; }
+</style>
+</head>
+<body class="t-mm7">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · AUFLADUNG</div>
+  <div class="symbol" style="font-size:120px">!</div>
+  <h1>Turbo-Diagnose</h1>
+  <p>Fehler finden, Schäden verstehen, richtig tauschen</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBO-DIAGNOSE</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Typische Fehlerbilder der Aufladung</li>
+      <li class="step from-left"><span class="num">2</span>Ladedruck prüfen und das Ladeluftsystem abdrücken</li>
+      <li class="step from-left"><span class="num">3</span>Ursachen von Turboschäden erkennen</li>
+      <li class="step from-left"><span class="num">4</span>Einen Turbolader richtig tauschen</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" id="s-fb">
+  <span class="tag">TURBO-DIAGNOSE</span><h2>Fehlerbilder – zum Durchklicken</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-f="0">Zu wenig Leistung</button><button class="btn ghost" data-f="1">Notlauf bei Volllast</button><button class="btn ghost" data-f="2">Blauer Rauch</button><button class="btn ghost" data-f="3">Pfeifen / Heulen</button></div>
+    <div class="card" id="fb-t" style="font-size:18px;font-weight:600;line-height:1.6"></div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBO-DIAGNOSE</span><h2>Ladedruck prüfen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fehlerspeicher lesen<small>Regelabweichung Ladedruck, Unter- oder Überladung</small></li>
+      <li class="step">Messwerte bei Volllast-Probefahrt<small>Soll- und Ist-Ladedruck vergleichen – ein Beifahrer liest ab oder das Diagnosegerät zeichnet auf</small></li>
+      <li class="step">Steller im Aktortest<small>bewegen sich Wastegate oder VTG frei über den ganzen Weg?</small></li>
+      <li class="step">Ladeluftsystem abdrücken<small>mit Abdrückgerät und Druck laut Hersteller – Lecks hört oder sieht man</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBO-DIAGNOSE</span><h2>Den Lader selbst prüfen</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Wellenspiel</b>Ein wenig radiales Spiel ist normal. Streift das Verdichterrad am Gehäuse, ist der Lader defekt.</div>
+      <div class="tip step"><b>Verdichterrad</b>Verbogene oder abgebrochene Schaufeln: Fremdkörper – Luftfilter und Ansaugweg prüfen.</div>
+      <div class="tip step"><b>Öl im Ladeluftsystem</b>Etwas Ölnebel ist normal. Viel Öl: Ölrücklauf, Kurbelgehäuseentlüftung und Lagerung prüfen.</div>
+      <div class="warn step"><b>Motor geht durch</b>Viel Öl im Ansaugtrakt kann der Diesel als Kraftstoff verbrennen – er dreht hoch und lässt sich nicht abstellen. Gefahr!</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBO-DIAGNOSE</span><h2>Ursachen für Turboschäden</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>Ölmangel</b><span>verstopfte Zulaufleitung, zu wenig Öl, falsches Öl</span></div>
+      <div class="val step from-left"><b>Verschmutztes Öl</b><span>Wechselintervall überzogen, Ölschlamm, Späne</span></div>
+      <div class="val step from-left"><b>Ölrücklauf verstopft</b><span>Öl staut sich und wird über die Dichtungen gedrückt</span></div>
+      <div class="val step from-left"><b>Fremdkörper</b><span>Schmutz, Teile oder defekter Luftfilter im Ansaugweg</span></div>
+    </div>
+    <div class="note step">Ein Turbo geht fast nie „einfach so“ kaputt. Die Ursache liegt meist außerhalb des Laders.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBO-DIAGNOSE</span><h2>Turbolader richtig tauschen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Ursache finden und beheben<small>sonst ist der neue Lader nach kurzer Zeit wieder defekt</small></li>
+      <li class="step">Ölzulaufleitung erneuern, Ölrücklauf frei, Ölsieb prüfen<small>dazu Ölwechsel mit Filter, Luftfilter neu, Ansaugweg reinigen</small></li>
+      <li class="step">Neuen Lader mit frischem Öl befüllen<small>nur neue Dichtungen verwenden</small></li>
+      <li class="step">Vor dem ersten Start Öldruck aufbauen<small>Vorgehen laut Hersteller – dann im Leerlauf laufen lassen und auf Dichtheit prüfen</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBO-DIAGNOSE</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-auf-diagnose.mp4" poster="videos/mm-auf-diagnose.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBO-DIAGNOSE</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Der Motor geht bei Volllast in den Notlauf, Ladedruck zu niedrig. Was prüfst du zuerst?</p>
+      <div class="opts"><button class="opt">Ladeluftschläuche auf Undichtigkeit</button><button class="opt">Die Zündkerzen</button><button class="opt">Den Reifendruck</button></div>
+      <div class="fb">Ein undichter Schlauch ist ein häufiger Grund für Unterladung.</div></div>
+    <div class="q" data-correct="1"><p>2. Was ist die häufigste Ursache für einen Turboschaden?</p>
+      <div class="opts"><button class="opt">Zu viel Kühlmittel</button><button class="opt">Probleme mit der Ölversorgung</button><button class="opt">Zu hoher Reifendruck</button></div>
+      <div class="fb">Ölmangel, Schmutz im Öl oder ein verstopfter Rücklauf.</div></div>
+    <div class="q" data-correct="2"><p>3. Was musst du beim Turbotausch immer machen?</p>
+      <div class="opts"><button class="opt">Nur den Lader tauschen</button><button class="opt">Den Ladedrucksensor tauschen</button><button class="opt">Ursache beheben, Ölzulauf erneuern, Ölwechsel</button></div>
+      <div class="fb">Sonst geht der neue Lader auch kaputt.</div></div>
+    <div class="q" data-correct="0"><p>4. Viel Öl im Ladeluftsystem eines Diesels – welche Gefahr besteht?</p>
+      <div class="opts"><button class="opt">Der Motor kann „durchgehen“</button><button class="opt">Die Batterie wird leer</button><button class="opt">Keine</button></div>
+      <div class="fb">Er verbrennt das Öl als Kraftstoff und lässt sich nicht abstellen.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">TURBO-DIAGNOSE</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Ladedruck Soll/Ist bei Volllast vergleichen</span></li>
+        <li class="step"><span>Undichtigkeit? Ladeluftsystem abdrücken</span></li>
+        <li class="step"><span>Turboschaden: meist Ölversorgung</span></li>
+        <li class="step"><span>Beim Tausch: Ursache beheben, Öl, Ölzulauf</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Aufladung" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const F = [
+    '<b>Zu wenig Leistung, Ladedruck zu niedrig (Unterladung)</b><br>Mögliche Ursachen: undichter Ladeluftschlauch oder Ladeluftkühler, Wastegate klemmt offen, VTG klemmt offen, Unterdruckschlauch am Steller undicht, verstopfter Luftfilter, verstopfter Partikelfilter.',
+    '<b>Notlauf bei Volllast, Ladedruck zu hoch (Überladung)</b><br>Mögliche Ursachen: VTG-Leitschaufeln verrußt und klemmen, Wastegate klemmt zu, Steller oder Taktventil defekt, Ladedrucksensor misst falsch.',
+    '<b>Blauer Rauch, Ölverbrauch</b><br>Mögliche Ursachen: Ölrücklauf des Laders verstopft, Kurbelgehäuseentlüftung defekt (Überdruck im Motor), Lagerschaden am Lader. Erst die Ursache außerhalb des Laders prüfen!',
+    '<b>Pfeifen oder Heulen</b><br>Mögliche Ursachen: Undichtigkeit im Ladeluftsystem (Pfeifen beim Gasgeben), Lagerspiel – das Verdichterrad streift. Ladeluftsystem abdrücken, Wellenspiel prüfen.'
+  ];
+  const bt = document.querySelectorAll('#s-fb [data-f]');
+  function f(i) { document.getElementById('fb-t').innerHTML = F[i]; bt.forEach(x => x.classList.toggle('on', +x.dataset.f === i)); }
+  bt.forEach(x => x.onclick = () => f(+x.dataset.f)); f(0);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

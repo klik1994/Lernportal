@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Ladedruckregelung – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+  .drehen-t, .drehen-v { animation: dreh 1.2s linear infinite; }
+  .drehen-t { transform-origin: 120px 130px; } .drehen-v { transform-origin: 440px 130px; }
+  @keyframes dreh { to { transform: rotate(360deg); } }
+  .suv-rad { animation: dreh .8s linear infinite; transform-origin: 150px 200px; }
+</style>
+</head>
+<body class="t-mm7">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · AUFLADUNG</div>
+  <div class="symbol" style="font-size:120px">p</div>
+  <h1>Ladedruckregelung</h1>
+  <p>Wastegate, VTG und Schubumluftventil</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">LADEDRUCK</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Warum der Ladedruck geregelt werden muss</li>
+      <li class="step from-left"><span class="num">2</span>Wie Wastegate und VTG arbeiten</li>
+      <li class="step from-left"><span class="num">3</span>Was das Schubumluftventil macht</li>
+      <li class="step from-left"><span class="num">4</span>Welche Sensoren und Steller beteiligt sind</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LADEDRUCK</span><h2>Warum regeln?</h2>
+  <div class="body">
+    <div class="card step" style="font-size:20px;font-weight:600;margin-bottom:14px">Je mehr Abgas, desto schneller dreht der Lader. Ohne Regelung würde der Ladedruck bei hoher Drehzahl <span class="c">viel zu hoch</span>.</div>
+    <div class="kette">
+      <div class="glied step"><b>Ladedrucksensor</b><span>misst den Ist-Druck</span></div><div class="flow-arrow step k-e"></div>
+      <div class="glied step"><b>Steuergerät</b><span>vergleicht mit dem Soll-Druck</span></div><div class="flow-arrow step k-v"></div>
+      <div class="glied step"><b>Steller</b><span>Wastegate oder VTG</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-wg">
+  <span class="tag">LADEDRUCK</span><h2>Wastegate – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="ctrl"><span style="width:280px">Drehzahl: <span class="c" id="wg-n">1.500 1/min</span></span><input type="range" id="wg" min="1000" max="6000" step="100" value="1500"></div>
+    <div class="grid2" style="margin-top:14px;align-items:center">
+      <div class="card">
+        <div class="muted" style="font-size:15px;font-weight:800">LADEDRUCK (ABSOLUT)</div><div class="lcd2" id="wg-p" style="font-size:32px;margin-top:6px">—</div>
+        <div class="muted" style="font-size:15px;font-weight:800;margin-top:14px">WASTEGATE GEÖFFNET</div>
+        <div style="height:18px;background:var(--card2);border-radius:8px;margin-top:6px;overflow:hidden"><div id="wg-bar" style="height:100%;width:0;background:var(--c);transition:width .2s"></div></div>
+      </div>
+      <div class="card" id="wg-t" style="font-size:18px;font-weight:600;line-height:1.5"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Beispiel Benziner, Beispielwerte. 1 bar absolut = kein Ladedruck.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LADEDRUCK</span><h2>VTG – verstellbare Leitschaufeln</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Niedrige Drehzahl</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Leitschaufeln stehen <b>eng</b></li><li>das Abgas strömt schnell auf die Turbine</li><li>schon früh viel Ladedruck – kaum Turboloch</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Hohe Drehzahl</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Leitschaufeln stehen <b>weit offen</b></li><li>das Abgas strömt langsamer</li><li>der Ladedruck wird nicht zu hoch</li></ul></div>
+    </div>
+    <div class="note step">VTG gibt es vor allem beim Diesel. Beim Benziner ist das Abgas meist zu heiß dafür – dort regelt das Wastegate.</div>
+  </div>
+</section>
+
+<section class="slide" id="s-suv">
+  <span class="tag">LADEDRUCK</span><h2>Das Schubumluftventil (Benziner)</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:center;grid-template-columns:1.15fr 1fr">
+      <svg viewBox="0 0 520 300" width="500" height="290" style="display:block;margin:0 auto" id="suv-svg">
+  <text x="20" y="186" font-size="13" font-weight="800" fill="#94a4ba">Ansaugluft</text>
+  <path d="M20 200 H120" fill="none" stroke="#ecf1f8" stroke-width="5"/>
+  <path d="M150 170 V70 H470" fill="none" stroke="#ecf1f8" stroke-width="5"/>
+  <path d="M260 70 V250 H100 V200" fill="none" stroke="#94a4ba" stroke-width="4" stroke-dasharray="7 6"/>
+  <rect id="suv-druck" x="146" y="64" width="234" height="12" rx="6" fill="#f05e4e" style="opacity:0;transition:opacity .3s"/>
+  <path id="suv-a" d="M20 200 H120 L150 200 V70 H470" fill="none" stroke="none"/>
+  <path id="suv-b" d="M150 170 V70 H260 V250 H100 V200 H150" fill="none" stroke="none"/>
+  <g class="suv-rad"><circle cx="150" cy="200" r="30" fill="#213552" stroke="#28aaf5" stroke-width="4"/>
+    <path d="M150 200 L150 174 M150 200 L172 213 M150 200 L128 213" stroke="#28aaf5" stroke-width="5"/></g>
+  <text x="92" y="238" text-anchor="end" font-size="13" font-weight="800" fill="#28aaf5">Verdichter</text>
+  <rect x="240" y="135" width="40" height="40" rx="6" fill="#213552" stroke="#94a4ba" stroke-width="2"/>
+  <circle id="suv-v" cx="260" cy="155" r="10" fill="#f05e4e" style="transition:fill .3s"/>
+  <text x="290" y="150" font-size="13" font-weight="800" fill="#94a4ba">Schubumluft-</text>
+  <text x="290" y="166" font-size="13" font-weight="800" fill="#94a4ba">ventil</text>
+  <circle cx="400" cy="70" r="16" fill="none" stroke="#94a4ba" stroke-width="2"/>
+  <line id="suv-dk" x1="400" y1="56" x2="400" y2="84" stroke="#ffb020" stroke-width="5" stroke-linecap="round" style="transition:transform .5s;transform-origin:400px 70px;transform:rotate(90deg)"/>
+  <text x="400" y="40" text-anchor="middle" font-size="13" font-weight="800" fill="#94a4ba">Drosselklappe</text>
+  <rect x="470" y="40" width="40" height="60" rx="6" fill="#213552" stroke="#94a4ba" stroke-width="2"/>
+  <text x="490" y="120" text-anchor="middle" font-size="13" font-weight="800" fill="#94a4ba">Motor</text>
+  <text id="suv-txt" x="165" y="100" font-size="15" font-weight="900" fill="#f05e4e" style="opacity:0">Druckstoß!</text>
+</svg>
+      <ol class="steps-list">
+        <li class="step">Fahrer geht vom Gas<small>die Drosselklappe schließt</small></li>
+        <li class="step">Druckstoß vor der Klappe<small>der Verdichter drückt noch Luft gegen die geschlossene Klappe – der Lader würde stark abgebremst</small></li>
+        <li class="step">Das Schubumluftventil <span class="c">öffnet</span><small>die Luft strömt zurück vor den Verdichter</small></li>
+        <li class="step">Der Lader dreht weiter<small>beim nächsten Gasgeben ist der Ladedruck schneller wieder da</small></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LADEDRUCK</span><h2>Steller und Sensoren</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Unterdruckdose + Taktventil</b>Ein Taktventil (PWM) steuert den Unterdruck an der Dose – sie bewegt Wastegate oder VTG.</div>
+      <div class="tip step"><b>Elektrischer Steller</b>Bewegt Wastegate oder VTG direkt, schneller und genauer – mit Rückmeldung der Stellung.</div>
+      <div class="tip step"><b>Ladedrucksensor</b>Misst Druck (und oft Temperatur) nach dem Ladeluftkühler – im Diagnosegerät als Ist-Wert.</div>
+      <div class="warn step"><b>Überladung</b>Ist der Druck zu hoch, schaltet das Steuergerät in den Notlauf, um den Motor zu schützen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LADEDRUCK</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-auf-regelung.mp4" poster="videos/mm-auf-regelung.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LADEDRUCK</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Was macht das Wastegate?</p>
+      <div class="opts"><button class="opt">Es leitet Abgas an der Turbine vorbei</button><button class="opt">Es kühlt die Ladeluft</button><button class="opt">Es misst den Ladedruck</button></div>
+      <div class="fb">So dreht die Turbine nicht schneller und der Ladedruck bleibt begrenzt.</div></div>
+    <div class="q" data-correct="1"><p>2. Wie stehen die VTG-Leitschaufeln bei niedriger Drehzahl?</p>
+      <div class="opts"><button class="opt">Weit offen</button><button class="opt">Eng</button><button class="opt">Sie sind ausgebaut</button></div>
+      <div class="fb">Eng gestellt strömt das Abgas schneller auf die Turbine – früh viel Ladedruck.</div></div>
+    <div class="q" data-correct="2"><p>3. Wozu dient das Schubumluftventil?</p>
+      <div class="opts"><button class="opt">Es erhöht den Ladedruck beim Gasgeben</button><button class="opt">Es kühlt den Turbo</button><button class="opt">Es baut den Druckstoß ab, wenn die Drosselklappe schließt</button></div>
+      <div class="fb">Die Luft strömt zurück vor den Verdichter, der Lader dreht weiter.</div></div>
+    <div class="q" data-correct="0"><p>4. Was passiert bei Überladung?</p>
+      <div class="opts"><button class="opt">Das Steuergerät schaltet in den Notlauf</button><button class="opt">Der Motor bekommt mehr Leistung</button><button class="opt">Nichts</button></div>
+      <div class="fb">So wird der Motor geschützt.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">LADEDRUCK</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Ladedrucksensor → Steuergerät → Steller</span></li>
+        <li class="step"><span>Wastegate: Abgas an der Turbine vorbei</span></li>
+        <li class="step"><span>VTG: eng bei niedriger, weit bei hoher Drehzahl</span></li>
+        <li class="step"><span>Schubumluftventil: Druckstoß abbauen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Aufladung" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script src="assets/schaltung.js"></script><script>
+(function () {
+  const wg = document.getElementById('wg');
+  function f() {
+    const n = +wg.value;
+    const ohne = 1 + Math.min(2.4, Math.max(0, (n - 1100) / 1500));
+    const soll = 2.2;
+    const p = Math.min(ohne, soll);
+    const auf = ohne > soll ? Math.min(100, (ohne - soll) / 1.2 * 100) : 0;
+    document.getElementById('wg-n').textContent = n.toLocaleString('de-DE') + ' 1/min';
+    document.getElementById('wg-p').textContent = 'ca. ' + p.toFixed(1).replace('.', ',') + ' bar';
+    document.getElementById('wg-bar').style.width = auf + '%';
+    document.getElementById('wg-t').innerHTML = auf > 0
+      ? '<b class="grn">Wastegate öffnet:</b> Ein Teil des Abgases strömt an der Turbine vorbei. Der Ladedruck bleibt beim Sollwert – ohne Wastegate wären es jetzt ca. ' + ohne.toFixed(1).replace('.', ',') + ' bar.'
+      : '<b>Wastegate zu:</b> Das ganze Abgas treibt die Turbine – der Ladedruck steigt mit der Drehzahl.';
+  }
+  wg.addEventListener('input', f); f();
+})();
+</script>
+<script>
+(function () {
+  const s = document.getElementById('s-suv'), svg = document.getElementById('suv-svg');
+  const fa = Flow(svg, document.getElementById('suv-a'), { spacing: 30, speed: 90, r: 5, color: '#28aaf5' });
+  const fb = Flow(svg, document.getElementById('suv-b'), { spacing: 30, speed: 90, r: 5, color: '#34c778' });
+  const rad = svg.querySelector('.suv-rad');
+  function upd() {
+    const n = s.querySelectorAll('.step.on').length;
+    fa.on(n === 0); fb.on(n >= 3);
+    document.getElementById('suv-dk').style.transform = n >= 1 ? 'rotate(0deg)' : 'rotate(90deg)';
+    const druck = n === 2;
+    document.getElementById('suv-druck').style.opacity = druck ? 0.85 : 0;
+    document.getElementById('suv-txt').style.opacity = druck ? 1 : 0;
+    document.getElementById('suv-v').setAttribute('fill', n >= 3 ? '#34c778' : '#f05e4e');
+    rad.style.animationDuration = druck ? '3s' : '0.8s';
+  }
+  s.addEventListener('stepon', upd); s.addEventListener('stepoff', upd); s.addEventListener('slideshow', upd);
+  upd();
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

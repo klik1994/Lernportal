@@ -180,104 +180,108 @@ rail_js = '''<script>
 })();
 </script>'''
 
-# ---------------------------------------------------------------- Luft, Turbo, AGR
-T = 'TURBO UND AGR'
-luft = [
-    titel_folie(K, 'T', 'Turbo und AGR', 'Aufladung und Abgasrückführung beim Diesel'),
-    lernziele(T, ['Wie ein Abgasturbolader arbeitet', 'Wozu Ladeluftkühler und VTG dienen',
-                  'Was die Abgasrückführung (AGR) macht', 'Typische Fehler finden']),
-    folie(T, 'So arbeitet der Turbolader', '''    <ol class="steps-list">
-      <li class="step">Das heiße <span class="c">Abgas</span> treibt die Turbine an<small>Energie, die sonst ungenutzt aus dem Auspuff geht</small></li>
-      <li class="step">Auf derselben Welle sitzt der <span class="c">Verdichter</span><small>er dreht mit – bis über 200.000 1/min (Richtwert)</small></li>
-      <li class="step">Der Verdichter drückt <span class="c">mehr Luft</span> in den Motor<small>mehr Luft = es kann mehr Kraftstoff verbrannt werden = mehr Leistung</small></li>
-      <li class="step">Der <span class="c">Ladeluftkühler</span> kühlt die verdichtete Luft<small>kalte Luft ist dichter – noch mehr Sauerstoff im Zylinder</small></li>
-    </ol>'''),
-    folie(T, 'Ladedruck – zum Ausprobieren', '''    <div class="ctrl"><span style="width:280px">Drehzahl: <span class="c" id="lt-n">1.500 1/min</span></span><input type="range" id="lt" min="800" max="4500" step="100" value="1500"></div>
-    <div class="choice" style="margin:12px 0"><button class="btn ghost on" data-v="1">mit VTG</button><button class="btn ghost" data-v="0">ohne VTG</button></div>
-    <div class="grid2" style="align-items:center">
-      <div class="card"><div class="muted" style="font-size:15px;font-weight:800">LADEDRUCK (ABSOLUT)</div><div class="lcd2" id="lt-p" style="font-size:34px;margin-top:6px">—</div>
-        <div style="height:16px;background:var(--card2);border-radius:8px;margin-top:12px;overflow:hidden"><div id="lt-bar" style="height:100%;width:0;background:var(--c);transition:width .2s"></div></div></div>
-      <div class="card" id="lt-t" style="font-size:18px;font-weight:600;line-height:1.5"></div>
-    </div>
-    <p class="muted" style="font-size:14px;margin:10px 0 0">Beispielwerte. 1 bar absolut = kein Ladedruck (Umgebungsdruck).</p>''', sid='s-lt', body_cls='body noclick'),
-    folie(T, 'Abgasrückführung (AGR)', '''    <div class="kette">
-      <div class="glied step"><b>Abgas</b><span>ein Teil wird abgezweigt</span></div><div class="flow-arrow step"></div>
-      <div class="glied step"><b>AGR-Kühler und AGR-Ventil</b><span>das Steuergerät bestimmt die Menge</span></div><div class="flow-arrow step"></div>
-      <div class="glied step hd"><b>Ansaugluft</b><span>weniger Sauerstoff, kühlere Verbrennung</span></div>
-    </div>
-    <div class="tip step" style="margin-top:20px"><b>Warum das Ganze?</b>Bei sehr heißer Verbrennung entstehen viele Stickoxide (NOx). Mit Abgas in der Ansaugluft brennt es kühler – es entstehen weniger Stickoxide.</div>'''),
-    folie(T, 'AGR-Menge – zum Ausprobieren', '''    <div class="ctrl"><span style="width:280px">AGR-Rate: <span class="c" id="agr-v">20 %</span></span><input type="range" id="agr" min="0" max="50" step="5" value="20"></div>
-    <div class="grid2" style="margin-top:16px;align-items:center">
-      <div class="card">
-        <div style="font-weight:800;margin-bottom:6px">Stickoxide (NOx)</div>
-        <div style="height:22px;background:var(--card2);border-radius:8px;overflow:hidden"><div id="agr-nox" style="height:100%;background:var(--red);transition:width .2s"></div></div>
-        <div style="font-weight:800;margin:16px 0 6px">Ruß</div>
-        <div style="height:22px;background:var(--card2);border-radius:8px;overflow:hidden"><div id="agr-russ" style="height:100%;background:var(--muted);transition:width .2s"></div></div>
-      </div>
-      <div class="card" id="agr-t" style="font-size:18px;font-weight:600;line-height:1.5"></div>
-    </div>
-    <p class="muted" style="font-size:14px;margin:10px 0 0">Beispiel, vereinfacht – das Steuergerät sucht immer den besten Mittelweg.</p>''', sid='s-agr', body_cls='body noclick'),
-    folie(T, 'Typische Fehler', '''    <div class="grid2" style="align-content:start">
-      <div class="tip step"><b>Leistungsverlust, Notlauf</b>Undichter Ladeluftschlauch oder Ladeluftkühler – Ladedruck Soll/Ist vergleichen, Abdrücken.</div>
-      <div class="tip step"><b>VTG klemmt</b>Verrußte Leitschaufeln: Ladedruck zu niedrig oder zu hoch (Überladung).</div>
-      <div class="tip step"><b>AGR-Ventil verkokt</b>Bleibt offen oder geht nicht auf – schwarzer Rauch, Ruckeln, Fehlerspeicher.</div>
-      <div class="warn step"><b>Öl im Ladeluftsystem</b>Etwas Ölnebel ist normal. Viel Öl: Turbolader prüfen – im schlimmsten Fall kann der Motor „durchgehen“.</div>
-    </div>'''),
-    folie(T, 'Turbo schonen', '''    <ol class="steps-list">
-      <li class="step">Kalt nicht voll belasten<small>das Öl muss erst warm werden und überall hinkommen</small></li>
-      <li class="step">Nach starker Belastung kurz nachlaufen lassen<small>damit der heiße Lader abkühlt und das Öl nicht verkokt</small></li>
-      <li class="step">Ölwechsel nach Vorgabe, richtiges Öl<small>die Lagerung des Laders braucht sauberes Öl</small></li>
-      <li class="step">Beim Tausch: Ursache finden<small>Ölzulauf, Ölrücklauf und Luftfilter prüfen – sonst geht der neue Lader auch kaputt</small></li>
-    </ol>'''),
-    video(T, 'mm-diesel-turbo'),
-    kurztest(T, [
-        ('Was treibt die Turbine des Abgasturboladers an?', ['Der Keilriemen', 'Das Abgas', 'Ein Elektromotor'], 1, 'Das heiße Abgas treibt die Turbine, auf derselben Welle sitzt der Verdichter.'),
-        ('Wozu dient der Ladeluftkühler?', ['Kühle Luft ist dichter – mehr Sauerstoff im Zylinder', 'Er kühlt das Motoröl', 'Er wärmt den Motor schneller auf'], 0, 'Beim Verdichten wird die Luft warm, gekühlt passt mehr hinein.'),
-        ('Was bewirkt die Abgasrückführung?', ['Mehr Leistung', 'Weniger Ruß', 'Weniger Stickoxide (NOx)'], 2, 'Die Verbrennung wird kühler – es entstehen weniger Stickoxide.'),
-        ('Der Motor geht in Notlauf, Ladedruck zu niedrig. Was prüfst du zuerst?', ['Ladeluftschläuche auf Undichtigkeit', 'Die Zündkerzen', 'Den Reifendruck'], 0, 'Ein undichter Schlauch ist ein häufiger Grund für zu wenig Ladedruck.'),
-    ]),
-    merke(T, ['Abgas treibt Turbine, Verdichter drückt Luft in den Motor', 'Ladeluftkühler: kühle Luft ist dichter',
-              'AGR: weniger Stickoxide|zu viel AGR macht Ruß', 'Turbo: warm fahren, nachlaufen lassen']),
-]
-luft_js = '''<script>
-(function () {
-  const lt = document.getElementById('lt'); let vtg = 1;
-  const vb = document.querySelectorAll('#s-lt [data-v]');
-  function l() {
-    const n = +lt.value;
-    const k = vtg ? Math.min(1, (n - 800) / 1200) : Math.max(0, Math.min(1, (n - 1600) / 1600));
-    const p = 1 + 1.4 * k;
-    document.getElementById('lt-n').textContent = n.toLocaleString('de-DE') + ' 1/min';
-    document.getElementById('lt-p').textContent = 'ca. ' + p.toFixed(1).replace('.', ',') + ' bar';
-    document.getElementById('lt-bar').style.width = (k * 100) + '%';
-    let t;
-    if (vtg) t = n < 2000 ? '<b>VTG:</b> Bei niedriger Drehzahl stellen sich die Leitschaufeln eng. Das Abgas strömt schneller auf die Turbine – schon früh viel Ladedruck.' : '<b>VTG:</b> Bei hoher Drehzahl öffnen die Leitschaufeln weit, damit der Ladedruck nicht zu hoch wird.';
-    else t = n < 2400 ? '<b>Ohne VTG:</b> Bei niedriger Drehzahl ist zu wenig Abgas da – der Lader kommt kaum auf Touren („Turboloch“).' : '<b>Ohne VTG:</b> Erst bei höherer Drehzahl baut sich Ladedruck auf.';
-    document.getElementById('lt-t').innerHTML = t;
-    vb.forEach(x => x.classList.toggle('on', +x.dataset.v === vtg));
-  }
-  lt.addEventListener('input', l); vb.forEach(x => x.onclick = () => { vtg = +x.dataset.v; l(); }); l();
+# ---------------------------------------------------------------- Pumpe-Düse
+T = 'PUMPE-DÜSE'
+PDSVG = """<svg viewBox="0 0 420 340" width="400" height="324" style="display:block;margin:0 auto">
+  <g id="pd-hebel" style="transition:transform .5s;transform-origin:160px 110px"><rect x="90" y="102" width="240" height="16" rx="8" fill="#a9b3c1"/><circle cx="115" cy="122" r="9" fill="#6b7686"/></g>
+  <circle cx="160" cy="110" r="7" fill="#3b4250" stroke="#ecf1f8" stroke-width="2"/>
+  <text x="160" y="90" text-anchor="middle" font-size="13" font-weight="800" fill="#94a4ba">Kipphebel</text>
+  <circle cx="115" cy="165" r="26" fill="#3b4250" stroke="#94a4ba" stroke-width="3"/>
+  <g id="pd-nocke" style="transition:transform .5s;transform-origin:115px 165px"><path d="M93 178 Q115 210 137 178 Z" fill="#6b7686"/></g>
+  <text x="115" y="214" text-anchor="middle" font-size="13" font-weight="800" fill="#94a4ba">Nocke</text>
+  <rect x="270" y="125" width="60" height="155" rx="6" fill="#213552" stroke="#94a4ba" stroke-width="2"/>
+  <rect id="pd-kammer" x="276" y="198" width="48" height="72" fill="#28aaf5" style="transition:fill .4s"/>
+  <rect id="pd-kolben" x="280" y="118" width="40" height="80" rx="4" fill="#c9c3b6"/>
+  <rect x="330" y="215" width="60" height="40" rx="8" fill="#213552" stroke="#94a4ba" stroke-width="2"/>
+  <text x="360" y="240" text-anchor="middle" font-size="12" font-weight="800" fill="#ecf1f8">Ventil</text>
+  <text id="pd-vz" x="360" y="272" text-anchor="middle" font-size="13" font-weight="800" fill="#34c778">offen</text>
+  <path d="M290 280 L310 280 L304 310 L296 310 Z" fill="#94a4ba"/>
+  <g id="pd-spray" style="opacity:0;transition:opacity .3s"><path d="M300 312 L270 340 M300 312 L300 340 M300 312 L330 340" stroke="#e6d27a" stroke-width="4" stroke-linecap="round"/></g>
+  <text x="240" y="300" text-anchor="end" font-size="13" font-weight="800" fill="#94a4ba">Düse</text>
+</svg>"""
 
-  const a = document.getElementById('agr');
-  function g() {
-    const r = +a.value;
-    document.getElementById('agr-v').textContent = r + ' %';
-    document.getElementById('agr-nox').style.width = (95 - r * 1.6) + '%';
-    document.getElementById('agr-russ').style.width = (8 + Math.pow(r / 50, 2.2) * 87) + '%';
-    let t;
-    if (r < 10) t = '<b class="red">Kaum AGR:</b> sehr heiße Verbrennung – viele Stickoxide.';
-    else if (r <= 30) t = '<b class="grn">Mittelweg:</b> deutlich weniger Stickoxide, noch wenig Ruß.';
-    else t = '<b class="ora">Zu viel AGR:</b> Es fehlt Sauerstoff – viel Ruß, schwarzer Rauch, der Partikelfilter füllt sich schnell.';
-    document.getElementById('agr-t').innerHTML = t;
+pd = [
+    titel_folie(K, 'PD', 'Pumpe-Düse', 'Pumpe und Einspritzdüse in einem Bauteil', 'font-size:90px'),
+    lernziele(T, ['Wie eine Pumpe-Düse-Einheit aufgebaut ist', 'Wie der Druck erzeugt wird',
+                  'Vor- und Nachteile gegenüber Common-Rail', 'Einbau, Prüfen und typische Fehler']),
+    folie(T, 'Aufbau', """    <div class="kette">
+      <div class="glied step"><b>Nockenwelle</b><span>eine zusätzliche Nocke pro Zylinder</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Rollenkipphebel</b><span>drückt den Pumpenkolben nach unten</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Pumpe-Düse-Einheit</b><span>Pumpe, Magnetventil und Düse in einem Bauteil</span></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <div class="tip step"><b>Jeder Zylinder hat seine eigene Einheit</b>Sie sitzt im Zylinderkopf. Hochdruckleitungen gibt es nicht.</div>
+      <div class="tip step"><b>Kraftstoffversorgung</b>Eine Kraftstoffpumpe liefert den Diesel mit Vordruck über Kanäle im Zylinderkopf zu den Einheiten.</div>
+    </div>"""),
+    folie(T, 'So entsteht der Druck – zum Ausprobieren', f"""    <div class="choice" style="margin-bottom:12px"><button class="btn ghost" data-p="0">1. Saughub</button><button class="btn ghost" data-p="1">2. Vorhub</button><button class="btn ghost" data-p="2">3. Einspritzung</button><button class="btn ghost" data-p="3">4. Ende</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.1fr 1fr">
+      {PDSVG}
+      <div>
+        <div class="card"><div class="muted" style="font-size:15px;font-weight:800">DRUCK IN DER EINHEIT</div><div class="lcd2" id="pd-d" style="font-size:32px;margin-top:6px">—</div></div>
+        <div class="card" id="pd-t" style="margin-top:12px;font-size:17px;font-weight:600;line-height:1.5"></div>
+      </div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Vereinfachte Darstellung, Richtwert.</p>""", sid='s-pd', body_cls='body noclick'),
+    folie(T, 'Pumpe-Düse und Common-Rail', """    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Pumpe-Düse</div>
+        <ul UL><li>sehr hoher Druck – bis ca. 2.000 bar (Richtwert)</li><li>keine Hochdruckleitungen</li><li>Druck hängt von der Nockenwelle und der Drehzahl ab</li><li>lauter, weniger Einspritzungen pro Takt möglich</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Common-Rail</div>
+        <ul UL><li>Druck immer verfügbar – unabhängig von der Drehzahl</li><li>viele Einspritzungen pro Takt</li><li>leiser, sauberere Abgase</li><li>hat die Pumpe-Düse abgelöst</li></ul></div>
+    </div>
+    <div class="note step">Pumpe-Düse findest du vor allem bei älteren TDI-Motoren – sie kommen aber noch oft in die Werkstatt.</div>""".replace('UL', UL)),
+    folie(T, 'Einbau und Einstellen', """    <ol class="steps-list">
+      <li class="step">Neue Dichtringe und Schrauben<small>immer laut Teileliste – alte O-Ringe nicht wiederverwenden</small></li>
+      <li class="step">Einheit gerade einsetzen, Spannpratze nach Vorgabe anziehen<small>Drehmoment und Drehwinkel laut Hersteller</small></li>
+      <li class="step">Grundeinstellung am Kipphebel<small>Einstellschraube nach Herstellervorgabe einstellen, z. B. mit Messuhr</small></li>
+      <li class="step">Fehlerspeicher, Messwerte, Probefahrt<small>Laufruhe der Zylinder kontrollieren</small></li>
+    </ol>"""),
+    folie(T, 'Prüfen und typische Fehler', """    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Messwerte</b>Laufruhe- bzw. Mengenabweichung pro Zylinder vergleichen – ein Ausreißer zeigt die auffällige Einheit.</div>
+      <div class="warn step"><b>Ölstand steigt</b>Undichte O-Ringe: Diesel gelangt ins Motoröl. Ölstand und Ölgeruch prüfen – Motorschaden möglich.</div>
+      <div class="tip step"><b>Kabelbaum im Zylinderkopf</b>Scheuerstellen oder Öl im Stecker führen zu Aussetzern – Kabel und Stecker prüfen.</div>
+      <div class="warn step"><b>Magnetventil</b>Hohe Ansteuerspannung – keine Prüflampe, nicht in den Stecker stechen. Prüfen mit Diagnosegerät und Prüfadapter.</div>
+    </div>"""),
+    video(T, 'mm-pumpe-duese'),
+    kurztest(T, [
+        ('Wodurch wird bei der Pumpe-Düse der Druck erzeugt?', ['Durch die Nockenwelle über einen Kipphebel', 'Durch eine Hochdruckpumpe am Rail', 'Durch den Turbolader'], 0, 'Eine zusätzliche Nocke drückt über den Rollenkipphebel den Pumpenkolben nach unten.'),
+        ('Wann beginnt die Einspritzung?', ['Wenn das Magnetventil öffnet', 'Wenn das Magnetventil schließt', 'Beim Saughub'], 1, 'Erst wenn das Ventil schließt, kann sich der Druck aufbauen und die Düse öffnet.'),
+        ('Der Ölstand steigt bei einem Pumpe-Düse-Motor. Was kann die Ursache sein?', ['Zu viel AdBlue', 'Neue Zündkerzen', 'Undichte O-Ringe an den Pumpe-Düse-Einheiten'], 2, 'Diesel gelangt ins Öl – das verdünnt das Motoröl.'),
+        ('Was ist ein Vorteil von Common-Rail gegenüber Pumpe-Düse?', ['Der Druck ist unabhängig von der Drehzahl verfügbar', 'Es gibt keine Injektoren', 'Es braucht keinen Kraftstofffilter'], 0, 'Darum sind viele Einspritzungen pro Takt möglich.'),
+    ]),
+    merke(T, ['Pumpe, Magnetventil und Düse in einem Bauteil', 'Nocke + Kipphebel erzeugen den Druck|bis ca. 2.000 bar',
+              'Ventil zu = Einspritzung', 'Ölstand steigt? O-Ringe prüfen']),
+]
+pd_js = """<script>
+(function () {
+  const P = [
+    [118, '#28aaf5', 'offen', '#34c778', 0, 0, 0, 'ca. Vordruck', '<b>Saughub:</b> Die Feder drückt den Kolben nach oben. Diesel strömt in den Raum unter dem Kolben.'],
+    [133, '#28aaf5', 'offen', '#34c778', 0, 140, 6.2, 'ca. Vordruck', '<b>Vorhub:</b> Die Nocke drückt den Kolben nach unten. Das Ventil ist offen – der Diesel wird zurück in den Zulauf gedrückt. Noch keine Einspritzung.'],
+    [148, '#ff8f3f', 'zu', '#f05e4e', 1, 170, 12.4, 'bis ca. 2.000 bar', '<b>Einspritzung:</b> Das Steuergerät schließt das Magnetventil. Der Druck steigt stark an, die Düsennadel öffnet – der Diesel wird eingespritzt. Wie lange das Ventil zu bleibt, bestimmt die Menge.'],
+    [158, '#28aaf5', 'offen', '#34c778', 0, 190, 16.6, 'fällt ab', '<b>Ende:</b> Das Magnetventil öffnet wieder. Der Druck bricht zusammen, die Düse schließt.']
+  ];
+  const bt = document.querySelectorAll('#s-pd [data-p]');
+  function p(i) {
+    const s = P[i];
+    document.getElementById('pd-kolben').setAttribute('y', s[0]);
+    const k = document.getElementById('pd-kammer'); k.setAttribute('y', s[0] + 80); k.setAttribute('height', Math.max(6, 270 - (s[0] + 80))); k.setAttribute('fill', s[1]);
+    const vz = document.getElementById('pd-vz'); vz.textContent = s[2]; vz.setAttribute('fill', s[3]);
+    document.getElementById('pd-spray').style.opacity = s[4];
+    document.getElementById('pd-nocke').style.transform = 'rotate(' + s[5] + 'deg)';
+    document.getElementById('pd-hebel').style.transform = 'rotate(' + s[6] + 'deg)';
+    document.getElementById('pd-d').textContent = s[7];
+    document.getElementById('pd-t').innerHTML = s[8];
+    bt.forEach(x => x.classList.toggle('on', +x.dataset.p === i));
   }
-  a.addEventListener('input', g); g();
+  bt.forEach(x => x.onclick = () => p(+x.dataset.p));
+  document.getElementById('s-pd').addEventListener('slideshow', () => p(0));
+  p(0);
 })();
-</script>'''
+</script>"""
 
 STYLE = '  .symbol { font-size: 110px; }'
 
 if __name__ == '__main__':
     seite('mm-diesel-grundlagen.html', 'Diesel-Grundlagen – Motormanagement', 't-mm4', THEMA, grundlagen, STYLE, grundlagen_js)
     seite('mm-common-rail.html', 'Common-Rail – Motormanagement', 't-mm4', THEMA, rail, STYLE, rail_js)
-    seite('mm-diesel-turbo.html', 'Turbo und AGR – Motormanagement', 't-mm4', THEMA, luft, STYLE, luft_js)
+    seite('mm-pumpe-duese.html', 'Pumpe-Düse – Motormanagement', 't-mm4', THEMA, pd, STYLE, pd_js)
     print('ok')

@@ -34,6 +34,7 @@ body.t-mm3 { --c: var(--ora); --ct: var(--ora-t); }
 body.t-mm4 { --c: var(--pur); --ct: var(--pur-t); }
 body.t-mm5 { --c: var(--grn); --ct: var(--grn-t); }
 body.t-mm6 { --c: var(--blu); --ct: var(--blu-t); }
+body.t-mm7 { --c: var(--yel); --ct: var(--yel-t); }
 
 /* ---------- Heller Modus ---------- */
 html.light {
