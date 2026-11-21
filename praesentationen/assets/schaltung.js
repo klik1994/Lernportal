@@ -61,7 +61,7 @@
     el('stop', { offset: '0%', 'stop-color': '#f7b612', 'stop-opacity': '.85' }, rg);
     el('stop', { offset: '100%', 'stop-color': '#f7b612', 'stop-opacity': '0' }, rg);
 
-    const gBat = el('g', { style: 'transition:opacity .6s' }, svg);
+    const gBat = el('g', { class: 'dev', style: 'transition:opacity .6s' }, svg);
     const gWire = el('g', { style: 'transition:opacity .6s' }, svg);
     el('path', { class: 'wire', d: 'M110 184 V150 H40 V440 H600 V346' }, gWire);
     el('path', { class: 'wire', d: 'M600 254 V120 H470' }, gWire);
@@ -91,7 +91,7 @@
     const loop = el('path', { d: 'M210 184 V120 H600 V440 H40 V150 H110 V184', fill: 'none', stroke: 'none' }, svg);
     const flow = Flow(svg, loop, { spacing: 44, speed: 70, r: 7, color: '#28aaf5' });
     flow.on(false);
-    const gapMask = el('rect', { x: 380, y: 108, width: 80, height: 24, fill: '#0e192b', opacity: 0 }, svg);
+    const gapMask = el('rect', { x: 380, y: 108, width: 80, height: 24, style: 'fill:var(--bg)', opacity: 0 }, svg);
 
     // Verbraucher
     let glow, bulb;
@@ -115,7 +115,7 @@
     const api = {};
     if (o.meter) {
       const mx = M ? 720 : 860, my = 60, C = o.color;
-      const gM = el('g', { transform: 'translate(' + mx + ' ' + my + ')', opacity: 0, style: 'transition:opacity .5s' }, svg);
+      const gM = el('g', { class: 'dev', transform: 'translate(' + mx + ' ' + my + ')', opacity: 0, style: 'transition:opacity .5s' }, svg);
       el('rect', { x: 0, y: 0, width: 220, height: 340, rx: 26, fill: C }, gM);
       el('rect', { x: 10, y: 10, width: 200, height: 320, rx: 20, fill: '#2c313a' }, gM);
       el('rect', { x: 28, y: 28, width: 164, height: 82, rx: 8, fill: '#c4d6be' }, gM);

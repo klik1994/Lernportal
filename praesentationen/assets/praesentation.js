@@ -92,6 +92,24 @@
   document.getElementById('btn-next').onclick = next;
   document.getElementById('btn-fs').onclick = toggleFs;
 
+  // Hell / Dunkel: folgt dem Gerät, bis man selbst umschaltet
+  const root = document.documentElement;
+  const darkMq = window.matchMedia('(prefers-color-scheme: light)');
+  function gespeichert() { try { return localStorage.getItem('lp-theme'); } catch (e) { return null; } }
+  function setzeThema(light) {
+    root.classList.toggle('light', light);
+    const b = document.getElementById('btn-theme');
+    if (b) { b.textContent = light ? '☾' : '☀'; b.title = light ? 'Dunkler Modus' : 'Heller Modus'; }
+  }
+  setzeThema(gespeichert() ? gespeichert() === 'light' : darkMq.matches);
+  darkMq.addEventListener && darkMq.addEventListener('change', (e) => { if (!gespeichert()) setzeThema(e.matches); });
+  const tb = document.getElementById('btn-theme');
+  if (tb) tb.onclick = () => {
+    const light = !root.classList.contains('light');
+    setzeThema(light);
+    try { localStorage.setItem('lp-theme', light ? 'light' : 'dark'); } catch (e) {}
+  };
+
   // Kurztest
   document.querySelectorAll('.quiz').forEach((quiz) => {
     const qs = quiz.querySelectorAll('.q');

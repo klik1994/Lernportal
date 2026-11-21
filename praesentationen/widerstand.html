@@ -6,10 +6,11 @@
 <meta name="theme-color" content="#0e192b">
 <meta name="robots" content="noindex, nofollow">
 <title>Widerstand – Grundlagen Elektrik</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
 <link rel="stylesheet" href="assets/praesentation.css">
 <style>
   .factor { background: var(--card); border-radius: 18px; padding: 18px 24px; }
-  .factor h4 { margin: 0 0 8px; font-size: 26px; font-weight: 900; color: var(--c); }
+  .factor h4 { margin: 0 0 8px; font-size: 26px; font-weight: 900; color: var(--ct); }
   .factor p { margin: 8px 0 0; font-size: 19px; font-weight: 600; }
   .factor svg { display: block; }
   .grow { transition: width 1.2s ease .3s, height 1.2s ease .3s, y 1.2s ease .3s; }
@@ -19,10 +20,10 @@
   .lcd-val { font-size: 64px; font-weight: 900; color: #19231c; font-variant-numeric: tabular-nums; transition: opacity .2s; }
   .lcd-unit { position: absolute; left: 16px; top: 10px; font-size: 18px; font-weight: 900; color: #19231c; }
   .range-lbl { margin-top: 16px; font-size: 20px; font-weight: 700; }
-  .range-lbl b { color: var(--c); }
+  .range-lbl b { color: var(--ct); }
   .ranges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
   .ranges span { background: var(--card2); border-radius: 10px; padding: 8px 12px; font-size: 16px; font-weight: 800; color: var(--muted); transition: background .3s, color .3s; }
-  .ranges span.cur { background: var(--c); color: var(--bg); }
+  .ranges span.cur { background: var(--c); color: var(--on-c); }
   .ranges span.done { color: var(--txt); }
   @media (max-width: 820px), (max-height: 520px) { .lcd { height: 90px; } .lcd-val { font-size: 46px; } .mm-box { padding: 16px; } .range-lbl { font-size: 17px; } .ranges span { font-size: 14px; } }
 </style>
@@ -181,10 +182,10 @@
       <div style="font-size:22px;font-weight:800">Probier es aus:</div>
       <div class="ctrl"><span style="width:150px" class="yel">U = <span id="uv">12</span> V</span><input type="range" id="u" min="0" max="14" step="0.5" value="12"></div>
       <div class="ctrl"><span style="width:150px" class="red">R = <span id="rv">4</span> Ω</span><input type="range" id="r" min="1" max="24" step="1" value="4"></div>
-      <div style="background:#213552;border-radius:16px;padding:18px 24px">
+      <div style="background:var(--card2);border-radius:16px;padding:18px 24px">
         <div class="muted" style="font-size:17px;font-weight:700">STROM</div>
         <div style="font-size:24px;font-weight:700">I = <span id="f-u">12</span> V : <span id="f-r">4</span> Ω = <span class="blu" style="font-size:44px;font-weight:900" id="iv">3,00 A</span></div>
-        <div style="height:14px;background:#0e192b;border-radius:99px;margin-top:14px;overflow:hidden"><div id="ibar" style="height:100%;background:#28aaf5;width:20%;transition:width .3s"></div></div>
+        <div style="height:14px;background:var(--bg);border-radius:99px;margin-top:14px;overflow:hidden"><div id="ibar" style="height:100%;background:#28aaf5;width:20%;transition:width .3s"></div></div>
       </div>
       <div class="muted" style="font-size:18px">Mehr Spannung → mehr Strom. &nbsp;Mehr Widerstand → weniger Strom.</div>
     </div>
@@ -278,6 +279,7 @@
   <button id="btn-next" title="Weiter (→)">→</button>
   <div id="bar"><i></i></div>
   <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
   <button id="btn-fs" title="Vollbild (F)">⛶</button>
 </nav>
 
