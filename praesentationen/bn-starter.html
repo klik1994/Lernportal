@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Starter – Bordnetz</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  .kl { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .kl .card { margin: 0; text-align: center; transition: opacity .3s, box-shadow .3s; }
+  .kl .card b { display: block; font-size: 34px; font-weight: 900; }
+  .kl .card span { font-size: 15px; font-weight: 700; color: var(--muted); }
+  .kl .card.an { box-shadow: 0 0 0 3px var(--c); }
+  .kl .card.aus { opacity: .35; }
+  .fz { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .fz span { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 15px; background: var(--card2); border-radius: 10px; padding: 6px 10px; }
+  .fz i { width: 22px; height: 28px; border-radius: 4px; display: inline-block; border: 2px solid rgba(0,0,0,.25); }
+  .mp { cursor: pointer; }
+  html.light svg text[fill="#ffd34d"] { fill: #8a6400; }
+  html.light .mp circle[stroke="#ffd34d"] { stroke: #c79400; }
+  @media (max-width: 820px), (max-height: 520px) { .kl .card b { font-size: 26px; } .zz { grid-template-columns: repeat(2, 1fr) !important; } .zz svg { max-width: 72px !important; margin: 0 auto; } .val b { font-size: 14px; hyphens: auto; overflow-wrap: anywhere; } }
+</style>
+</head>
+<body class="t-bn5">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">BORDNETZ</div>
+  <div class="symbol" style="font-size:110px">50</div>
+  <h1>Der Starter</h1>
+  <p>Aufbau, Startvorgang, Prüfen und Fehlerbilder</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">STARTER</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Wie der Starter aufgebaut ist</li>
+      <li class="step from-left"><span class="num">2</span>Was beim Starten nacheinander passiert</li>
+      <li class="step from-left"><span class="num">3</span>Welche Klemmen am Starter sind</li>
+      <li class="step from-left"><span class="num">4</span>Wie du Starterfehler eingrenzt</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STARTER</span><h2>Aufbau</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>Elektromotor</b><span>Gleichstrommotor, meist mit Dauermagneten</span></div>
+      <div class="val step from-left"><b>Vorgelege</b><span>Planetengetriebe – macht den kleinen Motor kräftig</span></div>
+      <div class="val step from-left"><b>Magnetschalter</b><span>spurt das Ritzel ein und schaltet den großen Strom zum Motor</span></div>
+      <div class="val step from-left"><b>Einrückhebel</b><span>schiebt das Ritzel zum Zahnkranz</span></div>
+      <div class="val step from-left"><b>Ritzel</b><span>mit Freilauf – greift in den Zahnkranz am Schwungrad – der Freilauf schützt den Starter, wenn der Motor anspringt</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-sv">
+  <span class="tag">STARTER</span><h2>Der Startvorgang – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:8px;flex-wrap:wrap;gap:6px"><button class="btn ghost on" data-s="0">Ruhe</button><button class="btn ghost" data-s="1">1 · Schlüssel auf Start</button><button class="btn ghost" data-s="2">2 · Ritzel spurt ein</button><button class="btn ghost" data-s="3">3 · Motor springt an</button><button class="btn ghost" data-s="4">4 · Schlüssel los</button></div>
+    <svg viewBox="0 0 760 340" width="760" height="340" style="display:block;margin:0 auto;max-width:100%;height:auto" id="sv-svg">
+      <rect x="20" y="40" width="110" height="60" rx="8" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/><text x="75" y="76" text-anchor="middle" font-size="16" font-weight="900" fill="#ecf1f8">Batterie</text>
+      <rect x="100" y="32" width="20" height="9" fill="#f05e4e"/><rect x="30" y="32" width="20" height="9" fill="#28aaf5"/>
+      <rect x="20" y="170" width="110" height="50" rx="8" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/><text x="75" y="200" text-anchor="middle" font-size="15" font-weight="900" fill="#ecf1f8">Zündschloss</text>
+      <path d="M110 32 V14 H560 V58" fill="none" stroke="#f05e4e" stroke-width="9"/><text x="300" y="36" font-size="15" font-weight="900" fill="#f05e4e">Klemme 30 (dick)</text>
+      <path d="M100 32 V20 H90 V170" fill="none" stroke="#f05e4e" stroke-width="3"/>
+      <path id="sv-50" d="M130 195 H260 V110" fill="none" stroke="#f05e4e" stroke-width="3"/><text x="140" y="188" font-size="15" font-weight="900" fill="#f05e4e">Klemme 50</text>
+      <rect x="240" y="50" width="360" height="60" rx="10" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/>
+      <text x="420" y="45" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">MAGNETSCHALTER</text>
+      <g id="sv-spule"><path d="M270 95 q9 -30 18 0" fill="none" stroke="#ecf1f8" stroke-width="3"/><path d="M288 95 q9 -30 18 0" fill="none" stroke="#ecf1f8" stroke-width="3"/><path d="M306 95 q9 -30 18 0" fill="none" stroke="#ecf1f8" stroke-width="3"/><path d="M324 95 q9 -30 18 0" fill="none" stroke="#ecf1f8" stroke-width="3"/><path d="M342 95 q9 -30 18 0" fill="none" stroke="#ecf1f8" stroke-width="3"/><path d="M360 95 q9 -30 18 0" fill="none" stroke="#ecf1f8" stroke-width="3"/><path d="M378 95 q9 -30 18 0" fill="none" stroke="#ecf1f8" stroke-width="3"/></g>
+      <rect id="sv-anker" x="410" y="66" width="120" height="28" rx="5" fill="#94a4ba"/>
+      <circle cx="560" cy="64" r="5" fill="#ecf1f8"/><line id="sv-hk" x1="560" y1="64" x2="586" y2="86" stroke="#ecf1f8" stroke-width="5"/><circle cx="560" cy="104" r="5" fill="#ecf1f8"/>
+      <text x="610" y="90" font-size="13" font-weight="800" fill="#94a4ba">Haupt-</text><text x="610" y="106" font-size="13" font-weight="800" fill="#94a4ba">kontakt</text>
+      <path d="M560 104 V150 H420 V200" fill="none" stroke="#f05e4e" stroke-width="9"/>
+      <circle id="sv-m" cx="420" cy="245" r="45" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+      <g id="sv-mr"><line x1="420" y1="212" x2="420" y2="278" stroke="#ecf1f8" stroke-width="4"/><line x1="387" y1="245" x2="453" y2="245" stroke="#ecf1f8" stroke-width="4"/></g>
+      <text x="420" y="315" text-anchor="middle" font-size="15" font-weight="900" fill="#ecf1f8">Elektromotor</text>
+      <line x1="465" y1="245" x2="640" y2="245" stroke="#94a4ba" stroke-width="8"/>
+      <line id="sv-hebel" x1="530" y1="94" x2="555" y2="240" stroke="#ecf1f8" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="540" cy="160" r="6" fill="#ecf1f8"/>
+      <g id="sv-rz"><rect x="545" y="222" width="34" height="46" rx="4" fill="#ffd34d"/><rect x="545" y="216" width="5" height="58" fill="#ffd34d"/><rect x="554" y="216" width="5" height="58" fill="#ffd34d"/><rect x="563" y="216" width="5" height="58" fill="#ffd34d"/><rect x="572" y="216" width="5" height="58" fill="#ffd34d"/></g>
+      <text id="sv-rzl" x="562" y="296" text-anchor="middle" font-size="14" font-weight="900" fill="#ffd34d">Ritzel</text>
+      <g id="sv-zk"><circle cx="700" cy="245" r="56" fill="none" stroke="#94a4ba" stroke-width="8" stroke-dasharray="7 5"/><circle cx="700" cy="245" r="40" fill="#213552"/><line x1="700" y1="205" x2="700" y2="285" stroke="#94a4ba" stroke-width="3"/></g>
+      <text x="700" y="325" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">Zahnkranz (Motor)</text>
+      <path id="sv-p30" d="M110 34 V14 H560 V58 M560 104 V150 H420 V200" fill="none" stroke="none"/>
+      <path id="sv-p30a" d="M110 32 V14 H560 V150 H420 V200" fill="none" stroke="none"/>
+      <path id="sv-p50" d="M90 40 V170 M130 195 H260 V110" fill="none" stroke="none"/>
+      <path id="sv-p50a" d="M130 195 H260 V110" fill="none" stroke="none"/>
+    </svg>
+    <div class="card" id="sv-t" style="font-size:16px;font-weight:600;line-height:1.5;margin-top:6px"></div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STARTER</span><h2>Klemmen und Werte</h2>
+  <div class="body">
+    <div class="grid3" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:30px;color:var(--red)">30</div><p style="margin:6px 0 0">Dicke Leitung direkt von der Batterie. Oft <b>ohne Sicherung</b>!</p></div>
+      <div class="card step"><div class="big" style="font-size:30px;color:var(--red)">50</div><p style="margin:6px 0 0">Steuerleitung vom Zündschloss oder Steuergerät, oft über ein Startrelais.</p></div>
+      <div class="card step"><div class="big" style="font-size:30px;color:var(--blu)">31</div><p style="margin:6px 0 0">Masse über Gehäuse und Motor – das Masseband muss gut sein.</p></div>
+    </div>
+    <div class="values" style="margin-top:12px">
+      <div class="val step from-left"><b>einige 100 A</b><span>Starterstrom beim Pkw – Richtwert</span></div>
+      <div class="val step from-left"><b>ca. 9,6 V</b><span>so tief darf die Batteriespannung beim Starten höchstens fallen – Richtwert</span></div>
+    </div>
+    <p class="muted" style="font-size:14px">Genaue Werte laut Hersteller.</p>
+  </div>
+</section>
+
+<section class="slide" id="s-fb">
+  <span class="tag">STARTER</span><h2>Fehlerbilder – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px;flex-wrap:wrap;gap:6px"><button class="btn ghost on" data-f="0">Nichts passiert</button><button class="btn ghost" data-f="1">Es klickt nur</button><button class="btn ghost" data-f="2">Dreht zu langsam</button><button class="btn ghost" data-f="3">Starter dreht, Motor nicht</button><button class="btn ghost" data-f="4">Starter läuft weiter</button></div>
+    <div class="grid2" style="align-items:start">
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">MÖGLICHE URSACHEN</div><ul id="fb-u" style="font-size:16px;line-height:1.55;padding-left:20px;margin:8px 0 0"></ul></div>
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">SO PRÜFST DU</div><ul id="fb-p" style="font-size:16px;line-height:1.55;padding-left:20px;margin:8px 0 0"></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STARTER</span><h2>Starter prüfen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Batterie zuerst<small>geladen und startfähig? Ohne gute Batterie ist jede Starterprüfung sinnlos</small></li>
+      <li class="step">Spannung beim Starten<small>an der Batterie – Richtwert nicht unter ca. 9,6 V</small></li>
+      <li class="step">Klemme 50 beim Starten<small>kommt die Steuerspannung am Starter an? Wert laut Hersteller</small></li>
+      <li class="step">Spannungsfall unter Last<small>Plusleitung (Batterie-Plus bis Klemme 30) und Masse (Batterie-Minus bis Startergehäuse) beim Starten</small></li>
+      <li class="step">Starterstrom<small>mit der Stromzange – zu hoch: Starter schwergängig, zu niedrig: Übergangswiderstand</small></li>
+    </ol>
+    <p class="muted" style="font-size:14px">Damit der Motor beim Prüfen nicht anspringt, nach Herstellerangabe vorgehen.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STARTER</span><h2>Start-Stopp und neue Systeme</h2>
+  <div class="body">
+    <div class="grid3" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:21px">Verstärkter Starter</div><p style="margin:6px 0 0">Für viel mehr Startvorgänge gebaut: haltbarere Bürsten, Freilauf und Lager.</p></div>
+      <div class="card step"><div class="big" style="font-size:21px">Passende Batterie</div><p style="margin:6px 0 0">Start-Stopp braucht eine EFB- oder AGM-Batterie mit Batteriesensor.</p></div>
+      <div class="card step"><div class="big" style="font-size:21px">Riemen-Startergenerator</div><p style="margin:6px 0 0">Startet den Motor über den Riemen und arbeitet auch als Generator – oft mit 48 V (Mild-Hybrid).</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STARTER</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="warn step"><b>Klemme 30 ohne Sicherung</b>Vor Arbeiten am Starter die Batterie abklemmen (Minus zuerst). Ein Kurzschluss an Klemme 30 kann die Leitung zum Glühen bringen.</div>
+      <div class="tip step"><b>Pausen machen</b>Nicht lange am Stück starten (Richtwert höchstens ca. 10 s), dann eine Pause – der Starter wird sonst heiß.</div>
+      <div class="warn step"><b>Starter läuft weiter</b>Bleibt der Starter nach dem Loslassen an, sofort die Batterie abklemmen – sonst wird er zerstört.</div>
+      <div class="tip step"><b>Masseband</b>Ein lockeres oder korrodiertes Masseband zwischen Motor und Karosserie ist eine häufige Ursache für Startprobleme.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STARTER</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/bn-starter.mp4" poster="videos/bn-starter.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STARTER</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Was macht der Magnetschalter?</p>
+      <div class="opts"><button class="opt">Er lädt die Batterie</button><button class="opt">Er spurt das Ritzel ein und schaltet den großen Strom zum Starter</button><button class="opt">Er misst die Drehzahl</button></div>
+      <div class="fb">Er wird über Klemme 50 angesteuert.</div></div>
+    <div class="q" data-correct="0"><p>2. Wozu dient der Freilauf am Ritzel?</p>
+      <div class="opts"><button class="opt">Er schützt den Starter, wenn der Motor anspringt</button><button class="opt">Er macht den Starter schneller</button><button class="opt">Er ersetzt den Zahnkranz</button></div>
+      <div class="fb">Sonst würde der laufende Motor den Starter viel zu schnell antreiben.</div></div>
+    <div class="q" data-correct="2"><p>3. Beim Starten klickt es nur. Was prüfst du zuerst?</p>
+      <div class="opts"><button class="opt">Den Luftfilter</button><button class="opt">Die Zündkerzen</button><button class="opt">Batterie und Spannungsfall an Plusleitung und Masse</button></div>
+      <div class="fb">Der Magnetschalter zieht an, aber es kommt zu wenig Strom am Motor an.</div></div>
+    <div class="q" data-correct="2"><p>4. Welche Klemme ist die Steuerleitung des Starters?</p>
+      <div class="opts"><button class="opt">30</button><button class="opt">31</button><button class="opt">50</button></div>
+      <div class="fb">Klemme 50 kommt vom Zündschloss oder Steuergerät.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STARTER</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Magnetschalter: Ritzel einspuren und Hauptstrom schalten</span></li>
+        <li class="step"><span>Freilauf schützt den Starter beim Anspringen</span></li>
+        <li class="step"><span>30 dick und oft ungesichert · 50 Steuerleitung · 31 Masse</span></li>
+        <li class="step"><span>Erst Batterie prüfen, dann Spannungsfall unter Last</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Bordnetz" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script src="assets/schaltung.js"></script>
+<script>
+(function () {
+  const svg = document.getElementById('sv-svg');
+  const f30 = Flow(svg, document.getElementById('sv-p30a'), { spacing: 16, speed: 120, r: 7, color: '#ffd34d' });
+  const f50 = Flow(svg, document.getElementById('sv-p50a'), { spacing: 30, speed: 50, r: 4, color: '#ffd34d' });
+  const S = [
+    { e: 0, hk: 0, mot: 0, zk: 0, f50: 0, f30: 0, t: '<b>Ruhe:</b> Der Anker im Magnetschalter ist draußen, das Ritzel steht vom Zahnkranz weg, der Hauptkontakt ist offen.' },
+    { e: 1, hk: 0, mot: 0.2, zk: 0, f50: 1, f30: 0, t: '<b>1 · Schlüssel auf Start:</b> Über <span class="c">Klemme 50</span> fließt Strom in den Magnetschalter. Er wird zum Magneten und zieht den Anker hinein. Der Einrückhebel schiebt das Ritzel zum Zahnkranz.' },
+    { e: 1, hk: 1, mot: 1, zk: 1, f50: 1, f30: 1, t: '<b>2 · Ritzel spurt ein:</b> Das Ritzel greift in den Zahnkranz. Am Ende schließt der <span class="c">Hauptkontakt</span>: Ein sehr großer Strom fließt über <span class="c">Klemme 30</span> zum Elektromotor. Der Starter dreht den Verbrennungsmotor.' },
+    { e: 1, hk: 1, mot: 1, zk: 3, f50: 1, f30: 1, t: '<b>3 · Motor springt an:</b> Jetzt dreht der Motor schneller als der Starter. Der <span class="c">Freilauf</span> im Ritzel trennt – so wird der Starter nicht viel zu schnell gedreht.' },
+    { e: 0, hk: 0, mot: 0, zk: 2, f50: 0, f30: 0, t: '<b>4 · Schlüssel los:</b> Klemme 50 ist aus. Eine Feder drückt den Anker zurück, der Hauptkontakt öffnet, das Ritzel spurt aus. Der Motor läuft allein weiter.' }
+  ];
+  let st = S[0], wm = 0, wz = 0;
+  const b = document.querySelectorAll('#s-sv [data-s]');
+  function s(i) {
+    st = S[i];
+    document.getElementById('sv-anker').setAttribute('x', st.e ? 370 : 410);
+    document.getElementById('sv-hebel').setAttribute('x1', st.e ? 490 : 530);
+    document.getElementById('sv-hebel').setAttribute('x2', st.e ? 595 : 555);
+    document.getElementById('sv-rz').setAttribute('transform', st.e ? 'translate(40 0)' : '');
+    document.getElementById('sv-rzl').setAttribute('x', st.e ? 602 : 562);
+    document.getElementById('sv-hk').setAttribute('x2', st.hk ? 560 : 586); document.getElementById('sv-hk').setAttribute('y2', st.hk ? 100 : 86);
+    f30.on(!!st.f30); f50.on(!!st.f50);
+    b.forEach(x => x.classList.toggle('on', +x.dataset.s === i));
+    document.getElementById('sv-t').innerHTML = st.t;
+  }
+  b.forEach(x => x.onclick = () => s(+x.dataset.s)); s(0);
+  setInterval(() => {
+    wm = (wm + st.mot * 14) % 360; wz = (wz + st.zk * 4) % 360;
+    document.getElementById('sv-mr').setAttribute('transform', 'rotate(' + wm + ' 420 245)');
+    document.getElementById('sv-zk').setAttribute('transform', 'rotate(' + wz + ' 700 245)');
+  }, 40);
+
+  const FB = [
+    [['Batterie leer', 'Steuerspannung an Klemme 50 fehlt (z. B. Wegfahrsperre, Kupplungs- oder Wählhebelschalter, Startrelais)', 'Magnetschalter defekt'],
+     ['Batterie prüfen', 'Fehlerspeicher lesen', 'Spannung an Klemme 50 beim Starten messen']],
+    [['Batterie zu schwach', 'Übergangswiderstand an Klemme 30 oder an der Masse', 'Hauptkontakt im Magnetschalter verbrannt', 'Starter defekt'],
+     ['Spannung beim Starten an der Batterie', 'Spannungsfall Plusleitung und Masse unter Last', 'Spannung direkt an Klemme 30 am Starter beim Starten']],
+    [['Batterie schwach oder kalt', 'Übergangswiderstände (Pole, Masseband)', 'Starter verschlissen (Bürsten, Lager)', 'falsches oder zu dickes Motoröl'],
+     ['Batterietester', 'Spannungsfall unter Last', 'Starterstrom mit der Stromzange']],
+    [['Freilauf rutscht durch', 'Ritzel spurt nicht ein (Einrückhebel, Magnetschalter)', 'Zähne am Ritzel oder Zahnkranz beschädigt'],
+     ['Geräusch genau anhören', 'Starter ausbauen und Ritzel, Freilauf prüfen', 'Zahnkranz durch die Öffnung ansehen']],
+    [['Klemme 50 bleibt an (Zündschloss oder Startrelais hängt)', 'Magnetschalter klemmt, Hauptkontakt verschweißt'],
+     ['Sofort Batterie abklemmen!', 'Spannung an Klemme 50 nach dem Loslassen messen', 'Startrelais und Magnetschalter prüfen']]
+  ];
+  const fb = document.querySelectorAll('#s-fb [data-f]');
+  function f(i) {
+    document.getElementById('fb-u').innerHTML = FB[i][0].map(x => '<li>' + x + '</li>').join('');
+    document.getElementById('fb-p').innerHTML = FB[i][1].map(x => '<li>' + x + '</li>').join('');
+    fb.forEach(x => x.classList.toggle('on', +x.dataset.f === i));
+  }
+  fb.forEach(x => x.onclick = () => f(+x.dataset.f)); f(0);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

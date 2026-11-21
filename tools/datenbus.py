@@ -3,7 +3,7 @@ Aufruf: cd tools && python3 datenbus.py"""
 from praesentation_bauen import *
 
 THEMA = 'Datenbus-Systeme'
-K = 'FAHRZEUGELEKTRONIK · DATENBUS'
+K = 'BORDNETZ · DATENBUS'
 UL = 'style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"'
 CH, CL = '#ff8f3f', '#28aaf5'   # CAN-High, CAN-Low
 

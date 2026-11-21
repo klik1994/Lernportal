@@ -40,6 +40,11 @@ body.t-parallel { --c: var(--roy); --ct: var(--roy-t); }
 body.t-gemischt { --c: var(--pur); --ct: var(--pur-t); }
 body.t-hv { --c: var(--ora); --ct: var(--ora-t); }
 body.t-bus { --c: var(--tea); --ct: var(--tea-t); }
+body.t-bn1 { --c: var(--yel); --ct: var(--yel-t); }
+body.t-bn2 { --c: var(--roy); --ct: var(--roy-t); }
+body.t-bn3 { --c: var(--grn); --ct: var(--grn-t); }
+body.t-bn4 { --c: var(--ora); --ct: var(--ora-t); }
+body.t-bn5 { --c: var(--pur); --ct: var(--pur-t); }
 
 /* ---------- Heller Modus ---------- */
 html.light {

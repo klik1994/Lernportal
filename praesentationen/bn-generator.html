@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Generator – Bordnetz</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  .kl { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .kl .card { margin: 0; text-align: center; transition: opacity .3s, box-shadow .3s; }
+  .kl .card b { display: block; font-size: 34px; font-weight: 900; }
+  .kl .card span { font-size: 15px; font-weight: 700; color: var(--muted); }
+  .kl .card.an { box-shadow: 0 0 0 3px var(--c); }
+  .kl .card.aus { opacity: .35; }
+  .fz { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .fz span { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 15px; background: var(--card2); border-radius: 10px; padding: 6px 10px; }
+  .fz i { width: 22px; height: 28px; border-radius: 4px; display: inline-block; border: 2px solid rgba(0,0,0,.25); }
+  .mp { cursor: pointer; }
+  html.light svg text[fill="#ffd34d"] { fill: #8a6400; }
+  html.light .mp circle[stroke="#ffd34d"] { stroke: #c79400; }
+  @media (max-width: 820px), (max-height: 520px) { .kl .card b { font-size: 26px; } .zz { grid-template-columns: repeat(2, 1fr) !important; } .zz svg { max-width: 72px !important; margin: 0 auto; } .val b { font-size: 14px; hyphens: auto; overflow-wrap: anywhere; } }
+</style>
+</head>
+<body class="t-bn4">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">BORDNETZ</div>
+  <div class="symbol" style="font-size:110px">G</div>
+  <h1>Der Generator</h1>
+  <p>Aufbau, Regler, Ladespannung und Prüfen</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">GENERATOR</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Welche Aufgabe der Generator hat</li>
+      <li class="step from-left"><span class="num">2</span>Wie Drehstrom entsteht und zu Gleichspannung wird</li>
+      <li class="step from-left"><span class="num">3</span>Was der Regler macht</li>
+      <li class="step from-left"><span class="num">4</span>Wie du Generator und Ladesystem prüfst</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GENERATOR</span><h2>Aufgabe des Generators</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Motor</b><span>dreht über den Riemen</span></div><div class="flow-arrow step"></div>
+      <div class="glied step hd"><b>Generator</b><span>erzeugt elektrische Energie</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Verbraucher</b><span>Licht, Steuergeräte, Gebläse …</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Batterie</b><span>wird wieder geladen</span></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <div class="tip step"><b>Ohne Generator</b>würde die Batterie bei laufendem Motor immer leerer – nach kurzer Zeit geht nichts mehr.</div>
+      <div class="tip step"><b>Ladekontrollleuchte</b>Leuchtet sie bei laufendem Motor, lädt der Generator nicht richtig. Bald prüfen!</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-dw">
+  <span class="tag">GENERATOR</span><h2>Vom Drehstrom zur Gleichspannung – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px"><button class="btn ghost on" data-w="0">Drehstrom (im Ständer)</button><button class="btn ghost" data-w="1">Nach dem Gleichrichter</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 600 230" width="600" height="230" style="display:block;margin:0 auto;max-width:100%;height:auto" id="dw-svg">
+      <rect x="0" y="0" width="600" height="230" rx="12" fill="#18283f"/>
+      <g id="dw-grid"></g><g id="dw-w"></g>
+      <text id="dw-lab" x="16" y="24" font-size="15" font-weight="800" fill="#94a4ba"></text>
+    </svg>
+      <div class="card" id="dw-t" style="font-size:16px;font-weight:600;line-height:1.55"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-rg">
+  <span class="tag">GENERATOR</span><h2>Der Regler – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="ctrl"><span style="width:250px">Motordrehzahl: <span class="c" id="rg-dn">2.000 1/min</span></span><input type="range" id="rg-d" min="800" max="6000" step="100" value="2000"></div>
+    <div class="ctrl"><span style="width:250px">Verbraucher: <span class="c" id="rg-vn">mittel</span></span><input type="range" id="rg-v" min="0" max="2" step="1" value="1"></div>
+    <div class="grid3" style="margin-top:12px">
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">LADESPANNUNG</div><div class="lcd2" id="rg-u" style="font-size:30px">14,2 V</div></div>
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">ERREGERSTROM</div><div class="lcd2" id="rg-e" style="font-size:30px">40 %</div>
+        <div style="height:14px;background:var(--card2);border-radius:7px;overflow:hidden;margin-top:6px"><div id="rg-eb" style="height:100%;width:40%;background:var(--c)"></div></div></div>
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">BATTERIE</div><div class="lcd2" id="rg-b" style="font-size:24px">wird geladen</div></div>
+    </div>
+    <div class="card" id="rg-t" style="font-size:16px;font-weight:600;line-height:1.55;margin-top:12px"></div>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">Vereinfachtes Beispiel. Ladespannung ca. 14 V – genauer Wert laut Hersteller.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GENERATOR</span><h2>Aufbau</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>Riemenscheibe</b><span>oft mit Freilauf – dämpft Drehschwingungen des Motors</span></div>
+      <div class="val step from-left"><b>Läufer</b><span>Klauenpolläufer mit Erregerwicklung – ein drehender Elektromagnet</span></div>
+      <div class="val step from-left"><b>Schleifringe</b><span>mit Kohlebürsten – bringen den Erregerstrom in den drehenden Läufer</span></div>
+      <div class="val step from-left"><b>Ständer</b><span>drei Wicklungen – hier entsteht der Drehstrom</span></div>
+      <div class="val step from-left"><b>Gleichrichter</b><span>Dioden machen aus Drehstrom Gleichspannung</span></div>
+      <div class="val step from-left"><b>Regler</b><span>hält die Ladespannung konstant</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GENERATOR</span><h2>Anschlüsse und Werte</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Anschlüsse</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li><b>B+</b>: dicke Leitung zur Batterie – führt <b>immer</b> Batteriespannung</li><li><b>D+ / L</b>: Ladekontrolle (Klemme 61)</li><li>bei neueren Fahrzeugen: Datenleitung (z. B. LIN) zum Motorsteuergerät</li><li>Masse über das Gehäuse</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Ladespannung</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Richtwert ca. 13,8 bis 14,8 V</li><li>mit Generatormanagement zeitweise auch weniger oder mehr – das Steuergerät regelt nach Ladezustand der Batterie</li><li>genaue Werte laut Hersteller</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GENERATOR</span><h2>Generator prüfen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Sichtprüfung<small>Riemen, Spanner, Freilauf, Stecker, B+-Mutter fest?</small></li>
+      <li class="step">Ladespannung an der Batterie<small>im Leerlauf und bei ca. 2.500 1/min, mit und ohne Verbraucher</small></li>
+      <li class="step">Spannungsfall unter Last<small>B+-Leitung und Masse zwischen Generator und Batterie</small></li>
+      <li class="step">Welligkeit mit dem Oszilloskop<small>zeigt defekte Dioden oder Wicklungen</small></li>
+      <li class="step">Fehlerspeicher<small>bei Generatoren mit Datenleitung meldet das Steuergerät Fehler</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide" id="s-ow">
+  <span class="tag">GENERATOR</span><h2>Welligkeit am Oszilloskop – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px;flex-wrap:wrap"><button class="btn ghost on" data-o="ok">In Ordnung</button><button class="btn ghost" data-o="dio">Diode defekt</button><button class="btn ghost" data-o="reg">Regler defekt</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 600 220" width="600" height="220" style="display:block;margin:0 auto;max-width:100%;height:auto" id="ow-svg">
+      <rect x="0" y="0" width="600" height="220" rx="12" fill="#18283f"/>
+      <g id="ow-grid"></g><g id="ow-w"></g>
+      <text id="ow-lab" x="16" y="24" font-size="15" font-weight="800" fill="#94a4ba"></text>
+    </svg>
+      <div class="card" id="ow-t" style="font-size:16px;font-weight:600;line-height:1.55"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">Vereinfachte Beispielbilder, gemessen an B+ gegen Masse bei laufendem Motor.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GENERATOR</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="warn step"><b>B+ führt immer Spannung</b>Vor Arbeiten am Generator die Batterie abklemmen (Minus zuerst). Ein abgerutschter Schlüssel an B+ macht einen Kurzschluss.</div>
+      <div class="warn step"><b>Nie bei laufendem Motor abklemmen</b>Die Batterie nie bei laufendem Motor abklemmen – Spannungsspitzen können Steuergeräte zerstören.</div>
+      <div class="tip step"><b>Freilauf prüfen</b>Die Freilaufriemenscheibe muss in eine Richtung frei drehen und in die andere sperren. Prüfen und tauschen nur mit Spezialwerkzeug.</div>
+      <div class="tip step"><b>Batterie oft leer?</b>Erst die Batterie prüfen, dann Ladespannung und Ruhestrom. Ein Generator allein ist selten die einzige Ursache.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GENERATOR</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/bn-generator.mp4" poster="videos/bn-generator.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GENERATOR</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Was macht der Gleichrichter im Generator?</p>
+      <div class="opts"><button class="opt">Er hält die Spannung konstant</button><button class="opt">Er macht aus Drehstrom Gleichspannung</button><button class="opt">Er dreht den Läufer</button></div>
+      <div class="fb">Dioden lassen den Strom nur in eine Richtung durch.</div></div>
+    <div class="q" data-correct="0"><p>2. Wie hält der Regler die Ladespannung konstant?</p>
+      <div class="opts"><button class="opt">Er verändert den Erregerstrom</button><button class="opt">Er verändert die Motordrehzahl</button><button class="opt">Er schaltet die Batterie ab</button></div>
+      <div class="fb">Weniger Erregerstrom → schwächeres Magnetfeld → weniger Spannung.</div></div>
+    <div class="q" data-correct="2"><p>3. Welche Ladespannung ist ein üblicher Richtwert?</p>
+      <div class="opts"><button class="opt">ca. 12 V</button><button class="opt">ca. 16–17 V</button><button class="opt">ca. 13,8–14,8 V</button></div>
+      <div class="fb">Genauer Wert laut Hersteller.</div></div>
+    <div class="q" data-correct="0"><p>4. Warum darfst du die Batterie nicht bei laufendem Motor abklemmen?</p>
+      <div class="opts"><button class="opt">Spannungsspitzen können Steuergeräte zerstören</button><button class="opt">Der Motor geht sofort aus</button><button class="opt">Die Batterie wird zu voll</button></div>
+      <div class="fb">Ohne Batterie fehlt der „Puffer“ im Bordnetz.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GENERATOR</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Generator versorgt die Verbraucher und lädt die Batterie</span></li>
+        <li class="step"><span>Drehstrom im Ständer → Gleichrichter → Gleichspannung</span></li>
+        <li class="step"><span>Regler verändert den Erregerstrom<small>Ladespannung bleibt ca. 14 V</small></span></li>
+        <li class="step"><span>B+ führt immer Batteriespannung</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Bordnetz" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  function grid(id, h) {
+    let g = '';
+    for (let x = 50; x < 600; x += 50) g += '<line x1="' + x + '" y1="0" x2="' + x + '" y2="' + h + '" stroke="#94a4ba" stroke-width="1" opacity=".18"/>';
+    for (let y = 30; y < h; y += 40) g += '<line x1="0" y1="' + y + '" x2="600" y2="' + y + '" stroke="#94a4ba" stroke-width="1" opacity=".18"/>';
+    document.getElementById(id + '-grid').innerHTML = g;
+  }
+  const pfad = (fn, h, c, w) => { let d = ''; for (let x = 10; x <= 590; x += 2) d += (d ? ' L' : 'M') + x + ' ' + fn(x).toFixed(1); return '<path d="' + d + '" fill="none" stroke="' + c + '" stroke-width="' + w + '"/>'; };
+  grid('dw', 230);
+  const C = ['#f05e4e', '#ffd34d', '#28aaf5'];
+  const ph = (x, k) => Math.sin((x - 10) / 580 * 2 * Math.PI * 3 - k * 2 * Math.PI / 3);
+  const db = document.querySelectorAll('#s-dw [data-w]');
+  function dw(i) {
+    const mid = 115, A = 80;
+    let o = '';
+    if (!i) { for (let k = 0; k < 3; k++) o += pfad(x => mid - A * ph(x, k), 230, C[k], 3); o += '<line x1="10" y1="' + mid + '" x2="590" y2="' + mid + '" stroke="#94a4ba" stroke-width="1.5"/>'; }
+    else {
+      for (let k = 0; k < 3; k++) o += pfad(x => 200 - 0.75 * A * Math.abs(ph(x, k)), 230, C[k], 1.5).replace('stroke-width', 'opacity=".35" stroke-width');
+      o += pfad(x => 200 - 0.75 * A * Math.max(Math.abs(ph(x, 0)), Math.abs(ph(x, 1)), Math.abs(ph(x, 2))), 230, '#34c778', 5);
+      o += '<line x1="10" y1="200" x2="590" y2="200" stroke="#94a4ba" stroke-width="1.5"/><text x="580" y="218" text-anchor="end" font-size="13" font-weight="800" fill="#94a4ba">0 V</text>';
+    }
+    document.getElementById('dw-w').innerHTML = o;
+    document.getElementById('dw-lab').textContent = i ? 'Gleichspannung mit kleiner Welligkeit' : 'Drei Wechselspannungen, versetzt';
+    document.getElementById('dw-t').innerHTML = i
+      ? '<b>Gleichrichter:</b> Die <span class="c">Dioden</span> lassen den Strom nur in eine Richtung durch. Aus den drei Wechselspannungen wird eine <span class="grn">Gleichspannung</span> (grün) – mit einer kleinen Welligkeit.'
+      : '<b>Drehstrom:</b> Der Läufer ist ein drehender <span class="c">Elektromagnet</span>. Er dreht sich in den drei Wicklungen des Ständers. In jeder Wicklung entsteht eine Wechselspannung – zeitlich versetzt. Das nennt man Drehstrom.';
+    db.forEach(b => b.classList.toggle('on', +b.dataset.w === i));
+  }
+  db.forEach(b => b.onclick = () => dw(+b.dataset.w)); dw(0);
+
+  const rd = document.getElementById('rg-d'), rv = document.getElementById('rg-v');
+  function rg() {
+    const n = +rd.value, v = +rv.value;
+    const bedarf = [0.3, 0.6, 1.0][v];
+    const kann = Math.min(1, (n - 600) / 1800);
+    let e = bedarf / kann, u = 14.2, bat = 'wird geladen';
+    if (e > 1) { u = 14.2 - (e - 1) * 1.6; e = 1; }
+    u = Math.max(12.2, u);
+    if (u < 13.3) bat = 'wird entladen'; else if (u < 13.9) bat = 'kaum Ladung';
+    document.getElementById('rg-dn').textContent = n.toLocaleString('de-DE') + ' 1/min';
+    document.getElementById('rg-vn').textContent = ['wenig', 'mittel', 'viele (Licht, Heckscheibe, Gebläse)'][v];
+    document.getElementById('rg-u').textContent = u.toFixed(1).replace('.', ',') + ' V';
+    document.getElementById('rg-e').textContent = Math.round(e * 100) + ' %';
+    document.getElementById('rg-eb').style.width = Math.round(e * 100) + '%';
+    const b = document.getElementById('rg-b'); b.textContent = bat; b.className = 'lcd2 ' + (u < 13.3 ? 'red' : u < 13.9 ? 'yel' : 'grn');
+    document.getElementById('rg-t').innerHTML = e >= 1 && u < 14.1
+      ? '<b class="ora">Am Limit:</b> Bei niedriger Drehzahl und vielen Verbrauchern reicht auch der volle Erregerstrom nicht. Die Spannung sinkt – die Batterie hilft mit und wird entladen. Darum heben manche Fahrzeuge die Leerlaufdrehzahl an.'
+      : '<b>Der Regler arbeitet:</b> Er verändert den <span class="c">Erregerstrom</span> im Läufer. Mehr Erregerstrom = stärkeres Magnetfeld = mehr Spannung. So bleibt die Ladespannung bei unterschiedlicher Drehzahl und Last gleich.';
+  }
+  rd.addEventListener('input', rg); rv.addEventListener('input', rg); rg();
+
+  grid('ow', 220);
+  const ob = document.querySelectorAll('#s-ow [data-o]');
+  function ow(m) {
+    const rip = x => Math.abs(Math.sin((x - 10) / 580 * Math.PI * 18));
+    let fn, t;
+    if (m === 'ok') { fn = x => 110 - 8 * rip(x); t = '<b class="grn">In Ordnung:</b> Kleine, gleichmäßige Welligkeit – alle Dioden arbeiten.'; }
+    if (m === 'dio') { fn = x => { const i = Math.floor((x - 10) / 580 * 18); return 110 - 8 * rip(x) + (i % 3 === 0 ? 40 * rip(x) : 0); }; t = '<b class="red">Diode defekt:</b> In regelmäßigen Abständen fehlt ein Stück – tiefe Einbrüche im Bild. Der Generator bringt weniger Leistung, die Batterie wird schlecht geladen.'; }
+    if (m === 'reg') { fn = x => 60 - 8 * rip(x); t = '<b class="red">Regler defekt:</b> Die Spannung ist viel zu hoch (z. B. 16 V). Die Batterie gast, Lampen brennen durch, Steuergeräte können Schaden nehmen.'; }
+    document.getElementById('ow-w').innerHTML = pfad(fn, 220, '#34c778', 4) + '<line x1="10" y1="110" x2="590" y2="110" stroke="#94a4ba" stroke-width="1" stroke-dasharray="5 5"/><text x="586" y="104" text-anchor="end" font-size="13" font-weight="800" fill="#94a4ba">ca. 14 V</text>';
+    document.getElementById('ow-lab').textContent = m === 'reg' ? 'Spannung zu hoch' : 'Welligkeit der Ladespannung';
+    document.getElementById('ow-t').innerHTML = t;
+    ob.forEach(b => b.classList.toggle('on', b.dataset.o === m));
+  }
+  ob.forEach(b => b.onclick = () => ow(b.dataset.o)); ow('ok');
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

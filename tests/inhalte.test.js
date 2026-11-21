@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 16 Themen, 153 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 17 Themen, 166 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
-  assert.strictEqual(r.themen.length, 16);
-  assert.strictEqual(r.fragen.length, 153);
+  assert.strictEqual(r.themen.length, 17);
+  assert.strictEqual(r.fragen.length, 166);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
@@ -102,7 +102,7 @@ test('Echte Inhaltsdatei: Präsentationen zu Spannung, Strom und Widerstand sind
 test('Echte Inhaltsdatei: Präsentationen zu Sensoren, Aktoren und EVA-Prinzip sind verlinkt und vorhanden', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
   const t = r.themen.find(x => x.name === 'Sensoren, Aktoren und EVA-Prinzip');
-  assert.strictEqual(t.bereich, 'Fahrzeugelektronik');
+  assert.strictEqual(t.bereich, 'Bordnetz');
   assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['EVA-Prinzip', 'Sensoren', 'Aktoren']);
   t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
   ['eva', 'sensoren', 'aktoren'].forEach(n => {
@@ -227,10 +227,24 @@ test('Echte Inhaltsdatei: Hochvolt im Kfz mit Präsentationen und Videos', async
 test('Echte Inhaltsdatei: Datenbus-Systeme mit Präsentationen und Videos', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
   const t = r.themen.find(x => x.name === 'Datenbus-Systeme');
-  assert.strictEqual(t.bereich, 'Fahrzeugelektronik');
+  assert.strictEqual(t.bereich, 'Bordnetz');
   assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Grundlagen der Vernetzung', 'CAN-Bus', 'LIN, FlexRay, MOST, Ethernet', 'Diagnose am Datenbus']);
   t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
   ['bus-grundlagen', 'bus-can', 'bus-systeme', 'bus-diagnose'].forEach(n => {
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
+  });
+});
+
+test('Echte Inhaltsdatei: Bordnetz mit Präsentationen und Videos, ab 2. Lehrjahr', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  const t = r.themen.find(x => x.name === 'Bordnetz');
+  assert.strictEqual(t.bereich, 'Bordnetz');
+  assert.strictEqual(t.lehrjahr, 2);
+  assert.strictEqual(r.fragen.filter(f => f.thema === 'Bordnetz').length, 13);
+  assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Aufbau des Bordnetzes', 'Stromlaufplan und Fehlersuche', 'Starterbatterie', 'Generator', 'Starter']);
+  t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
+  ['bn-aufbau', 'bn-stromlaufplan', 'bn-batterie', 'bn-generator', 'bn-starter'].forEach(n => {
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
   });

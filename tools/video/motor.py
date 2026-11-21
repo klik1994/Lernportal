@@ -2032,3 +2032,182 @@ VIDEOS_MOTOR.update({
     'bus-diagnose': (TEA, [(title_scene('?', 'Diagnose am Datenbus', 'Oszilloskop, 60 Ω, Ruhestrom', TEA, kicker=KICK10), 5.0),
                            (vd_fehler, 12.0), (VD_RUHE, 9.0), (VD_MERKE, 7.5)]),
 })
+
+
+# ================================================================ BORDNETZ
+KICK11 = 'BORDNETZ  ·  LERNVIDEO'
+BN_PH = [
+    ('Motor aus', [('Batterie', ''), ('Sicherungen', ''), ('Verbraucher', 'Radio, Standlicht')], 'Motor aus: Nur die Batterie liefert Strom'),
+    ('Motor startet', [('Batterie', ''), ('Klemme 30', 'dicke Leitung'), ('Starter', 'einige 100 A')], 'Beim Start: sehr großer Strom zum Starter'),
+    ('Motor läuft', [('Generator', 'ca. 14 V'), ('Verbraucher', 'alle'), ('Batterie', 'wird geladen')], 'Motor läuft: Generator versorgt alles und lädt die Batterie'),
+]
+
+
+def bn_fluss(d, t, dur):
+    ph = min(2, int(t // 4))
+    tt = t - ph * 4
+    header(d, t, 'BORDNETZ', 'Wer liefert den Strom? – ' + BN_PH[ph][0], YEL)
+    a = pr(tt, 0, 0.4) * (1 - pr(tt, 3.7, 4.0)) if ph < 2 else pr(tt, 0, 0.4)
+    for i, (lab, _, _) in enumerate(BN_PH):
+        x = 290 + i * 240
+        on = i == ph
+        rrect(d, (x, 120, x + 220, 166), 23, YEL if on else CARD, 1)
+        text(d, x + 110, 143, lab, 22, 'Bold', BG if on else MUTED, 1, 'mm', bg=YEL if on else CARD)
+    if a > 0.01:
+        kette_boxes(d, tt, BN_PH[ph][1], 260, 140, YEL, a_start=0.2, step=0.4)
+    caption(d, t, [(i * 4 + 0.3, i * 4 + 3.9 if i < 2 else dur, BN_PH[i][2]) for i in range(3)], YEL, y=520)
+
+
+BN_KL = values_scene('BORDNETZ', YEL, [], [
+    ('30', 'Dauerplus – direkt von der Batterie'), ('15', 'Zündungsplus – bei Zündung an'),
+    ('31', 'Masse – Rückleitung zum Minuspol'), ('50', 'Starter – nur beim Starten')],
+    note='Klemmenbezeichnungen nach DIN 72552', title='Die wichtigsten Klemmen', vsize=40)
+BN_MERKE1 = merke_scene('BORDNETZ', YEL, ['Motor aus: Batterie versorgt\nMotor läuft: Generator versorgt und lädt', '30 · 15 · 31 · 50',
+                                          'Sicherung schützt die Leitung', 'Relais: kleiner Strom schaltet großen'])
+
+
+def bn_mess(d, t, dur):
+    fehler = t > 6.5
+    header(d, t, 'STROMLAUFPLAN', 'Messen gegen Masse – ' + ('Masse unterbrochen' if fehler else 'in Ordnung'), ROY)
+    a = pr(t, 0.2, 0.8)
+    line(d, [(160, 130), (720, 130)], RED, 6, a); text(d, 130, 130, '30', 26, 'XB', RED, a, 'mm')
+    line(d, [(160, 520), (720, 520)], BLU, 6, a); text(d, 130, 520, '31', 26, 'XB', BLU, a, 'mm')
+    line(d, [(300, 130), (300, 200)], RED, 5, a)
+    rrect(d, (285, 200, 315, 260), 5, CARD, a, outline=TXT, width=3); text(d, 335, 230, 'F1', 22, 'Bold', TXT, a, 'lm')
+    line(d, [(300, 260), (300, 330), (480, 330)], RED, 5, a)
+    lamp(d, (520, 330), 38, 0 if fehler else 1, a)
+    line(d, [(558, 330), (620, 330), (620, 520 if not fehler else 430)], BLU, 5, a)
+    if fehler:
+        line(d, [(620, 470), (620, 520)], BLU, 5, a)
+        line(d, [(600, 440), (640, 460)], YEL, 5, a); line(d, [(640, 440), (600, 460)], YEL, 5, a)
+    for (x, y, v_ok, v_f, lab) in [(420, 330, '12,3 V', '12,5 V', 'P4'), (620, 380, '0,1 V', '12,5 V', 'P5')]:
+        k = pr(t, 1.5 if lab == 'P4' else 3, 2.1 if lab == 'P4' else 3.6)
+        circle(d, (x, y), 14, YEL, k)
+        v = v_f if fehler else v_ok
+        rrect(d, (x + 30, y - 66, x + 200, y - 22), 12, CARD2, k)
+        text(d, x + 115, y - 44, lab + ': ' + v, 24, 'XB', YEL if not (fehler and lab == 'P5') else RED, k, 'mm', bg=CARD2)
+    caption(d, t, [(0.6, 6.2, 'In Ordnung: auf der Masseseite fast 0 V'), (6.8, dur, 'Auf beiden Seiten 12,5 V –\ndie Masse ist unterbrochen')], ROY, y=600)
+
+
+BN_FS = values_scene('STROMLAUFPLAN', ROY, [], [
+    ('1', 'Stromlaufplan für genau dieses Fahrzeug'), ('2', 'Sicherung und Sichtprüfung'),
+    ('3', 'Spannung von Plus Richtung Verbraucher'), ('4', 'Masse und Spannungsfall unter Last')],
+    title='Fehlersuche Schritt für Schritt', vsize=40)
+BN_MERKE2 = merke_scene('STROMLAUFPLAN', ROY, ['Oben Plus, unten Masse', 'Wo die Spannung fehlt, liegt der Fehler davor',
+                                               'Spannung auf der Masseseite = Masse fehlt', 'Spannungsfall immer unter Last'])
+
+
+def bn_zellen(d, t, dur):
+    header(d, t, 'BATTERIE', '6 Zellen in Reihe', GRN)
+    n = min(6, int(clamp((t - 0.8) / 1.0, 0, 6.99)) + (1 if t > 0.8 else 0))
+    n = min(n, 6)
+    a = pr(t, 0.2, 0.8)
+    rrect(d, (130, 150, 1010, 450), 20, CARD, a, outline=MUTED, width=3)
+    rrect(d, (160, 122, 220, 152), 6, BLU, a); rrect(d, (920, 122, 980, 152), 6, RED, a)
+    for i in range(6):
+        x = 150 + i * 143
+        k = 1 if i < n else 0.2
+        rrect(d, (x, 170, x + 130, 430), 12, CARD2, a * k, bg=CARD)
+        for j in range(5):
+            rrect(d, (x + 16 + j * 21, 200, x + 28 + j * 21, 360), 3, RED if j % 2 == 0 else BLU, a * k * 0.85, bg=CARD2)
+        text(d, x + 65, 400, '2,1 V', 24, 'XB', TXT, a * k, 'mm', bg=CARD2)
+    rrect(d, (1040, 250, 1220, 350), 18, CARD2, a)
+    text(d, 1130, 300, (f'{n * 2.1:.1f}'.replace('.', ',') + ' V') if n else '0 V', 40, 'XB', GRN, a, 'mm', bg=CARD2)
+    caption(d, t, [(0.6, 6.5, 'Jede Zelle liefert ca. 2,1 V'), (6.8, dur, '6 Zellen in Reihe ergeben ca. 12,6 V')], GRN, y=560)
+
+
+BN_LZ = values_scene('BATTERIE', GRN, [], [
+    ('12,7 V', 'ca. 100 % – voll'), ('12,5 V', 'ca. 75 %'), ('12,3 V', 'ca. 50 % – nachladen'), ('12,1 V', 'ca. 25 % – sofort laden')],
+    note='Ruhespannung nach einigen Stunden Ruhe – Richtwerte', title='Ladezustand über die Ruhespannung', vsize=34)
+BN_MERKE3 = merke_scene('BATTERIE', GRN, ['6 Zellen × 2,1 V = 12,6 V', 'Standard, EFB, AGM', 'Ruhespannung zeigt den Ladezustand',
+                                          'Abklemmen: Minus zuerst'])
+
+
+def bn_wellen(d, t, dur):
+    gl = t > 5.5
+    header(d, t, 'GENERATOR', 'Gleichrichter: aus Drehstrom wird Gleichspannung' if gl else 'Drehstrom im Ständer', ORA)
+    a = pr(t, 0.2, 0.8)
+    x0, y0, w, h = 140, 120, 1000, 360
+    rrect(d, (x0 - 20, y0 - 20, x0 + w + 20, y0 + h + 20), 16, CARD, a)
+    cols = [RED, YEL, BLU]
+    prog = clamp((t - 0.6) / 3)
+    for k in range(3):
+        ph = lambda x, k=k: math.sin(x * 2 * math.pi * 3 - k * 2 * math.pi / 3)
+        if not gl:
+            trace(d, x0, y0, w * prog, h, lambda x, ph=ph: 0.5 + 0.42 * ph(x * prog), cols[k], a, bg=CARD)
+        else:
+            trace(d, x0, y0, w, h, lambda x, ph=ph: 0.1 + 0.75 * abs(ph(x)), mix(cols[k], 0.35, CARD), a, bg=CARD)
+    if gl:
+        g = clamp((t - 5.8) / 2)
+        trace(d, x0, y0, w * g, h, lambda x: 0.1 + 0.75 * max(abs(math.sin(x * g * 6 * math.pi - k * 2 * math.pi / 3)) for k in range(3)), GRN, a, bg=CARD)
+    caption(d, t, [(0.6, 5.2, 'Drei Wicklungen – drei versetzte Wechselspannungen'), (5.7, dur, 'Dioden machen daraus Gleichspannung (grün)')], ORA, y=580)
+
+
+BN_GW = values_scene('GENERATOR', ORA, [], [
+    ('ca. 14 V', 'Ladespannung – Richtwert laut Hersteller'), ('Regler', 'verändert den Erregerstrom'),
+    ('B+', 'führt immer Batteriespannung'), ('Oszi', 'Welligkeit zeigt defekte Dioden')],
+    title='Regler, Werte und Prüfen', vsize=34)
+BN_MERKE4 = merke_scene('GENERATOR', ORA, ['Versorgt Verbraucher und lädt die Batterie', 'Drehstrom → Gleichrichter → Gleichspannung',
+                                           'Regler hält ca. 14 V', 'B+ führt immer Spannung'])
+
+
+def bn_start(d, t, dur):
+    header(d, t, 'STARTER', 'Der Startvorgang', PUR)
+    a = pr(t, 0.2, 0.8)
+    s50 = 1.2 < t < 10.5
+    ein = clamp((t - 2.0) / 0.8) * (1 - clamp((t - 10.5) / 0.6))
+    hk = t > 3.0 and t < 10.5
+    rrect(d, (80, 120, 230, 190), 12, CARD, a, outline=TXT, width=3); text(d, 155, 155, 'Batterie', 24, 'Bold', TXT, a, 'mm', bg=CARD)
+    rrect(d, (80, 330, 230, 390), 12, CARD, a, outline=TXT, width=3); text(d, 155, 360, 'Zündschloss', 22, 'Bold', TXT, a, 'mm', bg=CARD)
+    p30 = Path([(210, 120), (210, 96), (760, 96), (760, 150)])
+    p30b = Path([(760, 220), (760, 270), (620, 270), (620, 330)])
+    p50 = Path([(230, 360), (420, 360), (420, 220)])
+    line(d, p30.pts, RED, 10, a); line(d, p30b.pts, RED, 10, a); line(d, p50.pts, RED, 4, a)
+    text(d, 470, 76, 'Klemme 30', 22, 'Bold', RED, a, 'mm'); text(d, 320, 340, 'Klemme 50', 22, 'Bold', RED, a, 'mm')
+    rrect(d, (380, 150, 800, 220), 14, CARD, a, outline=TXT, width=3)
+    text(d, 590, 136, 'MAGNETSCHALTER', 16, 'Bold', MUTED, a, 'mm')
+    ax = 600 - 60 * ein
+    rrect(d, (ax, 168, ax + 140, 202), 6, MUTED, a, bg=CARD)
+    circle(d, (760, 150), 7, TXT, a); circle(d, (760, 220), 7, TXT, a)
+    line(d, [(760, 150), (760, 220) if hk else (790, 200)], TXT, 6, a)
+    circle(d, (620, 400), 60, CARD, a, outline=TXT, width=4)
+    ang = (t * 9 if hk else 0)
+    for k in range(2):
+        aa = ang + k * math.pi / 2
+        line(d, [(620 - 50 * math.cos(aa), 400 - 50 * math.sin(aa)), (620 + 50 * math.cos(aa), 400 + 50 * math.sin(aa))], TXT, 4, a, bg=CARD)
+    line(d, [(680, 400), (900, 400)], MUTED, 10, a)
+    rx = 800 + 78 * ein
+    rrect(d, (rx, 368, rx + 44, 432), 6, YEL, a)
+    za = (t * 2 if hk else 0) + (t * 5 if t > 7 else 0)
+    for i in range(24):
+        aa = za + i * math.pi / 12
+        line(d, [(1010 + 70 * math.cos(aa), 400 + 70 * math.sin(aa)), (1010 + 86 * math.cos(aa), 400 + 86 * math.sin(aa))], MUTED, 7, a)
+    circle(d, (1010, 400), 66, CARD2, a)
+    text(d, 1010, 510, 'Zahnkranz', 20, 'Bold', MUTED, a, 'mm'); text(d, rx + 22, 460, 'Ritzel', 20, 'Bold', YEL, a, 'mm')
+    if s50:
+        flow_dots(d, p50, t, 60, 34, 5, YEL, a)
+    if hk:
+        flow_dots(d, p30, t, 160, 22, 8, YEL, a); flow_dots(d, p30b, t, 160, 22, 8, YEL, a)
+    caption(d, t, [(0.6, 2.9, 'Schlüssel auf Start: Klemme 50 steuert den Magnetschalter'), (3.0, 6.9, 'Ritzel spurt ein, Hauptkontakt schließt:\ngroßer Strom über Klemme 30'),
+                   (7.0, 10.4, 'Motor springt an – der Freilauf schützt den Starter'), (10.5, dur, 'Schlüssel los: Ritzel spurt aus')], PUR, y=600)
+
+
+BN_SF = values_scene('STARTER', PUR, [], [
+    ('Nichts', 'Batterie und Klemme 50 prüfen'), ('Klickt nur', 'Spannungsfall an 30 und Masse'),
+    ('Zu langsam', 'Batterie, Übergangswiderstände'), ('Läuft weiter', 'sofort Batterie abklemmen')],
+    title='Fehlerbilder', vsize=32)
+BN_MERKE5 = merke_scene('STARTER', PUR, ['Magnetschalter: einspuren und Strom schalten', 'Freilauf schützt beim Anspringen',
+                                         '30 dick · 50 Steuerleitung · 31 Masse', 'Erst Batterie, dann Spannungsfall'])
+
+VIDEOS_MOTOR.update({
+    'bn-aufbau': (YEL, [(title_scene('30', 'Aufbau des Bordnetzes', 'Batterie, Generator, Klemmen', YEL, size=80, kicker=KICK11), 5.0),
+                        (bn_fluss, 12.0), (BN_KL, 9.0), (BN_MERKE1, 7.5)]),
+    'bn-stromlaufplan': (ROY, [(title_scene('F1', 'Stromlaufplan und Fehlersuche', 'Messen gegen Masse', ROY, size=80, kicker=KICK11), 5.0),
+                               (bn_mess, 13.0), (BN_FS, 9.0), (BN_MERKE2, 7.5)]),
+    'bn-batterie': (GRN, [(title_scene('12V', 'Die Starterbatterie', 'Aufbau und Ladezustand', GRN, size=64, kicker=KICK11), 5.0),
+                          (bn_zellen, 10.0), (BN_LZ, 9.0), (BN_MERKE3, 7.5)]),
+    'bn-generator': (ORA, [(title_scene('G', 'Der Generator', 'Drehstrom, Gleichrichter, Regler', ORA, kicker=KICK11), 5.0),
+                           (bn_wellen, 11.0), (BN_GW, 9.0), (BN_MERKE4, 7.5)]),
+    'bn-starter': (PUR, [(title_scene('50', 'Der Starter', 'Startvorgang und Fehlerbilder', PUR, size=90, kicker=KICK11), 5.0),
+                         (bn_start, 13.0), (BN_SF, 9.0), (BN_MERKE5, 7.5)]),
+})

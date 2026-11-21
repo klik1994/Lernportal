@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Stromlaufplan und Fehlersuche – Bordnetz</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  .kl { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .kl .card { margin: 0; text-align: center; transition: opacity .3s, box-shadow .3s; }
+  .kl .card b { display: block; font-size: 34px; font-weight: 900; }
+  .kl .card span { font-size: 15px; font-weight: 700; color: var(--muted); }
+  .kl .card.an { box-shadow: 0 0 0 3px var(--c); }
+  .kl .card.aus { opacity: .35; }
+  .fz { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .fz span { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 15px; background: var(--card2); border-radius: 10px; padding: 6px 10px; }
+  .fz i { width: 22px; height: 28px; border-radius: 4px; display: inline-block; border: 2px solid rgba(0,0,0,.25); }
+  .mp { cursor: pointer; }
+  html.light svg text[fill="#ffd34d"] { fill: #8a6400; }
+  html.light .mp circle[stroke="#ffd34d"] { stroke: #c79400; }
+  @media (max-width: 820px), (max-height: 520px) { .kl .card b { font-size: 26px; } .zz { grid-template-columns: repeat(2, 1fr) !important; } .zz svg { max-width: 72px !important; margin: 0 auto; } .val b { font-size: 14px; hyphens: auto; overflow-wrap: anywhere; } }
+</style>
+</head>
+<body class="t-bn2">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">BORDNETZ</div>
+  <div class="symbol" style="font-size:56px">F1·K1</div>
+  <h1>Stromlaufplan und Fehlersuche</h1>
+  <p>Pläne lesen und Fehler gezielt finden</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">STROMLAUFPLAN</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Wie ein Stromlaufplan aufgebaut ist</li>
+      <li class="step from-left"><span class="num">2</span>Was Schaltzeichen und Kennbuchstaben bedeuten</li>
+      <li class="step from-left"><span class="num">3</span>Wie du entlang des Stromwegs misst</li>
+      <li class="step from-left"><span class="num">4</span>Wie du Unterbrechung, Masse- und Übergangsfehler findest</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STROMLAUFPLAN</span><h2>So ist ein Stromlaufplan aufgebaut</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:center;grid-template-columns:1.1fr 1fr">
+      <svg viewBox="0 0 520 330" width="520" height="330" style="display:block;margin:0 auto;max-width:100%;height:auto">
+      <line x1="30" y1="40" x2="500" y2="40" stroke="#f05e4e" stroke-width="5"/><text x="8" y="46" font-size="18" font-weight="900" fill="#f05e4e">30</text>
+      <line x1="30" y1="76" x2="500" y2="76" stroke="#f05e4e" stroke-width="5"/><text x="8" y="82" font-size="18" font-weight="900" fill="#f05e4e">15</text>
+      <line x1="30" y1="282" x2="500" y2="282" stroke="#28aaf5" stroke-width="5"/><text x="8" y="288" font-size="18" font-weight="900" fill="#28aaf5">31</text>
+      <line x1="120" y1="40" x2="120" y2="96" stroke="#ecf1f8" stroke-width="3"/>
+      <rect x="110" y="96" width="20" height="40" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/><line x1="120" y1="96" x2="120" y2="136" stroke="#ecf1f8" stroke-width="2"/>
+      <text x="138" y="122" font-size="16" font-weight="900" fill="#ecf1f8">F1</text>
+      <line x1="120" y1="136" x2="120" y2="170" stroke="#ecf1f8" stroke-width="3"/>
+      <circle cx="120" cy="172" r="4" fill="#ecf1f8"/><line x1="120" y1="172" x2="140" y2="204" stroke="#ecf1f8" stroke-width="3"/><circle cx="120" cy="210" r="4" fill="#ecf1f8"/>
+      <text x="146" y="196" font-size="16" font-weight="900" fill="#ecf1f8">S1</text>
+      <line x1="120" y1="210" x2="120" y2="226" stroke="#ecf1f8" stroke-width="3"/>
+      <circle cx="120" cy="246" r="18" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/>
+      <line x1="107" y1="233" x2="133" y2="259" stroke="#ecf1f8" stroke-width="2"/><line x1="133" y1="233" x2="107" y2="259" stroke="#ecf1f8" stroke-width="2"/>
+      <text x="146" y="252" font-size="16" font-weight="900" fill="#ecf1f8">E1</text>
+      <line x1="120" y1="264" x2="120" y2="282" stroke="#ecf1f8" stroke-width="3"/>
+      <line x1="330" y1="76" x2="330" y2="130" stroke="#ecf1f8" stroke-width="3"/>
+      <rect x="310" y="130" width="40" height="60" rx="4" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/><line x1="310" y1="190" x2="350" y2="130" stroke="#ecf1f8" stroke-width="2"/>
+      <text x="358" y="166" font-size="16" font-weight="900" fill="#ecf1f8">K1</text>
+      <line x1="330" y1="190" x2="330" y2="282" stroke="#ecf1f8" stroke-width="3"/>
+      <line x1="440" y1="40" x2="440" y2="150" stroke="#ecf1f8" stroke-width="3"/>
+      <circle cx="440" cy="152" r="4" fill="#ecf1f8"/><line x1="440" y1="152" x2="462" y2="184" stroke="#ecf1f8" stroke-width="3"/><circle cx="440" cy="190" r="4" fill="#ecf1f8"/>
+      <line x1="354" y1="168" x2="436" y2="168" stroke="#94a4ba" stroke-width="2" stroke-dasharray="5 5"/>
+      <line x1="440" y1="190" x2="440" y2="214" stroke="#ecf1f8" stroke-width="3"/>
+      <circle cx="440" cy="236" r="22" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/><text x="440" y="243" text-anchor="middle" font-size="20" font-weight="900" fill="#ecf1f8">M</text>
+      <text x="470" y="242" font-size="16" font-weight="900" fill="#ecf1f8">M1</text>
+      <line x1="440" y1="258" x2="440" y2="282" stroke="#ecf1f8" stroke-width="3"/>
+      <text x="200" y="232" font-size="13" font-weight="800" fill="#94a4ba">1,0 gr/sw</text>
+      <text x="120" y="318" text-anchor="middle" font-size="16" font-weight="900" fill="#94a4ba">1</text>
+      <text x="330" y="318" text-anchor="middle" font-size="16" font-weight="900" fill="#94a4ba">2</text>
+      <text x="440" y="318" text-anchor="middle" font-size="16" font-weight="900" fill="#94a4ba">3</text>
+      <line x1="30" y1="298" x2="500" y2="298" stroke="#94a4ba" stroke-width="1"/>
+    </svg>
+      <ol class="steps-list">
+        <li class="step">Oben Plus, unten Masse<small>oben Klemme 30 und 15, unten Klemme 31</small></li>
+        <li class="step">Strompfade senkrecht<small>von oben (Plus) nach unten (Masse) – unten stehen die Strompfad-Nummern</small></li>
+        <li class="step">Ruhestellung<small>Schalter und Relais sind so gezeichnet, wie sie bei Zündung aus stehen</small></li>
+        <li class="step">Leitungen beschriftet<small>z. B. „1,0 gr/sw“ = 1,0 mm², grau mit schwarzem Streifen</small></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STROMLAUFPLAN</span><h2>Schaltzeichen und Kennbuchstaben</h2>
+  <div class="body">
+    <div class="zz" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+      <div class="card step" style="margin:0;text-align:center"><svg viewBox="0 0 80 60" width="80" height="60"><line x1="10" y1="30" x2="32" y2="30" stroke="#ecf1f8" stroke-width="3"/><line x1="32" y1="14" x2="32" y2="46" stroke="#ecf1f8" stroke-width="4"/><line x1="42" y1="22" x2="42" y2="38" stroke="#ecf1f8" stroke-width="8"/><line x1="42" y1="30" x2="70" y2="30" stroke="#ecf1f8" stroke-width="3"/></svg><div style="font-weight:800">Batterie</div><div class="muted" style="font-size:14px">z. B. G1</div></div>
+      <div class="card step" style="margin:0;text-align:center"><svg viewBox="0 0 80 60" width="80" height="60"><line x1="5" y1="30" x2="20" y2="30" stroke="#ecf1f8" stroke-width="3"/><rect x="20" y="20" width="40" height="20" rx="3" fill="none" stroke="#ecf1f8" stroke-width="3"/><line x1="20" y1="30" x2="60" y2="30" stroke="#ecf1f8" stroke-width="2"/><line x1="60" y1="30" x2="75" y2="30" stroke="#ecf1f8" stroke-width="3"/></svg><div style="font-weight:800">Sicherung</div><div class="muted" style="font-size:14px">z. B. F1</div></div>
+      <div class="card step" style="margin:0;text-align:center"><svg viewBox="0 0 80 60" width="80" height="60"><line x1="5" y1="40" x2="22" y2="40" stroke="#ecf1f8" stroke-width="3"/><line x1="22" y1="40" x2="55" y2="20" stroke="#ecf1f8" stroke-width="3"/><line x1="58" y1="40" x2="75" y2="40" stroke="#ecf1f8" stroke-width="3"/><circle cx="22" cy="40" r="3" fill="#ecf1f8"/></svg><div style="font-weight:800">Schalter</div><div class="muted" style="font-size:14px">z. B. S1</div></div>
+      <div class="card step" style="margin:0;text-align:center"><svg viewBox="0 0 80 60" width="80" height="60"><rect x="25" y="10" width="30" height="40" rx="3" fill="none" stroke="#ecf1f8" stroke-width="3"/><line x1="25" y1="50" x2="55" y2="10" stroke="#ecf1f8" stroke-width="2"/></svg><div style="font-weight:800">Relais (Spule)</div><div class="muted" style="font-size:14px">z. B. K1</div></div>
+      <div class="card step" style="margin:0;text-align:center"><svg viewBox="0 0 80 60" width="80" height="60"><circle cx="40" cy="30" r="17" fill="none" stroke="#ecf1f8" stroke-width="3"/><line x1="28" y1="18" x2="52" y2="42" stroke="#ecf1f8" stroke-width="2"/><line x1="52" y1="18" x2="28" y2="42" stroke="#ecf1f8" stroke-width="2"/></svg><div style="font-weight:800">Lampe</div><div class="muted" style="font-size:14px">z. B. E1</div></div>
+      <div class="card step" style="margin:0;text-align:center"><svg viewBox="0 0 80 60" width="80" height="60"><circle cx="40" cy="30" r="18" fill="none" stroke="#ecf1f8" stroke-width="3"/><text x="40" y="38" text-anchor="middle" font-size="20" font-weight="900" fill="#ecf1f8">M</text></svg><div style="font-weight:800">Motor</div><div class="muted" style="font-size:14px">z. B. M1</div></div>
+      <div class="card step" style="margin:0;text-align:center"><svg viewBox="0 0 80 60" width="80" height="60"><line x1="5" y1="30" x2="22" y2="30" stroke="#ecf1f8" stroke-width="3"/><rect x="22" y="22" width="36" height="16" fill="none" stroke="#ecf1f8" stroke-width="3"/><line x1="58" y1="30" x2="75" y2="30" stroke="#ecf1f8" stroke-width="3"/></svg><div style="font-weight:800">Widerstand</div><div class="muted" style="font-size:14px">z. B. R1</div></div>
+      <div class="card step" style="margin:0;text-align:center"><svg viewBox="0 0 80 60" width="80" height="60"><line x1="40" y1="14" x2="40" y2="24" stroke="#28aaf5" stroke-width="4"/><line x1="23.0" y1="24" x2="57.0" y2="24" stroke="#28aaf5" stroke-width="4"/><line x1="28.666666666666664" y1="30" x2="51.333333333333336" y2="30" stroke="#28aaf5" stroke-width="4"/><line x1="34.333333333333336" y1="36" x2="45.666666666666664" y2="36" stroke="#28aaf5" stroke-width="4"/></svg><div style="font-weight:800">Masse</div><div class="muted" style="font-size:14px">z. B. Klemme 31</div></div>
+    </div>
+    <div class="note step" style="margin-top:12px">Kennbuchstaben nach DIN. Viele Hersteller verwenden eigene Buchstaben (z. B. VW: S = Sicherung, J = Steuergerät oder Relais). Immer die Legende des Stromlaufplans lesen.</div>
+  </div>
+</section>
+
+<section class="slide" id="s-ms">
+  <span class="tag">STROMLAUFPLAN</span><h2>Messen im Stromkreis – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:8px;flex-wrap:wrap;gap:6px" id="ms-fb"><button class="btn ghost on" data-f="ok">In Ordnung</button><button class="btn ghost" data-f="sich">Sicherung defekt</button><button class="btn ghost" data-f="leit">Leitung unterbrochen</button><button class="btn ghost" data-f="lampe">Lampe defekt</button><button class="btn ghost" data-f="mu">Masse unterbrochen</button><button class="btn ghost" data-f="mk">Masse korrodiert</button><button class="btn" data-f="zufall" style="--c:var(--yel)">? Zufallsfehler</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1fr 1fr">
+      <svg viewBox="0 0 460 400" width="460" height="400" style="display:block;margin:0 auto;max-width:100%;height:auto" id="ms-svg">
+      <line x1="40" y1="40" x2="440" y2="40" stroke="#f05e4e" stroke-width="5"/><text x="46" y="30" font-size="16" font-weight="900" fill="#f05e4e">30</text>
+      <line x1="40" y1="372" x2="440" y2="372" stroke="#28aaf5" stroke-width="5"/><text x="46" y="394" font-size="16" font-weight="900" fill="#28aaf5">31</text>
+      <line x1="160" y1="40" x2="160" y2="90" stroke="#f05e4e" stroke-width="4"/>
+      <rect id="ms-f" x="148" y="90" width="24" height="44" rx="4" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/><line id="ms-fd" x1="160" y1="90" x2="160" y2="134" stroke="#ecf1f8" stroke-width="2"/>
+      <text x="184" y="118" font-size="16" font-weight="900" fill="#ecf1f8">F1 10 A</text>
+      <line x1="160" y1="134" x2="160" y2="180" stroke="#f05e4e" stroke-width="4"/>
+      <circle cx="160" cy="182" r="4" fill="#ecf1f8"/><line x1="160" y1="182" x2="160" y2="214" stroke="#ecf1f8" stroke-width="4"/><circle cx="160" cy="214" r="4" fill="#ecf1f8"/>
+      <text x="184" y="204" font-size="16" font-weight="900" fill="#ecf1f8">S1 (ein)</text>
+      <path id="ms-l1" d="M160 214 V236 H304" fill="none" stroke="#f05e4e" stroke-width="4"/>
+      <g id="ms-bruch" style="display:none"><line x1="204" y1="226" x2="218" y2="246" stroke="#ffd34d" stroke-width="4"/><line x1="218" y1="226" x2="204" y2="246" stroke="#ffd34d" stroke-width="4"/></g>
+      <circle id="ms-lampe" cx="330" cy="236" r="26" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+      <line id="ms-w1" x1="312" y1="218" x2="348" y2="254" stroke="#ecf1f8" stroke-width="3"/><line id="ms-w2" x1="348" y1="218" x2="312" y2="254" stroke="#ecf1f8" stroke-width="3"/>
+      <text x="330" y="200" text-anchor="middle" font-size="16" font-weight="900" fill="#ecf1f8">E1</text>
+      <path d="M356 236 H380 V372" fill="none" stroke="#28aaf5" stroke-width="4"/>
+      <g id="ms-masse" style="display:none"><circle cx="380" cy="345" r="14" fill="none" stroke="#ffd34d" stroke-width="4"/></g>
+      <g class="mp" data-p="0"><circle cx="160" cy="64" r="15" fill="#213552" stroke="#ffd34d" stroke-width="3"/><text x="136" y="70" text-anchor="end" font-size="16" font-weight="900" fill="#ffd34d">P1</text></g><g class="mp" data-p="1"><circle cx="160" cy="156" r="15" fill="#213552" stroke="#ffd34d" stroke-width="3"/><text x="136" y="162" text-anchor="end" font-size="16" font-weight="900" fill="#ffd34d">P2</text></g><g class="mp" data-p="2"><circle cx="160" cy="236" r="15" fill="#213552" stroke="#ffd34d" stroke-width="3"/><text x="136" y="242" text-anchor="end" font-size="16" font-weight="900" fill="#ffd34d">P3</text></g><g class="mp" data-p="3"><circle cx="262" cy="236" r="15" fill="#213552" stroke="#ffd34d" stroke-width="3"/><text x="262" y="212" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">P4</text></g><g class="mp" data-p="4"><circle cx="380" cy="310" r="15" fill="#213552" stroke="#ffd34d" stroke-width="3"/><text x="356" y="316" text-anchor="end" font-size="16" font-weight="900" fill="#ffd34d">P5</text></g>
+      <text x="392" y="280" font-size="13" font-weight="800" fill="#94a4ba">Masse-</text><text x="392" y="296" font-size="13" font-weight="800" fill="#94a4ba">seite</text>
+    </svg>
+      <div>
+        <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">MULTIMETER (SCHWARZ AN MASSE)</div><div class="lcd2" id="ms-v" style="font-size:34px;margin-top:4px">–</div><div class="muted" id="ms-p" style="font-size:15px;font-weight:700">Tippe auf einen Messpunkt P1 … P5</div></div>
+        <div class="card" id="ms-t" style="font-size:16px;font-weight:600;line-height:1.5;margin-top:10px"></div>
+      </div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">Schalter S1 ist eingeschaltet. Gemessen wird gegen Masse. Beispielwerte.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STROMLAUFPLAN</span><h2>Fehlersuche Schritt für Schritt</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Beanstandung prüfen<small>Was genau geht nicht? Immer, oder nur manchmal?</small></li>
+      <li class="step">Stromlaufplan für genau dieses Fahrzeug holen<small>Strompfad suchen: Sicherung, Schalter, Relais, Verbraucher, Masse</small></li>
+      <li class="step">Sicherung und Sichtprüfung<small>Stecker, Leitungen, Massepunkte ansehen</small></li>
+      <li class="step">Spannung messen – von Plus Richtung Verbraucher<small>wo die Spannung wegfällt, liegt die Unterbrechung davor</small></li>
+      <li class="step">Masse prüfen<small>liegt auf der Masseseite des Verbrauchers Spannung an, fehlt die Masse</small></li>
+      <li class="step">Reparieren und Funktion prüfen<small>danach Fehlerspeicher lesen und löschen</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide" id="s-sf">
+  <span class="tag">STROMLAUFPLAN</span><h2>Spannungsfall unter Last – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px"><button class="btn ghost on" data-l="0">Verbraucher aus</button><button class="btn ghost" data-l="1">Verbraucher ein</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.2fr 1fr">
+      <svg viewBox="0 0 520 240" width="520" height="240" style="display:block;margin:0 auto;max-width:100%;height:auto" id="sf-svg">
+      <rect x="20" y="90" width="90" height="60" rx="8" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/><text x="65" y="128" text-anchor="middle" font-size="18" font-weight="900" fill="#ecf1f8">12,5 V</text>
+      <rect x="92" y="80" width="14" height="10" fill="#f05e4e"/><rect x="24" y="80" width="14" height="10" fill="#28aaf5"/>
+      <path d="M99 80 V50 H400 V100" fill="none" stroke="#f05e4e" stroke-width="5"/>
+      <g><rect x="230" y="38" width="40" height="24" rx="4" fill="#ffd34d"/><text x="250" y="84" text-anchor="middle" font-size="13" font-weight="800" fill="#ffd34d">Übergangswiderstand</text></g>
+      <circle id="sf-l" cx="400" cy="124" r="24" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+      <line x1="383" y1="107" x2="417" y2="141" stroke="#ecf1f8" stroke-width="3"/><line x1="417" y1="107" x2="383" y2="141" stroke="#ecf1f8" stroke-width="3"/>
+      <path d="M400 148 V200 H8 V66 H31 V80" fill="none" stroke="#28aaf5" stroke-width="5"/>
+      <path id="sf-p" d="M99 80 V50 H400 V148 V200 H8 V66 H31 V80" fill="none" stroke="none"/>
+      <path d="M120 50 Q120 10 160 10 H360 Q400 10 400 40" fill="none" stroke="#94a4ba" stroke-width="2" stroke-dasharray="5 5"/>
+      <text x="260" y="226" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">Multimeter von Batterie-Plus bis Verbraucher-Plus (gestrichelt)</text>
+    </svg>
+      <div>
+        <div class="grid2" style="gap:10px"><div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">AM VERBRAUCHER</div><div class="lcd2" id="sf-u" style="font-size:26px">12,5 V</div></div>
+        <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">SPANNUNGSFALL LEITUNG</div><div class="lcd2" id="sf-d" style="font-size:26px">0,0 V</div></div></div>
+        <div class="card" id="sf-t" style="font-size:16px;font-weight:600;line-height:1.5;margin-top:10px"></div>
+      </div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">Beispielwerte. Zulässiger Spannungsfall: wenige Zehntel Volt – genauer Wert laut Hersteller.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STROMLAUFPLAN</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Richtiger Plan</b>Den Stromlaufplan genau für dieses Fahrzeug verwenden (Fahrgestellnummer, Ausstattung). Pläne ähnlicher Modelle können abweichen.</div>
+      <div class="tip step"><b>Stecker sind häufig schuld</b>Korrosion, aufgeweitete oder herausgerutschte Kontakte. Kontakte nur mit passendem Prüfkontakt prüfen.</div>
+      <div class="tip step"><b>Fehler nur manchmal?</b>Während der Messung an Leitungen und Steckern leicht wackeln (Wackeltest) – so findest du Wackelkontakte.</div>
+      <div class="warn step"><b>Messung ohne Last täuscht</b>Ein Übergangswiderstand fällt ohne Strom nicht auf. Darum Spannung und Spannungsfall immer mit eingeschaltetem Verbraucher messen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STROMLAUFPLAN</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/bn-stromlaufplan.mp4" poster="videos/bn-stromlaufplan.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STROMLAUFPLAN</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Was steht im Stromlaufplan oben?</p>
+      <div class="opts"><button class="opt">Masse (Klemme 31)</button><button class="opt">Plus (z. B. Klemme 30 und 15)</button><button class="opt">Die Strompfad-Nummern</button></div>
+      <div class="fb">Oben Plus, unten Masse – die Strompfade laufen von oben nach unten.</div></div>
+    <div class="q" data-correct="0"><p>2. Lampe aus. An beiden Anschlüssen der Lampe misst du 12,5 V gegen Masse. Was ist defekt?</p>
+      <div class="opts"><button class="opt">Die Masse der Lampe ist unterbrochen</button><button class="opt">Die Sicherung</button><button class="opt">Alles in Ordnung</button></div>
+      <div class="fb">Ohne Masse fließt kein Strom – die Spannung „steht“ auf beiden Seiten.</div></div>
+    <div class="q" data-correct="2"><p>3. Warum misst du den Spannungsfall unter Last?</p>
+      <div class="opts"><button class="opt">Weil das Multimeter sonst kaputt geht</button><button class="opt">Weil die Batterie sonst leer wird</button><button class="opt">Ohne Strom fällt ein Übergangswiderstand nicht auf</button></div>
+      <div class="fb">Erst wenn Strom fließt, fällt am Übergangswiderstand Spannung ab.</div></div>
+    <div class="q" data-correct="0"><p>4. Was bedeutet die Leitungsangabe „1,5 rt“?</p>
+      <div class="opts"><button class="opt">1,5 mm², rot</button><button class="opt">1,5 A, rot</button><button class="opt">1,5 m lang, rot</button></div>
+      <div class="fb">Querschnitt in mm² und Farbe.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">STROMLAUFPLAN</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Oben Plus, unten Masse<small>Strompfade von oben nach unten</small></span></li>
+        <li class="step"><span>Von Plus Richtung Verbraucher messen<small>wo die Spannung fehlt, liegt der Fehler davor</small></span></li>
+        <li class="step"><span>Spannung auf der Masseseite = Masse fehlt</span></li>
+        <li class="step"><span>Spannungsfall immer unter Last messen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Bordnetz" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script src="assets/schaltung.js"></script>
+<script>
+(function () {
+  const V = {
+    ok: [[12.5, 12.5, 12.4, 12.3, 0.1], 1, '<b class="grn">In Ordnung:</b> Die Spannung kommt bis zur Lampe an (P4 ca. 12,3 V), auf der Masseseite (P5) fast 0 V. Die Lampe leuchtet.'],
+    sich: [[12.5, 0, 0, 0, 0], 0, '<b class="red">Sicherung defekt:</b> Vor der Sicherung (P1) 12,5 V, dahinter (P2) 0 V. Ursache für das Durchbrennen suchen!'],
+    leit: [[12.5, 12.5, 12.5, 0, 0], 0, '<b class="red">Leitung unterbrochen:</b> Am Schalter (P3) noch 12,5 V, an der Lampe (P4) 0 V. Die Unterbrechung liegt zwischen P3 und P4.'],
+    lampe: [[12.5, 12.5, 12.5, 12.5, 0], 0, '<b class="red">Lampe defekt:</b> Vor der Lampe 12,5 V, dahinter 0 V – die Spannung „verschwindet“ in der Lampe. Glühfaden unterbrochen.'],
+    mu: [[12.5, 12.5, 12.5, 12.5, 12.5], 0, '<b class="red">Masse unterbrochen:</b> Auf beiden Seiten der Lampe 12,5 V! Es fließt kein Strom, darum fällt an der Lampe keine Spannung ab. Masseleitung und Massepunkt prüfen.'],
+    mk: [[12.5, 12.5, 12.4, 12.4, 4.2], 0.35, '<b class="ora">Masse korrodiert:</b> Die Lampe leuchtet schwach. Auf der Masseseite (P5) liegen 4,2 V statt fast 0 V – am Massepunkt fällt zu viel Spannung ab (Übergangswiderstand).']
+  };
+  const NAMEN = { ok: 'In Ordnung', sich: 'Sicherung defekt', leit: 'Leitung unterbrochen', lampe: 'Lampe defekt', mu: 'Masse unterbrochen', mk: 'Masse korrodiert' };
+  let f = 'ok', geheim = false, p = -1;
+  const fb = document.querySelectorAll('#ms-fb [data-f]');
+  const fmt = v => v.toFixed(1).replace('.', ',') + ' V';
+  function zeichne() {
+    const w = V[f], hell = w[1];
+    document.getElementById('ms-lampe').setAttribute('fill', hell ? (hell < 1 ? '#7a6a2a' : '#ffd34d') : '#18283f');
+    const zeig = !geheim;
+    document.getElementById('ms-bruch').style.display = zeig && f === 'leit' ? '' : 'none';
+    document.getElementById('ms-masse').style.display = zeig && (f === 'mu' || f === 'mk') ? '' : 'none';
+    document.getElementById('ms-fd').style.display = zeig && f === 'sich' ? 'none' : '';
+    document.getElementById('ms-w1').setAttribute('stroke-dasharray', zeig && f === 'lampe' ? '6 8' : '');
+    document.getElementById('ms-v').textContent = p < 0 ? '–' : fmt(w[0][p]);
+    document.getElementById('ms-p').textContent = p < 0 ? 'Tippe auf einen Messpunkt P1 … P5' : 'P' + (p + 1) + ' gegen Masse';
+    document.querySelectorAll('#ms-svg .mp circle').forEach((c, i) => c.setAttribute('fill', i === p ? '#ffd34d' : '#213552'));
+    document.getElementById('ms-t').innerHTML = geheim
+      ? '<b class="yel">Zufallsfehler:</b> Miss an den Punkten P1 bis P5. Wenn du weißt, was defekt ist, tippe oben auf deine Vermutung.'
+      : w[2];
+    fb.forEach(b => b.classList.toggle('on', !geheim && b.dataset.f === f));
+  }
+  fb.forEach(b => b.onclick = () => {
+    const n = b.dataset.f;
+    if (n === 'zufall') { const k = Object.keys(V).filter(x => x !== 'ok'); f = k[Math.floor(Math.random() * k.length)]; geheim = true; p = -1; zeichne(); return; }
+    if (geheim) {
+      if (n === f) { geheim = false; zeichne(); document.getElementById('ms-t').innerHTML = '<b class="grn">Richtig erkannt!</b> ' + V[f][2]; }
+      else document.getElementById('ms-t').innerHTML = '<b class="red">Noch nicht.</b> „' + NAMEN[n] + '“ passt nicht zu den Messwerten. Miss weiter und vergleiche.';
+      return;
+    }
+    f = n; zeichne();
+  });
+  document.querySelectorAll('#ms-svg .mp').forEach(g => g.onclick = () => { p = +g.dataset.p; zeichne(); const m = document.getElementById('ms-t'); if (geheim) return; });
+  zeichne();
+
+  const sv = document.getElementById('sf-svg');
+  const fl = Flow(sv, document.getElementById('sf-p'), { spacing: 26, speed: 50, r: 6, color: '#ffd34d' });
+  const lb = document.querySelectorAll('#s-sf [data-l]');
+  function l(i) {
+    fl.on(!!i);
+    document.getElementById('sf-l').setAttribute('fill', i ? '#a08a30' : '#18283f');
+    document.getElementById('sf-u').textContent = i ? '10,1 V' : '12,5 V';
+    document.getElementById('sf-d').textContent = i ? '2,4 V' : '0,0 V';
+    document.getElementById('sf-t').innerHTML = i
+      ? '<b class="red">Mit Last:</b> Jetzt fließt Strom. Am Übergangswiderstand fallen 2,4 V ab – am Verbraucher kommen nur 10,1 V an. Die Lampe leuchtet schwach. <span class="c">Jetzt ist der Fehler sichtbar.</span>'
+      : '<b>Ohne Last:</b> Es fließt kein Strom. Am Übergangswiderstand fällt keine Spannung ab – das Multimeter zeigt am Verbraucher volle 12,5 V. <span class="ora">Der Fehler bleibt unsichtbar!</span>';
+    lb.forEach(b => b.classList.toggle('on', +b.dataset.l === i));
+  }
+  lb.forEach(b => b.onclick = () => l(+b.dataset.l)); l(0);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>
