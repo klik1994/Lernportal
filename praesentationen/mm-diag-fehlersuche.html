@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Systematische Fehlersuche – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+</style>
+</head>
+<body class="t-mm6">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · DIAGNOSE</div>
+  <div class="symbol" style="font-size:120px">?</div>
+  <h1>Systematische Fehlersuche</h1>
+  <p>Schritt für Schritt statt Teile tauschen</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">FEHLERSUCHE</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>In welcher Reihenfolge du einen Fehler suchst</li>
+      <li class="step from-left"><span class="num">2</span>Warum das Kundengespräch so wichtig ist</li>
+      <li class="step from-left"><span class="num">3</span>Wie du an einem Sensor gezielt misst</li>
+      <li class="step from-left"><span class="num">4</span>Einen Fall Schritt für Schritt lösen</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">FEHLERSUCHE</span><h2>Der Weg zum Fehler</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Kundengespräch<small>Was genau? Wann – kalt, warm, bei Regen? Wie oft? Seit wann?</small></li>
+      <li class="step">Fehler nachvollziehen<small>Probefahrt unter den genannten Bedingungen</small></li>
+      <li class="step">Fehlerspeicher und Messwerte<small>speichern, Plausibilität prüfen</small></li>
+      <li class="step">Prüfplan des Herstellers<small>geführte Fehlersuche, Stromlaufplan, Sollwerte</small></li>
+      <li class="step">Gezielt messen<small>Spannungsversorgung, Masse, Signal – mit Prüfadapter</small></li>
+      <li class="step">Ursache beheben, kontrollieren, dokumentieren<small>löschen, Probefahrt, erneut auslesen</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">FEHLERSUCHE</span><h2>Messen an einem Sensor</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 560 230" width="540" height="222" style="display:block;margin:0 auto">
+  <rect x="20" y="40" width="130" height="150" rx="12" fill="#213552" stroke="#94a4ba" stroke-width="2"/>
+  <text x="85" y="120" text-anchor="middle" font-size="16" font-weight="800" fill="#ecf1f8">Steuergerät</text>
+  <rect x="420" y="40" width="120" height="150" rx="12" fill="#213552" stroke="#94a4ba" stroke-width="2"/>
+  <text x="480" y="120" text-anchor="middle" font-size="16" font-weight="800" fill="#ecf1f8">Sensor</text>
+  <line x1="150" y1="70" x2="420" y2="70" stroke="#f05e4e" stroke-width="4"/><text x="255" y="60" text-anchor="middle" font-size="15" font-weight="800" fill="#f05e4e">Versorgung ca. 5 V</text>
+  <line x1="150" y1="115" x2="420" y2="115" stroke="#28aaf5" stroke-width="4"/><text x="255" y="105" text-anchor="middle" font-size="15" font-weight="800" fill="#28aaf5">Signal z. B. 0,5–4,5 V</text>
+  <line x1="150" y1="160" x2="420" y2="160" stroke="#94a4ba" stroke-width="4"/><text x="255" y="150" text-anchor="middle" font-size="15" font-weight="800" fill="#94a4ba">Masse ca. 0 V</text>
+  <rect x="370" y="50" width="36" height="130" rx="6" fill="none" stroke="#34c778" stroke-width="3" stroke-dasharray="6 5"/>
+  <text x="388" y="212" text-anchor="middle" font-size="14" font-weight="800" fill="#34c778">Prüfadapter</text>
+</svg>
+      <ol class="steps-list">
+        <li class="step">Zündung an, Stecker gesteckt<small>Messung über den Prüfadapter</small></li>
+        <li class="step">Versorgung gegen Masse<small>ca. 5 V vom Steuergerät?</small></li>
+        <li class="step">Masse prüfen<small>Spannungsfall gegen Batterie-Minus nahe 0 V</small></li>
+        <li class="step">Signal bei Betrieb<small>ändert es sich passend?</small></li>
+      </ol>
+    </div>
+    <div class="note step">Beispielwerte – Sollwerte laut Stromlaufplan bzw. Reparaturleitfaden</div>
+  </div>
+</section>
+
+<section class="slide" id="s-fa">
+  <span class="tag">FEHLERSUCHE</span><h2>Ein Fall zum Durchklicken</h2>
+  <div class="body noclick">
+    <div class="card" style="font-size:18px;font-weight:700;margin-bottom:10px">Kunde: „Motorkontrollleuchte an, der Motor zieht schlecht.“ Fehlerspeicher: <span class="c">P0102 – Luftmassenmesser, Signal zu niedrig</span></div>
+    <div class="card" id="fa-frage" style="font-size:19px;font-weight:800"></div>
+    <div class="choice" id="fa-opts" style="margin-top:10px;flex-direction:column;align-items:stretch"></div>
+    <div class="card" id="fa-t" style="margin-top:10px;font-size:17px;font-weight:600;line-height:1.5"></div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">FEHLERSUCHE</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="warn step"><b>Teile tauschen nach Gefühl</b>Kostet Geld und Zeit – und oft ist danach der Fehler noch da.</div>
+      <div class="tip step"><b>Erst das Einfache</b>Batterie, Sicherungen, Masseverbindungen, Stecker und Korrosion zuerst prüfen.</div>
+      <div class="tip step"><b>Nicht von vorne in den Stecker</b>Kontakte werden aufgeweitet – neuer Wackelkontakt. Immer Prüfadapter verwenden.</div>
+      <div class="tip step"><b>„OL“ am Multimeter?</b>Bei manuellem Multimeter erst den Messbereich schrittweise bis zum höchsten hochstellen – erst dann gilt: Unterbrechung.</div>
+      <div class="warn step"><b>Aktive Sensoren</b>Nicht mit dem Ohmmeter messen – sie können beschädigt werden. Spannung und Signal bei Betrieb prüfen.</div>
+      <div class="tip step"><b>Dokumentieren</b>Fehlercodes, Messwerte und was du getan hast aufschreiben – hilft dir und dem Kollegen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">FEHLERSUCHE</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-diag-fehlersuche.mp4" poster="videos/mm-diag-fehlersuche.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">FEHLERSUCHE</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Was ist der erste Schritt bei der Fehlersuche?</p>
+      <div class="opts"><button class="opt">Teile bestellen</button><button class="opt">Kundengespräch – was, wann, wie oft?</button><button class="opt">Fehlerspeicher löschen</button></div>
+      <div class="fb">Die Angaben des Kunden zeigen, wo und wann du suchen musst.</div></div>
+    <div class="q" data-correct="2"><p>2. Wie misst du an einem Sensorstecker richtig?</p>
+      <div class="opts"><button class="opt">Von vorne in die Buchse stechen</button><button class="opt">Mit dem Ohmmeter am aktiven Sensor</button><button class="opt">Über einen Prüfadapter bei gestecktem Stecker</button></div>
+      <div class="fb">So bleiben die Kontakte heil und du misst unter echten Bedingungen.</div></div>
+    <div class="q" data-correct="0"><p>3. Ein Luftmassenmesser meldet „Signal zu niedrig“. Was prüfst du vor dem Tausch?</p>
+      <div class="opts"><button class="opt">Versorgung, Masse und Signalleitung</button><button class="opt">Die Zündkerzen</button><button class="opt">Den Reifendruck</button></div>
+      <div class="fb">Oft ist eine Leitung oder ein Stecker die Ursache, nicht der Sensor.</div></div>
+    <div class="q" data-correct="1"><p>4. Woran erkennst du, dass die Reparatur erfolgreich war?</p>
+      <div class="opts"><button class="opt">Die Rechnung ist geschrieben</button><button class="opt">Nach Löschen und Probefahrt kommt der Fehler nicht wieder</button><button class="opt">Das Teil ist neu</button></div>
+      <div class="fb">Erst die Kontrolle zeigt, ob die Ursache wirklich behoben ist.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">FEHLERSUCHE</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Kunde → nachvollziehen → auslesen → Prüfplan → messen</span></li>
+        <li class="step"><span>Versorgung, Masse, Signal – mit Prüfadapter</span></li>
+        <li class="step"><span>Erst das Einfache prüfen</span></li>
+        <li class="step"><span>Kontrolle: löschen, Probefahrt, erneut auslesen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Diagnose" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const S = [
+    ['1. Was machst du zuerst?', ['Luftmassenmesser sofort tauschen', 'Fehler und Umgebungsbedingungen speichern, Messwerte ansehen', 'Fehlerspeicher löschen und abwarten'], 1,
+     'Richtig: Erst sichern und ansehen. Im Messwert zeigt der Luftmassenmesser im Leerlauf fast 0 kg/h.'],
+    ['2. Wie geht es weiter?', ['Mit dem Prüfadapter Versorgung, Masse und Signal messen', 'Neuen Luftmassenmesser einbauen', 'Zündkerzen wechseln'], 0,
+     'Richtig: gezielt messen. Ergebnis: Masse in Ordnung, Signal fast 0 V – aber keine Versorgungsspannung am Sensor.'],
+    ['3. Keine Versorgung am Sensor. Was prüfst du?', ['Den Luftfilter', 'Den Sensor mit dem Ohmmeter', 'Sicherung und Leitung laut Stromlaufplan'], 2,
+     'Richtig: Die Sicherung ist in Ordnung, aber die Leitung zum Sensor ist am Stecker korrodiert und unterbrochen.'],
+    ['4. Leitung repariert. Und jetzt?', ['Fertig – Auto zurückgeben', 'Fehler löschen, Probefahrt, erneut auslesen, dokumentieren', 'Luftmassenmesser trotzdem tauschen'], 1,
+     '<b class="grn">Geschafft!</b> Der Fehler kommt nicht wieder. Der Luftmassenmesser war nie defekt – Teiletausch hätte nichts gebracht.']
+  ];
+  let st = 0;
+  function show() {
+    const s = S[st];
+    document.getElementById('fa-frage').textContent = s[0];
+    document.getElementById('fa-opts').innerHTML = s[1].map((o, j) => '<button class="btn ghost" data-o="' + j + '" style="text-align:left">' + o + '</button>').join('');
+    document.querySelectorAll('#fa-opts [data-o]').forEach(b => b.onclick = () => {
+      const j = +b.dataset.o;
+      if (j === s[2]) {
+        document.getElementById('fa-t').innerHTML = s[3] + (st < S.length - 1 ? ' <button class="btn" id="fa-next" style="margin-left:8px">Weiter</button>' : ' <button class="btn ghost" id="fa-neu" style="margin-left:8px">Nochmal</button>');
+        const n = document.getElementById('fa-next'); if (n) n.onclick = () => { st++; show(); };
+        const r = document.getElementById('fa-neu'); if (r) r.onclick = () => { st = 0; show(); };
+      } else document.getElementById('fa-t').innerHTML = '<b class="ora">Lieber nicht:</b> Das kostet Zeit oder Geld und bringt dich nicht näher an die Ursache. Probier es noch einmal.';
+    });
+    document.getElementById('fa-t').innerHTML = 'Wähle den nächsten Schritt.';
+  }
+  document.getElementById('s-fa').addEventListener('slideshow', () => { st = 0; show(); });
+  show();
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

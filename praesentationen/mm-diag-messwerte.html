@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Messwerte und Adaption – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+</style>
+</head>
+<body class="t-mm6">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · DIAGNOSE</div>
+  <div class="symbol" style="font-size:84px">MW</div>
+  <h1>Messwerte und Adaption</h1>
+  <p>Istwerte lesen, Plausibilität prüfen, Stellglieder testen</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">MESSWERTE</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Was Messwerte (Istwerte) sind</li>
+      <li class="step from-left"><span class="num">2</span>Wie du erkennst, ob ein Wert plausibel ist</li>
+      <li class="step from-left"><span class="num">3</span>Was ein Stellglied- oder Aktortest ist</li>
+      <li class="step from-left"><span class="num">4</span>Was Adaptionswerte sind und wann man sie zurücksetzt</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MESSWERTE</span><h2>Messwerte im Diagnosegerät</h2>
+  <div class="body">
+    <div class="card step" style="font-size:20px;font-weight:600;margin-bottom:14px">Das Diagnosegerät zeigt, was das Steuergerät <span class="c">gerade sieht</span> – die Werte aller Sensoren, live.</div>
+    <div class="values">
+      <div class="val step from-left"><b>ca. 90 °C</b><span>Kühlmitteltemperatur bei warmem Motor</span></div>
+      <div class="val step from-left"><b>ca. 650–850 1/min</b><span>Leerlaufdrehzahl, warm</span></div>
+      <div class="val step from-left"><b>ca. 1,00</b><span>Lambda beim Benziner im Leerlauf</span></div>
+      <div class="val step from-left"><b>nahe 0 %</b><span>Korrekturwerte der Gemischregelung</span></div>
+    </div>
+    <div class="note step">Richtwerte – Sollwerte immer laut Hersteller bzw. Reparaturleitfaden</div>
+  </div>
+</section>
+
+<section class="slide" id="s-pl">
+  <span class="tag">MESSWERTE</span><h2>Was passt nicht? – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-s="0">Fall 1</button><button class="btn ghost" data-s="1">Fall 2</button><button class="btn ghost" data-s="2">Fall 3</button></div>
+    <div class="card" id="pl-lage" style="font-size:18px;font-weight:700;margin-bottom:10px"></div>
+    <div id="pl-werte" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px"></div>
+    <div class="card" id="pl-t" style="margin-top:12px;font-size:17px;font-weight:600;line-height:1.5">Tippe auf den Wert, der nicht passt.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MESSWERTE</span><h2>Plausibel oder nicht?</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Werte mit dem <span class="c">Betriebszustand</span> vergleichen<small>kalter Motor, warmer Leerlauf, Volllast – passen die Werte dazu?</small></li>
+      <li class="step">Sensoren <span class="c">untereinander</span> vergleichen<small>über Nacht abgekühlt: Kühlmittel- und Ansauglufttemperatur müssen fast gleich sein</small></li>
+      <li class="step">Typische <span class="c">Ersatzwerte</span> erkennen<small>z. B. genau −40 °C oder 140 °C: oft Unterbrechung oder Kurzschluss in Leitung oder Stecker</small></li>
+      <li class="step">Wert ändert sich nicht?<small>Gas geben, Motor warm werden lassen – ein Sensor muss reagieren</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MESSWERTE</span><h2>Stellglieddiagnose (Aktortest)</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Diagnosegerät</b><span>Aktortest starten</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Steuergerät</b><span>steuert das Bauteil an</span></div><div class="flow-arrow step"></div>
+      <div class="glied step hd"><b>Aktor</b><span>z. B. Kraftstoffpumpe, Lüfter, AGR-Ventil, Tankentlüftung</span></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <div class="tip step"><b>Hören, fühlen, messen</b>Klickt das Ventil, läuft die Pumpe, dreht der Lüfter? So prüfst du Steuergerät, Leitung und Aktor zusammen.</div>
+      <div class="warn step"><b>Vorsicht</b>Beim Aktortest können sich Teile bewegen (Lüfter, Drosselklappe). Hände weg, Hinweise im Diagnosegerät beachten.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MESSWERTE</span><h2>Adaptionswerte</h2>
+  <div class="body">
+    <div class="card step" style="font-size:20px;font-weight:600;margin-bottom:14px">Das Steuergerät <span class="c">lernt</span> mit der Zeit dazu und gleicht Verschleiß und Bauteiltoleranzen aus.</div>
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Beispiele</b>Gemischadaption (Langzeitkorrektur), Drosselklappe, Leerlauf, Mengenabgleich der Injektoren.</div>
+      <div class="tip step"><b>Als Hinweis nutzen</b>Eine Adaption an der Grenze zeigt: Hier gleicht das Steuergerät einen Fehler aus.</div>
+      <div class="warn step"><b>Nach dem Tausch</b>Neue Bauteile oft anlernen oder Adaption zurücksetzen – genau nach Herstellervorgabe.</div>
+      <div class="warn step"><b>Nicht „blind“ zurücksetzen</b>Wer Adaptionen ohne Grund löscht, versteckt den Fehler nur.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MESSWERTE</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-diag-messwerte.mp4" poster="videos/mm-diag-messwerte.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MESSWERTE</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Was zeigen die Messwerte im Diagnosegerät?</p>
+      <div class="opts"><button class="opt">Was das Steuergerät gerade von den Sensoren bekommt</button><button class="opt">Nur alte Fehler</button><button class="opt">Die Rechnung</button></div>
+      <div class="fb">Live-Werte aller Sensoren und berechnete Werte.</div></div>
+    <div class="q" data-correct="1"><p>2. Das Auto stand über Nacht. Kühlmittel: 8 °C, Ansaugluft: −40 °C. Was ist auffällig?</p>
+      <div class="opts"><button class="opt">Kühlmitteltemperatur</button><button class="opt">Die Ansauglufttemperatur – oft Unterbrechung</button><button class="opt">Nichts</button></div>
+      <div class="fb">Nach dem Abkühlen müssen beide Werte fast gleich sein. −40 °C ist ein typischer Ersatzwert.</div></div>
+    <div class="q" data-correct="2"><p>3. Wozu dient ein Aktortest?</p>
+      <div class="opts"><button class="opt">Er löscht den Fehlerspeicher</button><button class="opt">Er misst die Batteriespannung</button><button class="opt">Das Steuergerät steuert ein Bauteil gezielt an</button></div>
+      <div class="fb">So prüfst du Steuergerät, Leitung und Aktor zusammen.</div></div>
+    <div class="q" data-correct="0"><p>4. Wann setzt man Adaptionswerte zurück?</p>
+      <div class="opts"><button class="opt">Nach Herstellervorgabe, z. B. nach Bauteiltausch</button><button class="opt">Bei jedem Werkstattbesuch</button><button class="opt">Nie</button></div>
+      <div class="fb">Ohne Grund zurücksetzen versteckt nur den Fehler.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MESSWERTE</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Messwerte: live, was das Steuergerät sieht</span></li>
+        <li class="step"><span>Plausibel? Betriebszustand und Sensoren vergleichen<small>−40 °C oft Unterbrechung</small></span></li>
+        <li class="step"><span>Aktortest prüft Steuergerät, Leitung und Aktor</span></li>
+        <li class="step"><span>Adaption: lernt mit – zurücksetzen nur nach Vorgabe</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Diagnose" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const F = [
+    ['Motor stand über Nacht in der Halle, Zündung an.', [['Kühlmitteltemperatur', '12 °C'], ['Ansauglufttemperatur', '−40 °C'], ['Drehzahl', '0 1/min'], ['Batteriespannung', '12,5 V']], 1,
+     '<b class="red">Ansauglufttemperatur −40 °C</b> passt nicht: Nach der Nacht müssen beide Temperaturen fast gleich sein. −40 °C ist ein typischer Ersatzwert – Leitung und Stecker mit Prüfadapter prüfen.'],
+    ['Warmer Motor im Leerlauf.', [['Kühlmitteltemperatur', '91 °C'], ['Drehzahl', '760 1/min'], ['Lambda', '1,00'], ['Langzeitkorrektur', '+22 %']], 3,
+     '<b class="red">Langzeitkorrektur +22 %</b> ist viel zu hoch: Das Steuergerät muss stark anfetten – Falschluft, Kraftstoffdruck oder Luftmassenmesser prüfen.'],
+    ['Warmer Motor im Leerlauf, keine Verbraucher an.', [['Kühlmitteltemperatur', '20 °C'], ['Drehzahl', '780 1/min'], ['Ladespannung', '14,1 V'], ['Lambda', '1,00']], 0,
+     '<b class="red">Kühlmitteltemperatur 20 °C</b> bei warmem Motor passt nicht. Folge: zu fettes Gemisch, hoher Verbrauch, Lüfter-Probleme. Sensor und Leitung prüfen.']
+  ];
+  const bt = document.querySelectorAll('#s-pl [data-s]');
+  let fall = 0;
+  function show(i) {
+    fall = i; const f = F[i];
+    document.getElementById('pl-lage').textContent = f[0];
+    document.getElementById('pl-werte').innerHTML = f[1].map((w, j) => '<button class="btn ghost" data-w="' + j + '" style="display:flex;justify-content:space-between;width:100%;font-size:17px"><span>' + w[0] + '</span><b>' + w[1] + '</b></button>').join('');
+    document.getElementById('pl-t').innerHTML = 'Tippe auf den Wert, der nicht passt.';
+    document.querySelectorAll('#pl-werte [data-w]').forEach(b => b.onclick = () => {
+      const j = +b.dataset.w;
+      if (j === f[2]) { b.style.borderColor = 'var(--red)'; b.classList.add('on'); document.getElementById('pl-t').innerHTML = f[3]; }
+      else { document.getElementById('pl-t').innerHTML = '<b>' + f[1][j][0] + '</b> passt hier. Schau noch einmal.'; }
+    });
+    bt.forEach(x => x.classList.toggle('on', +x.dataset.s === i));
+  }
+  bt.forEach(x => x.onclick = () => show(+x.dataset.s)); show(0);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

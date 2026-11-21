@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>OBD und Fehlerspeicher – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+</style>
+</head>
+<body class="t-mm6">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · DIAGNOSE</div>
+  <div class="symbol" style="font-size:72px">OBD</div>
+  <h1>OBD und Fehlerspeicher</h1>
+  <p>Diagnosestecker, Fehlercodes und Motorkontrollleuchte</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">OBD</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Was OBD ist und wo der Diagnosestecker sitzt</li>
+      <li class="step from-left"><span class="num">2</span>Was die Motorkontrollleuchte meldet</li>
+      <li class="step from-left"><span class="num">3</span>Wie ein Fehlercode aufgebaut ist</li>
+      <li class="step from-left"><span class="num">4</span>Wie du den Fehlerspeicher richtig ausliest</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">OBD</span><h2>Was ist OBD?</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:center">
+      <div>
+        <div class="card step" style="font-size:20px;font-weight:600"><span class="c">On-Board-Diagnose:</span> Das Steuergerät überwacht sich und alle abgasrelevanten Bauteile selbst – während der Fahrt.</div>
+        <ul class="step" style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Pflicht in der EU: Benziner ab 2001, Diesel ab 2004</li><li>Fehler werden mit Code im Fehlerspeicher abgelegt</li><li>genormter 16-poliger Diagnosestecker</li></ul>
+      </div>
+      <div class="card step" style="text-align:center"><svg viewBox="0 0 320 150" width="300" height="140" style="display:block;margin:0 auto">
+  <path d="M20 20 H300 L280 130 H40 Z" fill="#3b4250" stroke="#94a4ba" stroke-width="3"/>
+  <rect x="50" y="40" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="79" y="40" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="108" y="40" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="137" y="40" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="166" y="40" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="195" y="40" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="224" y="40" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="253" y="40" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="50" y="86" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="79" y="86" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="108" y="86" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="137" y="86" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="166" y="86" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="195" y="86" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="224" y="86" width="16" height="26" rx="3" fill="#c6a15a"/><rect x="253" y="86" width="16" height="26" rx="3" fill="#c6a15a"/>
+</svg><div style="font-weight:800;margin-top:8px">Diagnosestecker</div><div class="muted" style="font-size:15px">meist im Fahrerfußraum, in der Nähe der Lenksäule</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">OBD</span><h2>Die Motorkontrollleuchte</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>leuchtet kurz</b><span>bei Zündung an – Lampentest, geht nach dem Start aus</span></div>
+      <div class="val step from-left"><b>leuchtet dauernd</b><span>ein abgasrelevanter Fehler ist gespeichert – bald in die Werkstatt</span></div>
+      <div class="val step from-left"><b>blinkt</b><span>starke Zündaussetzer – Gefahr für den Katalysator: Leistung wegnehmen</span></div>
+    </div>
+    <div class="tip step" style="margin-top:14px"><b>Nicht jeder Fehler macht die Leuchte an</b>Viele Fehler stehen nur im Fehlerspeicher. Darum bei jeder Beschwerde auslesen – auch wenn keine Lampe leuchtet.</div>
+  </div>
+</section>
+
+<section class="slide" id="s-fc">
+  <span class="tag">OBD</span><h2>Fehlercodes lesen – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:14px"><button class="btn ghost on" data-c="0">P0301</button><button class="btn ghost" data-c="1">P0171</button><button class="btn ghost" data-c="2">P0420</button><button class="btn ghost" data-c="3">P0113</button></div>
+    <div class="card" style="display:flex;gap:6px;justify-content:center;font-size:52px;font-weight:900;letter-spacing:2px" id="fc-code"></div>
+    <div class="grid2" style="margin-top:14px;grid-template-columns:repeat(4,1fr)" id="fc-teile"></div>
+    <div class="card" id="fc-t" style="margin-top:14px;font-size:18px;font-weight:600"></div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">OBD</span><h2>Mehr als nur der Code</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="card step"><div class="big" style="font-size:21px">Statisch oder sporadisch</div><ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li><b>statisch:</b> Fehler ist jetzt vorhanden</li><li><b>sporadisch:</b> Fehler war da, ist gerade weg – z. B. Wackelkontakt</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:21px">Umgebungsbedingungen</div><ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Drehzahl, Temperatur, Kilometerstand, Häufigkeit</li><li>zeigen, <b>wann</b> der Fehler auftrat</li><li>sehr wichtig bei sporadischen Fehlern</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:21px">Bereitschaftstests (Readiness)</div><ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>zeigen, ob alle Eigendiagnosen schon gelaufen sind</li><li>nach dem Löschen erst wieder nach Fahrt vollständig</li><li>wichtig für die Abgasuntersuchung</li></ul></div>
+      <div class="tip step"><b>Ein Fehler – viele Codes</b>Ein defekter Sensor oder eine fehlende Masse kann mehrere Fehler auslösen. Mit dem ersten, wichtigsten Fehler anfangen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">OBD</span><h2>Fehlerspeicher richtig auslesen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Batteriespannung prüfen<small>bei langer Diagnose ein Ladegerät mit Stützfunktion anschließen</small></li>
+      <li class="step">Alle Steuergeräte auslesen<small>auch Fehler in anderen Systemen können die Ursache sein</small></li>
+      <li class="step">Fehler und Umgebungsbedingungen <span class="c">speichern oder notieren</span><small>erst dann irgendetwas löschen</small></li>
+      <li class="step">Nach der Reparatur: löschen, Probefahrt, erneut auslesen<small>kommt der Fehler wieder, ist die Ursache noch nicht gefunden</small></li>
+    </ol>
+    <div class="warn step" style="margin-top:6px"><b>Nicht einfach löschen</b>Wer sofort löscht, verliert wichtige Hinweise – und der Fehler kommt wieder.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">OBD</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-diag-obd.mp4" poster="videos/mm-diag-obd.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">OBD</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Was bedeutet eine blinkende Motorkontrollleuchte?</p>
+      <div class="opts"><button class="opt">Starke Zündaussetzer – Gefahr für den Kat</button><button class="opt">Ölwechsel fällig</button><button class="opt">Lampentest</button></div>
+      <div class="fb">Leistung wegnehmen und bald in die Werkstatt.</div></div>
+    <div class="q" data-correct="1"><p>2. Wofür steht das „P“ in einem Fehlercode wie P0301?</p>
+      <div class="opts"><button class="opt">Pumpe</button><button class="opt">Antrieb (Motor und Getriebe)</button><button class="opt">Partikelfilter</button></div>
+      <div class="fb">P = Powertrain, also Antrieb.</div></div>
+    <div class="q" data-correct="2"><p>3. Was solltest du vor dem Löschen des Fehlerspeichers tun?</p>
+      <div class="opts"><button class="opt">Nichts</button><button class="opt">Batterie abklemmen</button><button class="opt">Fehler und Umgebungsbedingungen speichern</button></div>
+      <div class="fb">Sonst gehen wichtige Hinweise verloren.</div></div>
+    <div class="q" data-correct="0"><p>4. Ein Fehler ist als „sporadisch“ gespeichert. Was heißt das?</p>
+      <div class="opts"><button class="opt">Der Fehler war da, ist aber gerade nicht vorhanden</button><button class="opt">Der Fehler ist dauernd da</button><button class="opt">Das Steuergerät ist defekt</button></div>
+      <div class="fb">Typisch für Wackelkontakte – Umgebungsbedingungen helfen.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">OBD</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>OBD: Steuergerät überwacht sich selbst</span></li>
+        <li class="step"><span>Leuchte dauernd: Fehler – blinkt: Kat in Gefahr</span></li>
+        <li class="step"><span>P0301: Antrieb, genormt, Zündung, Zylinder 1</span></li>
+        <li class="step"><span>Erst speichern, dann löschen<small>Probefahrt, erneut auslesen</small></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Diagnose" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const C = [
+    ['P0301', ['P', 'Antrieb'], ['0', 'genormt'], ['3', 'Zündung / Aussetzer'], ['01', 'Zylinder 1'], 'Zündaussetzer Zylinder 1. Prüfen: Zündspule quertauschen, Zündkerze, Einspritzventil, Kompression.'],
+    ['P0171', ['P', 'Antrieb'], ['0', 'genormt'], ['1', 'Luft- und Kraftstoffmenge'], ['71', 'Gemisch zu mager, Bank 1'], 'Gemisch zu mager. Prüfen: Falschluft, Kraftstoffdruck, Luftmassenmesser, Korrekturwerte.'],
+    ['P0420', ['P', 'Antrieb'], ['0', 'genormt'], ['4', 'Abgasnachbehandlung'], ['20', 'Kat-Wirkungsgrad, Bank 1'], 'Wirkungsgrad Katalysator zu niedrig. Prüfen: Sonde nach Kat, Undichtigkeit der Abgasanlage, Aussetzer.'],
+    ['P0113', ['P', 'Antrieb'], ['0', 'genormt'], ['1', 'Luft- und Kraftstoffmenge'], ['13', 'Ansauglufttemperatur: Signal zu hoch'], 'Signal zu hoch – oft Unterbrechung in Leitung oder Stecker. Prüfen mit Prüfadapter: Versorgung, Masse, Signal.']
+  ];
+  const bt = document.querySelectorAll('#s-fc [data-c]');
+  const FAR = ['var(--blu)', 'var(--grn)', 'var(--ora)', 'var(--pur)'];
+  function c(i) {
+    const k = C[i];
+    document.getElementById('fc-code').innerHTML = [k[1], k[2], k[3], k[4]].map((p, j) => '<span style="color:' + FAR[j] + '">' + p[0] + '</span>').join('');
+    document.getElementById('fc-teile').innerHTML = [k[1], k[2], k[3], k[4]].map((p, j) => '<div class="card" style="border-top:4px solid ' + FAR[j] + ';text-align:center"><div style="font-size:26px;font-weight:900">' + p[0] + '</div><div class="muted" style="font-size:15px;font-weight:700">' + p[1] + '</div></div>').join('');
+    document.getElementById('fc-t').innerHTML = k[5];
+    bt.forEach(x => x.classList.toggle('on', +x.dataset.c === i));
+  }
+  bt.forEach(x => x.onclick = () => c(+x.dataset.c)); c(0);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

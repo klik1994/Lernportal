@@ -1127,3 +1127,132 @@ VIDEOS_MOTOR.update({
     'mm-abgas-dpf': (GRN, [(title_scene('DPF', 'DPF und AdBlue', 'Abgasreinigung beim Diesel', GRN, size=80, kicker=KICK5), 5.0),
                            (ad_kette, 7.0), (ad_dpf, 10.5), (ad_adblue, 9.0), (AD_WERTE, 8.5), (AD_MERKE, 7.5)]),
 })
+
+
+# =================== DIAGNOSE ===================
+KICK6 = 'DIAGNOSE  ·  LERNVIDEO'
+
+
+def do_stecker(d, t, dur):
+    header(d, t, 'OBD', 'Diagnosestecker und Motorkontrollleuchte', BLU)
+    a = pr(t, 0.3, 0.9)
+    poly(d, [(110, 180), (530, 180), (500, 360), (140, 360)], CORE, a)
+    for r in range(2):
+        for i in range(8):
+            rrect(d, (155 + i * 44, 215 + r * 75, 179 + i * 44, 255 + r * 75), 4, (198, 161, 90), a, bg=CORE)
+    text(d, 320, 410, '16-poliger Diagnosestecker', 26, 'Bold', TXT, a, 'mm')
+    text(d, 320, 445, 'meist im Fahrerfußraum', 20, 'Semi', MUTED, a, 'mm')
+    state = 0 if t < 4.5 else 1 if t < 8 else 2
+    b = pr(t, 1.0, 1.6)
+    on = state == 1 or (state == 2 and (t * 3) % 1 < 0.5)
+    col = (255, 176, 32)
+    circle(d, (900, 270), 80, col if on else CARD2, b)
+    text(d, 900, 270, 'MKL', 34, 'XB', BG if on else MUTED, b, 'mm', bg=col if on else CARD2)
+    msg = ['leuchtet kurz: Lampentest', 'dauernd: Fehler gespeichert', 'blinkt: Aussetzer – Kat in Gefahr!'][state]
+    text(d, 900, 400, msg, 26, 'XB', RED if state == 2 else TXT, b, 'mm')
+    caption(d, t, [(0.6, dur, 'OBD: Das Steuergerät überwacht sich selbst')], BLU)
+
+
+def do_code(d, t, dur):
+    header(d, t, 'OBD', 'Einen Fehlercode lesen', BLU)
+    parts = [('P', 'Antrieb', BLU), ('0', 'genormt', GRN), ('3', 'Zündung', ORA), ('01', 'Zylinder 1', PUR)]
+    xs = [330, 500, 670, 870]
+    for i, (s, sub, c) in enumerate(parts):
+        a = pr(t, 0.4, 0.9)
+        text(d, xs[i], 220, s, 110, 'Black', c, a, 'mm')
+        b = pr(t, 2.0 + i * 1.3, 2.6 + i * 1.3)
+        rrect(d, (xs[i] - 85, 320, xs[i] + 85, 400), 14, CARD, b)
+        rect(d, (xs[i] - 73, 320, xs[i] + 73, 326), c, b, bg=CARD)
+        text(d, xs[i], 362, sub, 24, 'Bold', TXT, b, 'mm', bg=CARD)
+    caption(d, t, [(7.5, dur, 'P0301: Zündaussetzer Zylinder 1')], BLU)
+
+
+DO_ABLAUF = values_scene('FEHLERSPEICHER', BLU, [], [
+    ('1.', 'Batteriespannung sichern – Ladegerät anschließen'), ('2.', 'alle Steuergeräte auslesen'),
+    ('3.', 'Fehler und Umgebungsbedingungen speichern'), ('4.', 'reparieren, löschen, Probefahrt, erneut auslesen')],
+    note='Nicht einfach löschen – sonst gehen Hinweise verloren', title='Richtig auslesen', vsize=30)
+
+DO_MERKE = merke_scene('OBD', BLU, [
+    'OBD: Steuergerät überwacht sich selbst', 'Leuchte dauernd: Fehler – blinkt: Kat in Gefahr',
+    'P0301: Antrieb, genormt, Zündung, Zylinder 1', 'Erst speichern, dann löschen'])
+
+
+def dm_datenstrom(d, t, dur):
+    header(d, t, 'MESSWERTE', 'Was passt nicht?', BLU)
+    rows = [('Kühlmitteltemperatur', '12 °C', False), ('Ansauglufttemperatur', '−40 °C', True), ('Drehzahl', '0 1/min', False), ('Batteriespannung', '12,5 V', False)]
+    text(d, 640, 130, 'Motor stand über Nacht – Zündung an', 26, 'Bold', MUTED, pr(t, 0.3, 0.8), 'mm')
+    for i, (n, v, bad) in enumerate(rows):
+        a = pr(t, 0.8 + i * 0.5, 1.3 + i * 0.5)
+        y = 170 + i * 85
+        hl = bad and t > 5.0
+        rrect(d, (240, y, 1040, y + 70), 14, CARD, a, outline=RED if hl else None, width=4 if hl else 0)
+        text(d, 270, y + 35, n, 26, 'Bold', TXT, a, 'lm', bg=CARD)
+        text(d, 1010, y + 35, v, 30, 'XB', RED if hl else BLU, a, 'rm', bg=CARD)
+    caption(d, t, [(5.0, dur, '−40 °C: typischer Ersatzwert – oft Unterbrechung')], BLU)
+
+
+def dm_aktor(d, t, dur):
+    header(d, t, 'MESSWERTE', 'Stellglieddiagnose', BLU)
+    kette_boxes(d, t, [('Diagnosegerät', 'Aktortest starten'), ('Steuergerät', 'steuert an'), ('Aktor', 'z. B. Lüfter')], 170, 130, BLU, step=0.8, hd=(2,))
+    a = pr(t, 3.0, 3.6)
+    ang = (t - 3) * 8 if t > 3.6 else 0
+    rad(d, (640, 430), 90, ang, BLU, a)
+    caption(d, t, [(3.6, dur, 'Läuft der Lüfter? Steuergerät, Leitung und Aktor sind in Ordnung')], BLU)
+
+
+DM_WERTE = values_scene('MESSWERTE', BLU, [], [
+    ('ca. 90 °C', 'Kühlmittel bei warmem Motor'), ('ca. 650–850', 'Leerlaufdrehzahl warm (1/min)'),
+    ('nahe 0 %', 'Korrekturwerte – Gemisch in Ordnung'), ('Adaption', 'zurücksetzen nur nach Vorgabe')],
+    note='Richtwerte – Sollwerte laut Hersteller', title='Gut zu wissen', vsize=26)
+
+DM_MERKE = merke_scene('MESSWERTE', BLU, [
+    'Messwerte: live, was das Steuergerät sieht', 'Sensoren untereinander vergleichen',
+    'Aktortest prüft Steuergerät, Leitung, Aktor', 'Adaption nur nach Vorgabe zurücksetzen'])
+
+
+def df_weg(d, t, dur):
+    header(d, t, 'FEHLERSUCHE', 'Der Weg zum Fehler', BLU)
+    steps = ['Kundengespräch', 'Fehler nachvollziehen', 'Auslesen und Messwerte', 'Prüfplan des Herstellers', 'Gezielt messen', 'Beheben und kontrollieren']
+    for i, s in enumerate(steps):
+        a = pr(t, 0.5 + i * 1.0, 1.0 + i * 1.0)
+        col, row = i % 3, i // 3
+        x, y = 90 + col * 380, 150 + row * 170
+        rrect(d, (x, y, x + 340, y + 130), 16, CARD, a)
+        circle(d, (x + 50, y + 65), 28, BLU, a, bg=CARD)
+        text(d, x + 50, y + 65, str(i + 1), 28, 'XB', BG, a, 'mm', bg=BLU)
+        lines = s.split(' ', 1) if len(s) > 16 else [s]
+        for j, l in enumerate(lines):
+            text(d, x + 95, y + 65 + (j - (len(lines) - 1) / 2) * 32, l, 25, 'Bold', TXT, a, 'lm', bg=CARD)
+    caption(d, t, [(6.6, dur, 'Schritt für Schritt – statt Teile tauschen')], BLU)
+
+
+def df_messen(d, t, dur):
+    header(d, t, 'FEHLERSUCHE', 'Messen an einem Sensor', BLU)
+    a = pr(t, 0.3, 0.9)
+    rrect(d, (90, 150, 330, 450), 16, CARD2, a, outline=MUTED, width=2)
+    text(d, 210, 300, 'Steuergerät', 26, 'Bold', TXT, a, 'mm', bg=CARD2)
+    rrect(d, (950, 150, 1190, 450), 16, CARD2, a, outline=MUTED, width=2)
+    text(d, 1070, 300, 'Sensor', 26, 'Bold', TXT, a, 'mm', bg=CARD2)
+    rows = [('Versorgung', 'ca. 5 V', RED, 200), ('Signal', 'z. B. 0,5–4,5 V', BLU, 300), ('Masse', 'ca. 0 V', MUTED, 400)]
+    for i, (n, v, c, y) in enumerate(rows):
+        b = pr(t, 1.0 + i * 1.6, 1.6 + i * 1.6)
+        line(d, [(330, y), (950, y)], c, 6, a)
+        text(d, 450, y - 26, n, 24, 'Bold', c, a, 'mm')
+        rrect(d, (610, y - 46, 830, y - 6), 10, CARD, b)
+        text(d, 720, y - 26, v, 22, 'XB', TXT, b, 'mm', bg=CARD)
+    rrect(d, (860, 170, 900, 430), 6, None, a, outline=GRN, width=3)
+    caption(d, t, [(0.6, dur, 'Immer über den Prüfadapter messen – nicht von vorne in den Stecker')], BLU)
+
+
+DF_MERKE = merke_scene('FEHLERSUCHE', BLU, [
+    'Kunde → nachvollziehen → auslesen → messen', 'Versorgung, Masse, Signal – mit Prüfadapter',
+    'Erst das Einfache prüfen', 'Kontrolle: löschen, Probefahrt, erneut auslesen'])
+
+VIDEOS_MOTOR.update({
+    'mm-diag-obd': (BLU, [(title_scene('OBD', 'OBD und Fehlerspeicher', 'Diagnosestecker und Fehlercodes', BLU, size=72, kicker=KICK6), 5.0),
+                          (do_stecker, 11.0), (do_code, 10.0), (DO_ABLAUF, 9.0), (DO_MERKE, 7.5)]),
+    'mm-diag-messwerte': (BLU, [(title_scene('MW', 'Messwerte und Adaption', 'Istwerte lesen und prüfen', BLU, size=84, kicker=KICK6), 5.0),
+                                (dm_datenstrom, 9.0), (dm_aktor, 9.0), (DM_WERTE, 8.5), (DM_MERKE, 7.5)]),
+    'mm-diag-fehlersuche': (BLU, [(title_scene('?', 'Systematische Fehlersuche', 'Schritt für Schritt', BLU, kicker=KICK6), 5.0),
+                                  (df_weg, 10.0), (df_messen, 9.0), (DF_MERKE, 7.5)]),
+})
