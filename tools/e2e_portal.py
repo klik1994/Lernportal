@@ -21,7 +21,7 @@ with sync_playwright() as p:
     page.on('pageerror', lambda e: errors.append(str(e)))
     page.goto(base + '/index.html')
     page.wait_for_selector('[data-start="eingang"]')
-    assert '18 Fragen · 9 Themen' in page.inner_text('#app')
+    assert '18 Fragen · 10 Themen' in page.inner_text('#app')
     page.screenshot(path=str(shots / 'p1-willkommen.png'), full_page=True)
     page.goto(base + '/index.html#/themen')
     page.wait_for_selector('[data-start="eingang"]')

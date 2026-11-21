@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Diesel-Grundlagen – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+</style>
+</head>
+<body class="t-mm4">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · DIESEL</div>
+  <div class="symbol">D</div>
+  <h1>Diesel-Grundlagen</h1>
+  <p>Selbstzündung, Luftüberschuss und Glühanlage</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">DIESEL</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Wie sich der Diesel von selbst entzündet</li>
+      <li class="step from-left"><span class="num">2</span>Unterschiede zwischen Otto- und Dieselmotor</li>
+      <li class="step from-left"><span class="num">3</span>Wie die Leistung geregelt wird</li>
+      <li class="step from-left"><span class="num">4</span>Wie die Glühanlage beim Kaltstart hilft</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DIESEL</span><h2>Selbstzündung</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Der Kolben verdichtet <span class="c">nur Luft</span><small>sehr stark – ca. 16 : 1 bis 20 : 1 (Richtwert)</small></li>
+      <li class="step">Die Luft wird dabei <span class="c">sehr heiß</span><small>ca. 700–900 °C (Richtwert) – wie beim Aufpumpen eines Fahrradreifens, nur viel stärker</small></li>
+      <li class="step">Kurz vor OT wird Diesel <span class="c">eingespritzt</span><small>fein zerstäubt, mit sehr hohem Druck</small></li>
+      <li class="step">Der Kraftstoff <span class="c">entzündet sich von selbst</span><small>keine Zündkerze nötig</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DIESEL</span><h2>Otto und Diesel im Vergleich</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Ottomotor</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Zündung durch Funke (Zündkerze)</li><li>Verdichtung ca. 10 : 1 bis 14 : 1</li><li>Last über die Luftmenge (Drosselklappe)</li><li>Lambda meist = 1</li></ul></div>
+      <div class="card step" style="border-top:4px solid var(--c)"><div class="big" style="font-size:22px">Dieselmotor</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Selbstzündung durch heiße Luft</li><li>Verdichtung ca. 16 : 1 bis 20 : 1</li><li>Last über die <b>Kraftstoffmenge</b></li><li>immer Luftüberschuss: Lambda größer 1</li></ul></div>
+    </div>
+    <div class="note step">Richtwerte – genaue Werte laut Herstellerangabe</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DIESEL</span><h2>So wird die Leistung geregelt</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Fahrpedal</b><span>Fahrerwunsch</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Steuergerät</b><span>berechnet die Einspritzmenge</span></div><div class="flow-arrow step"></div>
+      <div class="glied step hd"><b>Injektoren</b><span>mehr Kraftstoff = mehr Leistung</span></div>
+    </div>
+    <div class="grid2" style="margin-top:20px">
+      <div class="tip step"><b>Luft ist immer genug da</b>Der Diesel saugt immer viel Luft an. Geregelt wird nur, wie viel Kraftstoff dazukommt.</div>
+      <div class="tip step"><b>Drosselklappe beim Diesel?</b>Gibt es oft – aber nicht für die Leistung, sondern für die Abgasrückführung und zum ruhigen Abstellen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-gk">
+  <span class="tag">DIESEL</span><h2>Die Glühanlage – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost" data-g="0">Zündung aus</button><button class="btn ghost" data-g="1">Vorglühen</button><button class="btn ghost" data-g="2">Motor startet</button><button class="btn ghost" data-g="3">Nachglühen</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:300px 1fr">
+      <svg viewBox="0 0 300 300" width="280" height="280" style="display:block;margin:0 auto">
+  <rect x="135" y="20" width="30" height="40" rx="5" fill="#a9b3c1" stroke="#6b7686" stroke-width="2"/>
+  <rect x="120" y="60" width="60" height="40" rx="4" fill="#6b7686"/>
+  <rect x="128" y="100" width="44" height="90" fill="#a9b3c1" stroke="#6b7686" stroke-width="2"/>
+  <path d="M128 112 l44 10 M128 130 l44 10 M128 148 l44 10 M128 166 l44 10" stroke="#6b7686" stroke-width="3"/>
+  <rect x="138" y="190" width="24" height="40" fill="#a9b3c1" stroke="#6b7686" stroke-width="2"/>
+  <rect id="gk-spitze" x="142" y="230" width="16" height="50" rx="8" fill="#6b7686" style="transition:fill .6s"/>
+  <circle id="gk-glow" cx="150" cy="262" r="34" fill="#ff8f3f" style="opacity:0;transition:opacity .6s"/>
+</svg>
+      <div>
+        <div class="card" style="display:flex;align-items:center;gap:14px"><div id="gk-lampe" style="width:46px;height:46px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-size:24px;font-weight:900;color:var(--muted)">~</div><div style="font-weight:800" id="gk-l">Glühkontrollleuchte aus</div></div>
+        <div class="card" id="gk-t" style="margin-top:12px;font-size:18px;font-weight:600;line-height:1.5"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DIESEL</span><h2>Glühkerzen prüfen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fehlerspeicher lesen<small>das Glühzeitsteuergerät erkennt defekte Glühkerzen oft selbst</small></li>
+      <li class="step">Stromaufnahme mit der <span class="c">Stromzange</span><small>alle Glühkerzen vergleichen – eine ohne Strom ist defekt</small></li>
+      <li class="step">Oder Widerstand messen – <span class="c">spannungsfrei</span>, Stecker ab<small>sehr kleiner Widerstand ist richtig, genauer Wert laut Hersteller</small></li>
+      <li class="step">Zeigt das Multimeter „OL“?<small>Bei manuellem Multimeter erst den Messbereich schrittweise bis zum höchsten hochstellen – erst dann gilt: Unterbrechung</small></li>
+    </ol>
+    <div class="warn step" style="margin-top:6px"><b>Niedervolt-Glühkerzen</b>Moderne Glühkerzen arbeiten mit weniger als 12 V (Ansteuerung mit PWM). Nie direkt an die Batterie anschließen – sie brennen sofort durch.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DIESEL</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Springt kalt schlecht an</b>Zuerst an Glühkerzen, Batterie und Raildruck denken.</div>
+      <div class="tip step"><b>Weißer Rauch beim Kaltstart</b>Unverbrannter Kraftstoff – oft fehlt das Nachglühen oder eine Glühkerze ist defekt.</div>
+      <div class="warn step"><b>Glühkerze ausbauen</b>Nur bei warmem Motor, mit Drehmomentschlüssel und Gefühl – festgebrannte Glühkerzen reißen leicht ab.</div>
+      <div class="tip step"><b>Winterdiesel</b>Im Winter kann Diesel ohne Zusätze versulzen – Paraffin verstopft den Filter.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DIESEL</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-diesel-grundlagen.mp4" poster="videos/mm-diesel-grundlagen.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DIESEL</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Wie entzündet sich der Kraftstoff im Dieselmotor?</p>
+      <div class="opts"><button class="opt">Durch einen Funken</button><button class="opt">Von selbst in der heißen, verdichteten Luft</button><button class="opt">Durch die Glühkerze bei jeder Verbrennung</button></div>
+      <div class="fb">Die Luft wird beim Verdichten sehr heiß – der Diesel entzündet sich von selbst.</div></div>
+    <div class="q" data-correct="0"><p>2. Wie wird beim Diesel die Leistung geregelt?</p>
+      <div class="opts"><button class="opt">Über die Kraftstoffmenge</button><button class="opt">Über die Drosselklappe</button><button class="opt">Über die Zündspannung</button></div>
+      <div class="fb">Luft ist immer genug da, geregelt wird die Einspritzmenge.</div></div>
+    <div class="q" data-correct="2"><p>3. Wozu dient das Nachglühen?</p>
+      <div class="opts"><button class="opt">Es lädt die Batterie</button><button class="opt">Es kühlt den Motor</button><button class="opt">Ruhiger Lauf und weniger Rauch nach dem Kaltstart</button></div>
+      <div class="fb">Die Glühkerzen bleiben nach dem Start noch eine Zeit an.</div></div>
+    <div class="q" data-correct="1"><p>4. Was darfst du mit Niedervolt-Glühkerzen nicht machen?</p>
+      <div class="opts"><button class="opt">Mit der Stromzange prüfen</button><button class="opt">Direkt an 12 V anschließen</button><button class="opt">Fehlerspeicher lesen</button></div>
+      <div class="fb">Sie arbeiten mit weniger als 12 V und brennen an der Batterie sofort durch.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">DIESEL</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Selbstzündung durch heiße, verdichtete Luft</span></li>
+        <li class="step"><span>Leistung über die Kraftstoffmenge<small>Luftüberschuss, Lambda größer 1</small></span></li>
+        <li class="step"><span>Glühkerzen helfen beim Kaltstart</span></li>
+        <li class="step"><span>Niedervolt-Glühkerzen nie an 12 V</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Dieselmanagement" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const G = [
+    ['#6b7686', 0, false, 'Glühkontrollleuchte aus', 'Alles aus. Tippe auf <b>Vorglühen</b>.'],
+    ['#ff7a2f', .8, true, 'Glühkontrollleuchte an', '<b>Zündung an:</b> Das Glühzeitsteuergerät schaltet Spannung auf die Glühkerzen. Sie werden in wenigen Sekunden sehr heiß und wärmen den Brennraum. Erlischt die Leuchte, kann gestartet werden. Bei warmem Motor entfällt das Vorglühen.'],
+    ['#ff7a2f', .8, false, 'Glühkontrollleuchte aus', '<b>Start:</b> Die heiße Glühkerze hilft, dass sich der Kraftstoff im noch kalten Brennraum entzündet.'],
+    ['#ff9b3f', .5, false, 'Glühkontrollleuchte aus', '<b>Nachglühen:</b> Die Glühkerzen bleiben nach dem Start noch eine Zeit an – für ruhigen Lauf, weniger Geräusch und weniger weißen Rauch.']
+  ];
+  const bt = document.querySelectorAll('#s-gk [data-g]');
+  function g(i) {
+    document.getElementById('gk-spitze').setAttribute('fill', G[i][0]);
+    document.getElementById('gk-glow').style.opacity = G[i][1];
+    const l = document.getElementById('gk-lampe');
+    l.style.background = G[i][2] ? '#ffb020' : 'var(--card2)'; l.style.color = G[i][2] ? '#1a1a1a' : 'var(--muted)';
+    document.getElementById('gk-l').textContent = G[i][3];
+    document.getElementById('gk-t').innerHTML = G[i][4];
+    bt.forEach(x => x.classList.toggle('on', +x.dataset.g === i));
+  }
+  bt.forEach(x => x.onclick = () => g(+x.dataset.g));
+  document.getElementById('s-gk').addEventListener('slideshow', () => g(0));
+  g(0);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

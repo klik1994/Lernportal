@@ -747,3 +747,191 @@ VIDEOS_MOTOR.update({
     'mm-zuendzeitpunkt': (ORA, [(title_scene('OT', 'Zündzeitpunkt', 'Früh, spät und Klopfen', ORA, size=96, kicker=KICK3), 5.0),
                                 (zz_kolben, 11.0), (zz_frueh, 10.0), (zz_klopf, 11.0), (ZZ_MERKE, 7.5)]),
 })
+
+
+# =================== DIESEL ===================
+KICK4 = 'DIESEL  ·  LERNVIDEO'
+
+
+def dg_verdichten(d, t, dur):
+    header(d, t, 'DIESEL', 'Selbstzündung', PUR)
+    a = pr(t, 0.2, 0.8)
+    k = pr(t, 1.0, 6.0)
+    top, bot = 140, 470
+    ky = lerp(420, 180, k)
+    line(d, [(250, top), (250, bot), (510, bot)], TXT, 0, 0)
+    line(d, [(250, top), (250, 480)], TXT, 5, a)
+    line(d, [(510, top), (510, 480)], TXT, 5, a)
+    line(d, [(250, top), (510, top)], TXT, 5, a)
+    heat = k
+    rect(d, (254, top + 3, 506, ky - 2), mix(lerp_c((24, 40, 63), (255, 120, 60), heat), 1), a)
+    rrect(d, (256, ky, 504, ky + 70), 8, CARD2, a, outline=MUTED, width=3)
+    line(d, [(380, ky + 70), (380, 560)], MUTED, 14, a)
+    temp = 20 + 780 * k
+    rrect(d, (640, 190, 1190, 300), 18, CARD, a)
+    text(d, 670, 245, 'Lufttemperatur', 28, 'Bold', TXT, a, 'lm', bg=CARD)
+    text(d, 1160, 245, f'ca. {temp:.0f} °C', 36, 'XB', PUR, a, 'rm', bg=CARD)
+    sp = pr(t, 6.5, 7.2)
+    if sp > 0:
+        for i in range(7):
+            ang = math.radians(60 + i * 10)
+            line(d, [(380, top + 6), (380 + math.cos(ang) * 60 * sp * (1 if i % 2 else -1), top + 6 + math.sin(ang) * 30 * sp)], (230, 210, 120), 3, sp)
+    fl = pr(t, 8.0, 8.6)
+    if fl > 0:
+        rect(d, (254, top + 3, 506, ky - 2), mix((255, 170, 40), 0.9 * fl), 1)
+        text(d, 380, (top + ky) / 2, 'Selbstzündung!', 26, 'XB', BG, fl, 'mm', bg=(255, 170, 40))
+    caption(d, t, [(0.6, 6.3, 'Der Kolben verdichtet nur Luft – sie wird sehr heiß'),
+                   (6.5, dur, 'Diesel wird eingespritzt und entzündet sich von selbst')], PUR)
+
+
+def lerp_c(c0, c1, k):
+    return tuple(int(c0[i] + (c1[i] - c0[i]) * clamp(k)) for i in range(3))
+
+
+def dg_vergleich(d, t, dur):
+    header(d, t, 'DIESEL', 'Otto und Diesel', PUR)
+    rows = [('Zündung', 'Funke (Zündkerze)', 'Selbstzündung'), ('Verdichtung', 'ca. 10 – 14 : 1', 'ca. 16 – 20 : 1'),
+            ('Leistung über', 'Luftmenge', 'Kraftstoffmenge'), ('Lambda', 'meist = 1', 'größer 1')]
+    a = pr(t, 0.3, 0.9)
+    text(d, 620, 130, 'Ottomotor', 30, 'XB', MUTED, a, 'mm')
+    text(d, 960, 130, 'Dieselmotor', 30, 'XB', PUR, a, 'mm')
+    for i, (l, o, di) in enumerate(rows):
+        b = pr(t, 1.0 + i * 1.2, 1.6 + i * 1.2)
+        y = 170 + i * 90
+        rrect(d, (90, y, 1190, y + 74), 14, CARD, b)
+        text(d, 120, y + 37, l, 26, 'Bold', TXT, b, 'lm', bg=CARD)
+        text(d, 620, y + 37, o, 26, 'Semi', MUTED, b, 'mm', bg=CARD)
+        text(d, 960, y + 37, di, 28, 'XB', PUR, b, 'mm', bg=CARD)
+    caption(d, t, [(6.2, dur, 'Richtwerte – genaue Werte laut Hersteller')], PUR)
+
+
+def dg_gluehen(d, t, dur):
+    header(d, t, 'DIESEL', 'Die Glühanlage', PUR)
+    a = pr(t, 0.2, 0.8)
+    phase = 0 if t < 1.5 else 1 if t < 5.5 else 2 if t < 7.5 else 3
+    hot = [0, pr(t, 1.5, 3.5), 1, 1 - 0.4 * pr(t, 7.5, 10)][phase]
+    x = 330
+    rrect(d, (x - 15, 130, x + 15, 175), 5, (169, 179, 193), a)
+    rect(d, (x - 30, 175, x + 30, 215), (107, 118, 134), a)
+    rect(d, (x - 22, 215, x + 22, 330), (169, 179, 193), a)
+    rect(d, (x - 12, 330, x + 12, 380), (169, 179, 193), a)
+    if hot > 0.05:
+        circle(d, (x, 420), 60, mix((255, 140, 50), 0.5 * hot), 1)
+    rrect(d, (x - 9, 380, x + 9, 455), 9, lerp_c((107, 118, 134), (255, 120, 40), hot), a)
+    lamp = phase == 1 and t < 5.0
+    circle(d, (720, 230), 40, (255, 176, 32) if lamp else CARD2, a)
+    text(d, 720, 230, '~', 40, 'XB', BG if lamp else MUTED, a, 'mm', bg=(255, 176, 32) if lamp else CARD2)
+    text(d, 790, 230, 'Glühkontrollleuchte ' + ('an' if lamp else 'aus'), 28, 'Bold', TXT, a, 'lm')
+    names = ['Zündung aus', 'Vorglühen', 'Motor startet', 'Nachglühen']
+    for i, nme in enumerate(names):
+        y = 320 + i * 56
+        on = i == phase
+        rrect(d, (690, y, 1100, y + 44), 12, PUR if on else CARD, a)
+        text(d, 710, y + 22, nme, 22, 'Bold', BG if on else MUTED, a, 'lm', bg=PUR if on else CARD)
+    caption(d, t, [(1.5, 5.4, 'Vorglühen: Die Glühkerzen werden in Sekunden heiß'),
+                   (5.5, 7.4, 'Start: Die Wärme hilft beim Entzünden'),
+                   (7.5, dur, 'Nachglühen: ruhiger Lauf, weniger Rauch')], PUR)
+
+
+DG_MERKE = merke_scene('DIESEL', PUR, [
+    'Selbstzündung durch heiße, verdichtete Luft', 'Leistung über die Kraftstoffmenge',
+    'Glühkerzen helfen beim Kaltstart', 'Niedervolt-Glühkerzen nie an 12 V'])
+
+
+def cr_kette(d, t, dur):
+    header(d, t, 'COMMON-RAIL', 'Aufbau', PUR)
+    kette_boxes(d, t, [('Vorförder-', 'pumpe'), ('Filter', ''), ('Hochdruck-', 'pumpe'), ('Rail', ''), ('Injektoren', '')], 220, 130, PUR, step=0.8, hd=(4,))
+    caption(d, t, [(0.6, 5.4, 'Vom Tank bis zum Injektor'), (5.5, dur, 'Alle Injektoren hängen am selben Rail')], PUR)
+
+
+CR_DRUCK = values_scene('COMMON-RAIL', PUR, [], [
+    ('ca. 3–6 bar', 'Niederdruck'), ('ca. 250–400 bar', 'Raildruck im Leerlauf'),
+    ('über 2.000 bar', 'Raildruck bei Volllast'), ('ca. 200 bar', 'mindestens nötig zum Starten')],
+    note='Richtwerte – Hochdruck: Verletzungsgefahr!', title='Typische Drücke', vsize=26)
+
+
+def cr_verlauf(d, t, dur):
+    header(d, t, 'COMMON-RAIL', 'Einspritzverlauf', PUR)
+    a = pr(t, 0.2, 0.8)
+    line(d, [(120, 470), (1160, 470)], MUTED, 3, a)
+    line(d, [(560, 150), (560, 470)], MUTED, 2, a)
+    text(d, 560, 500, 'OT', 26, 'XB', TXT, a, 'mm')
+    bars = [((400, 380), 'Vor', 'leiser', 1.0), ((440, 380), None, None, 1.4), ((540, 215), 'Haupt', 'Leistung', 3.2), ((900, 360), 'Nach', 'Partikelfilter', 5.6)]
+    for (x, y), lab, sub, st in bars:
+        b = pr(t, st, st + 0.6)
+        w = 30 if lab != 'Haupt' else 110
+        rrect(d, (x, lerp(470, y, b), x + w, 470), 5, PUR, b)
+        if lab:
+            text(d, x + w / 2 + (20 if lab == 'Vor' else 0), y - 60, lab, 26, 'XB', PUR, b, 'mm')
+            text(d, x + w / 2 + (20 if lab == 'Vor' else 0), y - 30, sub, 20, 'Semi', MUTED, b, 'mm')
+    caption(d, t, [(1.0, 3.1, 'Voreinspritzung: weicher und leiser'), (3.2, 5.5, 'Haupteinspritzung: die Leistung'),
+                   (5.6, dur, 'Nacheinspritzung: z. B. für den Partikelfilter')], PUR)
+
+
+CR_MERKE = merke_scene('COMMON-RAIL', PUR, [
+    'Vorförderpumpe → Filter → Hochdruckpumpe → Rail', 'Raildruck bis über 2.000 bar',
+    'Vor-, Haupt- und Nacheinspritzung', 'Hochdruck: Gefahr, absolute Sauberkeit'])
+
+
+def rad(d, c, r, ang, col, a):
+    circle(d, c, r, None, a, outline=col, width=4)
+    for i in range(6):
+        q = ang + i * math.pi / 3
+        line(d, [c, (c[0] + r * 0.9 * math.cos(q), c[1] + r * 0.9 * math.sin(q))], col, 6, a)
+    circle(d, c, 10, col, a)
+
+
+def dt_turbo(d, t, dur):
+    header(d, t, 'TURBO', 'So arbeitet der Turbolader', PUR)
+    a = pr(t, 0.2, 0.8)
+    sp = pr(t, 1.0, 4.0)
+    ang = t * t * 2.0 * sp
+    rad(d, (420, 330), 110, ang, ORA, a)
+    rad(d, (860, 330), 110, -ang, BLU, a)
+    line(d, [(420, 330), (860, 330)], MUTED, 10, a)
+    text(d, 420, 480, 'Turbine', 28, 'XB', ORA, a, 'mm')
+    text(d, 420, 515, 'vom Abgas angetrieben', 20, 'Semi', MUTED, a, 'mm')
+    text(d, 860, 480, 'Verdichter', 28, 'XB', BLU, a, 'mm')
+    text(d, 860, 515, 'drückt Luft in den Motor', 20, 'Semi', MUTED, a, 'mm')
+    text(d, 640, 300, 'gleiche Welle', 20, 'Bold', MUTED, a, 'mm')
+    for i in range(4):
+        k = ((t * 0.9 + i / 4) % 1)
+        arrow(d, (150 + 120 * k, 200), (230 + 120 * k, 200), ORA, 5, 14, a * sp * (1 - k))
+        arrow(d, (1000 + 120 * k, 200), (1080 + 120 * k, 200), BLU, 5, 14, a * sp * (1 - k))
+    text(d, 200, 160, 'Abgas', 22, 'Bold', ORA, a, 'mm')
+    text(d, 1080, 160, 'Ladeluft', 22, 'Bold', BLU, a, 'mm')
+    caption(d, t, [(0.6, 5.5, 'Das Abgas treibt die Turbine an'), (5.6, dur, 'Mehr Luft im Zylinder = mehr Leistung')], PUR)
+
+
+def dt_agr(d, t, dur):
+    header(d, t, 'AGR', 'Abgasrückführung', PUR)
+    a = pr(t, 0.2, 0.8)
+    r = 50 * clamp((t - 1.0) / 7.0)
+    rrect(d, (90, 150, 1190, 250), 16, CARD, a)
+    text(d, 120, 200, 'AGR-Rate', 28, 'Bold', TXT, a, 'lm', bg=CARD)
+    text(d, 1160, 200, f'{r:.0f} %', 36, 'XB', PUR, a, 'rm', bg=CARD)
+    for i, (lab, val, col) in enumerate([('Stickoxide (NOx)', 95 - r * 1.6, RED), ('Ruß', 8 + (r / 50) ** 2.2 * 87, MUTED)]):
+        y = 300 + i * 120
+        text(d, 90, y, lab, 26, 'Bold', TXT, a, 'lm')
+        rrect(d, (90, y + 24, 1190, y + 64), 10, CARD, a)
+        rrect(d, (90, y + 24, 90 + 11 * val, y + 64), 10, col, a)
+    caption(d, t, [(0.6, 5.0, 'Mehr AGR: weniger Stickoxide'), (5.1, dur, 'Zu viel AGR: viel Ruß – der Mittelweg zählt')], PUR)
+
+
+DT_WERTE = values_scene('TURBO', PUR, [], [
+    ('bis ca. 2,5 bar', 'Ladedruck (absolut)'), ('über 200.000', 'Umdrehungen pro Minute am Lader'),
+    ('VTG', 'Leitschaufeln: früh viel Ladedruck'), ('nachlaufen', 'lassen nach starker Belastung')],
+    note='Richtwerte – genaue Werte laut Hersteller', title='Gut zu wissen', vsize=26)
+
+DT_MERKE = merke_scene('TURBO UND AGR', PUR, [
+    'Abgas treibt Turbine, Verdichter drückt Luft', 'Ladeluftkühler: kühle Luft ist dichter',
+    'AGR: weniger Stickoxide, zu viel macht Ruß', 'Turbo: warm fahren, nachlaufen lassen'])
+
+VIDEOS_MOTOR.update({
+    'mm-diesel-grundlagen': (PUR, [(title_scene('D', 'Diesel-Grundlagen', 'Selbstzündung und Glühanlage', PUR, kicker=KICK4), 5.0),
+                                   (dg_verdichten, 11.0), (dg_vergleich, 9.0), (dg_gluehen, 11.0), (DG_MERKE, 7.5)]),
+    'mm-common-rail': (PUR, [(title_scene('CR', 'Common-Rail', 'Hochdruck und Einspritzverlauf', PUR, size=96, kicker=KICK4), 5.0),
+                             (cr_kette, 9.0), (CR_DRUCK, 9.0), (cr_verlauf, 10.0), (CR_MERKE, 7.5)]),
+    'mm-diesel-turbo': (PUR, [(title_scene('T', 'Turbo und AGR', 'Aufladung und Abgasrückführung', PUR, kicker=KICK4), 5.0),
+                              (dt_turbo, 10.0), (dt_agr, 10.0), (DT_WERTE, 9.0), (DT_MERKE, 7.5)]),
+})

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Common-Rail – Motormanagement</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 110px; }
+</style>
+</head>
+<body class="t-mm4">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTORMANAGEMENT · DIESEL</div>
+  <div class="symbol" style="font-size:84px">CR</div>
+  <h1>Common-Rail</h1>
+  <p>Hochdruck, Injektoren und Einspritzverlauf</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">COMMON-RAIL</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Wie ein Common-Rail-System aufgebaut ist</li>
+      <li class="step from-left"><span class="num">2</span>Welche Drücke dort herrschen</li>
+      <li class="step from-left"><span class="num">3</span>Warum mehrmals pro Takt eingespritzt wird</li>
+      <li class="step from-left"><span class="num">4</span>Sicher arbeiten und prüfen</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">COMMON-RAIL</span><h2>Aufbau</h2>
+  <div class="body">
+    <div class="kette">
+      <div class="glied step"><b>Vorförderpumpe</b><span>im Tank, Niederdruck</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Kraftstofffilter</b><span>mit Wasserabscheider</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Hochdruckpumpe</b><span>vom Motor angetrieben</span></div><div class="flow-arrow step"></div>
+      <div class="glied step"><b>Rail</b><span>Hochdruckspeicher mit Raildrucksensor</span></div><div class="flow-arrow step"></div>
+      <div class="glied step hd"><b>Injektoren</b><span>spritzen in den Brennraum</span></div>
+    </div>
+    <div class="tip step" style="margin-top:18px"><b>„Common Rail“ heißt „gemeinsame Leiste“</b>Alle Injektoren hängen am selben Rail. Der Druck ist immer da – das Steuergerät bestimmt nur, wann und wie lange jeder Injektor öffnet. Überschüssiger Kraftstoff fließt über den Rücklauf zurück in den Tank.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">COMMON-RAIL</span><h2>Typische Drücke</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>ca. 3–6 bar</b><span>Niederdruck nach der Vorförderpumpe</span></div>
+      <div class="val step from-left"><b>ca. 250–400 bar</b><span>Raildruck im Leerlauf</span></div>
+      <div class="val step from-left"><b>über 2.000 bar</b><span>Raildruck bei Volllast (je nach System bis ca. 2.500 bar)</span></div>
+      <div class="val step from-left"><b>ca. 200 bar</b><span>so viel braucht es mindestens, damit der Motor startet</span></div>
+    </div>
+    <div class="note step">Richtwerte – genaue Werte laut Herstellerangabe. Raildruck Soll und Ist im Diagnosegerät vergleichen.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">COMMON-RAIL</span><h2>Injektoren</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Magnetventil-Injektor</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>eine Spule öffnet ein Steuerventil</li><li>der Kraftstoffdruck hebt die Düsennadel</li><li>etwas langsamer, robust</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Piezo-Injektor</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>ein Piezo-Stapel dehnt sich bei Spannung aus</li><li>schaltet sehr schnell – viele Einspritzungen möglich</li><li>leiser, genauer</li></ul></div>
+      <div class="warn step" style="grid-column:1/-1"><b>Hohe Ansteuerspannung</b>Injektoren werden mit deutlich mehr als 12 V angesteuert – keine Prüflampe, nicht in den Stecker stechen. Prüfen nur mit Diagnosegerät, Oszilloskop und Prüfadapter.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-ev">
+  <span class="tag">COMMON-RAIL</span><h2>Einspritzverlauf – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-e="vor">Voreinspritzung</button><button class="btn ghost on" data-e="haupt">Haupteinspritzung</button><button class="btn ghost on" data-e="nach">Nacheinspritzung</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 560 220" width="540" height="212" style="display:block;margin:0 auto">
+  <line x1="30" y1="180" x2="540" y2="180" stroke="#94a4ba" stroke-width="2"/>
+  <line x1="250" y1="30" x2="250" y2="180" stroke="#94a4ba" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="250" y="206" text-anchor="middle" font-size="16" font-weight="800" fill="#ecf1f8">OT</text>
+  <text x="34" y="40" font-size="14" font-weight="700" fill="#94a4ba">Einspritzung</text>
+  <g id="ev-vor" style="transition:opacity .3s"><rect x="175" y="140" width="16" height="40" rx="3" fill="#a07cf5"/><rect x="200" y="140" width="16" height="40" rx="3" fill="#a07cf5"/><text x="195" y="128" text-anchor="middle" font-size="14" font-weight="800" fill="#a07cf5">Vor</text></g>
+  <g id="ev-haupt" style="transition:opacity .3s"><rect x="240" y="60" width="70" height="120" rx="4" fill="#a07cf5"/><text x="275" y="50" text-anchor="middle" font-size="14" font-weight="800" fill="#a07cf5">Haupt</text></g>
+  <g id="ev-nach" style="transition:opacity .3s"><rect x="420" y="130" width="22" height="50" rx="3" fill="#a07cf5"/><text x="431" y="118" text-anchor="middle" font-size="14" font-weight="800" fill="#a07cf5">Nach</text></g>
+</svg>
+      <div class="card" id="ev-t" style="font-size:17px;font-weight:600;line-height:1.5"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Tippe die Einspritzungen an und aus. Vereinfachte Darstellung.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">COMMON-RAIL</span><h2>Sicher arbeiten</h2>
+  <div class="body">
+    <div class="warn step"><b>Hochdruck – Verletzungsgefahr</b>Ein Kraftstoffstrahl mit über 1.000 bar durchdringt die Haut. Bei laufendem Motor nie an Hochdruckleitungen fassen oder nach Lecks tasten.</div>
+    <div class="warn step" style="margin-top:12px"><b>Vor dem Öffnen</b>Motor aus und warten, bis der Druck abgebaut ist – Vorgabe und Wartezeit laut Hersteller.</div>
+    <div class="tip step" style="margin-top:12px"><b>Absolute Sauberkeit</b>Schon kleinste Schmutzteilchen zerstören Pumpe und Injektoren. Offene Anschlüsse sofort mit Schutzkappen verschließen. Hochdruckleitungen nach dem Lösen meist erneuern.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">COMMON-RAIL</span><h2>Common-Rail prüfen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fehlerspeicher und Raildruck lesen<small>Soll und Ist im Diagnosegerät vergleichen – auch beim Starten</small></li>
+      <li class="step">Mengenabgleich ansehen<small>Korrekturwerte pro Zylinder – ein Ausreißer zeigt den auffälligen Injektor</small></li>
+      <li class="step">Rücklaufmenge messen<small>Rücklauf jedes Injektors in Messgläser – ein Injektor mit viel mehr Rücklauf ist verschlissen</small></li>
+      <li class="step">Nach Injektortausch: Codierung<small>den Code vom Injektor im Steuergerät eintragen</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">COMMON-RAIL</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mm-common-rail.mp4" poster="videos/mm-common-rail.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">COMMON-RAIL</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Welche Aufgabe hat das Rail?</p>
+      <div class="opts"><button class="opt">Es kühlt den Kraftstoff</button><button class="opt">Es ist der Hochdruckspeicher für alle Injektoren</button><button class="opt">Es filtert Wasser aus dem Diesel</button></div>
+      <div class="fb">Alle Injektoren hängen am selben Rail – der Druck ist immer da.</div></div>
+    <div class="q" data-correct="2"><p>2. Wie hoch ist der Raildruck bei Volllast etwa (Richtwert)?</p>
+      <div class="opts"><button class="opt">ca. 5 bar</button><button class="opt">ca. 50 bar</button><button class="opt">über 2.000 bar</button></div>
+      <div class="fb">Moderne Systeme arbeiten mit über 2.000 bar.</div></div>
+    <div class="q" data-correct="0"><p>3. Wozu dient die Voreinspritzung?</p>
+      <div class="opts"><button class="opt">Die Verbrennung wird weicher und leiser</button><button class="opt">Sie reinigt den Partikelfilter</button><button class="opt">Sie kühlt die Injektoren</button></div>
+      <div class="fb">Eine kleine Menge vorab macht den Druckanstieg sanfter – das typische Nageln wird leiser.</div></div>
+    <div class="q" data-correct="1"><p>4. Ein Injektor hat beim Rücklauftest viel mehr Rücklauf als die anderen. Was bedeutet das?</p>
+      <div class="opts"><button class="opt">Er ist in Ordnung</button><button class="opt">Er ist verschlissen</button><button class="opt">Der Tank ist zu voll</button></div>
+      <div class="fb">Viel Rücklauf heißt: Der Injektor ist innen undicht.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">COMMON-RAIL</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Vorförderpumpe → Filter → Hochdruckpumpe → Rail → Injektoren</span></li>
+        <li class="step"><span>Raildruck bis über 2.000 bar</span></li>
+        <li class="step"><span>Vor-, Haupt- und Nacheinspritzung</span></li>
+        <li class="step"><span>Hochdruck: Lebensgefahr, absolute Sauberkeit</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Motormanagement%3A%20Dieselmanagement" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const T = {
+    vor: '<b>Voreinspritzung:</b> eine kleine Menge vorab. Die Verbrennung startet sanfter – das typische Diesel-Nageln wird leiser.',
+    haupt: '<b>Haupteinspritzung:</b> der größte Teil des Kraftstoffs – sie erzeugt die Leistung.',
+    nach: '<b>Nacheinspritzung:</b> nach der Verbrennung, z. B. damit der Partikelfilter heiß genug zum Freibrennen wird.'
+  };
+  const bt = document.querySelectorAll('#s-ev [data-e]');
+  function upd(last) {
+    bt.forEach(b => document.getElementById('ev-' + b.dataset.e).style.opacity = b.classList.contains('on') ? 1 : 0.12);
+    const k = last || 'haupt';
+    document.getElementById('ev-t').innerHTML = T[k] + (document.querySelector('#s-ev [data-e="' + k + '"]').classList.contains('on') ? '' : '<br><span class="muted">– gerade ausgeschaltet –</span>');
+  }
+  bt.forEach(b => b.onclick = () => { b.classList.toggle('on'); upd(b.dataset.e); });
+  upd('vor');
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>
