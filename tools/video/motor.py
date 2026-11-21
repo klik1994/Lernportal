@@ -1439,3 +1439,226 @@ VIDEOS_MOTOR.update({
     'mm-auf-diagnose': (YEL, [(title_scene('!', 'Turbo-Diagnose', 'Fehler finden, richtig tauschen', YEL, kicker=KICK7), 5.0),
                               (ad2_pruefen, 9.0), (AD2_URSACHEN, 8.5), (AD2_TAUSCH, 8.5), (AD2_MERKE, 7.5)]),
 })
+
+
+# =================== REIHE / PARALLEL / GEMISCHT ===================
+KICK8 = 'GRUNDLAGEN ELEKTRIK  ·  LERNVIDEO'
+
+
+def v_batt(d, x, y1, y2, a):
+    m = (y1 + y2) / 2
+    line(d, [(x, y1), (x, m - 10)], TXT, 5, a)
+    line(d, [(x, m + 10), (x, y2)], TXT, 5, a)
+    line(d, [(x - 34, m - 10), (x + 34, m - 10)], RED, 7, a)
+    line(d, [(x - 18, m + 10), (x + 18, m + 10)], MUTED, 10, a)
+    text(d, x - 44, m - 10, '+', 30, 'XB', RED, a, 'rm')
+    text(d, x + 44, m + 4, '12 V', 22, 'Bold', MUTED, a, 'lm')
+
+
+def v_lampe(d, c, an, a, k=1.0, lab=None):
+    if an > 0.01:
+        circle(d, c, 46, mix(YEL, 0.45 * an * k), 1)
+    circle(d, c, 26, CARD2, a, outline=TXT, width=5)
+    line(d, [(c[0] - 18, c[1] - 18), (c[0] + 18, c[1] + 18)], TXT, 4, a)
+    line(d, [(c[0] + 18, c[1] - 18), (c[0] - 18, c[1] + 18)], TXT, 4, a)
+    if lab:
+        text(d, c[0], c[1] - 50, lab, 20, 'Bold', MUTED, a, 'mm')
+
+
+def v_wid(d, c, lab, a, vert=False, col=None):
+    w, h = (34, 80) if vert else (80, 34)
+    rrect(d, (c[0] - w / 2, c[1] - h / 2, c[0] + w / 2, c[1] + h / 2), 4, CARD2, a, outline=col or TXT, width=5)
+    if vert:
+        text(d, c[0] + 30, c[1], lab, 22, 'Bold', col or MUTED, a, 'lm')
+    else:
+        text(d, c[0], c[1] - 36, lab, 22, 'Bold', col or MUTED, a, 'mm')
+
+
+def vr_kreis(d, t, dur):
+    header(d, t, 'REIHENSCHALTUNG', 'Nur ein Stromweg', TEA)
+    a = pr(t, 0.2, 0.8)
+    an = 1 if t < 6 else 0
+    v_batt(d, 200, 230, 350, a)
+    line(d, [(200, 230), (200, 140), (454, 140)], RED, 6, a)
+    line(d, [(506, 140), (694, 140)], ORA if an else RED, 6, a)
+    line(d, [(746, 140), (1000, 140), (1000, 470), (200, 470), (200, 350)], ROY, 6, a)
+    pts = [(200, 230), (200, 140), (1000, 140), (1000, 470), (200, 470), (200, 350)]
+    if an:
+        flow_dots(d, Path(pts), t, 110, 46, 8, (255, 211, 77), a)
+    v_lampe(d, (480, 140), an, a, lab='Lampe 1')
+    if t < 6:
+        v_lampe(d, (720, 140), an, a, lab='Lampe 2')
+    else:
+        text(d, 720, 90, 'Lampe 2 fehlt', 22, 'XB', RED, 1, 'mm')
+    text(d, 320, 175, 'Plus 12 V', 22, 'XB', RED, a, 'mm')
+    text(d, 600, 175, 'ca. 6 V' if an else 'Plus 12 V', 22, 'XB', ORA if an else RED, a, 'mm')
+    text(d, 600, 440, 'Minus 0 V', 22, 'XB', ROY, a, 'mm')
+    caption(d, t, [(0.6, 5.8, 'Rot = Plus, blau = Minus – an jeder Lampe fällt Spannung ab'),
+                   (6.0, dur, 'Lampe fehlt: Plus reicht bis zum Sockel – dort misst du 12 V')], TEA)
+
+
+VR_REGELN = values_scene('REIHENSCHALTUNG', TEA, [], [
+    ('I gleich', 'Der Strom ist überall gleich groß'), ('R = R1 + R2', 'Die Widerstände werden addiert'),
+    ('U = U1 + U2', 'Die Spannung teilt sich auf'), ('größter R', 'hat die größte Teilspannung')],
+    note='Gilt für jede Reihenschaltung', title='Die Regeln', vsize=28)
+
+
+def vr_rechnen(d, t, dur):
+    header(d, t, 'REIHENSCHALTUNG', 'Ein Rechenbeispiel', TEA)
+    a = pr(t, 0.2, 0.8)
+    v_batt(d, 200, 230, 350, a)
+    pts = [(200, 230), (200, 140), (1000, 140), (1000, 470), (200, 470), (200, 350)]
+    line(d, pts, TXT, 5, a)
+    flow_dots(d, Path(pts), t, 90, 46, 7, BLU, a)
+    v_wid(d, (480, 140), 'R1 = 4 Ω', a)
+    v_wid(d, (720, 140), 'R2 = 2 Ω', a)
+    for i, (x, y, s, c, st) in enumerate([(600, 300, 'R = 4 Ω + 2 Ω = 6 Ω', TXT, 1.5), (600, 360, 'I = 12 V : 6 Ω = 2 A', BLU, 3.5),
+                                          (480, 205, 'U1 = 8 V', TEA, 5.5), (720, 205, 'U2 = 4 V', TEA, 6.5)]):
+        text(d, x, y, s, 30, 'XB', c, pr(t, st, st + 0.5), 'mm')
+    caption(d, t, [(7.5, dur, 'Probe: 8 V + 4 V = 12 V')], TEA)
+
+
+VR_MERKE = merke_scene('REIHENSCHALTUNG', TEA, [
+    'Nur ein Stromweg', 'Strom überall gleich', 'R = R1 + R2 + …', 'U = U1 + U2 + …'])
+
+
+def vp_kreis(d, t, dur):
+    header(d, t, 'PARALLELSCHALTUNG', 'Jeder Verbraucher hat seinen Zweig', ROY)
+    a = pr(t, 0.2, 0.8)
+    xs = [500, 700, 900]
+    ons = [t > 1.5, t > 3.0, t > 4.5]
+    if t > 7.5:
+        ons[1] = False
+    v_batt(d, 200, 230, 350, a)
+    line(d, [(200, 230), (200, 140), (900, 140)], TXT, 5, a)
+    line(d, [(200, 350), (200, 470), (900, 470)], TXT, 5, a)
+    for i, x in enumerate(xs):
+        line(d, [(x, 140), (x, 470)], TXT, 5, a)
+        if ons[i]:
+            flow_dots(d, Path([(200, 230), (200, 140), (x, 140), (x, 470), (200, 470), (200, 350)]), t + i * 0.13, 110, 46, 7, BLU, a)
+        v_lampe(d, (x, 305), 1 if ons[i] else 0, a)
+    n = sum(ons)
+    rrect(d, (1000, 240, 1220, 360), 16, CARD, a)
+    text(d, 1110, 275, 'Gesamtstrom', 20, 'Bold', MUTED, a, 'mm', bg=CARD)
+    text(d, 1110, 320, f'{n * 2} A', 40, 'XB', ROY, a, 'mm', bg=CARD)
+    caption(d, t, [(0.6, 7.4, 'Jede Lampe bekommt 12 V – die Ströme addieren sich'),
+                   (7.5, dur, 'Eine Lampe aus – die anderen leuchten weiter')], ROY)
+
+
+VP_REGELN = values_scene('PARALLELSCHALTUNG', ROY, [], [
+    ('U gleich', 'An jedem Zweig dieselbe Spannung'), ('I = I1 + I2', 'Die Zweigströme werden addiert'),
+    ('R kleiner', 'als der kleinste Einzelwiderstand'), ('im Kfz', 'fast alle Verbraucher parallel')],
+    note='Mehr Verbraucher = mehr Gesamtstrom', title='Die Regeln', vsize=28)
+
+
+def vp_rechnen(d, t, dur):
+    header(d, t, 'PARALLELSCHALTUNG', 'Ein Rechenbeispiel', ROY)
+    a = pr(t, 0.2, 0.8)
+    v_batt(d, 200, 230, 350, a)
+    line(d, [(200, 230), (200, 140), (740, 140)], TXT, 5, a)
+    line(d, [(200, 350), (200, 470), (740, 470)], TXT, 5, a)
+    for x, lab in [(540, 'R1 = 6 Ω'), (740, 'R2 = 3 Ω')]:
+        line(d, [(x, 140), (x, 470)], TXT, 5, a)
+        v_wid(d, (x, 305), lab, a, True)
+    flow_dots(d, Path([(200, 230), (200, 140), (540, 140), (540, 470), (200, 470), (200, 350)]), t, 60, 46, 7, BLU, a)
+    flow_dots(d, Path([(200, 230), (200, 140), (740, 140), (740, 470), (200, 470), (200, 350)]), t + 0.2, 120, 46, 7, BLU, a)
+    for s, y, st in [('I1 = 12 V : 6 Ω = 2 A', 230, 1.5), ('I2 = 12 V : 3 Ω = 4 A', 290, 3.0), ('I = 2 A + 4 A = 6 A', 350, 4.5), ('R = 12 V : 6 A = 2 Ω', 410, 6.0)]:
+        text(d, 900, y, s, 26, 'XB', ROY if 'I =' in s or 'R =' in s else TXT, pr(t, st, st + 0.5), 'lm')
+    caption(d, t, [(7.0, dur, '2 Ω – kleiner als der kleinste Einzelwiderstand')], ROY)
+
+
+
+def vp_warum(d, t, dur):
+    header(d, t, 'PARALLELSCHALTUNG', 'Warum wird R kleiner?', ROY)
+    a = pr(t, 0.2, 0.8)
+    zw = [(500, 34, '6 Ω', 0), (680, 16, '12 Ω', 3.5), (860, 16, '12 Ω', 7.0)]
+    v_batt(d, 200, 230, 350, a)
+    line(d, [(200, 230), (200, 140), (860, 140)], RED, 6, a)
+    line(d, [(200, 350), (200, 470), (860, 470)], ROY, 6, a)
+    I = 0
+    for i, (x, w, lab, st) in enumerate(zw):
+        b = pr(t, st, st + 0.6) if st else a
+        line(d, [(x, 140), (x, 255)], RED, 6, b)
+        line(d, [(x, 355), (x, 470)], ROY, 6, b)
+        rrect(d, (x - w, 255, x + w, 355), 4, CARD2, b, outline=TXT, width=5)
+        text(d, x + w + 14, 305, lab, 22, 'Bold', MUTED, b, 'lm')
+        if b > 0.5 or i == 0:
+            I += 12 / int(lab.split()[0])
+            flow_dots(d, Path([(200, 230), (200, 140), (x, 140), (x, 470), (200, 470), (200, 350)]), t + i * 0.13, 110 if i == 0 else 55, 46, 7, (255, 211, 77), b)
+    R = 12 / I
+    rrect(d, (960, 200, 1230, 420), 16, CARD, a)
+    text(d, 1095, 240, 'Gesamtstrom', 20, 'Bold', MUTED, a, 'mm', bg=CARD)
+    text(d, 1095, 280, f'{I:.0f} A', 38, 'XB', TXT, a, 'mm', bg=CARD)
+    text(d, 1095, 335, 'Gesamtwiderstand', 20, 'Bold', MUTED, a, 'mm', bg=CARD)
+    text(d, 1095, 378, f'{R:.0f} Ω', 38, 'XB', ROY, a, 'mm', bg=CARD)
+    caption(d, t, [(0.6, 3.4, 'Ein Zweig mit 6 Ω: 2 A – Gesamtwiderstand 6 Ω'),
+                   (3.5, 6.9, 'Jeder neue Zweig ist ein Weg mehr – mehr Strom fließt'),
+                   (7.0, dur, 'Mehr Strom bei 12 V = kleinerer Widerstand: R = U : I')], ROY)
+
+VP_MERKE = merke_scene('PARALLELSCHALTUNG', ROY, [
+    'Jeder Verbraucher hat seinen Zweig', 'Spannung überall gleich', 'I = I1 + I2 + …', 'R kleiner als der kleinste'])
+
+
+def vg_schritte(d, t, dur):
+    header(d, t, 'GEMISCHTE SCHALTUNG', 'Schritt für Schritt vereinfachen', PUR)
+    a = pr(t, 0.2, 0.8)
+    st = 0 if t < 4 else 1 if t < 8 else 2
+    v_batt(d, 200, 230, 350, a)
+    if st == 0:
+        line(d, [(200, 230), (200, 140), (900, 140), (900, 470), (200, 470), (200, 350)], TXT, 5, a)
+        line(d, [(640, 140), (640, 470)], TXT, 5, a)
+        v_wid(d, (420, 140), 'R1 = 2 Ω', a)
+        v_wid(d, (640, 305), 'R2 = 6 Ω', a, True)
+        v_wid(d, (900, 305), 'R3 = 3 Ω', a, True)
+    elif st == 1:
+        b = pr(t, 4, 4.6)
+        line(d, [(200, 230), (200, 140), (760, 140), (760, 470), (200, 470), (200, 350)], TXT, 5, b)
+        v_wid(d, (420, 140), 'R1 = 2 Ω', b)
+        v_wid(d, (760, 305), 'R23 = 2 Ω', b, True, PUR)
+    else:
+        b = pr(t, 8, 8.6)
+        line(d, [(200, 230), (200, 140), (600, 140), (600, 470), (200, 470), (200, 350)], TXT, 5, b)
+        v_wid(d, (600, 305), 'R = 4 Ω', b, True, PUR)
+        text(d, 900, 305, 'I = 12 V : 4 Ω = 3 A', 30, 'XB', BLU, pr(t, 9, 9.5), 'mm')
+    caption(d, t, [(0.6, 3.9, 'R1 in Reihe, R2 und R3 parallel'),
+                   (4.0, 7.9, 'Parallelgruppe ersetzen: 6 Ω || 3 Ω = 2 Ω'),
+                   (8.0, dur, 'Reihe addieren: 2 Ω + 2 Ω = 4 Ω')], PUR)
+
+
+VG_RECHNEN = values_scene('GEMISCHTE SCHALTUNG', PUR, [], [
+    ('R23 = 2 Ω', '6 Ω parallel zu 3 Ω'), ('I = 3 A', '12 V : 4 Ω'),
+    ('U1 = 6 V', 'an R1 – an der Gruppe ebenfalls 6 V'), ('1 A + 2 A', 'Zweigströme I2 und I3 = 3 A')],
+    note='Erst vereinfachen, dann rückwärts rechnen', title='Das Rechenbeispiel', vsize=28)
+
+
+def vg_kfz(d, t, dur):
+    header(d, t, 'GEMISCHTE SCHALTUNG', 'Gemeinsame Masse im Kfz', PUR)
+    a = pr(t, 0.2, 0.8)
+    schlecht = t > 4
+    k = 0.35 if schlecht else 1
+    v_batt(d, 200, 230, 350, a)
+    line(d, [(200, 230), (200, 140), (800, 140)], TXT, 5, a)
+    line(d, [(560, 140), (560, 400)], TXT, 5, a)
+    line(d, [(800, 140), (800, 400), (560, 400)], TXT, 5, a)
+    line(d, [(680, 400), (680, 470), (200, 470), (200, 350)], TXT, 5, a)
+    v_lampe(d, (560, 270), 1, a, k, 'links')
+    v_lampe(d, (800, 270), 1, a, k, 'rechts')
+    v_wid(d, (440, 470), 'Masseleitung', a, col=RED if schlecht else None)
+    if schlecht:
+        text(d, 440, 525, 'korrodiert – Übergangswiderstand', 22, 'XB', RED, pr(t, 4, 4.5), 'mm')
+    caption(d, t, [(0.6, 3.9, 'Zwei Leuchten parallel – eine gemeinsame Masse in Reihe'),
+                   (4.0, dur, 'Masse korrodiert: Beide Leuchten werden dunkler')], PUR)
+
+
+VG_MERKE = merke_scene('GEMISCHTE SCHALTUNG', PUR, [
+    'Teils in Reihe, teils parallel', 'Parallelgruppen ersetzen, dann addieren',
+    'Rückwärts: Strom, Spannungen, Zweigströme', 'Alle betroffen? Gemeinsamen Teil prüfen'])
+
+VIDEOS_MOTOR.update({
+    'reihe': (TEA, [(title_scene('R+R', 'Reihenschaltung', 'Nur ein Stromweg', TEA, size=64, kicker=KICK8), 5.0),
+                    (vr_kreis, 10.0), (VR_REGELN, 9.0), (vr_rechnen, 10.0), (VR_MERKE, 7.5)]),
+    'parallel': (ROY, [(title_scene('R||R', 'Parallelschaltung', 'Jeder Verbraucher hat seinen Zweig', ROY, size=64, kicker=KICK8), 5.0),
+                       (vp_kreis, 10.5), (VP_REGELN, 9.0), (vp_warum, 11.0), (vp_rechnen, 9.5), (VP_MERKE, 7.5)]),
+    'gemischt': (PUR, [(title_scene('R+||', 'Gemischte Schaltung', 'Reihe und parallel kombiniert', PUR, size=64, kicker=KICK8), 5.0),
+                       (vg_schritte, 12.0), (VG_RECHNEN, 9.0), (vg_kfz, 9.0), (VG_MERKE, 7.5)]),
+})

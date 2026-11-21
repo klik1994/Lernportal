@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 13 Themen, 119 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 14 Themen, 126 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
-  assert.strictEqual(r.themen.length, 13);
-  assert.strictEqual(r.fragen.length, 119);
+  assert.strictEqual(r.themen.length, 14);
+  assert.strictEqual(r.fragen.length, 126);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
@@ -196,4 +196,18 @@ test('Echte Inhaltsdatei: Motormanagement Aufladung mit Präsentationen und Vide
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
   });
   assert.ok(r.fragen.filter(f => f.thema === 'Motormanagement: Aufladung').length >= 5);
+});
+
+test('Echte Inhaltsdatei: Reihen-, Parallel- und gemischte Schaltung mit Präsentationen und Videos', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  [['Reihenschaltung', 'reihe'], ['Parallelschaltung', 'parallel'], ['Gemischte Schaltung', 'gemischt']].forEach(([name, n]) => {
+    const t = r.themen.find(x => x.name === name);
+    assert.strictEqual(t.bereich, 'Elektrik-Grundlagen');
+    assert.strictEqual(t.praesentationen.length, 1);
+    assert.strictEqual(t.praesentationen[0].link, 'praesentationen/' + n + '.html');
+    assert.ok(fs.existsSync(path.join(__dirname, '..', t.praesentationen[0].link)), n);
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
+    assert.ok(r.fragen.filter(f => f.thema === name).length >= 5, name);
+  });
 });

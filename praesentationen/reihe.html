@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Reihenschaltung – Grundlagen Elektrik</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 64px; }
+</style>
+</head>
+<body class="t-reihe">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">GRUNDLAGEN ELEKTRIK · KFZ-MECHATRONIK</div>
+  <div class="symbol" style="font-size:64px">R+R</div>
+  <h1>Reihenschaltung</h1>
+  <p>Alle Bauteile hintereinander – nur ein Stromweg</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">REIHENSCHALTUNG</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Woran du eine Reihenschaltung erkennst</li>
+      <li class="step from-left"><span class="num">2</span>Was für Strom, Spannung und Widerstand gilt</li>
+      <li class="step from-left"><span class="num">3</span>Wie du eine Reihenschaltung berechnest</li>
+      <li class="step from-left"><span class="num">4</span>Wo dir die Reihenschaltung im Kfz begegnet</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">REIHENSCHALTUNG</span><h2>Der Vergleich mit Wasser</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big">Ein Wasserschlauch mit <span class="c">zwei engen Stellen hintereinander</span>.</div></div>
+      <div class="card step"><div class="big">Durch beide Engstellen fließt <span class="c">dieselbe Menge</span> Wasser – es gibt nur einen Weg.</div></div>
+      <div class="card step"><div class="big">Jede Engstelle bremst. Zusammen bremsen sie <span class="c">mehr</span> als eine allein.</div></div>
+      <div class="card step"><div class="big">Ist der Schlauch an einer Stelle zu, fließt <span class="c">überall nichts</span> mehr.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-r1">
+  <span class="tag">REIHENSCHALTUNG</span><h2>Nur ein Stromweg – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" id="r1-ein">Beide Lampen drin</button><button class="btn ghost" id="r1-aus">Lampe 2 herausdrehen</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 560 300" width="540" height="290" style="display:block;margin:0 auto" id="r1-svg">
+  <g class="dev"><line x1="34" y1="142.0" x2="86" y2="142.0" stroke="#f05e4e" stroke-width="6"/>
+    <line x1="46" y1="158.0" x2="74" y2="158.0" stroke="#94a4ba" stroke-width="8"/></g>
+    <line x1="60" y1="110" x2="60" y2="142.0" stroke="#ecf1f8" stroke-width="4"/>
+    <line x1="60" y1="158.0" x2="60" y2="190" stroke="#ecf1f8" stroke-width="4"/>
+    <text x="26" y="146.0" text-anchor="end" font-size="22" font-weight="900" fill="#f05e4e">+</text>
+    <text x="26" y="172.0" text-anchor="end" font-size="22" font-weight="900" fill="#94a4ba">−</text>
+    <text x="94" y="156.0" font-size="16" font-weight="800" fill="#94a4ba">12 V</text>
+  <path d="M60 110 V50 H200" fill="none" stroke="#f05e4e" stroke-width="5"/>
+  <path id="r1-mid" d="M240 50 H360" fill="none" stroke="#ff8f3f" stroke-width="5" style="transition:stroke .3s"/>
+  <path d="M400 50 H500 V250 H60 V190" fill="none" stroke="#5b8cff" stroke-width="5"/>
+  <path id="r1-p" d="M60 110 V50 H500 V250 H60 V190" fill="none" stroke="none"/>
+  <circle id="r1l1-glow" cx="220" cy="50" r="34" fill="#f7b612" style="opacity:0;transition:opacity .3s"/>
+    <circle cx="220" cy="50" r="20" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+    <path id="r1l1-x" d="M206 36 L234 64 M234 36 L206 64" stroke="#ecf1f8" stroke-width="3"/>
+    <text x="220" y="20" text-anchor="middle" font-size="15" font-weight="800" fill="#94a4ba">Lampe 1</text>
+  <g id="r1-l2"><circle id="r1l2-glow" cx="380" cy="50" r="34" fill="#f7b612" style="opacity:0;transition:opacity .3s"/>
+    <circle cx="380" cy="50" r="20" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+    <path id="r1l2-x" d="M366 36 L394 64 M394 36 L366 64" stroke="#ecf1f8" stroke-width="3"/>
+    <text x="380" y="20" text-anchor="middle" font-size="15" font-weight="800" fill="#94a4ba">Lampe 2</text></g>
+  <text x="120" y="76" text-anchor="middle" font-size="15" font-weight="900" fill="#f05e4e">Plus 12 V</text>
+  <text id="r1-mt" x="300" y="76" text-anchor="middle" font-size="15" font-weight="900" fill="#ff8f3f">ca. 6 V</text>
+  <text x="280" y="238" text-anchor="middle" font-size="15" font-weight="900" fill="#5b8cff">Minus 0 V</text>
+  <text x="40" y="294" font-size="13" font-weight="800" fill="#f05e4e">rot = Plus</text><text x="140" y="294" font-size="13" font-weight="800" fill="#5b8cff">blau = Minus</text><text x="250" y="294" font-size="13" font-weight="800" fill="#94a4ba">gelbe Punkte = Strom (technisch: + → −)</text>
+</svg>
+      <div class="card" id="r1-t" style="font-size:18px;font-weight:600;line-height:1.5"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">REIHENSCHALTUNG</span><h2>Die drei Regeln</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>I = gleich</b><span>Der Strom ist an jeder Stelle gleich groß – es gibt nur einen Weg</span></div>
+      <div class="val step from-left"><b>R = R1 + R2 + …</b><span>Die Widerstände werden addiert – der Gesamtwiderstand wird größer</span></div>
+      <div class="val step from-left"><b>U = U1 + U2 + …</b><span>Die Spannung teilt sich auf – am größten Widerstand liegt die größte Teilspannung</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-r2">
+  <span class="tag">REIHENSCHALTUNG</span><h2>Rechnen – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="ctrl"><span style="width:200px">R1: <span class="c" id="r2-v1">4 Ω</span></span><input type="range" id="r2-s1" min="1" max="10" step="1" value="4"></div>
+    <div class="ctrl" style="margin-top:6px"><span style="width:200px">R2: <span class="c" id="r2-v2">2 Ω</span></span><input type="range" id="r2-s2" min="1" max="10" step="1" value="2"></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.2fr 1fr;margin-top:8px">
+      <svg viewBox="0 0 560 300" width="540" height="290" style="display:block;margin:0 auto" id="r2-svg">
+  <g class="dev"><line x1="34" y1="142.0" x2="86" y2="142.0" stroke="#f05e4e" stroke-width="6"/>
+    <line x1="46" y1="158.0" x2="74" y2="158.0" stroke="#94a4ba" stroke-width="8"/></g>
+    <line x1="60" y1="110" x2="60" y2="142.0" stroke="#ecf1f8" stroke-width="4"/>
+    <line x1="60" y1="158.0" x2="60" y2="190" stroke="#ecf1f8" stroke-width="4"/>
+    <text x="26" y="146.0" text-anchor="end" font-size="22" font-weight="900" fill="#f05e4e">+</text>
+    <text x="26" y="172.0" text-anchor="end" font-size="22" font-weight="900" fill="#94a4ba">−</text>
+    <text x="94" y="156.0" font-size="16" font-weight="800" fill="#94a4ba">12 V</text>
+  <path d="M60 110 V50 H190" fill="none" stroke="#f05e4e" stroke-width="5"/>
+  <path d="M250 50 H350" fill="none" stroke="#ff8f3f" stroke-width="5"/>
+  <path d="M410 50 H500 V250 H60 V190" fill="none" stroke="#5b8cff" stroke-width="5"/>
+  <path id="r2-p" d="M60 110 V50 H500 V250 H60 V190" fill="none" stroke="none"/>
+  <rect x="190.0" y="38.0" width="60" height="24" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+    <text id="r2-l1" x="220" y="30" text-anchor="middle" font-size="16" font-weight="800" fill="#94a4ba">R1</text>
+  <rect x="350.0" y="38.0" width="60" height="24" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+    <text id="r2-l2" x="380" y="30" text-anchor="middle" font-size="16" font-weight="800" fill="#94a4ba">R2</text>
+  <text id="r2-u1" x="220" y="100" text-anchor="middle" font-size="17" font-weight="900" fill="#1fc8b3">U1</text>
+  <text id="r2-u2" x="380" y="100" text-anchor="middle" font-size="17" font-weight="900" fill="#1fc8b3">U2</text>
+  <text id="r2-mp" x="300" y="130" text-anchor="middle" font-size="14" font-weight="900" fill="#ff8f3f"></text>
+  <text id="r2-i" x="280" y="235" text-anchor="middle" font-size="17" font-weight="900" fill="#28aaf5">I</text>
+  <text x="40" y="294" font-size="13" font-weight="800" fill="#f05e4e">rot = Plus</text><text x="140" y="294" font-size="13" font-weight="800" fill="#5b8cff">blau = Minus</text><text x="250" y="294" font-size="13" font-weight="800" fill="#94a4ba">gelbe Punkte = Strom (technisch: + → −)</text>
+</svg>
+      <div class="card" id="r2-t" style="font-size:17px;font-weight:700;line-height:1.7"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">REIHENSCHALTUNG</span><h2>Rechenbeispiel</h2>
+  <div class="body">
+    <div class="card step" style="font-size:19px;font-weight:700;margin-bottom:10px">Gegeben: U = 12 V, R1 = 4 Ω, R2 = 2 Ω (in Reihe)</div>
+    <ol class="steps-list">
+      <li class="step">Gesamtwiderstand<small>R = R1 + R2 = 4 Ω + 2 Ω = <b>6 Ω</b></small></li>
+      <li class="step">Strom (überall gleich)<small>I = U : R = 12 V : 6 Ω = <b>2 A</b></small></li>
+      <li class="step">Teilspannung an R1<small>U1 = R1 · I = 4 Ω · 2 A = <b>8 V</b></small></li>
+      <li class="step">Teilspannung an R2<small>U2 = R2 · I = 2 Ω · 2 A = <b>4 V</b> – Probe: 8 V + 4 V = 12 V ✓</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">REIHENSCHALTUNG</span><h2>Reihenschaltung im Kfz</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="warn step"><b>Korrodierte Masse</b>Ein Übergangswiderstand liegt in Reihe zur Lampe. Er „nimmt“ sich einen Teil der Spannung – die Lampe leuchtet schwächer.</div>
+      <div class="tip step"><b>Spannungsfall messen</b>Im Betrieb über Leitung oder Masseverbindung messen. Richtwert: nur wenige Zehntel Volt – genaue Grenzen laut Hersteller.</div>
+      <div class="tip step"><b>Vorwiderstand</b>Früher z. B. beim Innenraumgebläse: Ein Widerstand in Reihe senkt die Spannung am Motor – er dreht langsamer.</div>
+      <div class="tip step"><b>Schalter und Sicherung</b>liegen immer in Reihe zum Verbraucher – nur so können sie den Stromkreis unterbrechen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">REIHENSCHALTUNG</span><h2>Messen in der Reihenschaltung</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Strom messen: Kreis auftrennen, Messgerät <span class="c">in Reihe</span><small>egal an welcher Stelle – der Strom ist überall gleich</small></li>
+      <li class="step">Teilspannung messen: <span class="c">parallel</span> zum Bauteil<small>die Messspitzen an beide Anschlüsse des Bauteils – im Betrieb</small></li>
+      <li class="step">Probe: Alle Teilspannungen zusammen = Batteriespannung<small>fehlt etwas, steckt ein unbekannter Widerstand im Kreis</small></li>
+    </ol>
+    <div class="tip step" style="margin-top:6px"><b>„OL“ am manuellen Multimeter?</b>Den Messbereich schrittweise bis zum höchsten hochstellen – erst dann gilt: Unterbrechung.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">REIHENSCHALTUNG</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/reihe.mp4" poster="videos/reihe.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">REIHENSCHALTUNG</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Wie groß ist der Strom in einer Reihenschaltung?</p>
+      <div class="opts"><button class="opt">An jeder Stelle gleich</button><button class="opt">Am ersten Bauteil am größten</button><button class="opt">Er teilt sich auf</button></div>
+      <div class="fb">Es gibt nur einen Stromweg.</div></div>
+    <div class="q" data-correct="1"><p>2. R1 = 3 Ω und R2 = 9 Ω sind in Reihe. Wie groß ist der Gesamtwiderstand?</p>
+      <div class="opts"><button class="opt">3 Ω</button><button class="opt">12 Ω</button><button class="opt">27 Ω</button></div>
+      <div class="fb">In Reihe werden die Widerstände addiert: 3 Ω + 9 Ω = 12 Ω.</div></div>
+    <div class="q" data-correct="2"><p>3. An welchem Widerstand liegt die größte Teilspannung?</p>
+      <div class="opts"><button class="opt">Am kleinsten</button><button class="opt">An allen gleich</button><button class="opt">Am größten</button></div>
+      <div class="fb">U = R · I – bei gleichem Strom hat der größte Widerstand die größte Spannung.</div></div>
+    <div class="q" data-correct="0"><p>4. Eine Lampe in einer Reihenschaltung brennt durch. Was passiert?</p>
+      <div class="opts"><button class="opt">Alle anderen gehen auch aus</button><button class="opt">Die anderen leuchten heller</button><button class="opt">Nichts</button></div>
+      <div class="fb">Der einzige Stromweg ist unterbrochen.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">REIHENSCHALTUNG</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Nur ein Stromweg</span></li>
+        <li class="step"><span>Strom überall gleich</span></li>
+        <li class="step"><span>R = R1 + R2 + …<small>Widerstände addieren</small></span></li>
+        <li class="step"><span>U = U1 + U2 + …<small>Spannung teilt sich auf</small></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Reihenschaltung" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script src="assets/schaltung.js"></script>
+<script>
+(function () {
+  const f1 = Flow(document.getElementById('r1-svg'), document.getElementById('r1-p'), { spacing: 34, speed: 80, r: 6, color: '#ffd34d' });
+  const ein = document.getElementById('r1-ein'), aus = document.getElementById('r1-aus');
+  function set(an) {
+    f1.on(an);
+    ['r1l1', 'r1l2'].forEach(l => document.getElementById(l + '-glow').style.opacity = an ? 0.5 : 0);
+    document.getElementById('r1-l2').style.opacity = an ? 1 : 0.15;
+    const m = document.getElementById('r1-mid'), mt = document.getElementById('r1-mt');
+    m.setAttribute('stroke', an ? '#ff8f3f' : '#f05e4e'); mt.setAttribute('fill', an ? '#ff8f3f' : '#f05e4e'); mt.textContent = an ? 'ca. 6 V' : 'Plus 12 V';
+    ein.classList.toggle('on', an); aus.classList.toggle('on', !an);
+    document.getElementById('r1-t').innerHTML = an
+      ? '<b>Beide Lampen leuchten.</b> Der Strom fließt vom Pluspol durch Lampe 1, dann durch Lampe 2 und zurück zum Minuspol – es gibt <span class="c">nur einen Weg</span>.<br><br>An jeder Lampe fällt ein Teil der Spannung ab: vor Lampe 1 <span class="red">Plus 12 V</span>, zwischen den Lampen <span class="ora">ca. 6 V</span>, nach Lampe 2 <span class="roy">Minus 0 V</span>.'
+      : '<b class="red">Alles aus!</b> Lampe 2 fehlt – der einzige Stromweg ist unterbrochen. Darum geht auch Lampe 1 aus.<br><br>Ohne Strom „verbraucht“ Lampe 1 keine Spannung: <span class="red">Plus</span> reicht jetzt bis an den linken Kontakt von Lampe 2, <span class="roy">Minus</span> liegt am rechten. Am leeren Lampensockel misst du die vollen 12 V.';
+  }
+  ein.onclick = () => set(true); aus.onclick = () => set(false);
+  document.getElementById('s-r1').addEventListener('slideshow', () => set(true));
+  set(true);
+
+  const f2 = Flow(document.getElementById('r2-svg'), document.getElementById('r2-p'), { spacing: 34, speed: 80, r: 6, color: '#ffd34d' });
+  const s1 = document.getElementById('r2-s1'), s2 = document.getElementById('r2-s2');
+  const z = (x, d) => x.toFixed(d).replace('.', ',');
+  function rech() {
+    const R1 = +s1.value, R2 = +s2.value, R = R1 + R2, I = 12 / R, U1 = R1 * I, U2 = R2 * I;
+    document.getElementById('r2-v1').textContent = R1 + ' Ω'; document.getElementById('r2-v2').textContent = R2 + ' Ω';
+    document.getElementById('r2-l1').textContent = 'R1 = ' + R1 + ' Ω'; document.getElementById('r2-l2').textContent = 'R2 = ' + R2 + ' Ω';
+    document.getElementById('r2-u1').textContent = 'U1 = ' + z(U1, 1) + ' V'; document.getElementById('r2-u2').textContent = 'U2 = ' + z(U2, 1) + ' V';
+    document.getElementById('r2-i').textContent = 'I = ' + z(I, 2) + ' A';
+    document.getElementById('r2-mp').textContent = 'hier noch ' + z(U2, 1) + ' V gegen Minus';
+    f2.speed = 30 + I * 25;
+    document.getElementById('r2-t').innerHTML = 'R = ' + R1 + ' Ω + ' + R2 + ' Ω = <span class="c">' + R + ' Ω</span><br>I = 12 V : ' + R + ' Ω = <span class="c">' + z(I, 2) + ' A</span><br>U1 = ' + z(U1, 1) + ' V, U2 = ' + z(U2, 1) + ' V<br><span class="muted">Probe: ' + z(U1, 1) + ' V + ' + z(U2, 1) + ' V = 12 V</span>';
+  }
+  s1.addEventListener('input', rech); s2.addEventListener('input', rech); rech();
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Gemischte Schaltung – Grundlagen Elektrik</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 64px; }
+</style>
+</head>
+<body class="t-gemischt">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">GRUNDLAGEN ELEKTRIK · KFZ-MECHATRONIK</div>
+  <div class="symbol" style="font-size:64px">R+∥</div>
+  <h1>Gemischte Schaltung</h1>
+  <p>Reihe und parallel in einem Stromkreis</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">GEMISCHTE SCHALTUNG</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Wie du eine gemischte Schaltung erkennst</li>
+      <li class="step from-left"><span class="num">2</span>Wie du sie Schritt für Schritt vereinfachst</li>
+      <li class="step from-left"><span class="num">3</span>Wie du Strom und Spannungen berechnest</li>
+      <li class="step from-left"><span class="num">4</span>Warum das bei der Fehlersuche im Kfz hilft</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GEMISCHTE SCHALTUNG</span><h2>Was ist eine gemischte Schaltung?</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Teils in Reihe, teils parallel</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>manche Bauteile liegen hintereinander</li><li>andere liegen nebeneinander in eigenen Zweigen</li><li>für jeden Teil gelten seine eigenen Regeln</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">So gehst du vor</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Gruppen suchen, die eindeutig parallel oder in Reihe sind</li><li>jede Gruppe durch einen Ersatzwiderstand ersetzen</li><li>so lange vereinfachen, bis nur noch ein Widerstand übrig ist</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-vs">
+  <span class="tag">GEMISCHTE SCHALTUNG</span><h2>Schritt für Schritt vereinfachen</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-g="0">1. Schaltung</button><button class="btn ghost" data-g="1">2. Parallelgruppe ersetzen</button><button class="btn ghost" data-g="2">3. Reihe addieren</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 600 300" width="560" height="280" style="display:block;margin:0 auto"><g class="dev"><line x1="34" y1="142.0" x2="86" y2="142.0" stroke="#f05e4e" stroke-width="6"/>
+    <line x1="46" y1="158.0" x2="74" y2="158.0" stroke="#94a4ba" stroke-width="8"/></g>
+    <line x1="60" y1="110" x2="60" y2="142.0" stroke="#ecf1f8" stroke-width="4"/>
+    <line x1="60" y1="158.0" x2="60" y2="190" stroke="#ecf1f8" stroke-width="4"/>
+    <text x="26" y="146.0" text-anchor="end" font-size="22" font-weight="900" fill="#f05e4e">+</text>
+    <text x="26" y="172.0" text-anchor="end" font-size="22" font-weight="900" fill="#94a4ba">−</text>
+    <text x="94" y="156.0" font-size="16" font-weight="800" fill="#94a4ba">12 V</text><g class="vs" data-s="0">
+      <path d="M60 110 V50 H480 V250 H60 V190 M300 50 V250" fill="none" stroke="#ecf1f8" stroke-width="4"/>
+      <rect x="150.0" y="38.0" width="60" height="24" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+    <text x="180" y="30" text-anchor="middle" font-size="16" font-weight="800" fill="#94a4ba">R1 = 2 Ω</text><rect x="288.0" y="120.0" width="24" height="60" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+    <text x="322" y="155" text-anchor="start" font-size="16" font-weight="800" fill="#94a4ba">R2 = 6 Ω</text><rect x="468.0" y="120.0" width="24" height="60" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+    <text x="502" y="155" text-anchor="start" font-size="16" font-weight="800" fill="#94a4ba">R3 = 3 Ω</text></g><g class="vs" data-s="1">
+      <path d="M60 110 V50 H400 V250 H60 V190" fill="none" stroke="#ecf1f8" stroke-width="4"/>
+      <rect x="150.0" y="38.0" width="60" height="24" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+    <text x="180" y="30" text-anchor="middle" font-size="16" font-weight="800" fill="#94a4ba">R1 = 2 Ω</text><rect x="388" y="120" width="24" height="60" rx="3" fill="#18283f" stroke="#a07cf5" stroke-width="4"/>
+      <text x="422" y="146" font-size="16" font-weight="800" fill="#a07cf5">R23 = 2 Ω</text><text x="422" y="166" font-size="13" font-weight="700" fill="#94a4ba">ersetzt R2 ∥ R3</text></g><g class="vs" data-s="2">
+      <path d="M60 110 V50 H300 V250 H60 V190" fill="none" stroke="#ecf1f8" stroke-width="4"/>
+      <rect x="288" y="120" width="24" height="60" rx="3" fill="#18283f" stroke="#a07cf5" stroke-width="4"/>
+      <text x="322" y="146" font-size="16" font-weight="800" fill="#a07cf5">R = 4 Ω</text><text x="322" y="166" font-size="13" font-weight="700" fill="#94a4ba">R1 + R23</text></g></svg>
+      <div class="card" id="vs-t" style="font-size:17px;font-weight:600;line-height:1.6"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GEMISCHTE SCHALTUNG</span><h2>Rechenbeispiel</h2>
+  <div class="body">
+    <div class="card step" style="font-size:19px;font-weight:700;margin-bottom:10px">U = 12 V, R1 = 2 Ω in Reihe zu R2 = 6 Ω ∥ R3 = 3 Ω</div>
+    <ol class="steps-list">
+      <li class="step">Ersatzwiderstand der Parallelgruppe<small>R23 = (6 · 3) : (6 + 3) = 18 : 9 = <b>2 Ω</b></small></li>
+      <li class="step">Gesamtwiderstand und Gesamtstrom<small>R = 2 Ω + 2 Ω = <b>4 Ω</b> – I = 12 V : 4 Ω = <b>3 A</b></small></li>
+      <li class="step">Teilspannungen<small>U1 = 2 Ω · 3 A = <b>6 V</b> – an der Parallelgruppe: U23 = 12 V − 6 V = <b>6 V</b></small></li>
+      <li class="step">Zweigströme<small>I2 = 6 V : 6 Ω = <b>1 A</b> – I3 = 6 V : 3 Ω = <b>2 A</b> – Probe: 1 A + 2 A = 3 A ✓</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide" id="s-g1">
+  <span class="tag">GEMISCHTE SCHALTUNG</span><h2>Rechnen – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="ctrl"><span style="width:170px">R1: <span class="c" id="g1-v1">2 Ω</span></span><input type="range" id="g1-s1" min="1" max="10" step="1" value="2"></div>
+    <div class="ctrl" style="margin-top:4px"><span style="width:170px">R2: <span class="c" id="g1-v2">6 Ω</span></span><input type="range" id="g1-s2" min="1" max="12" step="1" value="6"></div>
+    <div class="ctrl" style="margin-top:4px"><span style="width:170px">R3: <span class="c" id="g1-v3">3 Ω</span></span><input type="range" id="g1-s3" min="1" max="12" step="1" value="3"></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.2fr 1fr;margin-top:6px">
+      <svg viewBox="0 0 600 300" width="560" height="280" style="display:block;margin:0 auto" id="g1-svg">
+  <g class="dev"><line x1="34" y1="142.0" x2="86" y2="142.0" stroke="#f05e4e" stroke-width="6"/>
+    <line x1="46" y1="158.0" x2="74" y2="158.0" stroke="#94a4ba" stroke-width="8"/></g>
+    <line x1="60" y1="110" x2="60" y2="142.0" stroke="#ecf1f8" stroke-width="4"/>
+    <line x1="60" y1="158.0" x2="60" y2="190" stroke="#ecf1f8" stroke-width="4"/>
+    <text x="26" y="146.0" text-anchor="end" font-size="22" font-weight="900" fill="#f05e4e">+</text>
+    <text x="26" y="172.0" text-anchor="end" font-size="22" font-weight="900" fill="#94a4ba">−</text>
+    <text x="94" y="156.0" font-size="16" font-weight="800" fill="#94a4ba">12 V</text>
+  <path d="M60 110 V50 H150" fill="none" stroke="#f05e4e" stroke-width="5"/>
+  <path d="M210 50 H480 V120 M300 50 V120" fill="none" stroke="#ff8f3f" stroke-width="5"/>
+  <path d="M300 180 V250 M480 180 V250 H60 V190" fill="none" stroke="#5b8cff" stroke-width="5"/>
+  <circle cx="300" cy="50" r="6" fill="#ff8f3f"/><circle cx="300" cy="250" r="6" fill="#5b8cff"/>
+  <path id="g1-pa" d="M60 110 V50 H300 V250 H60 V190" fill="none" stroke="none"/>
+  <path id="g1-pb" d="M60 110 V50 H480 V250 H60 V190" fill="none" stroke="none"/>
+  <rect x="150.0" y="38.0" width="60" height="24" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+    <text id="g1-l1" x="180" y="30" text-anchor="middle" font-size="16" font-weight="800" fill="#94a4ba">R1</text>
+  <rect x="288.0" y="120.0" width="24" height="60" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+    <text id="g1-l2" x="322" y="155" text-anchor="start" font-size="16" font-weight="800" fill="#94a4ba">R2</text>
+  <rect x="468.0" y="120.0" width="24" height="60" rx="3" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/>
+    <text id="g1-l3" x="502" y="155" text-anchor="start" font-size="16" font-weight="800" fill="#94a4ba">R3</text>
+  <text id="g1-u1" x="180" y="100" text-anchor="middle" font-size="16" font-weight="900" fill="#a07cf5"></text>
+  <text id="g1-mp" x="390" y="38" text-anchor="middle" font-size="14" font-weight="900" fill="#ff8f3f"></text>
+  <text id="g1-u23" x="390" y="232" text-anchor="middle" font-size="16" font-weight="900" fill="#a07cf5"></text>
+  <text id="g1-i" x="180" y="232" text-anchor="middle" font-size="16" font-weight="900" fill="#28aaf5"></text>
+  <text x="40" y="294" font-size="13" font-weight="800" fill="#f05e4e">rot = Plus</text><text x="140" y="294" font-size="13" font-weight="800" fill="#5b8cff">blau = Minus</text><text x="250" y="294" font-size="13" font-weight="800" fill="#94a4ba">gelbe Punkte = Strom (technisch: + → −)</text>
+</svg>
+      <div class="card" id="g1-t" style="font-size:16px;font-weight:700;line-height:1.7"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GEMISCHTE SCHALTUNG</span><h2>Gemischte Schaltung im Kfz</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Gemeinsame Masse</b>Zwei Rückleuchten (parallel) hängen an einer gemeinsamen Masseleitung (in Reihe). Ist die Masse korrodiert, leuchten beide schwächer.</div>
+      <div class="tip step"><b>Gemeinsame Sicherung</b>Mehrere Verbraucher parallel, davor eine Sicherung in Reihe. Löst sie aus, ist der ganze Kreis aus.</div>
+      <div class="tip step"><b>Fehlersuche</b>Nur ein Verbraucher betroffen? Fehler in seinem Zweig. Alle zusammen betroffen? Fehler im gemeinsamen Teil.</div>
+      <div class="tip step"><b>Stromlaufplan lesen</b>Erst die gemeinsamen Teile suchen (Sicherung, Schalter, Masse), dann die einzelnen Zweige.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GEMISCHTE SCHALTUNG</span><h2>Fehler finden – ein Beispiel</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Kunde: „Beide Rückleuchten sind dunkel, Bremslicht auch schwach.“<small>mehrere Verbraucher betroffen → Fehler im gemeinsamen Teil</small></li>
+      <li class="step">Spannung an der Leuchte messen – im Betrieb<small>nur 9,5 V statt ca. 12 V: Es fehlen 2,5 V</small></li>
+      <li class="step">Spannungsfall an der Masseleitung messen<small>2,3 V – hier steckt ein Übergangswiderstand in Reihe</small></li>
+      <li class="step">Massepunkt reinigen, Kontrolle<small>danach nur noch wenige Zehntel Volt – beide Leuchten wieder hell</small></li>
+    </ol>
+    <div class="note step">Beispielwerte – Grenzwerte laut Hersteller.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GEMISCHTE SCHALTUNG</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/gemischt.mp4" poster="videos/gemischt.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GEMISCHTE SCHALTUNG</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Was ist eine gemischte Schaltung?</p>
+      <div class="opts"><button class="opt">Bauteile teils in Reihe, teils parallel</button><button class="opt">Nur Lampen und Motoren gemischt</button><button class="opt">Zwei Batterien</button></div>
+      <div class="fb">Für jeden Teil gelten seine eigenen Regeln.</div></div>
+    <div class="q" data-correct="1"><p>2. Was machst du zuerst beim Berechnen?</p>
+      <div class="opts"><button class="opt">Alle Widerstände addieren</button><button class="opt">Parallelgruppen durch einen Ersatzwiderstand ersetzen</button><button class="opt">Die Spannungen addieren</button></div>
+      <div class="fb">Dann bleibt eine einfache Reihenschaltung übrig.</div></div>
+    <div class="q" data-correct="2"><p>3. R1 = 4 Ω in Reihe mit zwei parallelen Widerständen von je 8 Ω. Wie groß ist der Gesamtwiderstand?</p>
+      <div class="opts"><button class="opt">20 Ω</button><button class="opt">12 Ω</button><button class="opt">8 Ω</button></div>
+      <div class="fb">Parallel: 8 Ω ∥ 8 Ω = 4 Ω, dazu R1: 4 Ω + 4 Ω = 8 Ω.</div></div>
+    <div class="q" data-correct="0"><p>4. Beide Rückleuchten leuchten schwach. Wo suchst du zuerst?</p>
+      <div class="opts"><button class="opt">Im gemeinsamen Teil, z. B. an der Masse</button><button class="opt">An einer einzelnen Lampe</button><button class="opt">Am Radio</button></div>
+      <div class="fb">Sind alle betroffen, liegt der Fehler im gemeinsamen Teil.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">GEMISCHTE SCHALTUNG</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Teils in Reihe, teils parallel</span></li>
+        <li class="step"><span>Parallelgruppen ersetzen, dann Reihe addieren</span></li>
+        <li class="step"><span>Rückwärts: Strom, Teilspannungen, Zweigströme</span></li>
+        <li class="step"><span>Alle betroffen? Gemeinsamen Teil prüfen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Gemischte%20Schaltung" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script src="assets/schaltung.js"></script>
+<script>
+(function () {
+  const T = [
+    '<b>1. Die Schaltung:</b> R1 liegt in Reihe. R2 und R3 liegen parallel – sie hängen an denselben zwei Punkten.',
+    '<b>2. Parallelgruppe ersetzen:</b> R2 ∥ R3 = (6 · 3) : (6 + 3) = <span class="c">2 Ω</span>. Jetzt ist es eine einfache Reihenschaltung.',
+    '<b>3. Reihe addieren:</b> R = R1 + R23 = 2 Ω + 2 Ω = <span class="c">4 Ω</span>. Gesamtstrom: I = 12 V : 4 Ω = 3 A.'
+  ];
+  const bt = document.querySelectorAll('#s-vs [data-g]'), gs = document.querySelectorAll('#s-vs .vs');
+  function g(i) { gs.forEach(x => x.style.display = +x.dataset.s === i ? '' : 'none'); bt.forEach(x => x.classList.toggle('on', +x.dataset.g === i)); document.getElementById('vs-t').innerHTML = T[i]; }
+  bt.forEach(x => x.onclick = () => g(+x.dataset.g)); g(0);
+
+  const svg = document.getElementById('g1-svg');
+  const fa = Flow(svg, document.getElementById('g1-pa'), { spacing: 34, speed: 60, r: 6, color: '#ffd34d' });
+  const fb = Flow(svg, document.getElementById('g1-pb'), { spacing: 38, speed: 60, r: 6, color: '#ffd34d' });
+  const s = [1, 2, 3].map(i => document.getElementById('g1-s' + i));
+  const z = (x, d) => (Math.round(x * Math.pow(10, d)) / Math.pow(10, d)).toString().replace('.', ',');
+  function r() {
+    const [R1, R2, R3] = s.map(x => +x.value);
+    const R23 = R2 * R3 / (R2 + R3), R = R1 + R23, I = 12 / R, U1 = R1 * I, U23 = 12 - U1, I2 = U23 / R2, I3 = U23 / R3;
+    [R1, R2, R3].forEach((v, i) => { document.getElementById('g1-v' + (i + 1)).textContent = v + ' Ω'; document.getElementById('g1-l' + (i + 1)).textContent = 'R' + (i + 1) + ' = ' + v + ' Ω'; });
+    document.getElementById('g1-u1').textContent = 'U1 = ' + z(U1, 1) + ' V';
+    document.getElementById('g1-u23').textContent = 'U23 = ' + z(U23, 1) + ' V';
+    document.getElementById('g1-i').textContent = 'I = ' + z(I, 2) + ' A';
+    document.getElementById('g1-mp').textContent = 'nach R1 noch ' + z(U23, 1) + ' V';
+    fa.speed = 20 + I2 * 30; fb.speed = 20 + I3 * 30;
+    document.getElementById('g1-t').innerHTML = 'R23 = ' + z(R23, 2) + ' Ω<br>R = ' + R1 + ' Ω + ' + z(R23, 2) + ' Ω = <span class="c">' + z(R, 2) + ' Ω</span><br>I = <span class="c">' + z(I, 2) + ' A</span><br>U1 = ' + z(U1, 1) + ' V, U23 = ' + z(U23, 1) + ' V<br>I2 = ' + z(I2, 2) + ' A, I3 = ' + z(I3, 2) + ' A';
+  }
+  s.forEach(x => x.addEventListener('input', r)); r();
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>
