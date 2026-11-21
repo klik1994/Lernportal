@@ -38,6 +38,7 @@ body.t-mm7 { --c: var(--yel); --ct: var(--yel-t); }
 body.t-reihe { --c: var(--tea); --ct: var(--tea-t); }
 body.t-parallel { --c: var(--roy); --ct: var(--roy-t); }
 body.t-gemischt { --c: var(--pur); --ct: var(--pur-t); }
+body.t-hv { --c: var(--ora); --ct: var(--ora-t); }
 
 /* ---------- Heller Modus ---------- */
 html.light {

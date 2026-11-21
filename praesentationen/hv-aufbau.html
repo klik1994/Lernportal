@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Aufbau des E-Autos – Hochvolt im Kfz</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 96px; }
+</style>
+</head>
+<body class="t-hv">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">HOCHVOLT IM KFZ · DGUV INFORMATION 209-093</div>
+  <div class="symbol">⚡</div>
+  <h1>Aufbau des E-Autos</h1>
+  <p>Batterie, Leistungselektronik, E-Maschine und Laden</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">AUFBAU</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Welche Hochvolt-Bauteile ein E-Auto hat</li>
+      <li class="step from-left"><span class="num">2</span>Wie die Energie beim Fahren, Bremsen und Laden fließt</li>
+      <li class="step from-left"><span class="num">3</span>Wie die HV-Batterie aufgebaut ist und was der Wartungsstecker bewirkt</li>
+      <li class="step from-left"><span class="num">4</span>Welche Schutzeinrichtungen das HV-System hat</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" id="s-au">
+  <span class="tag">AUFBAU</span><h2>Die Hochvolt-Bauteile – zum Antippen</h2>
+  <div class="body noclick">
+    <svg viewBox="0 10 1000 380" width="1000" height="380" style="display:block;margin:0 auto;max-width:100%;height:auto" id="au-svg">
+  <path d="M20 300 Q30 180 180 165 L320 70 H650 L810 160 Q970 175 980 300 Z" fill="#213552" stroke="#94a4ba" stroke-width="4"/>
+  <circle cx="200" cy="318" r="50" fill="#18283f" stroke="#94a4ba" stroke-width="8"/><circle cx="810" cy="318" r="50" fill="#18283f" stroke="#94a4ba" stroke-width="8"/>
+  <path class="au-ln" data-g="lad" d="M80 225 H100" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <path class="au-ln" data-g="lad" d="M260 225 H285 V290" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <path class="au-ln" data-g="dc" d="M415 290 V260" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <path class="au-ln" data-g="fahr" d="M625 290 V270" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <path class="au-ln" data-g="fahr" d="M705 220 H742" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <path class="au-ln" data-g="nv" d="M625 150 V127 H490" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <g class="au-bx" data-k="dose" style="transition:opacity .3s"><rect x="36" y="203" width="44" height="44" rx="6" fill="#94a4ba"/><text x="58" y="276" text-anchor="middle" font-size="24" font-weight="800" fill="#94a4ba">Ladedose</text></g>
+  <g class="au-bx" data-k="ol" style="transition:opacity .3s"><rect x="100" y="195" width="160" height="60" rx="12" fill="#18283f" stroke="#ff8f3f" stroke-width="6"/><text x="180.0" y="235.08" text-anchor="middle" font-size="28" font-weight="900" fill="#ecf1f8">Ladegerät</text></g>
+  <g class="au-bx" data-k="dc" style="transition:opacity .3s"><rect x="340" y="200" width="150" height="60" rx="12" fill="#18283f" stroke="#ff8f3f" stroke-width="6"/><text x="415.0" y="240.08" text-anchor="middle" font-size="28" font-weight="900" fill="#ecf1f8">DC/DC</text></g>
+  <g class="au-bx" data-k="le" style="transition:opacity .3s"><rect x="545" y="150" width="160" height="120" rx="12" fill="#18283f" stroke="#ff8f3f" stroke-width="6"/><text x="625.0" y="205.71" text-anchor="middle" font-size="26" font-weight="900" fill="#ecf1f8">Leistungs-</text><text x="625.0" y="233.01000000000002" text-anchor="middle" font-size="26" font-weight="900" fill="#ecf1f8">elektronik</text></g>
+  <g class="au-bx" data-k="nv" style="transition:opacity .3s"><rect x="340" y="100" width="150" height="54" rx="12" fill="#18283f" stroke="#ff8f3f" stroke-width="6"/><text x="415.0" y="137.08" text-anchor="middle" font-size="28" font-weight="900" fill="#ecf1f8">Klima</text></g>
+  <g class="au-bx" data-k="em" style="transition:opacity .3s"><circle cx="790" cy="220" r="48" fill="#18283f" stroke="#ff8f3f" stroke-width="6"/><text x="790" y="230" text-anchor="middle" font-size="28" font-weight="900" fill="#ecf1f8">EM</text></g>
+  <g class="au-bx" data-k="bat" style="transition:opacity .3s"><rect x="265" y="290" width="490" height="62" rx="10" fill="#ff8f3f"/><text x="510" y="332" text-anchor="middle" font-size="32" font-weight="900" fill="#1a1a1a" class="dev">HV-Batterie</text></g>
+  <path id="au-p-fahr" d="M510 300 H625 V272" fill="none" stroke="none"/>
+  <path id="au-p-fahr2" d="M707 220 H740" fill="none" stroke="none"/>
+  <path id="au-p-dc" d="M470 300 H415 V262" fill="none" stroke="none"/>
+  <path id="au-p-rek" d="M740 220 H707" fill="none" stroke="none"/>
+  <path id="au-p-rek2" d="M625 272 V300 H510" fill="none" stroke="none"/>
+  <path id="au-p-lad" d="M58 225 H98" fill="none" stroke="none"/>
+  <path id="au-p-lad2" d="M262 225 H285 V300 H470" fill="none" stroke="none"/>
+  </svg>
+    <div class="card" id="au-t" style="font-size:18px;font-weight:600;line-height:1.5;margin-top:8px"></div>
+    <p class="muted" style="font-size:14px;margin:8px 0 0">Tippe auf ein Bauteil. Vereinfachte Darstellung – Lage und Bauform je nach Hersteller.</p>
+  </div>
+</section>
+
+<section class="slide" id="s-bz">
+  <span class="tag">AUFBAU</span><h2>Aufbau der HV-Batterie – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-l="0">1. Zelle</button><button class="btn ghost" data-l="1">2. Modul</button><button class="btn ghost" data-l="2">3. Batterie</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.35fr 1fr">
+      <svg viewBox="0 0 620 300" width="600" height="290" style="display:block;margin:0 auto" id="bz-svg"><g class="bz-l" data-l="0"><rect x="250" y="60" width="120" height="180" rx="14" fill="#213552" stroke="#ecf1f8" stroke-width="5"/><rect x="285" y="46" width="50" height="16" rx="4" fill="#ecf1f8"/><text x="310" y="110" text-anchor="middle" font-size="40" font-weight="900" fill="#f05e4e">+</text><text x="310" y="215" text-anchor="middle" font-size="44" font-weight="900" fill="#5b8cff">−</text><text x="310" y="165" text-anchor="middle" font-size="26" font-weight="900" fill="#ecf1f8">3,7 V</text><text x="400" y="130" font-size="20" font-weight="800" fill="#94a4ba">eine Zelle</text><text x="400" y="156" font-size="20" font-weight="800" fill="#94a4ba">Lithium-Ionen</text></g><g class="bz-l" data-l="1"><rect x="70" y="80" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="70" y="135" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="70" y="190" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect class="bz-par" x="62" y="72" width="60" height="164" rx="10" fill="none" stroke="#5b8cff" stroke-width="3" stroke-dasharray="6 5"/><path d="M122 154 H142" stroke="#ff8f3f" stroke-width="6"/><rect x="150" y="80" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="150" y="135" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="150" y="190" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect class="bz-par" x="142" y="72" width="60" height="164" rx="10" fill="none" stroke="#5b8cff" stroke-width="3" stroke-dasharray="6 5"/><path d="M202 154 H222" stroke="#ff8f3f" stroke-width="6"/><rect x="230" y="80" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="230" y="135" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="230" y="190" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect class="bz-par" x="222" y="72" width="60" height="164" rx="10" fill="none" stroke="#5b8cff" stroke-width="3" stroke-dasharray="6 5"/><path d="M282 154 H302" stroke="#ff8f3f" stroke-width="6"/><rect x="310" y="80" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="310" y="135" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="310" y="190" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect class="bz-par" x="302" y="72" width="60" height="164" rx="10" fill="none" stroke="#5b8cff" stroke-width="3" stroke-dasharray="6 5"/><path d="M362 154 H382" stroke="#ff8f3f" stroke-width="6"/><rect x="390" y="80" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="390" y="135" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="390" y="190" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect class="bz-par" x="382" y="72" width="60" height="164" rx="10" fill="none" stroke="#5b8cff" stroke-width="3" stroke-dasharray="6 5"/><path d="M442 154 H462" stroke="#ff8f3f" stroke-width="6"/><rect x="470" y="80" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="470" y="135" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect x="470" y="190" width="44" height="40" rx="6" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><rect class="bz-par" x="462" y="72" width="60" height="164" rx="10" fill="none" stroke="#5b8cff" stroke-width="3" stroke-dasharray="6 5"/><text x="40" y="160" text-anchor="end" font-size="30" font-weight="900" fill="#f05e4e">+</text><text x="580" y="160" font-size="34" font-weight="900" fill="#5b8cff">−</text><text x="92" y="262" text-anchor="middle" font-size="16" font-weight="800" fill="#5b8cff">3 Zellen parallel</text><text x="310" y="290" text-anchor="middle" font-size="17" font-weight="800" fill="#ff8f3f">Zellgruppen in Reihe → Spannung addiert sich</text><text x="310" y="40" text-anchor="middle" font-size="20" font-weight="900" fill="#ecf1f8">Ein Modul (Beispiel)</text></g><g class="bz-l" data-l="2"><rect x="20" y="30" width="580" height="240" rx="18" fill="none" stroke="#94a4ba" stroke-width="4"/><rect x="45" y="60" width="110" height="70" rx="8" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="100" y="103" text-anchor="middle" font-size="22" font-weight="900" fill="#ecf1f8">Modul 1</text><rect x="185" y="60" width="110" height="70" rx="8" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="240" y="103" text-anchor="middle" font-size="22" font-weight="900" fill="#ecf1f8">Modul 2</text><rect x="325" y="60" width="110" height="70" rx="8" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="380" y="103" text-anchor="middle" font-size="22" font-weight="900" fill="#ecf1f8">Modul 3</text><rect x="465" y="60" width="110" height="70" rx="8" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="520" y="103" text-anchor="middle" font-size="22" font-weight="900" fill="#ecf1f8">Modul 4</text><rect x="45" y="170" width="110" height="70" rx="8" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="100" y="213" text-anchor="middle" font-size="22" font-weight="900" fill="#ecf1f8">Modul 5</text><rect x="185" y="170" width="110" height="70" rx="8" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="240" y="213" text-anchor="middle" font-size="22" font-weight="900" fill="#ecf1f8">Modul 6</text><rect x="325" y="170" width="110" height="70" rx="8" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="380" y="213" text-anchor="middle" font-size="22" font-weight="900" fill="#ecf1f8">Modul 7</text><rect x="465" y="170" width="110" height="70" rx="8" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="520" y="213" text-anchor="middle" font-size="22" font-weight="900" fill="#ecf1f8">Modul 8</text><path d="M155 95 H185 M295 95 H325 M435 95 H465 M575 95 H588 V205 H575 M465 205 H435 M325 205 H295 M185 205 H155" fill="none" stroke="#ff8f3f" stroke-width="6"/><text x="310" y="296" text-anchor="middle" font-size="18" font-weight="800" fill="#94a4ba">alle Module in Reihe geschaltet</text></g></svg>
+      <div class="card" id="bz-t" style="font-size:17px;font-weight:600;line-height:1.55"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:8px 0 0">Beispielwerte – Zellzahl und Spannung je nach Fahrzeug.</p>
+  </div>
+</section>
+
+<section class="slide" id="s-ws">
+  <span class="tag">AUFBAU</span><h2>Der Wartungsstecker – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" id="ws-in">Stecker gesteckt</button><button class="btn ghost" id="ws-out-b">Stecker gezogen</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.35fr 1fr">
+      <svg viewBox="0 0 640 320" width="620" height="310" style="display:block;margin:0 auto" id="ws-svg">
+  <rect x="20" y="25" width="470" height="275" rx="16" fill="none" stroke="#94a4ba" stroke-width="4"/>
+  <text x="255" y="18" text-anchor="middle" font-size="15" font-weight="800" fill="#94a4ba">HV-Batterie</text>
+  <path class="ws-live" d="M450 75 H470" stroke="#ff8f3f" stroke-width="6"/>
+  <path class="ws-live" d="M370 75 H350 M270 75 H250 M170 75 H150 M70 75 H45 V128" fill="none" stroke="#ff8f3f" stroke-width="6"/>
+  <path class="ws-live" d="M45 172 V255 H70 M150 255 H170 M250 255 H270 M350 255 H370 M450 255 H470" fill="none" stroke="#ff8f3f" stroke-width="6"/>
+  <rect x="370" y="50" width="80" height="50" rx="7" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="410" y="82" text-anchor="middle" font-size="17" font-weight="900" fill="#ecf1f8">M1</text><rect x="270" y="50" width="80" height="50" rx="7" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="310" y="82" text-anchor="middle" font-size="17" font-weight="900" fill="#ecf1f8">M2</text><rect x="170" y="50" width="80" height="50" rx="7" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="210" y="82" text-anchor="middle" font-size="17" font-weight="900" fill="#ecf1f8">M3</text><rect x="70" y="50" width="80" height="50" rx="7" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="110" y="82" text-anchor="middle" font-size="17" font-weight="900" fill="#ecf1f8">M4</text><rect x="70" y="230" width="80" height="50" rx="7" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="110" y="262" text-anchor="middle" font-size="17" font-weight="900" fill="#ecf1f8">M5</text><rect x="170" y="230" width="80" height="50" rx="7" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="210" y="262" text-anchor="middle" font-size="17" font-weight="900" fill="#ecf1f8">M6</text><rect x="270" y="230" width="80" height="50" rx="7" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="310" y="262" text-anchor="middle" font-size="17" font-weight="900" fill="#ecf1f8">M7</text><rect x="370" y="230" width="80" height="50" rx="7" fill="#213552" stroke="#ff8f3f" stroke-width="4"/><text x="410" y="262" text-anchor="middle" font-size="17" font-weight="900" fill="#ecf1f8">M8</text>
+  <g id="ws-plug" style="transition:transform .5s, opacity .5s"><rect x="28" y="124" width="34" height="52" rx="6" fill="#ffd34d" stroke="#1a1a1a" stroke-width="3" class="dev"/></g><text x="70" y="150" font-size="14" font-weight="900" fill="#ecf1f8">Wartungs-</text><text x="70" y="166" font-size="14" font-weight="900" fill="#ecf1f8">stecker</text>
+  <rect x="200" y="135" width="110" height="46" rx="8" fill="#18283f" stroke="#a07cf5" stroke-width="3"/><text x="255" y="164" text-anchor="middle" font-size="16" font-weight="900" fill="#ecf1f8">BMS</text>
+  <path id="ws-pil" d="M200 158 H62 M310 158 H520 M520 75 V255" fill="none" stroke="#a07cf5" stroke-width="3" stroke-dasharray="7 6"/>
+  <text x="360" y="150" font-size="13" font-weight="800" fill="#a07cf5">Pilotlinie</text>
+  <circle cx="470" cy="75" r="5" fill="#ff8f3f"/><line id="ws-k1" x1="470" y1="75" x2="510" y2="75" stroke="#ff8f3f" stroke-width="6" style="transition:transform .4s;transform-origin:470px 75px"/>
+  <circle cx="470" cy="255" r="5" fill="#ff8f3f"/><line id="ws-k2" x1="470" y1="255" x2="510" y2="255" stroke="#ff8f3f" stroke-width="6" style="transition:transform .4s;transform-origin:470px 255px"/>
+  <text x="490" y="55" text-anchor="middle" font-size="13" font-weight="800" fill="#94a4ba">Schütz +</text><text x="490" y="285" text-anchor="middle" font-size="13" font-weight="800" fill="#94a4ba">Schütz −</text>
+  <path id="ws-out" d="M512 75 H560 V120 M512 255 H560 V210" fill="none" stroke="#ff8f3f" stroke-width="6" style="transition:opacity .4s"/>
+  <rect x="540" y="120" width="90" height="90" rx="10" fill="#18283f" stroke="#94a4ba" stroke-width="3"/>
+  <text x="585" y="158" text-anchor="middle" font-size="15" font-weight="900" fill="#ecf1f8">zum</text><text x="585" y="178" text-anchor="middle" font-size="15" font-weight="900" fill="#ecf1f8">Fahrzeug</text>
+  <text id="ws-h1" x="220" y="122" text-anchor="middle" font-size="16" font-weight="900" fill="#f05e4e" style="opacity:0;transition:opacity .4s">Hälfte 1: ca. 178 V</text>
+  <text id="ws-h2" x="220" y="220" text-anchor="middle" font-size="16" font-weight="900" fill="#f05e4e" style="opacity:0;transition:opacity .4s">Hälfte 2: ca. 178 V</text>
+</svg>
+      <div>
+        <div class="card"><div class="muted" style="font-size:15px;font-weight:800">SPANNUNG AM FAHRZEUG</div><div class="lcd2" id="ws-v" style="font-size:32px;margin-top:6px">ca. 355 V</div></div>
+        <div class="card" id="ws-t" style="margin-top:10px;font-size:16px;font-weight:600;line-height:1.5"></div>
+      </div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:8px 0 0">Vereinfachte Darstellung, Beispielwerte. Ob und wo es einen Wartungsstecker gibt, bestimmt der Hersteller.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AUFBAU</span><h2>Wartungsstecker oder Niedervolt-Trennstelle?</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step" style="border-top:4px solid var(--grn)"><div class="big" style="font-size:21px">Wartungsstecker (im HV-Kreis)</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>trennt den <b>Hauptstromkreis mechanisch</b> – mitten in der Batterie</li><li>teilt die Batterie in zwei Hälften mit kleinerer Spannung</li><li>unterbricht zusätzlich die Pilotlinie – die Schütze öffnen</li><li>wirkt auch, wenn ein Schütz verschweißt (festgeklebt) ist</li><li>kann mitgenommen oder abgeschlossen werden</li></ul></div>
+      <div class="card step" style="border-top:4px solid var(--ora)"><div class="big" style="font-size:21px">Niedervolt-Trennstelle / 12 V abklemmen</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>trennt nur den <b>12-V-Steuerkreis</b></li><li>die Schütze werden nicht mehr angesteuert und öffnen</li><li>der HV-Kreis selbst wird nicht mechanisch getrennt</li><li>ist ein Schütz verschweißt, kann trotzdem Hochvolt anliegen</li></ul></div>
+      <div class="warn step" style="grid-column:1/-1"><b>In beiden Fällen</b>Die Module selbst bleiben geladen – die Batterie ist innen nie spannungsfrei, auch jede Hälfte hat noch über 60 V. Darum immer nach Herstellervorgabe freischalten und die Spannungsfreiheit am Fahrzeug feststellen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-ef">
+  <span class="tag">AUFBAU</span><h2>Energiefluss – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px"><button class="btn ghost on" data-f="fahr">Fahren</button><button class="btn ghost" data-f="rek">Bremsen (Rekuperation)</button><button class="btn ghost" data-f="lad">Laden</button></div>
+    <svg viewBox="0 10 1000 380" width="1000" height="380" style="display:block;margin:0 auto;max-width:100%;height:auto" id="ef-svg">
+  <path d="M20 300 Q30 180 180 165 L320 70 H650 L810 160 Q970 175 980 300 Z" fill="#213552" stroke="#94a4ba" stroke-width="4"/>
+  <circle cx="200" cy="318" r="50" fill="#18283f" stroke="#94a4ba" stroke-width="8"/><circle cx="810" cy="318" r="50" fill="#18283f" stroke="#94a4ba" stroke-width="8"/>
+  <path class="ef-ln" data-g="lad" d="M80 225 H100" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <path class="ef-ln" data-g="lad" d="M260 225 H285 V290" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <path class="ef-ln" data-g="dc" d="M415 290 V260" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <path class="ef-ln" data-g="fahr" d="M625 290 V270" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <path class="ef-ln" data-g="fahr" d="M705 220 H742" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <path class="ef-ln" data-g="nv" d="M625 150 V127 H490" fill="none" stroke="#ff8f3f" stroke-width="10" stroke-linecap="round" style="transition:opacity .3s"/>
+  <g class="ef-bx" data-k="dose" style="transition:opacity .3s"><rect x="36" y="203" width="44" height="44" rx="6" fill="#94a4ba"/><text x="58" y="276" text-anchor="middle" font-size="24" font-weight="800" fill="#94a4ba">Ladedose</text></g>
+  <g class="ef-bx" data-k="ol" style="transition:opacity .3s"><rect x="100" y="195" width="160" height="60" rx="12" fill="#18283f" stroke="#ff8f3f" stroke-width="6"/><text x="180.0" y="235.08" text-anchor="middle" font-size="28" font-weight="900" fill="#ecf1f8">Ladegerät</text></g>
+  <g class="ef-bx" data-k="dc" style="transition:opacity .3s"><rect x="340" y="200" width="150" height="60" rx="12" fill="#18283f" stroke="#ff8f3f" stroke-width="6"/><text x="415.0" y="240.08" text-anchor="middle" font-size="28" font-weight="900" fill="#ecf1f8">DC/DC</text></g>
+  <g class="ef-bx" data-k="le" style="transition:opacity .3s"><rect x="545" y="150" width="160" height="120" rx="12" fill="#18283f" stroke="#ff8f3f" stroke-width="6"/><text x="625.0" y="205.71" text-anchor="middle" font-size="26" font-weight="900" fill="#ecf1f8">Leistungs-</text><text x="625.0" y="233.01000000000002" text-anchor="middle" font-size="26" font-weight="900" fill="#ecf1f8">elektronik</text></g>
+  <g class="ef-bx" data-k="nv" style="transition:opacity .3s"><rect x="340" y="100" width="150" height="54" rx="12" fill="#18283f" stroke="#ff8f3f" stroke-width="6"/><text x="415.0" y="137.08" text-anchor="middle" font-size="28" font-weight="900" fill="#ecf1f8">Klima</text></g>
+  <g class="ef-bx" data-k="em" style="transition:opacity .3s"><circle cx="790" cy="220" r="48" fill="#18283f" stroke="#ff8f3f" stroke-width="6"/><text x="790" y="230" text-anchor="middle" font-size="28" font-weight="900" fill="#ecf1f8">EM</text></g>
+  <g class="ef-bx" data-k="bat" style="transition:opacity .3s"><rect x="265" y="290" width="490" height="62" rx="10" fill="#ff8f3f"/><text x="510" y="332" text-anchor="middle" font-size="32" font-weight="900" fill="#1a1a1a" class="dev">HV-Batterie</text></g>
+  <path id="ef-p-fahr" d="M510 300 H625 V272" fill="none" stroke="none"/>
+  <path id="ef-p-fahr2" d="M707 220 H740" fill="none" stroke="none"/>
+  <path id="ef-p-dc" d="M470 300 H415 V262" fill="none" stroke="none"/>
+  <path id="ef-p-rek" d="M740 220 H707" fill="none" stroke="none"/>
+  <path id="ef-p-rek2" d="M625 272 V300 H510" fill="none" stroke="none"/>
+  <path id="ef-p-lad" d="M58 225 H98" fill="none" stroke="none"/>
+  <path id="ef-p-lad2" d="M262 225 H285 V300 H470" fill="none" stroke="none"/>
+  </svg>
+    <div class="card" id="ef-t" style="font-size:18px;font-weight:600;line-height:1.5;margin-top:8px"></div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AUFBAU</span><h2>Laden: AC und DC</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">AC-Laden (Wechselstrom)</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>an Wallbox oder Ladesäule mit Wechselstrom</li><li>das Ladegerät im Auto macht Gleichspannung daraus</li><li>meist bis 11 oder 22 kW (Richtwert)</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">DC-Laden (Gleichstrom)</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Schnellladesäule liefert direkt Gleichspannung</li><li>am Ladegerät im Auto vorbei direkt zur Batterie</li><li>deutlich höhere Leistung – kürzere Ladezeit</li></ul></div>
+    </div>
+    <div class="note step">Ladeleistungen je nach Fahrzeug und Ladesäule – Richtwerte.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AUFBAU</span><h2>Schutzeinrichtungen im HV-System</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Isoliertes System</b>Das HV-System hat keine Verbindung zur Karosserie. Eine Isolationsüberwachung meldet, wenn die Isolation schlechter wird.</div>
+      <div class="tip step"><b>Schütze in der Batterie</b>Sie trennen die Batterie vom Fahrzeug, z. B. bei Zündung aus oder nach einem Unfall.</div>
+      <div class="tip step"><b>Pilotlinie (Interlock)</b>Eine Überwachungsleitung durch die HV-Stecker – wird ein Stecker gezogen, schaltet das System ab.</div>
+      <div class="warn step"><b>Kein Ersatz fürs Freischalten</b>Diese Einrichtungen schützen im Betrieb. Vor Arbeiten am HV-System muss es trotzdem nach Vorschrift spannungsfrei geschaltet werden.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AUFBAU</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>12-V-Batterie</b>Auch E-Autos haben eine 12-V-Batterie. Ist sie leer, „startet“ das Fahrzeug nicht – das HV-System wird über 12 V eingeschaltet.</div>
+      <div class="tip step"><b>Leise heißt nicht aus</b>Ein E-Auto ist im Stand still – ob es „fahrbereit“ ist, zeigt nur die Anzeige im Kombiinstrument.</div>
+      <div class="warn step"><b>Anheben und Hebebühne</b>Nur an den vorgesehenen Aufnahmepunkten – die HV-Batterie im Unterboden nicht beschädigen.</div>
+      <div class="tip step"><b>Kühlmittel</b>Batterie und Leistungselektronik haben oft eigene Kühlkreisläufe – nur das vorgeschriebene Kühlmittel verwenden.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AUFBAU</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/hv-aufbau.mp4" poster="videos/hv-aufbau.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AUFBAU</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Was macht der Wechselrichter in der Leistungselektronik?</p>
+      <div class="opts"><button class="opt">Er macht aus Gleichspannung Drehstrom für die E-Maschine</button><button class="opt">Er lädt die 12-V-Batterie</button><button class="opt">Er kühlt die Batterie</button></div>
+      <div class="fb">So werden Drehzahl und Kraft der E-Maschine geregelt.</div></div>
+    <div class="q" data-correct="1"><p>2. Was ersetzt im E-Auto die Lichtmaschine?</p>
+      <div class="opts"><button class="opt">Die E-Maschine</button><button class="opt">Der DC/DC-Wandler</button><button class="opt">Das Ladegerät</button></div>
+      <div class="fb">Er macht aus Hochvolt 12 V für das Bordnetz.</div></div>
+    <div class="q" data-correct="2"><p>3. Was passiert beim Rekuperieren?</p>
+      <div class="opts"><button class="opt">Die Batterie wird beim Fahren entladen</button><button class="opt">Die Klimaanlage wird abgeschaltet</button><button class="opt">Die E-Maschine arbeitet als Generator und lädt die Batterie</button></div>
+      <div class="fb">Bremsenergie wird zurückgewonnen.</div></div>
+    <div class="q" data-correct="0"><p>4. Wie wird beim DC-Schnellladen geladen?</p>
+      <div class="opts"><button class="opt">Die Ladesäule liefert direkt Gleichspannung zur Batterie</button><button class="opt">Über das Ladegerät im Auto</button><button class="opt">Über die 12-V-Steckdose</button></div>
+      <div class="fb">Am On-Board-Ladegerät vorbei.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">AUFBAU</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Batterie, Leistungselektronik, E-Maschine</span></li>
+        <li class="step"><span>DC/DC-Wandler versorgt das 12-V-Bordnetz</span></li>
+        <li class="step"><span>AC: Lader im Auto – DC: direkt zur Batterie</span></li>
+        <li class="step"><span>Schutzeinrichtungen ersetzen kein Freischalten</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Hochvolt%20im%20Kfz" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script src="assets/schaltung.js"></script>
+<script>
+(function () {
+  const K = {"bat": ["HV-Batterie", "Speichert die Energie. Viele Lithium-Ionen-Zellen, zu Modulen zusammengefasst. Ein Batteriemanagement überwacht Spannung und Temperatur. Schütze (Schalter) verbinden die Batterie mit dem Fahrzeug."], "le": ["Leistungselektronik", "Der Wechselrichter macht aus der Gleichspannung der Batterie Drehstrom für die E-Maschine – und regelt so Drehzahl und Kraft. Achtung: Kondensatoren können Restladung haben."], "em": ["E-Maschine", "Treibt das Fahrzeug an. Beim Bremsen arbeitet sie als Generator und lädt die Batterie wieder auf (Rekuperation)."], "dc": ["DC/DC-Wandler", "Macht aus der Hochvoltspannung 12 V für das normale Bordnetz – er ersetzt die Lichtmaschine."], "ol": ["Ladegerät (On-Board)", "Beim Laden an Wechselstrom (AC) macht es aus Wechselspannung Gleichspannung für die Batterie. Beim Schnellladen (DC) liefert die Ladesäule direkt Gleichspannung."], "nv": ["Klima / Heizung", "Elektrischer Klimakompressor und Hochvolt-Heizung hängen ebenfalls am Hochvoltsystem – auch sie haben orange Leitungen."], "dose": ["Ladedose", "Hier wird das Ladekabel angeschlossen – für Wechselstrom (AC) und oft auch für Gleichstrom (DC)."], "bn": ["12-V-Bordnetz", "Licht, Steuergeräte, Radio und Co. laufen weiter mit 12 V. Auch E-Autos haben eine 12-V-Batterie."]};
+  const gs = document.querySelectorAll('#s-au .au-bx');
+  function k(id) {
+    gs.forEach(g => g.style.opacity = g.dataset.k === id ? 1 : 0.45);
+    document.getElementById('au-t').innerHTML = '<b class="ora">' + K[id][0] + ':</b> ' + K[id][1];
+  }
+  gs.forEach(g => { g.style.cursor = 'pointer'; g.onclick = () => k(g.dataset.k); }); k('bat');
+
+  const svg = document.getElementById('ef-svg');
+  const F = {}; ['fahr', 'fahr2', 'dc', 'rek', 'rek2', 'lad', 'lad2'].forEach(n => F[n] = Flow(svg, document.getElementById('ef-p-' + n), { spacing: 26, speed: 60, r: 9, color: '#ffd34d' }));
+  const M = { fahr: { f: ['fahr', 'fahr2', 'dc'], l: ['fahr', 'dc'], b: ['bat', 'le', 'em', 'dc'] }, rek: { f: ['rek', 'rek2'], l: ['fahr'], b: ['bat', 'le', 'em'] }, lad: { f: ['lad', 'lad2'], l: ['lad'], b: ['dose', 'ol', 'bat'] } };
+  const TX = {
+    fahr: '<b>Fahren:</b> Die Batterie gibt Energie ab. Die Leistungselektronik macht daraus Drehstrom, die E-Maschine (EM) treibt das Auto an. Der DC/DC-Wandler versorgt das 12-V-Bordnetz.',
+    rek: '<b>Bremsen:</b> Die E-Maschine arbeitet als Generator. Die Leistungselektronik schickt die Energie zurück in die Batterie (Rekuperation).',
+    lad: '<b>Laden (AC):</b> Strom kommt über die Ladedose, das Ladegerät macht Gleichspannung daraus und lädt die Batterie. Beim DC-Schnellladen geht es am Ladegerät vorbei direkt zur Batterie.'
+  };
+  const bt = document.querySelectorAll('#s-ef [data-f]');
+  function f(n) {
+    const m = M[n];
+    Object.keys(F).forEach(x => F[x].on(m.f.includes(x)));
+    document.querySelectorAll('#s-ef .ef-ln').forEach(l => l.style.opacity = m.l.includes(l.dataset.g) ? 1 : 0.2);
+    document.querySelectorAll('#s-ef .ef-bx').forEach(g => g.style.opacity = m.b.includes(g.dataset.k) ? 1 : 0.3);
+    bt.forEach(b => b.classList.toggle('on', b.dataset.f === n));
+    document.getElementById('ef-t').innerHTML = TX[n];
+  }
+  bt.forEach(b => b.onclick = () => f(b.dataset.f)); f('fahr');
+
+  const BT = [
+    '<b class="ora">Die Zelle:</b> Eine Lithium-Ionen-Zelle hat nur ca. 3,7 V. Für Hochvolt braucht man viele Zellen.',
+    '<b class="ora">Das Modul – gemischt verschaltet:</b> Jeweils mehrere Zellen sind <b>parallel</b> geschaltet (blau umrandet) – das erhöht die Kapazität und den möglichen Strom, die Spannung bleibt 3,7 V. Diese Zellgruppen sind <b>in Reihe</b> geschaltet – die Spannungen addieren sich. Beispiel: 12 Gruppen in Reihe ≈ 44 V.',
+    '<b class="ora">Die Batterie:</b> Mehrere Module sind in Reihe geschaltet. Beispiel: 8 Module × 12 Zellgruppen = 96 Gruppen in Reihe ≈ 355 V. Dazu kommen Batteriemanagement (BMS), Schütze, Sicherung, Kühlung und ein stabiles Gehäuse.'
+  ];
+  const lb = document.querySelectorAll('#s-bz [data-l]'), lg = document.querySelectorAll('#bz-svg .bz-l');
+  function lv(i) { lg.forEach(g => g.style.display = +g.dataset.l === i ? '' : 'none'); lb.forEach(b => b.classList.toggle('on', +b.dataset.l === i)); document.getElementById('bz-t').innerHTML = BT[i]; }
+  lb.forEach(b => b.onclick = () => lv(+b.dataset.l)); lv(0);
+
+  function ws(on) {
+    const pl = document.getElementById('ws-plug'); pl.style.transform = on ? '' : 'translate(-22px,0)'; pl.style.opacity = on ? 1 : 0.35;
+    document.getElementById('ws-k1').style.transform = on ? '' : 'rotate(-30deg)';
+    document.getElementById('ws-k2').style.transform = on ? '' : 'rotate(30deg)';
+    document.getElementById('ws-out').style.opacity = on ? 1 : 0.15;
+    document.getElementById('ws-pil').setAttribute('stroke', on ? '#a07cf5' : '#f05e4e');
+    ['ws-h1', 'ws-h2'].forEach(id => document.getElementById(id).style.opacity = on ? 0 : 1);
+    document.getElementById('ws-v').textContent = on ? 'ca. 355 V' : '0 V*';
+    document.getElementById('ws-in').classList.toggle('on', on); document.getElementById('ws-out-b').classList.toggle('on', !on);
+    document.getElementById('ws-t').innerHTML = on
+      ? '<b>Gesteckt:</b> Alle Module sind in Reihe verbunden, die Pilotlinie ist geschlossen. Das BMS kann die Schütze schließen – am Fahrzeug liegt die volle Spannung an.'
+      : '<b>Gezogen:</b> Der Hauptstromkreis ist <b>mitten in der Batterie mechanisch getrennt</b>. Die Pilotlinie ist unterbrochen – die Schütze öffnen. <span class="red">Aber: Jede Batteriehälfte hat noch ca. 178 V!</span><br><span class="muted">* erst nach Wartezeit und Spannungsprüfung sicher</span>';
+  }
+  document.getElementById('ws-in').onclick = () => ws(true); document.getElementById('ws-out-b').onclick = () => ws(false);
+  document.getElementById('s-ws').addEventListener('slideshow', () => ws(true));
+  ws(true);
+
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

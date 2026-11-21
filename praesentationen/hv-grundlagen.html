@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Hochvolt-Grundlagen – Hochvolt im Kfz</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 96px; }
+</style>
+</head>
+<body class="t-hv">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">HOCHVOLT IM KFZ · DGUV INFORMATION 209-093</div>
+  <div class="symbol" style="font-size:84px">HV</div>
+  <h1>Hochvolt-Grundlagen</h1>
+  <p>Was Hochvolt ist und warum es gefährlich ist</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">HV-GRUNDLAGEN</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Ab wann eine Spannung im Fahrzeug als Hochvolt gilt</li>
+      <li class="step from-left"><span class="num">2</span>Welche Gefahren vom Hochvoltsystem ausgehen</li>
+      <li class="step from-left"><span class="num">3</span>Woran du Hochvolt-Bauteile erkennst</li>
+      <li class="step from-left"><span class="num">4</span>Die wichtigste Regel: Hände weg von orange</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">HV-GRUNDLAGEN</span><h2>Was ist Hochvolt?</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>über 60 V</b><span>Gleichspannung (DC) – bis 1.500 V</span></div>
+      <div class="val step from-left"><b>über 30 V</b><span>Wechselspannung (AC) – bis 1.000 V</span></div>
+    </div>
+    <div class="tip step" style="margin-top:14px"><b>Zum Vergleich</b>Das normale Bordnetz hat 12 V. Hochvoltsysteme in E-Autos arbeiten heute meist mit rund 400 V oder 800 V Gleichspannung.</div>
+<div class="note step">Quelle: DGUV Information 209-093 „Qualifizierung für Arbeiten an Fahrzeugen mit Hochvoltsystemen“ (Ausgabe 08/2021). Herstellervorgaben beachten.</div>
+  </div>
+</section>
+
+<section class="slide" id="s-hs">
+  <span class="tag">HV-GRUNDLAGEN</span><h2>Hochvolt oder nicht? – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px;flex-wrap:wrap"><button class="btn ghost" data-s="0">12-V-Bordnetz</button><button class="btn ghost" data-s="1">48-V-Mildhybrid</button><button class="btn ghost" data-s="2">Hybrid / E-Auto</button><button class="btn ghost" data-s="3">E-Auto mit 800-V-Technik</button></div>
+    <div class="grid2" style="align-items:center">
+      <div class="card" style="text-align:center"><div class="muted" style="font-size:15px;font-weight:800">SYSTEMSPANNUNG</div><div id="hs-v" style="font-size:46px;font-weight:900;margin:6px 0">—</div><div id="hs-b" style="display:inline-block;padding:8px 18px;border-radius:999px;font-weight:900;font-size:20px"></div></div>
+      <div class="card" id="hs-t" style="font-size:18px;font-weight:600;line-height:1.5"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:10px 0 0">Richtwerte – die genaue Spannung steht in den Herstellerunterlagen.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">HV-GRUNDLAGEN</span><h2>Die Gefahren</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="warn step"><b>Elektrischer Schlag</b>Strom durch den Körper: Herzkammerflimmern, Verbrennungen – Lebensgefahr.</div>
+      <div class="warn step"><b>Störlichtbogen</b>Bei einem Kurzschluss entsteht ein Lichtbogen mit großer Hitze und grellem Licht – Verbrennungen, Augenschäden.</div>
+      <div class="warn step"><b>Brand und Hitze</b>Eine beschädigte Batterie kann sich stark erhitzen und brennen – auch noch Stunden oder Tage später.</div>
+      <div class="warn step"><b>Austretende Stoffe</b>Aus beschädigten Batterien können gefährliche Stoffe austreten – nicht berühren, nicht einatmen.</div>
+    </div>
+    <div class="tip step" style="margin-top:12px"><b>Restladung</b>Auch nach dem Abschalten kann noch Spannung anliegen, z. B. in Kondensatoren der Leistungselektronik.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">HV-GRUNDLAGEN</span><h2>So erkennst du Hochvolt-Bauteile</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:center">
+      <div class="card step" style="text-align:center">
+        <svg viewBox="0 0 260 200" width="240" height="185" style="display:block;margin:0 auto" class="dev">
+          <path d="M130 14 L246 186 H14 Z" fill="#ffd34d" stroke="#1a1a1a" stroke-width="8" stroke-linejoin="round"/>
+          <path d="M140 60 L104 124 H132 L116 172 L162 104 H132 Z" fill="#1a1a1a"/>
+        </svg>
+        <div style="font-weight:800;margin-top:6px">Warnzeichen „Elektrische Spannung“</div></div>
+      <ul class="step" style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0">
+        <li><b>Orange Leitungen</b> und Stecker – das ist Hochvolt</li>
+        <li><b>Warnaufkleber</b> an Batterie, Leistungselektronik und anderen HV-Bauteilen</li>
+        <li>In der Werkstatt: <b>Schild am Fahrzeug</b> zeigt den Zustand des HV-Systems</li>
+      </ul>
+    </div>
+    <div class="warn step" style="margin-top:12px"><b>Hände weg von orange!</b>Orange Leitungen und gekennzeichnete Bauteile nur anfassen, wenn du dafür qualifiziert und beauftragt bist.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">HV-GRUNDLAGEN</span><h2>Wichtig für dich</h2>
+  <div class="body">
+    <div class="warn step"><b>Wichtig</b>Diese Präsentation ersetzt keine Qualifizierung und keine Unterweisung. Wer was am Hochvoltsystem darf, legt dein Betrieb fest – auf Grundlage der DGUV Information 209-093 und der Gefährdungsbeurteilung.</div>
+    <div class="tip step" style="margin-top:12px"><b>Im Zweifel</b>Nichts anfassen, Arbeitsplatz verlassen und die Fachkundige Person Hochvolt (FHV) oder deinen Ausbilder fragen.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">HV-GRUNDLAGEN</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/hv-grundlagen.mp4" poster="videos/hv-grundlagen.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">HV-GRUNDLAGEN</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Ab welcher Gleichspannung spricht man im Fahrzeug von Hochvolt?</p>
+      <div class="opts"><button class="opt">Über 12 V</button><button class="opt">Über 60 V</button><button class="opt">Über 230 V</button></div>
+      <div class="fb">Hochvolt: über 60 V DC (bis 1.500 V) bzw. über 30 V AC (bis 1.000 V).</div></div>
+    <div class="q" data-correct="0"><p>2. Ist ein 48-V-Mildhybrid ein Hochvoltsystem?</p>
+      <div class="opts"><button class="opt">Nein, 48 V DC liegt unter 60 V</button><button class="opt">Ja, immer</button><button class="opt">Nur beim Laden</button></div>
+      <div class="fb">Hochvolt beginnt erst über 60 V DC.</div></div>
+    <div class="q" data-correct="2"><p>3. Welche Farbe haben Hochvoltleitungen?</p>
+      <div class="opts"><button class="opt">Rot</button><button class="opt">Blau</button><button class="opt">Orange</button></div>
+      <div class="fb">Darum gilt: Hände weg von orange!</div></div>
+    <div class="q" data-correct="0"><p>4. Warum kann nach dem Abschalten noch Spannung anliegen?</p>
+      <div class="opts"><button class="opt">Durch Restladungen, z. B. in Kondensatoren</button><button class="opt">Weil die 12-V-Batterie nachlädt</button><button class="opt">Das ist nicht möglich</button></div>
+      <div class="fb">Darum gibt es Wartezeiten und die Spannungsprüfung.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">HV-GRUNDLAGEN</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Hochvolt: über 60 V DC oder über 30 V AC</span></li>
+        <li class="step"><span>Gefahren: Schlag, Lichtbogen, Brand, Stoffe</span></li>
+        <li class="step"><span>Orange = Hochvolt – Hände weg!</span></li>
+        <li class="step"><span>Im Zweifel: FHV oder Ausbilder fragen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Hochvolt%20im%20Kfz" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const S = [["12 V DC", 0, "Kein Hochvolt. Das ist das normale Bordnetz – Arbeiten wie gewohnt."], ["48 V DC", 0, "Kein Hochvolt – unter 60 V DC. Trotzdem: Herstellervorgaben beachten, hohe Ströme und Kurzschlussgefahr."], ["ca. 400 V DC", 1, "Hochvolt! Über 60 V DC. Arbeiten am HV-System nur mit Qualifizierung nach DGUV 209-093."], ["ca. 800 V DC", 1, "Hochvolt! Über 60 V DC. Lebensgefahr bei Berührung – Hände weg von orange."]];
+  const bt = document.querySelectorAll('#s-hs [data-s]');
+  function s(i) {
+    const [v, h, t] = S[i];
+    document.getElementById('hs-v').textContent = v;
+    const b = document.getElementById('hs-b');
+    b.textContent = h ? 'HOCHVOLT' : 'kein Hochvolt';
+    b.style.background = h ? '#ff8f3f' : 'var(--card2)'; b.style.color = h ? '#1a1a1a' : 'var(--txt)';
+    document.getElementById('hs-t').innerHTML = t;
+    bt.forEach(x => x.classList.toggle('on', +x.dataset.s === i));
+  }
+  bt.forEach(x => x.onclick = () => s(+x.dataset.s)); s(0);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

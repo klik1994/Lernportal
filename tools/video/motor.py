@@ -1662,3 +1662,198 @@ VIDEOS_MOTOR.update({
     'gemischt': (PUR, [(title_scene('R+||', 'Gemischte Schaltung', 'Reihe und parallel kombiniert', PUR, size=64, kicker=KICK8), 5.0),
                        (vg_schritte, 12.0), (VG_RECHNEN, 9.0), (vg_kfz, 9.0), (VG_MERKE, 7.5)]),
 })
+
+
+# =================== HOCHVOLT ===================
+KICK9 = 'HOCHVOLT  ·  DGUV INFORMATION 209-093'
+
+
+def hg_grenzen(d, t, dur):
+    header(d, t, 'HOCHVOLT', 'Ab wann ist es Hochvolt?', ORA)
+    a = pr(t, 0.2, 0.8)
+    x0, x1, y = 120, 1160, 330
+    X = lambda v: x0 + (x1 - x0) * math.log10(v / 6) / math.log10(1000 / 6)
+    rrect(d, (x0, y - 14, X(60), y + 14), 7, GRN, a)
+    rrect(d, (X(60), y - 14, x1, y + 14), 7, ORA, a)
+    c = pr(t, 1.0, 1.5)
+    line(d, [(X(60), y - 70), (X(60), y + 30)], TXT, 4, c)
+    text(d, X(60), y - 92, 'Grenze: 60 V DC', 26, 'XB', TXT, c, 'mm')
+    text(d, (x0 + X(60)) / 2, y + 110, 'kein Hochvolt', 22, 'XB', GRN, a, 'mm')
+    text(d, (X(60) + x1) / 2, y + 110, 'HOCHVOLT', 26, 'XB', ORA, a, 'mm')
+    for i, (v, lab) in enumerate([(12, '12 V'), (48, '48 V'), (400, '400 V'), (800, '800 V')]):
+        b = pr(t, 2.0 + i * 1.0, 2.5 + i * 1.0)
+        circle(d, (X(v), y), 16, TXT, b)
+        text(d, X(v), y + 50, lab, 24, 'XB', TXT, b, 'mm')
+    caption(d, t, [(0.6, 5.9, 'Hochvolt: über 60 V Gleichspannung oder über 30 V Wechselspannung'),
+                   (6.0, dur, '12 V und 48 V: kein Hochvolt – E-Autos: meist ca. 400 oder 800 V')], ORA)
+
+
+HG_GEFAHR = values_scene('HOCHVOLT', ORA, [], [
+    ('Schlag', 'Strom durch den Körper – Lebensgefahr'), ('Lichtbogen', 'große Hitze und grelles Licht'),
+    ('Brand', 'beschädigte Batterie – auch später noch'), ('Restladung', 'auch nach dem Abschalten möglich')],
+    note='DGUV Information 209-093', title='Die Gefahren', vsize=28)
+
+
+def hg_orange(d, t, dur):
+    header(d, t, 'HOCHVOLT', 'Hände weg von orange!', ORA)
+    a = pr(t, 0.2, 0.8)
+    pts = [(120 + i * 8, 330 + 50 * math.sin(i / 12 + t * 0.6)) for i in range(70)]
+    line(d, pts, ORA, 26, a)
+    b = pr(t, 1.5, 2.1)
+    poly(d, [(900, 160), (1080, 470), (720, 470)], (255, 211, 77), b)
+    line(d, [(900, 160), (1080, 470), (720, 470), (900, 160)], (26, 26, 26), 10, b, bg=(255, 211, 77))
+    poly(d, [(915, 250), (860, 370), (900, 370), (880, 450), (950, 330), (905, 330)], (26, 26, 26), b)
+    caption(d, t, [(0.6, 4.5, 'Orange Leitungen und Warnaufkleber = Hochvolt'),
+                   (4.6, dur, 'Nur anfassen, wenn du qualifiziert und beauftragt bist')], ORA)
+
+
+HG_MERKE = merke_scene('HOCHVOLT', ORA, [
+    'Hochvolt: über 60 V DC oder 30 V AC', 'Gefahren: Schlag, Lichtbogen, Brand',
+    'Orange = Hochvolt – Hände weg!', 'Im Zweifel: FHV oder Ausbilder fragen'])
+
+
+def ha_fluss(d, t, dur):
+    header(d, t, 'AUFBAU', 'So fließt die Energie', ORA)
+    xs, w = kette_boxes(d, t, [('HV-Batterie', 'Gleichspannung'), ('Leistungselektronik', 'macht Drehstrom'), ('E-Maschine', 'treibt an')], 170, 130, ORA, step=0.8)
+    b = pr(t, 3.0, 3.6)
+    line(d, [(xs[0] + w / 2, 300), (xs[0] + w / 2, 400), (xs[1] + 20, 400)], ORA, 6, b)
+    rrect(d, (xs[1] + 20, 360, xs[1] + w, 440), 16, CARD, b)
+    text(d, xs[1] + 20 + (w - 20) / 2, 400, 'DC/DC-Wandler → 12 V', 22, 'Bold', TXT, b, 'mm', bg=CARD)
+    caption(d, t, [(0.6, 5.0, 'Fahren: Batterie → Leistungselektronik → E-Maschine'),
+                   (5.1, dur, 'Bremsen: Die E-Maschine lädt die Batterie wieder auf')], ORA)
+
+
+HA_LADEN = values_scene('AUFBAU', ORA, [], [
+    ('AC-Laden', 'Ladegerät im Auto macht Gleichspannung'), ('DC-Laden', 'Ladesäule liefert direkt Gleichspannung'),
+    ('DC/DC', 'versorgt das 12-V-Bordnetz'), ('Schütze', 'trennen die Batterie vom Fahrzeug')],
+    note='Schutzeinrichtungen ersetzen kein Freischalten', title='Laden und Schutz', vsize=28)
+
+HA_MERKE = merke_scene('AUFBAU', ORA, [
+    'Batterie, Leistungselektronik, E-Maschine', 'DC/DC-Wandler versorgt das 12-V-Bordnetz',
+    'AC: Lader im Auto – DC: direkt zur Batterie', 'Schutzeinrichtungen ersetzen kein Freischalten'])
+
+
+def hs_treppe(d, t, dur):
+    header(d, t, 'QUALIFIZIERUNG', 'Die Stufen nach DGUV 209-093', ORA)
+    st = [('S', 'bedienen,|laden, waschen'), ('1S', 'allgemeine|Arbeiten (FuP)'), ('2S', 'spannungsfrei|schalten (FHV)'), ('3S', 'Arbeiten unter|Spannung')]
+    for i, (s, sub) in enumerate(st):
+        b = pr(t, 0.6 + i * 1.8, 1.2 + i * 1.8)
+        x, h = 110 + i * 270, 90 + i * 80
+        rrect(d, (x, 520 - h, x + 250, 520), 12, ORA if i == 2 else CARD, b)
+        text(d, x + 125, 520 - h + 40, s, 40, 'XB', BG if i == 2 else ORA, b, 'mm', bg=ORA if i == 2 else CARD)
+        for j, l in enumerate(sub.split('|')):
+            text(d, x + 125, 545 + j * 28, l, 22, 'Bold', TXT, b, 'mm')
+    caption(d, t, [(8.0, dur, 'Kfz-Mechatroniker mit abgeschlossener Ausbildung: Fachkunde 2S')], ORA, y=640)
+
+
+HS_AZUBI = values_scene('QUALIFIZIERUNG', ORA, [], [
+    ('Abschluss', 'Kfz-Mechatroniker (AO 2013): Fachkunde 2S'), ('Ausbildung', 'HV-Arbeiten nur unter Leitung und Aufsicht einer FHV'),
+    ('Betrieb', 'legt fest, wer was darf'), ('3S', 'in der Regel mit zweiter Person')],
+    note='Quelle: DGUV Information 209-093 (08/2021)', title='Was gilt für dich?', vsize=26)
+
+HS_MERKE = merke_scene('QUALIFIZIERUNG', ORA, [
+    'S: bedienen – 1S: allgemeine Arbeiten', '2S (FHV): spannungsfrei schalten und arbeiten',
+    '3S: Arbeiten unter Spannung', 'Azubis: nur unter Leitung und Aufsicht einer FHV'])
+
+
+def hf_regeln(d, t, dur):
+    header(d, t, 'SPANNUNGSFREIHEIT', 'Die fünf Sicherheitsregeln', ORA)
+    rg = ['Freischalten', 'Gegen Wiedereinschalten sichern', 'Spannungsfreiheit feststellen', 'Erden und kurzschließen (nach Hersteller)', 'Benachbarte Teile abdecken']
+    for i, r in enumerate(rg):
+        b = pr(t, 0.5 + i * 0.8, 1.0 + i * 0.8)
+        y = 130 + i * 80
+        imm = i < 3 and t > 5.0
+        rrect(d, (150, y, 1130, y + 64), 14, CARD, b, outline=ORA if imm else None, width=4 if imm else 0)
+        circle(d, (195, y + 32), 22, ORA if i < 3 else CARD2, b, bg=CARD)
+        text(d, 195, y + 32, str(i + 1), 24, 'XB', BG if i < 3 else MUTED, b, 'mm', bg=ORA if i < 3 else CARD2)
+        text(d, 240, y + 32, r, 26, 'Bold', TXT, b, 'lm', bg=CARD)
+        if imm:
+            text(d, 1100, y + 32, 'immer', 22, 'XB', ORA, 1, 'rm', bg=CARD)
+    caption(d, t, [(5.0, dur, 'Am HV-System gelten immer die ersten drei Regeln')], ORA)
+
+
+def hf_pruefer(d, t, dur):
+    header(d, t, 'SPANNUNGSFREIHEIT', 'Spannungsfreiheit feststellen', ORA)
+    a = pr(t, 0.2, 0.8)
+    ph = 0 if t < 3.5 else 1 if t < 7 else 2
+    names = ['1. Prüfer vorher testen', '2. An allen Polen messen', '3. Prüfer nachher testen']
+    for i, n in enumerate(names):
+        on = i == ph
+        rrect(d, (90, 150 + i * 80, 560, 214 + i * 80), 14, ORA if on else CARD, a)
+        text(d, 115, 182 + i * 80, n, 26, 'Bold', BG if on else MUTED, a, 'lm', bg=ORA if on else CARD)
+    rrect(d, (700, 150, 1150, 420), 24, (255, 211, 77), a)
+    rrect(d, (740, 190, 1110, 300), 12, (196, 214, 190), a)
+    val = ['OK', '0 V', 'OK'][ph]
+    text(d, 1090, 245, val, 56, 'XB', (25, 35, 28), a, 'rm', bg=(196, 214, 190))
+    text(d, 925, 360, 'zweipoliger Spannungsprüfer', 22, 'Bold', (26, 26, 26), a, 'mm', bg=(255, 211, 77))
+    caption(d, t, [(0.6, dur, 'Kein Multimeter – nur ein geeigneter zweipoliger Spannungsprüfer')], ORA)
+
+
+HF_MERKE = merke_scene('SPANNUNGSFREIHEIT', ORA, [
+    'Freischalten, sichern, Spannungsfreiheit feststellen', 'Zweipoliger Spannungsprüfer – kein Multimeter',
+    'Prüfer vorher und nachher testen', 'Energiespeicher nie kurzschließen'])
+
+HSI_PSA = values_scene('SICHER ARBEITEN', ORA, [], [
+    ('Handschuhe', 'isolierend – vor Benutzung prüfen'), ('Gesichtsschutz', 'z. B. Helm mit Visier'),
+    ('Kleidung', 'gegen Störlichtbogen (DGUV-I 203-077)'), ('Schild', 'Zustand des HV-Systems und FHV')],
+    note='Was nötig ist, ergibt die Gefährdungsbeurteilung', title='Schutz und Kennzeichnung', vsize=26)
+
+HSI_UNFALL = values_scene('SICHER ARBEITEN', ORA, [], [
+    ('Spannung', 'nach einem Unfall möglich'), ('Airbag', 'Abschaltung ersetzt kein Freischalten'),
+    ('Brand', 'Batterie kann sich später entzünden'), ('Pannenhilfe', 'mindestens Stufe 1S')],
+    note='Quelle: DGUV Information 209-093 (08/2021)', title='Unfall und Panne', vsize=26)
+
+HSI_NOT = values_scene('SICHER ARBEITEN', ORA, [], [
+    ('1.', 'Eigenschutz – nicht in den Stromkreis greifen'), ('2.', 'Notruf 112'),
+    ('3.', 'Erste Hilfe, bei Bedarf Wiederbelebung'), ('4.', 'immer ärztlich untersuchen lassen')],
+    note='Herzrhythmusstörungen können auch später auftreten', title='Im Notfall: Stromunfall', vsize=30)
+
+HSI_MERKE = merke_scene('SICHER ARBEITEN', ORA, [
+    'PSA: Handschuhe, Gesichtsschutz, Schutzkleidung', 'Schild: Zustand des HV-Systems und FHV',
+    'Unfallfahrzeug: Spannung möglich, Brandgefahr', 'Stromunfall: Eigenschutz, 112, Arzt'])
+
+def ha_batterie(d, t, dur):
+    header(d, t, 'AUFBAU', 'Die HV-Batterie und der Wartungsstecker', ORA)
+    a = pr(t, 0.2, 0.8)
+    gezogen = t > 6.0
+    rrect(d, (90, 120, 900, 520), 20, None, a, outline=MUTED, width=4)
+    pos = [(560, 160), (400, 160), (240, 160), (130, 160)]
+    pos = [(700, 150), (520, 150), (340, 150), (160, 150), (160, 400), (340, 400), (520, 400), (700, 400)]
+    for i, (x, y) in enumerate(pos):
+        b = pr(t, 0.5 + i * 0.25, 0.9 + i * 0.25)
+        rrect(d, (x, y, x + 140, y + 80), 10, CARD2, b, outline=ORA, width=5)
+        text(d, x + 70, y + 40, f'Modul {i + 1}', 24, 'XB', TXT, b, 'mm', bg=CARD2)
+    c = pr(t, 2.5, 3.0)
+    for x in (300, 480, 660):
+        line(d, [(x, 190), (x + 40, 190)], ORA, 7, c)
+        line(d, [(x, 440), (x + 40, 440)], ORA, 7, c)
+    line(d, [(160, 190), (120, 190), (120, 290)], ORA, 7, c)
+    line(d, [(120, 350), (120, 440), (160, 440)], ORA, 7, c)
+    line(d, [(840, 190), (960, 190)], ORA, 7, c if not gezogen else c * 0.25)
+    line(d, [(840, 440), (960, 440)], ORA, 7, c if not gezogen else c * 0.25)
+    px = 100 - (40 if gezogen else 0)
+    rrect(d, (px, 290, px + 40, 350), 8, (255, 211, 77), c * (0.4 if gezogen else 1))
+    text(d, 175, 320, 'Wartungsstecker', 22, 'XB', TXT, c, 'lm')
+    rrect(d, (980, 250, 1220, 380), 16, CARD, a)
+    text(d, 1100, 285, 'am Fahrzeug', 20, 'Bold', MUTED, a, 'mm', bg=CARD)
+    text(d, 1100, 335, '0 V' if gezogen else 'ca. 355 V', 40, 'XB', TXT if gezogen else ORA, a, 'mm', bg=CARD)
+    if gezogen:
+        h = pr(t, 6.2, 6.8)
+        text(d, 500, 265, 'Hälfte 1: ca. 178 V', 26, 'XB', RED, h, 'mm')
+        text(d, 500, 375, 'Hälfte 2: ca. 178 V', 26, 'XB', RED, h, 'mm')
+    caption(d, t, [(0.6, 5.9, 'Viele Zellen bilden Module – alle Module in Reihe'),
+                   (6.0, dur, 'Stecker gezogen: Kreis mechanisch getrennt – jede Hälfte bleibt geladen!')], ORA, y=622)
+
+
+VIDEOS_MOTOR.update({
+    'hv-grundlagen': (ORA, [(title_scene('HV', 'Hochvolt-Grundlagen', 'Was Hochvolt ist und warum es gefährlich ist', ORA, size=84, kicker=KICK9), 5.0),
+                            (hg_grenzen, 10.0), (HG_GEFAHR, 8.5), (hg_orange, 8.5), (HG_MERKE, 7.5)]),
+    'hv-aufbau': (ORA, [(title_scene('EV', 'Aufbau des E-Autos', 'Batterie, Leistungselektronik, E-Maschine', ORA, size=84, kicker=KICK9), 5.0),
+                        (ha_fluss, 10.0), (ha_batterie, 11.0), (HA_LADEN, 8.5), (HA_MERKE, 7.5)]),
+    'hv-stufen': (ORA, [(title_scene('2S', 'Qualifizierungsstufen', 'Wer darf was am Hochvoltfahrzeug?', ORA, size=84, kicker=KICK9), 5.0),
+                        (hs_treppe, 11.0), (HS_AZUBI, 9.0), (HS_MERKE, 7.5)]),
+    'hv-freischalten': (ORA, [(title_scene('0 V', 'Spannungsfreiheit herstellen', 'Die Sicherheitsregeln', ORA, size=72, kicker=KICK9), 5.0),
+                              (hf_regeln, 9.0), (hf_pruefer, 10.5), (HF_MERKE, 7.5)]),
+    'hv-sicher': (ORA, [(title_scene('!', 'Sicher arbeiten', 'Schutz, Unfall und Notfall', ORA, kicker=KICK9), 5.0),
+                        (HSI_PSA, 8.5), (HSI_UNFALL, 8.5), (HSI_NOT, 8.5), (HSI_MERKE, 7.5)]),
+})
