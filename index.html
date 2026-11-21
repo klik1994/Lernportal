@@ -4,19 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0e192b">
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
 <title>Lernportal Kfz</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header><div class="in">
-  <a class="titel" href="#/" id="titel">Lernportal Kfz</a>
+<header>
+  <div class="kopf">
+    <div class="grow"><p class="eyebrow">Kfz-Mechatronik · Lernportal</p>
+    <a class="titel" href="#/" id="titel">Lernportal Kfz</a></div>
+    <button id="btn-theme" title="Heller Modus" aria-label="Heller Modus">☀</button>
+  </div>
   <nav id="nav">
     <a href="#/" data-r="start">Lernstand</a>
     <a href="#/themen" data-r="themen">Themen</a>
     <a href="#/ueben" data-r="ueben">Üben</a>
     <a href="multimeter.html">Multimeter</a>
   </nav>
-</div></header>
+</header>
 <main id="app"><p class="muted">Lade Inhalte …</p></main>
 <footer><a href="#/impressum">Impressum</a> · <a href="#/datenschutz">Datenschutz</a></footer>
 <script src="js/questions.js"></script>
@@ -24,6 +30,8 @@
 <script src="js/tests.js"></script>
 <script src="js/xlsx.js"></script>
 <script src="js/inhalte.js"></script>
+<script src="js/praesmeta.js"></script>
+<script src="js/theme.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

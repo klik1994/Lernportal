@@ -7,7 +7,7 @@
   const store = L.createStore(storage);
   let state = store.load();
   let inhalt = null, themenNamen = [];
-  let quiz = null, resetFrage = false, videoAn = {};
+  let quiz = null, resetFrage = false, videoAn = {}, metas = {};
 
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const absaetze = s => s.split(/\n+/).filter(x => x.trim()).map(x => '<p>' + esc(x) + '</p>').join('');
@@ -42,22 +42,47 @@
   }
   function show(html) { app.innerHTML = hinweis() + html; }
 
+  const PALETTE = ['yel', 'pur', 'tea', 'roy', 'blu', 'ora', 'grn', 'red'];
+  function bereichFarbe(b) {
+    const bereiche = [];
+    inhalt.themen.forEach(t => { if (!bereiche.includes(t.bereich)) bereiche.push(t.bereich); });
+    return PALETTE[Math.max(0, bereiche.indexOf(b)) % PALETTE.length];
+  }
+  function iconHtml(text) {
+    const t = String(text || '?');
+    return '<div class="icon' + (t.length > 2 ? ' lang' : '') + '" aria-hidden="true">' + esc(t) + '</div>';
+  }
+  function themaIcon(t) {
+    const erste = (t.praesentationen || []).map(p => metas[p.link]).find(m => m && m.symbol);
+    return iconHtml(erste ? erste.symbol : t.name.trim().charAt(0).toUpperCase());
+  }
+  const kurz = (s, n) => { const x = (s || '').replace(/\s+/g, ' ').trim(); return x.length > n ? x.slice(0, n).replace(/\s+\S*$/, '') + ' …' : x; };
+  const anzahlFragen = name => inhalt.fragen.filter(f => f.thema === name).length;
+  const plural = (n, eins, mehr) => n + ' ' + (n === 1 ? eins : mehr);
+
   function renderWillkommen() {
-    return '<h1>Willkommen!</h1><div class="card"><p>Mach zuerst den <b>Eingangstest</b>. Er dauert etwa 10 Minuten. Danach siehst du, welche Themen schon sitzen und was du noch lernen musst.</p>' +
-      '<p class="muted">' + anzahlEingang() + ' Fragen aus ' + themenNamen.length + ' Themen. Keine Note, nur für dich.</p>' +
-      '<button class="primary full" data-start="eingang">Eingangstest starten</button></div>';
+    return '<p class="eyebrow">Los geht\'s</p><h1>Willkommen im Lernportal</h1><p class="lead">Hier lernst du die Themen deiner Ausbildung mit Präsentationen, Videos, Tests und Praxisübungen.</p>' +
+      '<div class="grid"><div class="kachel a-yel">' + iconHtml('✓') + '<h3>Eingangstest</h3>' +
+      '<p>Mach zuerst den Eingangstest. Danach siehst du, welche Themen schon sitzen und was du noch lernen musst.</p>' +
+      '<p class="meta">' + anzahlEingang() + ' Fragen · ' + themenNamen.length + ' Themen · ca. 10 Min. · keine Note</p>' +
+      '<div class="knoepfe"><button class="primary" data-start="eingang">Eingangstest starten</button></div></div></div>';
   }
 
   function renderLernstand() {
     const fp = L.fortschritt(state, themenNamen);
     const next = L.nextSteps(state, themenNamen);
-    let h = '<h1>Mein Lernstand</h1><div class="card"><p style="margin:0 0 6px"><b>' + fp + ' %</b> der Themen sitzen</p><div class="bar"><div style="width:' + fp + '%"></div></div></div>';
-    h += '<h2>Als Nächstes</h2><div class="card">';
+    const sitzt = themenNamen.filter(t => L.statusOf(state, t) === 'sitzt').length;
+    let h = '<p class="eyebrow">Dein Stand</p><h1>Mein Lernstand</h1>';
+    h += '<div class="zweispaltig"><div class="card"><p class="muted" style="margin:0 0 6px">Fortschritt</p><p class="zahl">' + fp + ' %</p><p class="muted">' + sitzt + ' von ' + themenNamen.length + ' Themen sitzen</p><div class="bar"><div style="width:' + fp + '%"></div></div></div>';
+    h += '<div class="card a-roy"><p class="muted" style="margin:0 0 6px">Prüfungscheck</p><p>' + anzahlEingang() + ' Fragen quer durch alle Themen. Schwache Themen kommen wieder auf deine Liste.</p><button class="primary" data-start="pruefung">Prüfungscheck starten</button></div></div>';
+    h += '<h2>Als Nächstes</h2>';
     h += next.length
-      ? next.map(n => '<div class="row"><a class="t" href="' + themaLink(n.thema) + '">' + esc(n.text) + '</a><a class="btn" href="' + themaLink(n.thema) + '">Öffnen</a></div>').join('')
-      : '<p style="margin:0">Alles sitzt. Mach ab und zu den Prüfungscheck, damit es so bleibt.</p>';
-    h += '</div><h2>Prüfungscheck</h2><div class="card"><p class="muted">' + anzahlEingang() + ' Fragen quer durch alle Themen. Schwache Themen kommen wieder auf deine Liste.</p>';
-    h += '<button class="primary full" data-start="pruefung">Prüfungscheck starten</button></div>';
+      ? '<div class="grid">' + next.map(n => {
+          const t = inhalt.themen.find(x => x.name === n.thema);
+          return '<div class="kachel a-' + bereichFarbe(t.bereich) + '">' + themaIcon(t) + '<h3>' + esc(t.name) + '</h3><p>' + esc(n.text) + '</p><p class="meta">' + badge(L.statusOf(state, t.name)) + '</p>' +
+            '<div class="knoepfe"><a class="btn primary" href="' + themaLink(t.name) + '">Thema öffnen</a></div></div>';
+        }).join('') + '</div>'
+      : '<div class="card"><p style="margin:0">Alles sitzt. Mach ab und zu den Prüfungscheck, damit es so bleibt.</p></div>';
     h += '<p style="margin-top:24px">' + (resetFrage
       ? '<span class="muted">Wirklich alles löschen? </span><button class="link" data-reset="ja">Ja, löschen</button><button class="link" data-reset="nein">Abbrechen</button>'
       : '<button class="link" data-reset="frage">Lernstand zurücksetzen</button>') + '</p>';
@@ -72,43 +97,64 @@
   function renderThemen() {
     const bereiche = [];
     inhalt.themen.forEach(t => { if (!bereiche.includes(t.bereich)) bereiche.push(t.bereich); });
-    return '<h1>Themen</h1>' + bereiche.map(b => '<div class="bereich">' + esc(b) + '</div><div class="card">' +
-      inhalt.themen.filter(t => t.bereich === b).map(t =>
-        '<div class="row">' + sternKnopf(t.name) + '<a class="t" href="' + themaLink(t.name) + '">' + esc(t.name) + '<br>' + badge(L.statusOf(state, t.name)) + '</a></div>').join('') +
-      '</div>').join('');
+    return '<p class="eyebrow">Alle Themen</p><h1>Themen</h1><p class="lead">Tippe auf ein Thema für Präsentation, Erklärung und Kurztest. Mit dem Stern merkst du dir Themen.</p>' +
+      bereiche.map(b => '<div class="abschnitt"><h2>' + esc(b) + '</h2></div><div class="grid">' +
+        inhalt.themen.filter(t => t.bereich === b).map(t => {
+          const np = (t.praesentationen || []).length, nf = anzahlFragen(t.name);
+          const meta = [np ? plural(np, 'Präsentation', 'Präsentationen') : '', nf ? plural(nf, 'Testfrage', 'Testfragen') : ''].filter(Boolean).join(' · ');
+          return '<div class="kachel a-' + bereichFarbe(b) + '"><div class="kachel-kopf">' + themaIcon(t) + sternKnopf(t.name) + '</div>' +
+            '<h3><a class="decklink" href="' + themaLink(t.name) + '">' + esc(t.name) + '</a></h3>' +
+            (t.erklaerung ? '<p>' + esc(kurz(t.erklaerung, 130)) + '</p>' : '') +
+            '<p class="meta">' + badge(L.statusOf(state, t.name)) + (meta ? ' &nbsp;' + meta : '') + '</p>' +
+            '<div class="knoepfe"><a class="btn primary" href="' + themaLink(t.name) + '">Thema öffnen</a></div></div>';
+        }).join('') + '</div>').join('');
+  }
+
+  function deckKachel(p, standardFarbe) {
+    const m = metas[p.link] || {};
+    const teile = [m.folien ? m.folien + ' Folien' : '', m.video ? 'Video' : '', m.fragen ? plural(m.fragen, 'Testfrage', 'Testfragen') : ''].filter(Boolean).join(' · ');
+    return '<div class="kachel a-' + (m.farbe || standardFarbe) + '">' + iconHtml(m.symbol || '▶') +
+      '<h3>' + esc(p.titel) + '</h3>' + (m.untertitel ? '<p>' + esc(m.untertitel) + '</p>' : '') +
+      (teile ? '<p class="meta">' + teile + '</p>' : '<p class="meta"></p>') +
+      '<div class="knoepfe"><a class="btn primary" href="' + esc(p.link) + '">Präsentation starten</a>' +
+      (m.video ? '<button data-nurvideo="' + esc(m.video) + '">Nur Video</button>' : '') + '</div></div>';
   }
 
   function renderThema(name) {
     const t = inhalt.themen.find(x => x.name === name);
     if (!t) return '<h1>Thema nicht gefunden</h1><p><a href="#/themen">Zur Themenliste</a></p>';
-    const anzahl = inhalt.fragen.filter(f => f.thema === t.name).length;
-    let h = '<p class="muted"><a href="#/themen">Themen</a> · ' + esc(t.bereich) + '</p>';
-    h += '<div style="display:flex;align-items:center;gap:6px"><h1 style="flex:1;margin:0">' + esc(t.name) + '</h1>' + sternKnopf(t.name) + '</div>';
+    const farbe = bereichFarbe(t.bereich);
+    const anzahl = anzahlFragen(t.name);
+    let h = '<p class="eyebrow"><a href="#/themen" style="color:inherit;text-decoration:none">Themen</a> · ' + esc(t.bereich) + '</p>';
+    h += '<div style="display:flex;align-items:center;gap:6px"><h1 style="flex:1;margin:6px 0">' + esc(t.name) + '</h1>' + sternKnopf(t.name) + '</div>';
     h += '<p>' + badge(L.statusOf(state, t.name)) + '</p>';
     if (t.praesentationen && t.praesentationen.length) {
-      h += '<div class="card"><p style="margin:0 0 8px"><b>Präsentation' + (t.praesentationen.length > 1 ? 'en' : '') + '</b></p><p class="muted">Mit Animationen, Lernvideo und Kurztest. Tippen oder wischen zum Weiterblättern.</p><div class="liste">' +
-        t.praesentationen.map(p => '<a class="btn full" href="' + esc(p.link) + '">▶ ' + esc(p.titel) + '</a>').join('') + '</div></div>';
+      h += '<h2>Präsentation' + (t.praesentationen.length > 1 ? 'en' : '') + '</h2><p class="muted">Mit Animationen, Lernvideo und Kurztest. Tippen oder wischen zum Weiterblättern.</p>';
+      h += '<div class="grid">' + t.praesentationen.map(p => deckKachel(p, farbe)).join('') + '</div>';
     }
+    if (t.videoDatei || t.video) h += '<h2>Video</h2>';
     if (t.videoDatei) h += '<div class="video"><video src="' + esc(t.videoDatei) + '" controls preload="metadata" playsinline></video></div>';
     if (t.video) {
       h += videoAn[t.video]
         ? '<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/' + t.video + '?autoplay=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="Video"></iframe></div>'
-        : '<div class="card"><p class="muted">Beim Abspielen wird das Video von YouTube geladen.</p><button class="full" data-video="' + t.video + '">▶ Video abspielen</button></div>';
+        : '<div class="card"><p class="muted">Beim Abspielen wird das Video von YouTube geladen.</p><button data-video="' + t.video + '">▶ Video abspielen</button></div>';
     }
-    if (t.erklaerung) h += '<div class="card text">' + absaetze(t.erklaerung) + '</div>';
-    h += '<div class="card"><p style="margin:0 0 8px"><b>Kurztest</b></p>';
+    h += '<div class="zweispaltig" style="margin-top:22px">';
+    if (t.erklaerung) h += '<div class="card text"><h3 style="margin-top:0">Kurz erklärt</h3>' + absaetze(t.erklaerung) + '</div>';
+    h += '<div class="card a-' + farbe + '"><h3 style="margin-top:0">Kurztest</h3>';
     h += anzahl
-      ? '<p class="muted">' + Math.min(5, anzahl) + ' Fragen. Ab 80 % sitzt das Thema.</p><button class="primary full" data-kurz="' + esc(t.name) + '">Kurztest starten</button>'
+      ? '<p class="muted">' + Math.min(5, anzahl) + ' Fragen. Ab 80 % sitzt das Thema.</p><button class="primary" data-kurz="' + esc(t.name) + '">Kurztest starten</button>'
       : '<p class="muted" style="margin:0">Zu diesem Thema gibt es noch keine Fragen.</p>';
-    return h + '</div>';
+    return h + '</div></div>';
   }
 
   function renderUeben() {
-    return '<h1>Üben</h1><div class="card"><p><b>Eigener Übungstest</b><br><span class="muted">Wähle die Themen, die du üben willst.</span></p>' +
+    return '<p class="eyebrow">Trainieren</p><h1>Üben</h1><p class="lead">Stell dir deinen eigenen Test zusammen oder prüfe dich quer durch alle Themen.</p><div class="zweispaltig">' +
+      '<div class="card a-roy"><h3 style="margin-top:0">Eigener Übungstest</h3><p class="muted">Wähle die Themen, die du üben willst.</p>' +
       themenNamen.map((t, i) => '<label class="check"><input type="checkbox" data-wahl="' + i + '"> ' + esc(t) + '</label>').join('') +
-      '<div class="err" id="err"></div><button class="primary full" data-start="uebung">Übungstest starten (bis zu 10 Fragen)</button></div>' +
-      '<div class="card"><p><b>Prüfungscheck</b><br><span class="muted">' + anzahlEingang() + ' Fragen quer durch alle Themen.</span></p><button class="full" data-start="pruefung">Prüfungscheck starten</button></div>' +
-      '<div class="card"><p><b>Praxis</b><br><span class="muted">Messen und Fehlersuche am Stromkreis.</span></p><a class="btn full" href="multimeter.html">Multimeter-Übung öffnen</a></div>';
+      '<div class="err" id="err"></div><button class="primary" data-start="uebung">Übungstest starten (bis zu 10 Fragen)</button></div>' +
+      '<div><div class="kachel a-yel" style="margin-bottom:16px">' + iconHtml('✓') + '<h3>Prüfungscheck</h3><p>' + anzahlEingang() + ' Fragen quer durch alle Themen.</p><div class="knoepfe"><button class="primary" data-start="pruefung">Prüfungscheck starten</button></div></div>' +
+      '<div class="kachel a-tea">' + iconHtml('V') + '<h3>Multimeter-Übung</h3><p>Messen und Fehlersuche am Stromkreis.</p><div class="knoepfe"><a class="btn primary" href="multimeter.html">Übung öffnen</a></div></div></div></div>';
   }
 
   function anbieter() {
@@ -165,7 +211,7 @@
     const f = quiz.liste[quiz.i];
     const titel = { eingang: 'Eingangstest', pruefung: 'Prüfungscheck', kurz: 'Kurztest: ' + quiz.thema, uebung: 'Übungstest' }[quiz.art];
     let h = '<p class="muted">' + esc(titel) + ' · Frage ' + (quiz.i + 1) + ' von ' + quiz.liste.length + '</p>';
-    h += '<div class="bar" style="margin-bottom:16px"><div style="width:' + Math.round((quiz.i / quiz.liste.length) * 100) + '%;background:#1a5fb4"></div></div>';
+    h += '<div class="bar" style="margin-bottom:16px"><div style="width:' + Math.round((quiz.i / quiz.liste.length) * 100) + '%;background:var(--roy)"></div></div>';
     h += '<div class="card"><p class="muted" style="margin:0 0 4px">' + esc(f.thema) + '</p><h2 style="margin:0 0 14px">' + esc(f.frage) + '</h2>';
     h += f.antworten.map((a, k) => {
       let cls = 'answer';
@@ -199,7 +245,7 @@
     let h = '<h1>Auswertung</h1><div class="card"><p style="margin:0"><b>' + r.gesamt + ' %</b> richtig</p></div><h2>Nach Themen</h2><div class="card">';
     h += Object.keys(r.proThema).map(t => {
       const p = r.proThema[t];
-      return '<div class="row"><a class="t" href="' + themaLink(t) + '">' + esc(t) + '<div class="bar" style="margin-top:4px"><div style="width:' + p + '%;background:' + (p >= L.GRENZE ? '#2e7d32' : '#c62828') + '"></div></div></a><span>' + p + ' %</span>' + badge(L.statusOf(state, t)) + '</div>';
+      return '<div class="row"><a class="t" href="' + themaLink(t) + '">' + esc(t) + '<div class="bar" style="margin-top:4px"><div style="width:' + p + '%;background:' + (p >= L.GRENZE ? 'var(--grn)' : 'var(--red)') + '"></div></div></a><span>' + p + ' %</span>' + badge(L.statusOf(state, t)) + '</div>';
     }).join('') + '</div>';
     const schwach = Object.keys(r.proThema).filter(t => r.proThema[t] < L.GRENZE);
     if (schwach.length) h += '<p>Diese Themen stehen jetzt bei „Als Nächstes“: ' + schwach.map(esc).join(', ') + '.</p>';
@@ -214,6 +260,7 @@
     else if (d.kurz) starte('kurz', d.kurz);
     else if (d.stern) { state = L.toggleStern(state, d.stern); save(); render(); }
     else if (d.video) { videoAn[d.video] = true; render(); }
+    else if (d.nurvideo) zeigeVideo(d.nurvideo);
     else if (d.antwort !== undefined && quiz && !quiz.geprueft) { quiz.auswahl = +d.antwort; quiz.fehler = ''; render(); }
     else if (d.pruefen) {
       if (quiz.auswahl === null) { quiz.fehler = 'Wähle zuerst eine Antwort aus.'; render(); return; }
@@ -235,6 +282,34 @@
     window.scrollTo(0, 0);
   });
 
+  async function ladeMetas() {
+    const links = [];
+    inhalt.themen.forEach(t => (t.praesentationen || []).forEach(p => { if (/^praesentationen\//.test(p.link) && !links.includes(p.link)) links.push(p.link); }));
+    await Promise.all(links.map(async link => {
+      try {
+        const res = await fetch(link);
+        if (!res.ok) return;
+        const m = PraesMeta.parseMeta(await res.text());
+        const v = PraesMeta.videoPfad(link);
+        m.video = null;
+        if (v) { try { const r = await fetch(v, { method: 'HEAD' }); if (r.ok) m.video = v; } catch (e) { /* kein Video */ } }
+        metas[link] = m;
+      } catch (e) { /* Präsentation nicht erreichbar */ }
+    }));
+    if (!quiz) render();
+  }
+
+  function zeigeVideo(src) {
+    schliesseVideo();
+    const o = document.createElement('div');
+    o.id = 'overlay';
+    o.innerHTML = '<div class="box"><div class="zu"><button id="video-zu" aria-label="Video schließen">✕ Schließen</button></div><div class="video" style="margin:0"><video src="' + esc(src) + '" controls autoplay playsinline></video></div></div>';
+    o.addEventListener('click', e => { if (e.target === o || e.target.closest('#video-zu')) schliesseVideo(); });
+    document.body.appendChild(o);
+  }
+  function schliesseVideo() { const o = document.getElementById('overlay'); if (o) o.remove(); }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') schliesseVideo(); });
+
   async function laden() {
     app.innerHTML = '<p class="muted">Lade Inhalte …</p>';
     try {
@@ -248,6 +323,7 @@
       }
       if (!inhalt.fragen.length) { app.innerHTML = '<div class="hint">In der Excel-Datei wurden keine gültigen Fragen gefunden.</div>'; return; }
       render();
+      ladeMetas();
     } catch (err) {
       app.innerHTML = '<div class="hint">Die Inhalte konnten nicht geladen werden. Prüfe deine Internetverbindung.</div><button class="primary" id="nochmal">Nochmal versuchen</button>';
       document.getElementById('nochmal').onclick = laden;
