@@ -24,12 +24,16 @@
   .ntc .vals { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
   .ntc .lcd2 { font-size: 34px; }
   .ntc .lbl { font-size: 15px; color: var(--muted); font-weight: 700; margin-bottom: 4px; }
+  .plist { margin: 10px 0 0; padding-left: 22px; font-size: 18px; line-height: 1.45; }
+  .plist li { margin-bottom: 6px; }
+  .ring { transform-box: fill-box; transform-origin: center; animation: spin 6s linear infinite; }
   .pr { display: grid; grid-template-columns: 360px 1fr; gap: 36px; align-items: start; }
   .pr .lcd2 { font-size: 46px; min-height: 84px; display: flex; align-items: center; justify-content: flex-end; }
   @media (max-width: 820px), (max-height: 520px) {
     .sense, .wave, .ntc, .pr { grid-template-columns: 1fr !important; }
     .sense .card { grid-template-columns: 50px 1fr; } .sense .ico { font-size: 36px; } .sense h4 { font-size: 17px; } .sense p { font-size: 15px; }
-    .ntc .lcd2 { font-size: 26px; } .pr .lcd2 { font-size: 34px; min-height: 60px; }
+    .ntc .lcd2 { font-size: 26px; }
+    .plist { font-size: 15px; } .pr .lcd2 { font-size: 34px; min-height: 60px; }
   }
 </style>
 </head>
@@ -51,7 +55,7 @@
   <div class="body">
     <ul class="goals">
       <li class="step from-left"><span class="num">1</span>Was ein Sensor macht und welche es im Kfz gibt</li>
-      <li class="step from-left"><span class="num">2</span>Analoge, digitale und induktive Signale</li>
+      <li class="step from-left"><span class="num">2</span>Signalarten und aktive / passive Sensoren</li>
       <li class="step from-left"><span class="num">3</span>Wie ein Temperatursensor (NTC) funktioniert</li>
       <li class="step from-left"><span class="num">4</span>Wie du einen Sensor Schritt für Schritt prüfst</li>
     </ul>
@@ -126,11 +130,76 @@
         <small>induktiver Kurbelwellen- oder Raddrehzahlsensor</small>
       </div>
     </div>
-    <div class="tip step" style="margin-top:16px"><b>Aktiv oder passiv?</b>Aktive Sensoren haben eigene Elektronik und brauchen eine Versorgungsspannung (z. B. Hallsensor). Passive kommen ohne aus (z. B. induktiver Sensor, NTC).</div>
   </div>
 </section>
 
-<!-- 7 NTC interaktiv -->
+<!-- 7 Aktiv oder passiv -->
+<section class="slide">
+  <span class="tag">SENSOREN</span><h2>Aktiv oder passiv?</h2>
+  <div class="body grid2" style="align-items:start">
+    <div class="card step">
+      <div class="big">Passiv <span class="muted" style="font-size:18px">– ohne eigene Elektronik</span></div>
+      <ul class="plist">
+        <li>braucht <b>keine</b> Versorgungsspannung</li>
+        <li>erzeugt selbst ein Signal (induktiv) oder ändert nur seinen Widerstand (NTC)</li>
+        <li>induktiver Drehzahlsensor: bei Stillstand und sehr langsam <b>kein</b> Signal</li>
+      </ul>
+      <p class="muted" style="font-size:16px;margin:8px 0 0">z. B. induktiver Kurbelwellen- und Raddrehzahlsensor, NTC</p>
+    </div>
+    <div class="card step">
+      <div class="big">Aktiv <span class="muted" style="font-size:18px">– mit eigener Elektronik</span></div>
+      <ul class="plist">
+        <li>braucht eine <b>Versorgungsspannung</b> vom Steuergerät</li>
+        <li>liefert ein fertig aufbereitetes Signal (z. B. Rechteck)</li>
+        <li>erkennt Drehzahlen bis fast zum Stillstand</li>
+      </ul>
+      <p class="muted" style="font-size:16px;margin:8px 0 0">z. B. Hallsensor, aktiver Raddrehzahlsensor, Drucksensor</p>
+    </div>
+    <div class="warn step" style="grid-column:1/-1"><b>Achtung</b>Aktive Sensoren nie mit dem Ohmmeter prüfen – die Elektronik kann dabei beschädigt werden. Und: Die Anzahl der Leitungen verrät nicht sicher, ob ein Sensor aktiv oder passiv ist. Aktive Raddrehzahlsensoren haben z. B. nur 2 Leitungen. Im Zweifel: Stromlaufplan.</div>
+  </div>
+</section>
+
+<!-- 8 Aktiver Raddrehzahlsensor -->
+<section class="slide">
+  <span class="tag">SENSOREN</span><h2>Aktiver Raddrehzahlsensor – nur 2 Leitungen</h2>
+  <div class="body grid2" style="align-items:start;grid-template-columns:500px 1fr">
+    <div>
+      <svg viewBox="0 0 520 300" width="500" height="290">
+        <g class="ring"><circle cx="140" cy="150" r="118" fill="none" stroke="#94a4ba" stroke-width="2"/>
+          <g id="ring-seg"></g></g>
+        <circle cx="140" cy="150" r="80" fill="#18283f" stroke="#94a4ba" stroke-width="2"/>
+        <text x="140" y="146" text-anchor="middle" font-size="16" font-weight="800" fill="#94a4ba">Impulsring</text>
+        <text x="140" y="166" text-anchor="middle" font-size="14" font-weight="700" fill="#94a4ba">(Magnete N / S)</text>
+        <rect x="268" y="122" width="62" height="56" rx="10" fill="#213552" stroke="#34c778" stroke-width="3"/>
+        <text x="299" y="198" text-anchor="middle" font-size="15" font-weight="800" fill="#34c778">Sensor</text>
+        <line x1="330" y1="138" x2="410" y2="138" stroke="#f05e4e" stroke-width="5"/>
+        <line x1="330" y1="162" x2="410" y2="162" stroke="#94a4ba" stroke-width="5"/>
+        <rect x="410" y="95" width="100" height="110" rx="12" fill="#213552" stroke="#a07cf5" stroke-width="3"/>
+        <text x="460" y="146" text-anchor="middle" font-size="16" font-weight="800" fill="#ecf1f8">ABS-</text>
+        <text x="460" y="166" text-anchor="middle" font-size="16" font-weight="800" fill="#ecf1f8">Steuerg.</text>
+        <text x="370" y="250" text-anchor="middle" font-size="15" font-weight="700" fill="#94a4ba">2 Leitungen: Versorgung</text>
+        <text x="370" y="270" text-anchor="middle" font-size="15" font-weight="700" fill="#94a4ba">und Signal gemeinsam</text>
+      </svg>
+      <svg viewBox="0 0 520 130" width="500" height="125">
+        <text x="6" y="38" font-size="15" font-weight="800" fill="#34c778">14 mA</text>
+        <text x="6" y="98" font-size="15" font-weight="800" fill="#34c778">7 mA</text>
+        <line x1="60" y1="110" x2="510" y2="110" stroke="#94a4ba" stroke-width="2"/>
+        <path class="draw" pathLength="1" d="M60 93 H100 V33 H140 V93 H180 V33 H220 V93 H260 V33 H300 V93 H340 V33 H380 V93 H420 V33 H460 V93 H510" fill="none" stroke="#34c778" stroke-width="5" stroke-linejoin="round"/>
+        <text x="285" y="128" text-anchor="middle" font-size="14" font-weight="700" fill="#94a4ba">Strom im Takt der Magnete (typische Werte)</text>
+      </svg>
+    </div>
+    <div>
+      <ol class="steps-list">
+        <li class="step">Das ABS-Steuergerät versorgt den Sensor über die <span class="c">beiden Leitungen</span> mit Spannung.</li>
+        <li class="step">Der Sensor meldet die Drehzahl, indem er seinen <span class="c">Strom</span> ändert: ca. 7 mA ↔ 14 mA.</li>
+        <li class="step">Je schneller das Rad, desto mehr Wechsel pro Sekunde – auch bei Schrittgeschwindigkeit.</li>
+      </ol>
+      <div class="warn step" style="margin-top:12px;font-size:17px"><b>Prüfen</b>Versorgung am Stecker messen (Zündung an), Signal mit Oszilloskop oder Messwert im Diagnosegerät. Nicht mit dem Ohmmeter prüfen – der Messstrom kann die Elektronik beschädigen, und der Wert sagt nichts aus. Polung beachten.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 NTC interaktiv -->
 <section class="slide" id="s-ntc">
   <span class="tag">SENSOREN</span><h2>Beispiel: Temperatursensor (NTC)</h2>
   <div class="body ntc">
@@ -159,7 +228,7 @@
   </div>
 </section>
 
-<!-- 8 Anschluss -->
+<!-- 10 Anschluss -->
 <section class="slide">
   <span class="tag">SENSOREN</span><h2>So ist ein Sensor angeschlossen</h2>
   <div class="body grid2" style="align-items:start">
@@ -177,7 +246,7 @@
       <p style="font-size:17px;margin:4px 0 0">z. B. Drucksensor, Hallsensor, Fahrpedalsensor</p>
     </div>
     <div class="card step">
-      <div class="big" style="font-size:24px">2 Leitungen <span class="muted" style="font-size:18px">(passiver Sensor)</span></div>
+      <div class="big" style="font-size:24px">2 Leitungen <span class="muted" style="font-size:18px">(passiv oder aktiv)</span></div>
       <svg viewBox="0 0 480 210" width="480" height="210">
         <rect x="10" y="20" width="130" height="170" rx="12" fill="#213552" stroke="#a07cf5" stroke-width="3"/>
         <text x="75" y="110" text-anchor="middle" font-size="18" font-weight="800" fill="#ecf1f8">Steuer-</text><text x="75" y="132" text-anchor="middle" font-size="18" font-weight="800" fill="#ecf1f8">gerät</text>
@@ -186,13 +255,13 @@
         <line x1="140" y1="80" x2="350" y2="80" stroke="#34c778" stroke-width="5"/><text x="245" y="70" text-anchor="middle" font-size="16" font-weight="800" fill="#34c778">Signal</text>
         <line x1="140" y1="130" x2="350" y2="130" stroke="#94a4ba" stroke-width="5"/><text x="245" y="120" text-anchor="middle" font-size="16" font-weight="800" fill="#94a4ba">Masse</text>
       </svg>
-      <p style="font-size:17px;margin:4px 0 0">z. B. NTC-Temperatursensor, induktiver Drehzahlsensor</p>
+      <p style="font-size:17px;margin:4px 0 0">passiv: z. B. NTC, induktiver Drehzahlsensor<br>aktiv: z. B. aktiver Raddrehzahlsensor – dort laufen Versorgung und Signal über dieselben 2 Leitungen</p>
     </div>
     <div class="tip step" style="grid-column:1/-1"><b>Gut zu wissen</b>Die Leitungen findest du im Stromlaufplan. Farben und Pin-Belegung sind je nach Hersteller verschieden.</div>
   </div>
 </section>
 
-<!-- 9 Sensor prüfen -->
+<!-- 11 Sensor prüfen -->
 <section class="slide" id="s-pruef">
   <span class="tag">SENSOREN</span><h2>Sensor prüfen – Schritt für Schritt</h2>
   <div class="body pr">
@@ -206,23 +275,24 @@
       <li class="step">Sichtprüfung<small>Stecker, Pins und Leitung: Korrosion, Bruch, Feuchtigkeit?</small></li>
       <li class="step">Versorgung messen<small>Zündung an, Stecker gesteckt, mit Prüfadapter</small></li>
       <li class="step">Signalspannung messen<small>zwischen Signal und Masse, mit Sollwert vergleichen</small></li>
-      <li class="step">Widerstand messen<small>Stecker ab, spannungsfrei, mit Kennlinie vergleichen</small></li>
+      <li class="step">Widerstand messen – <span class="red">nur passive Sensoren</span><small>z. B. NTC: Stecker ab, spannungsfrei. Aktive Sensoren nie mit dem Ohmmeter – die Elektronik kann beschädigt werden!</small></li>
     </ol>
   </div>
 </section>
 
-<!-- 10 Praxis -->
+<!-- 12 Praxis -->
 <section class="slide">
   <span class="tag">SENSOREN</span><h2>Aus der Praxis</h2>
   <div class="body grid2" style="align-content:start">
-    <div class="warn step"><b>Prüfadapter nutzen</b>Nicht mit Messspitzen in Stecker stechen oder Isolierung aufstechen – das zerstört Kontakte und führt später zu Korrosion.</div>
+    <div class="warn step"><b>Prüfadapter nutzen</b>Nie von vorne mit den Messspitzen in die Buchsen des Steckers stechen – die Kontakte weiten sich auf, es entsteht ein Wackelkontakt. Auch nicht die Isolierung aufstechen – dort dringt Feuchtigkeit ein (Korrosion). Richtig: passenden Prüfadapter oder Adapterkabel verwenden.</div>
     <div class="tip step"><b>Erst Leitung, dann Sensor</b>Ein unplausibler Wert kommt oft von Stecker oder Leitung. Erst messen, dann tauschen.</div>
+    <div class="warn step" style="grid-column:1/-1"><b>Widerstand nur bei passiven Sensoren</b>Aktive Sensoren (z. B. Hallsensor, aktiver Raddrehzahlsensor) nie mit dem Ohmmeter prüfen – der Messstrom kann die Elektronik beschädigen.</div>
     <div class="tip step"><b>Ersatzwert</b>Fällt ein Sensor aus, rechnet das Steuergerät oft mit einem Ersatzwert (Notlauf). Darum immer den Fehlerspeicher lesen.</div>
     <div class="tip step"><b>Oszilloskop</b>Schnelle Signale wie bei Drehzahlsensoren zeigt das Multimeter nicht richtig an – dafür das Oszilloskop nehmen.</div>
   </div>
 </section>
 
-<!-- 11 Video -->
+<!-- 13 Video -->
 <section class="slide">
   <span class="tag">SENSOREN</span><h2>Lernvideo</h2>
   <div class="body video-box">
@@ -230,7 +300,7 @@
   </div>
 </section>
 
-<!-- 12 Kurztest -->
+<!-- 14 Kurztest -->
 <section class="slide">
   <span class="tag">SENSOREN</span><h2>Kurztest</h2>
   <div class="body quiz" style="gap:12px">
@@ -246,11 +316,14 @@
     <div class="q" data-correct="1"><p>4. Ein Sensor hat drei Leitungen. Welche sind es meist?</p>
       <div class="opts"><button class="opt">Plus, Plus, Masse</button><button class="opt">Versorgung, Signal, Masse</button><button class="opt">Drei Signale</button></div>
       <div class="fb">Versorgung (meist 5 V), Signal und Masse.</div></div>
+    <div class="q" data-correct="2"><p>5. Ein aktiver Raddrehzahlsensor hat nur 2 Leitungen. Wie meldet er die Drehzahl?</p>
+      <div class="opts"><button class="opt">Er erzeugt selbst eine Wechselspannung</button><button class="opt">Über eine eigene Signalleitung</button><button class="opt">Er ändert seinen Strom im Takt (ca. 7 / 14 mA)</button></div>
+      <div class="fb">Versorgung und Signal laufen über dieselben 2 Leitungen – das Signal steckt im Strom.</div></div>
     <div class="score">Klicke auf eine Antwort.</div>
   </div>
 </section>
 
-<!-- 13 Merke -->
+<!-- 15 Merke -->
 <section class="slide">
   <span class="tag">SENSOREN</span><h2>Zusammenfassung</h2>
   <div class="body">
@@ -259,8 +332,9 @@
       <ul>
         <li class="step"><span>Sensor = Eingabe im EVA-Prinzip<small>wandelt eine physikalische Größe in ein elektrisches Signal</small></span></li>
         <li class="step"><span>Signale: analog, digital, induktiv</span></li>
+        <li class="step"><span>Aktiv = mit Elektronik und Versorgung<small>auch mit nur 2 Leitungen, z. B. aktiver Raddrehzahlsensor</small></span></li>
         <li class="step"><span>NTC: wärmer → kleinerer Widerstand<small>und niedrigere Signalspannung</small></span></li>
-        <li class="step"><span>Prüfen: Messwerte, Sichtprüfung, Versorgung, Signal<small>erst messen, dann tauschen</small></span></li>
+        <li class="step"><span>Prüfen: Messwerte, Sichtprüfung, Versorgung, Signal<small>Widerstand nur bei passiven Sensoren messen</small></span></li>
       </ul>
     </div>
   </div>
@@ -278,6 +352,7 @@
   <button id="btn-fs" title="Vollbild (F)">⛶</button>
 </nav>
 
+<script src="assets/schaltung.js"></script>
 <script>
 /* NTC: Temperatur -> Widerstand -> Signalspannung (Beispielwerte: 2,5 kOhm bei 20 °C, Vorwiderstand 2,5 kOhm an 5 V) */
 (function () {
@@ -302,6 +377,17 @@
   s.addEventListener('input', upd); upd();
 })();
 
+/* Impulsring: abwechselnd Nord / Süd */
+(function () {
+  const g = document.getElementById('ring-seg');
+  for (let i = 0; i < 16; i++) {
+    const a0 = i / 16 * 2 * Math.PI, a1 = (i + 1) / 16 * 2 * Math.PI, r0 = 84, r1 = 116;
+    const p = (r, a) => (140 + r * Math.cos(a)).toFixed(1) + ' ' + (150 + r * Math.sin(a)).toFixed(1);
+    svgEl('path', { d: 'M' + p(r0, a0) + ' L' + p(r1, a0) + ' A116 116 0 0 1 ' + p(r1, a1) + ' L' + p(r0, a1) + ' A84 84 0 0 0 ' + p(r0, a0) + 'Z',
+      fill: i % 2 ? '#28aaf5' : '#f05e4e', opacity: .85 }, g);
+  }
+})();
+
 /* Sensor prüfen: Anzeige je Schritt */
 (function () {
   const s = document.getElementById('s-pruef');
@@ -310,7 +396,7 @@
               ['SICHTPRÜFUNG', 'OK', 'Stecker sauber, Pins nicht verbogen, Leitung heil'],
               ['VERSORGUNG', '5,02 V', 'Am 3-Leiter-Sensor: Versorgung gegen Masse – ca. 5 V. (Beim 2-Leiter-NTC entfällt dieser Schritt.)'],
               ['SIGNALSPANNUNG', '2,48 V', 'Signal gegen Masse – passt zu 20 °C laut Tabelle'],
-              ['WIDERSTAND', '2,5 kΩ', 'Sensor abgezogen, spannungsfrei gemessen – passt zur Kennlinie']];
+              ['WIDERSTAND', '2,5 kΩ', 'NTC (passiv) abgezogen, spannungsfrei gemessen – passt zur Kennlinie. Bei aktiven Sensoren entfällt dieser Schritt.']];
   function upd() {
     const n = s.querySelectorAll('.steps-list .step.on').length;
     document.getElementById('p-was').textContent = st[n][0];

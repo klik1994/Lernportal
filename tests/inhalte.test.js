@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 6 Themen, 45 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 6 Themen, 47 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
   assert.strictEqual(r.themen.length, 6);
-  assert.strictEqual(r.fragen.length, 45);
+  assert.strictEqual(r.fragen.length, 47);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
