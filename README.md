@@ -1,4 +1,4 @@
-# Lernportal Kfz
+# Azubi-Prüfstand (Lernportal Kfz)
 
 Kostenloses Lernportal für Kfz-Mechatroniker-Azubis: Eingangstest, Lernstand mit „Als Nächstes“, Themen mit Erklärung, Präsentationen, Video und Kurztest, eigener Übungstest, Prüfungscheck und Multimeter-Übung mit Fehlersuche.
 
