@@ -35,19 +35,20 @@
     if (!inhalt) return;
     aktualisiereAktive();
     const { r, arg } = route();
-    document.querySelectorAll('#nav a[data-r]').forEach(a => a.classList.toggle('on', a.dataset.r === r || ((r === 'thema' || r === 'bereich') && a.dataset.r === 'themen')));
+    const navR = ['themen', 'thema', 'bereich'].includes(r) ? 'start' : r;
+    document.querySelectorAll('#nav a[data-r]').forEach(a => a.classList.toggle('on', a.dataset.r === navR));
+    document.body.classList.toggle('ohne-nav', !state.lehrjahr && !['impressum', 'datenschutz'].includes(r));
     if (r === 'impressum') return show(renderImpressum());
     if (r === 'datenschutz') return show(renderDatenschutz());
     if (r === 'test' && quiz) return show(quiz.fertig ? renderErgebnis() : renderFrage());
     if (r === 'test') { location.hash = '#/'; return; }
     if (r === 'lexikon') { if (arg) lexBereich = ''; show(renderLexikon()); return lexikonFertig(arg); }
     if (!state.lehrjahr) return show(renderLehrjahrWahl());
-    if (!state.eingangstestFertig) return show(renderWillkommen());
-    if (r === 'themen') return show(renderThemen());
+    if (r === 'lernstand') return show(renderLernstand());
     if (r === 'thema') return show(renderThema(arg));
     if (r === 'bereich') return show(renderBereich(arg));
     if (r === 'ueben') return show(renderUeben());
-    return show(renderLernstand());
+    return show(renderThemen());
   }
   function show(html) { app.innerHTML = hinweis() + html; }
 
@@ -95,7 +96,7 @@
     const sitzt = themenNamen.filter(t => L.statusOf(state, t) === 'sitzt').length;
     let h = '<p class="eyebrow">Dein Stand · ' + LJ_TEXT(state.lehrjahr) + '</p><h1>Mein Lernstand</h1>';
     h += '<div class="zweispaltig"><div class="card"><p class="muted" style="margin:0 0 6px">Fortschritt</p><p class="zahl">' + fp + ' %</p><p class="muted">' + sitzt + ' von ' + themenNamen.length + ' Themen sitzen</p><div class="bar"><div style="width:' + fp + '%"></div></div></div>';
-    h += '<div class="card a-roy"><p class="muted" style="margin:0 0 6px">Prüfungscheck</p><p>' + anzahlEingang() + ' Fragen, 2 pro Thema, ca. ' + minuten() + ' Min. Schwache Themen kommen wieder auf deine Liste.</p><button class="primary" data-start="pruefung">Prüfungscheck starten</button></div></div>';
+    h += '<div class="card a-roy"><p class="muted" style="margin:0 0 6px">Wissenstest</p><p>' + anzahlEingang() + ' Fragen aus allen freigeschalteten Themen, jedes Mal neu gemischt. Schwache Themen kommen wieder auf deine Liste.</p><button class="primary" data-start="pruefung">Wissenstest starten</button></div></div>';
     h += '<h2>Als Nächstes</h2>';
     h += next.length
       ? '<div class="grid">' + next.map(n => {
@@ -103,7 +104,7 @@
           return '<div class="kachel a-' + bereichFarbe(t.bereich) + '">' + themaIcon(t) + '<h3>' + esc(t.name) + '</h3><p>' + esc(n.text) + '</p><p class="meta">' + badge(L.statusOf(state, t.name)) + '</p>' +
             '<div class="knoepfe"><a class="btn primary" href="' + themaLink(t.name) + '">Thema öffnen</a></div></div>';
         }).join('') + '</div>'
-      : '<div class="card"><p style="margin:0">Alles sitzt. Mach ab und zu den Prüfungscheck, damit es so bleibt.</p></div>';
+      : '<div class="card"><p style="margin:0">Alles sitzt. Mach ab und zu den Wissenstest, damit es so bleibt.</p></div>';
     h += '<p style="margin-top:24px">' + (resetFrage
       ? '<span class="muted">Wirklich alles löschen? </span><button class="link" data-reset="ja">Ja, löschen</button><button class="link" data-reset="nein">Abbrechen</button>'
       : '<button class="link" data-reset="frage">Lernstand zurücksetzen</button>') + '</p>';
@@ -149,7 +150,10 @@
 
   function renderThemen() {
     const lj = state.lehrjahr || 1;
-    let h = '<p class="eyebrow">Dein Lernpfad · ' + LJ_TEXT(lj) + '</p><h1>Themen</h1><p class="lead">Die Bereiche in der Reihenfolge deiner Ausbildung. Tippe auf einen Bereich, um seine Themen zu sehen.</p><div class="pfad">';
+    let h = '<p class="eyebrow">Dein Lernpfad · ' + LJ_TEXT(lj) + '</p><h1>Lernfelder</h1><p class="lead">Die Bereiche in der Reihenfolge deiner Ausbildung. Tippe auf einen Bereich, um seine Themen zu sehen.</p>';
+    h += '<div class="kachel a-yel wissenstest">' + iconHtml('✓') + '<div class="wt-text"><h3>Hier kannst du dein Wissen testen</h3>' +
+      '<p>Ein Test über alles bis zum ' + LJ_TEXT(lj) + ', jedes Mal neu zusammengestellt.</p><p class="meta">' + anzahlEingang() + ' Fragen · ca. ' + minuten() + ' Min.</p>' +
+      '<div class="knoepfe"><button class="primary" data-start="pruefung">Wissenstest starten</button></div></div></div><div class="pfad">';
     [1, 2, 3, 4].forEach(jahr => {
       const imJahr = inhalt.themen.filter(t => (t.lehrjahr || 1) === jahr);
       const zu = jahr > lj;
@@ -209,11 +213,11 @@
   function renderThema(name) {
     const t = inhalt.themen.find(x => x.name === name);
     if (!t) return '<h1>Thema nicht gefunden</h1><p><a href="#/themen">Zur Themenliste</a></p>';
-    if (gesperrt(t)) return '<p class="eyebrow"><a href="#/themen" style="color:inherit;text-decoration:none">Themen</a> · ' + esc(t.bereich) + '</p><h1>' + esc(t.name) + '</h1>' +
+    if (gesperrt(t)) return '<p class="eyebrow"><a href="#/themen" style="color:inherit;text-decoration:none">Lernfelder</a> · ' + esc(t.bereich) + '</p><h1>' + esc(t.name) + '</h1>' +
       '<div class="card"><p>🔒 Dieses Thema wird ab dem ' + LJ_TEXT(t.lehrjahr) + ' freigeschaltet.</p><p class="muted" style="margin:0">Dein Lehrjahr kannst du unter „Lernstand“ ändern.</p></div>';
     const farbe = bereichFarbe(t.bereich);
     const anzahl = anzahlFragen(t.name);
-    let h = '<p class="eyebrow"><a href="#/themen" style="color:inherit;text-decoration:none">Themen</a> · <a href="' + bereichLink(t.bereich) + '" style="color:inherit;text-decoration:none">' + esc(t.bereich) + '</a></p>';
+    let h = '<p class="eyebrow"><a href="#/themen" style="color:inherit;text-decoration:none">Lernfelder</a> · <a href="' + bereichLink(t.bereich) + '" style="color:inherit;text-decoration:none">' + esc(t.bereich) + '</a></p>';
     h += '<div style="display:flex;align-items:center;gap:6px"><h1 style="flex:1;margin:6px 0">' + esc(t.name) + '</h1>' + sternKnopf(t.name) + '</div>';
     h += '<p>' + badge(L.statusOf(state, t.name)) + '</p>';
     if (t.praesentationen && t.praesentationen.length) {
@@ -242,7 +246,7 @@
       '<div class="card a-roy"><h3 style="margin-top:0">Eigener Übungstest</h3><p class="muted">Wähle die Themen, die du üben willst.</p>' +
       themenNamen.map((t, i) => '<label class="check"><input type="checkbox" data-wahl="' + i + '"> ' + esc(t) + '</label>').join('') +
       '<div class="err" id="err"></div><button class="primary" data-start="uebung">Übungstest starten (bis zu 10 Fragen)</button></div>' +
-      '<div><div class="kachel a-yel" style="margin-bottom:16px">' + iconHtml('✓') + '<h3>Prüfungscheck</h3><p>' + anzahlEingang() + ' Fragen, 2 pro Thema, ca. ' + minuten() + ' Min.</p><div class="knoepfe"><button class="primary" data-start="pruefung">Prüfungscheck starten</button></div></div>' +
+      '<div><div class="kachel a-yel" style="margin-bottom:16px">' + iconHtml('✓') + '<h3>Wissenstest</h3><p>' + anzahlEingang() + ' Fragen aus allen freigeschalteten Themen, jedes Mal neu gemischt.</p><div class="knoepfe"><button class="primary" data-start="pruefung">Wissenstest starten</button></div></div>' +
       '<div class="kachel a-tea">' + iconHtml('V') + '<h3>Multimeter-Übung</h3><p>Messen und Fehlersuche am Stromkreis.</p><div class="knoepfe"><a class="btn primary" href="multimeter.html">Übung öffnen</a></div></div></div></div>';
   }
 
@@ -382,7 +386,7 @@
 
   function renderFrage() {
     const f = quiz.liste[quiz.i];
-    const titel = { eingang: 'Eingangstest', pruefung: 'Prüfungscheck', kurz: 'Kurztest: ' + quiz.thema, bereich: 'Bereichstest: ' + quiz.thema, uebung: 'Übungstest' }[quiz.art];
+    const titel = { eingang: 'Eingangstest', pruefung: 'Wissenstest · ' + LJ_TEXT(state.lehrjahr || 1), kurz: 'Kurztest: ' + quiz.thema, bereich: 'Bereichstest: ' + quiz.thema, uebung: 'Übungstest' }[quiz.art];
     let h = '<p class="muted">' + esc(titel) + ' · Frage ' + (quiz.i + 1) + ' von ' + quiz.liste.length + '</p>';
     h += '<div class="bar" style="margin-bottom:16px"><div style="width:' + Math.round((quiz.i / quiz.liste.length) * 100) + '%;background:var(--roy)"></div></div>';
     h += '<div class="card"><p class="muted" style="margin:0 0 4px">' + esc(f.thema) + '</p><h2 style="margin:0 0 14px">' + esc(f.frage) + '</h2>';
@@ -422,7 +426,7 @@
     }).join('') + '</div>';
     const schwach = Object.keys(r.proThema).filter(t => r.proThema[t] < L.GRENZE);
     if (schwach.length) h += '<p>Diese Themen stehen jetzt bei „Als Nächstes“: ' + schwach.map(esc).join(', ') + '.</p>';
-    return h + '<button class="primary full" data-fertig="1">Zum Lernstand</button>';
+    return h + '<button class="primary full" data-fertig="1">Zur Übersicht</button>';
   }
 
   app.addEventListener('click', e => {
@@ -447,7 +451,7 @@
       else beende();
     } else if (d.abbrechen) { const z = quiz.zurueck; quiz = null; location.hash = z === '#/test' ? '#/' : z; }
     else if (d.fertig) { quiz = null; location.hash = '#/'; }
-    else if (d.lehrjahr) { state = L.setLehrjahr(state, +d.lehrjahr); save(); lehrjahrOffen = false; render(); window.scrollTo(0, 0); }
+    else if (d.lehrjahr) { state = L.setLehrjahr(state, +d.lehrjahr); save(); lehrjahrOffen = false; if (route().r === 'lernstand') render(); else if (location.hash && location.hash !== '#/') location.hash = '#/'; else render(); window.scrollTo(0, 0); }
     else if (d.lehrjahrAendern) { lehrjahrOffen = true; render(); }
     else if (d.reset === 'frage') { resetFrage = true; render(); }
     else if (d.reset === 'ja') { state = L.initialState(); save(); resetFrage = false; render(); }

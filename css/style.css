@@ -148,3 +148,8 @@ label.check input{width:22px;height:22px;accent-color:var(--roy)}
 .tz-name{font-weight:700;font-size:16px}
 .tz-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:13px;font-weight:600}
 .themazeile .icon.lang{font-size:12px;letter-spacing:-.02em}
+body.ohne-nav nav{display:none}
+.wissenstest{flex-direction:row;gap:16px;align-items:flex-start;margin:6px 0 22px;max-width:760px}
+.wissenstest h3{margin:2px 0 8px}
+.wt-text{flex:1;min-width:0;display:flex;flex-direction:column}
+@media (max-width:600px){.wissenstest{flex-direction:column}}
