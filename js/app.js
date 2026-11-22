@@ -151,7 +151,7 @@
   function renderThemen() {
     const lj = state.lehrjahr || 1;
     let h = '<p class="eyebrow">Dein Lernpfad · ' + LJ_TEXT(lj) + '</p><h1>Lernfelder</h1><p class="lead">Die Bereiche in der Reihenfolge deiner Ausbildung. Tippe auf einen Bereich, um seine Themen zu sehen.</p>';
-    h += '<div class="kachel a-yel wissenstest">' + iconHtml('✓') + '<div class="wt-text"><h3>Hier kannst du dein Wissen testen</h3>' +
+    h += '<div class="kachel a-yel wissenstest">' + iconHtml('✓') + '<div class="wt-text"><h3>Teste hier dein Wissen</h3>' +
       '<p>Ein Test über alles bis zum ' + LJ_TEXT(lj) + ', jedes Mal neu zusammengestellt.</p><p class="meta">' + anzahlEingang() + ' Fragen · ca. ' + minuten() + ' Min.</p>' +
       '<div class="knoepfe"><button class="primary" data-start="pruefung">Wissenstest starten</button></div></div></div><div class="pfad">';
     [1, 2, 3, 4].forEach(jahr => {

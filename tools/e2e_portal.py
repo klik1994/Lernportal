@@ -27,7 +27,7 @@ with sync_playwright() as p:
     page.click('[data-lehrjahr="1"]')
     page.wait_for_selector('.pfad')
     assert page.locator('#nav').is_visible()
-    assert 'Hier kannst du dein Wissen testen' in page.inner_text('#app')
+    assert 'Teste hier dein Wissen' in page.inner_text('#app')
     import re
     m = re.search(r'(\d+) Fragen · ca\. (\d+) Min', page.inner_text('#app'))
     assert m and int(m.group(1)) > 0, page.inner_text('#app')
