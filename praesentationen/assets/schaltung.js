@@ -122,7 +122,7 @@
       const rd = el('text', { x: 180, y: 96, 'text-anchor': 'end', 'font-size': 38, 'font-weight': 800, fill: '#19231c' }, gM);
       const unit = el('text', { x: 38, y: 48, 'font-size': 14, 'font-weight': 800, fill: '#19231c' }, gM);
       const cx = 110, cy = 206;
-      const pos = { V: -150, 'Ω': -90, A: -30, OFF: 165 };
+      const pos = { V: 210, 'Ω': 270, A: 330, OFF: 165 };
       const labs = {};
       for (const k in pos) {
         const r = pos[k] * Math.PI / 180;
