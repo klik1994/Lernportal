@@ -58,18 +58,15 @@
 <section class="slide" id="s-hy">
   <span class="tag">BREMSE</span><h2>Hydraulik – zum Ausprobieren</h2>
   <div class="body noclick">
-    <div class="ctrl"><span style="width:300px">Kraft am Hauptzylinder: <span class="c" id="hy-fn">2.000 N</span></span><input type="range" id="hy-f" min="500" max="3000" step="100" value="2000"></div>
+    <div class="ctrl"><span style="width:300px;white-space:nowrap">Kraft Hauptzylinder: <span class="c" id="hy-fn">2.000 N</span></span><input type="range" id="hy-f" min="500" max="3000" step="100" value="2000"></div>
     <div class="grid2" style="align-items:center;grid-template-columns:1.2fr 1fr;margin-top:8px">
-      <svg viewBox="0 0 560 280" width="560" height="280" style="display:block;margin:0 auto;max-width:100%;height:auto" id="hy-svg">
-      <rect x="60" y="120" width="60" height="120" fill="#ff8f3f" opacity=".55"/><rect x="60" y="230" width="380" height="30" fill="#ff8f3f" opacity=".55"/>
-      <rect x="360" y="140" width="140" height="100" fill="#ff8f3f" opacity=".55"/>
-      <path d="M56 70 V264 H504 V120 M364 120 V230 M124 70 V230" fill="none" stroke="#ecf1f8" stroke-width="4"/>
-      <rect id="hy-k1" x="62" y="104" width="56" height="16" fill="#94a4ba"/>
-      <rect id="hy-k2" x="362" y="124" width="140" height="16" fill="#94a4ba"/>
-      <g id="hy-a1"></g><g id="hy-a2"></g>
-      <text x="90" y="292" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">Hauptzylinder</text>
-      <text x="432" y="292" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">Sattelkolben</text>
-      <text x="250" y="222" text-anchor="middle" font-size="15" font-weight="900" fill="#ecf1f8" id="hy-p">p</text>
+      <svg viewBox="0 0 560 310" width="560" height="310" style="display:block;margin:0 auto;max-width:100%;height:auto" id="hy-svg">
+      <path id="hy-fl" d="" fill="#ff8f3f" opacity=".5"/>
+      <path d="M76 40 V266 H504 V100 M356 100 V226 H141 V40" fill="none" stroke="#ecf1f8" stroke-width="5" stroke-linejoin="round"/>
+      <g id="hy-k1"></g><g id="hy-k2"></g>
+      <text x="248" y="252" text-anchor="middle" font-size="17" font-weight="900" fill="#ecf1f8" id="hy-p">p</text>
+      <text x="108" y="296" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">Hauptzylinder Ø 22 mm</text>
+      <text x="430" y="296" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">Sattelkolben Ø 54 mm</text>
     </svg>
       <div>
         <div class="grid2" style="gap:10px"><div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">DRUCK (ÜBERALL GLEICH)</div><div class="lcd2" id="hy-pv" style="font-size:26px">53 bar</div></div>
@@ -218,16 +215,17 @@
 <script>
 (function () {
   const hf = document.getElementById('hy-f'), A1 = 3.8, A2 = 22.9;
-  const pfeil = (x, y0, y1, c) => '<line x1="' + x + '" y1="' + y0 + '" x2="' + x + '" y2="' + y1 + '" stroke="' + c + '" stroke-width="7"/><path d="M' + (x - 12) + ' ' + (y1 + (y1 > y0 ? -14 : 14)) + ' L' + x + ' ' + y1 + ' L' + (x + 12) + ' ' + (y1 + (y1 > y0 ? -14 : 14)) + '" fill="none" stroke="' + c + '" stroke-width="7"/>';
+  const pfeil = (x, y0, y1, c, w) => { const r = y1 > y0 ? -1 : 1; return '<line x1="' + x + '" y1="' + y0 + '" x2="' + x + '" y2="' + (y1 + r * 10) + '" stroke="' + c + '" stroke-width="' + w + '"/><path d="M' + (x - w * 1.8) + ' ' + (y1 + r * w * 2.2) + ' L' + x + ' ' + y1 + ' L' + (x + w * 1.8) + ' ' + (y1 + r * w * 2.2) + ' Z" fill="' + c + '"/>'; };
   function hy() {
-    const F = +hf.value, p = F / A1 / 10, F2 = p * 10 * A2;
+    const F = +hf.value, p = F / A1 / 10, F2 = p * 10 * A2, k = (F - 500) / 2500;
+    const ys = 110 + 50 * k, yb = 150 - 50 * k * 57 / 140;
     document.getElementById('hy-fn').textContent = F.toLocaleString('de-DE') + ' N';
     document.getElementById('hy-pv').textContent = Math.round(p) + ' bar';
     document.getElementById('hy-f2').textContent = (Math.round(F2 / 100) * 100).toLocaleString('de-DE') + ' N';
     document.getElementById('hy-p').textContent = 'p = ' + Math.round(p) + ' bar';
-    const l1 = 20 + F / 3000 * 50, l2 = 20 + F2 / 18100 * 90;
-    document.getElementById('hy-a1').innerHTML = pfeil(90, 100 - l1, 100, '#ffd34d');
-    document.getElementById('hy-a2').innerHTML = pfeil(432, 120, 120 - Math.min(l2, 110), '#34c778');
+    document.getElementById('hy-fl').setAttribute('d', 'M79 ' + ys + ' V263 H501 V' + yb + ' H359 V229 H138 V' + ys + ' Z');
+    document.getElementById('hy-k1').innerHTML = '<rect x="80" y="' + (ys - 18) + '" width="57" height="18" rx="3" fill="#94a4ba"/>' + pfeil(108, ys - 18 - (34 + 26 * k), ys - 20, '#ffd34d', 6);
+    document.getElementById('hy-k2').innerHTML = '<rect x="360" y="' + (yb - 18) + '" width="140" height="18" rx="3" fill="#94a4ba"/>' + pfeil(430, yb - 20, yb - 20 - (40 + 60 * k), '#34c778', 12);
   }
   hf.addEventListener('input', hy); hy();
 
