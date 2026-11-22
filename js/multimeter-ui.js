@@ -54,6 +54,47 @@
     return s + '</svg>';
   }
 
+
+  const STELLUNGEN = [['aus', 'OFF', 150], ['V=', 'V⎓', 200], ['V~', 'V~', 245], ['Ω', 'Ω', 290], ['A=', 'A⎓', 335]];
+  const BUCHSEN = [['10A', '10A', 48], ['mA', 'mA', 98], ['COM', 'COM', 148], ['VΩ', 'VΩ', 198]];
+  const MODUS_TEXT = { 'V=': 'V DC', 'V~': 'V AC', 'Ω': 'OHM', 'A=': 'A DC', aus: '' };
+
+  function geraet(r) {
+    const cx = 123, cy = 205;
+    let s = '<svg class="geraet" viewBox="0 0 246 470" role="group" aria-label="Multimeter">';
+    s += '<rect x="3" y="3" width="240" height="384" rx="30" fill="#f7b612"/>';
+    s += '<rect x="15" y="15" width="216" height="360" rx="22" fill="#2c313a"/>';
+    s += '<rect x="31" y="30" width="184" height="86" rx="10" fill="#c4d6be" stroke="#1b2a12" stroke-width="2"/>';
+    s += '<text x="43" y="52" font-size="13" font-weight="800" fill="#1b2a12">' + (MODUS_TEXT[z.modus] || '') + '</text>';
+    s += '<text x="203" y="102" text-anchor="end" font-size="34" font-weight="700" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#19231c" aria-live="polite">' + (r.anzeige || '') + '</text>';
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="78" fill="#23272e"/>';
+    STELLUNGEN.forEach(([w, t, a]) => {
+      const rad = a * Math.PI / 180, on = z.modus === w;
+      const lx = cx + 64 * Math.cos(rad), ly = cy + 64 * Math.sin(rad);
+      s += '<g class="mmk" data-dreh="' + w + '" role="button" tabindex="0" aria-label="Wahlschalter ' + t + '" aria-pressed="' + on + '">' +
+        '<circle cx="' + lx.toFixed(1) + '" cy="' + ly.toFixed(1) + '" r="19" fill="' + (on ? '#f7b612' : '#353b45') + '"/>' +
+        '<text x="' + lx.toFixed(1) + '" y="' + (ly + 5).toFixed(1) + '" text-anchor="middle" font-size="' + (w === 'aus' ? 11 : 15) + '" font-weight="800" fill="' + (on ? '#2c313a' : '#c9d1dc') + '">' + t + '</text></g>';
+    });
+    const akt = STELLUNGEN.find(x => x[0] === z.modus) || STELLUNGEN[0];
+    const pr = akt[2] * Math.PI / 180;
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="36" fill="#15181d" stroke="#505662" stroke-width="3"/>';
+    s += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + 30 * Math.cos(pr)).toFixed(1) + '" y2="' + (cy + 30 * Math.sin(pr)).toFixed(1) + '" stroke="#f7b612" stroke-width="8" stroke-linecap="round"/>';
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="6" fill="#505662"/>';
+    BUCHSEN.forEach(([w, t, x]) => {
+      const com = w === 'COM', on = !com && z.buchseRot === w;
+      const inner = '<text x="' + x + '" y="318" text-anchor="middle" font-size="12" font-weight="800" fill="#c9d1dc">' + t + '</text>' +
+        '<circle cx="' + x + '" cy="345" r="16" fill="' + (com ? '#141619' : '#c0392b') + '" stroke="' + (on ? '#f7b612' : '#5a606c') + '" stroke-width="' + (on ? 4 : 2) + '"/>' +
+        '<circle cx="' + x + '" cy="345" r="6" fill="#0a0a0c"/>';
+      s += com ? '<g>' + inner + '</g>' : '<g class="mmk" data-buchse="' + w + '" role="button" tabindex="0" aria-label="Rote Messleitung in Buchse ' + t + '" aria-pressed="' + on + '">' + inner + '</g>';
+    });
+    const rx = (BUCHSEN.find(b => b[0] === z.buchseRot) || BUCHSEN[3])[2];
+    s += '<path d="M148 345 C 148 420, 100 410, 92 466" fill="none" stroke="#1b1d22" stroke-width="7" stroke-linecap="round"/>';
+    s += '<path d="M' + rx + ' 345 C ' + rx + ' 425, 160 410, 156 466" fill="none" stroke="#e0473a" stroke-width="7" stroke-linecap="round"/>';
+    s += '<circle cx="148" cy="345" r="9" fill="#1b1d22" stroke="#6b717c" stroke-width="2"/><circle cx="' + rx + '" cy="345" r="9" fill="#e0473a" stroke="#ffb3aa" stroke-width="2"/>';
+    s += '</svg>';
+    return '<div class="geraet-box"><div class="geraet-hilfe"><p class="lbl" style="margin:0">Multimeter</p><p class="muted" style="margin:4px 0 0">Tippe auf eine Stellung am Drehschalter und auf die Buchse für die rote Messleitung. Schwarz steckt immer in COM.</p></div>' + s + '</div>';
+  }
+
   function btn(attr, wert, text, aktiv, cls) {
     return '<button data-' + attr + '="' + wert + '" class="' + (aktiv ? 'on ' : '') + (cls || '') + '">' + text + '</button>';
   }
@@ -72,11 +113,9 @@
     if (ereignis) h += '<div class="meld warn">' + ereignis + '</div>';
     h += '<div class="seg">' + btn('schalter', '1', z.schalterZu ? 'Schalter: an' : 'Schalter: aus', z.schalterZu) + btn('batterie', '1', z.batterieAn ? 'Batterie: dran' : 'Batterie: ab', !z.batterieAn) + '</div>';
     h += '<div class="seg">' + btn('ziehen', '1', z.sicherungDrin ? 'Sicherung ziehen' : 'Sicherung einsetzen', !z.sicherungDrin) + btn('neusich', '1', 'Neue Sicherung', false) + btn('lampe', '1', z.lampeDran ? 'Lampe abstecken' : 'Lampe anstecken', !z.lampeDran) + '</div>';
-    h += '<div class="card"><div class="display" aria-live="polite">' + r.anzeige + '</div>';
-    h += '<p class="lbl">Wahlschalter</p><div class="seg">' + [['aus', 'AUS'], ['V=', 'V⎓'], ['V~', 'V~'], ['Ω', 'Ω'], ['A=', 'A⎓']].map(([w, t]) => btn('dreh', w, t, z.modus === w)).join('') + '</div>';
-    h += '<p class="lbl">Rote Leitung steckt in Buchse (Schwarz immer in COM)</p><div class="seg">' + ['VΩ', 'mA', '10A'].map(w => btn('buchse', w, w, z.buchseRot === w)).join('') + '</div>';
-    h += '<p class="lbl">Erst Messspitze wählen, dann Messpunkt im Bild antippen</p><div class="seg">' +
-      btn('spitze', 'rot', 'Rot: ' + (z.rot || '–'), spitze === 'rot', 'probe-rot') + btn('spitze', 'schwarz', 'Schwarz: ' + (z.schwarz || '–'), spitze === 'schwarz', 'probe-schwarz') + '</div></div>';
+    h += geraet(r);
+    h += '<p class="lbl">Erst Messspitze wählen, dann Messpunkt im Schaltplan antippen</p><div class="seg">' +
+      btn('spitze', 'rot', 'Rote Spitze: ' + (z.rot || '–'), spitze === 'rot', 'probe-rot') + btn('spitze', 'schwarz', 'Schwarze Spitze: ' + (z.schwarz || '–'), spitze === 'schwarz', 'probe-schwarz') + '</div>';
     if (r.meldung) h += '<div class="meld ' + (r.ok ? 'info' : 'warn') + '">' + r.meldung + '</div>';
     if (modus === 'fehler') {
       if (ergebnis) {
@@ -85,8 +124,8 @@
         if (zeigen) h += '<button class="primary" style="width:100%" data-neu="1">Neuer Fehler</button>';
         else h += '<div class="seg"><button class="primary" data-weiter="1">Weiter suchen</button><button data-loesung="1">Lösung zeigen</button></div>';
       } else if (antwortPhase) {
-        h += '<div class="card"><p class="lbl">1. Wo sitzt der Fehler?</p><div class="seg">' + Object.keys(M.ORTE).map(o => btn('ort', o, M.ORTE[o].name, wahlOrt === o)).join('') + '</div>';
-        h += '<p class="lbl">2. Was für ein Fehler ist es?</p><div class="seg">' + Object.keys(M.ARTEN).map(a => btn('art', a, M.ARTEN[a], wahlArt === a)).join('') + '</div>';
+        h += '<div class="card"><p class="lbl">1. Wo sitzt der Fehler?</p><div class="seg wrap">' + Object.keys(M.ORTE).map(o => btn('ort', o, M.ORTE[o].name, wahlOrt === o)).join('') + '</div>';
+        h += '<p class="lbl">2. Was für ein Fehler ist es?</p><div class="seg wrap">' + Object.keys(M.ARTEN).map(a => btn('art', a, M.ARTEN[a], wahlArt === a)).join('') + '</div>';
         if (antwortFehler) h += '<p class="meld warn">' + antwortFehler + '</p>';
         h += '<button class="primary" style="width:100%" data-antwort="1">Antwort prüfen</button></div>';
       } else {
@@ -109,7 +148,7 @@
       ereignis = '';
       nachMessung(); render(); return;
     }
-    const b = e.target.closest('button');
+    const b = e.target.closest('button, [data-dreh], [data-buchse]');
     if (!b) return;
     const d = b.dataset;
     ereignis = '';
@@ -140,6 +179,11 @@
     else if (d.loesung) ergebnis.loesung = true;
     else if (d.neu) neuerFehler();
     render();
+  });
+
+  root.addEventListener('keydown', e => {
+    const g = e.target.closest && e.target.closest('.mmk');
+    if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); g.dispatchEvent(new MouseEvent('click', { bubbles: true })); }
   });
 
   render();
