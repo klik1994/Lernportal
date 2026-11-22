@@ -1,0 +1,12 @@
+.oszi-box{margin:0 0 12px}
+#can svg.oszi{width:100%;height:auto;display:block;border-radius:12px}
+.pegel{display:flex;flex-wrap:wrap;gap:6px 16px;margin:8px 2px 0;font-size:14px;font-weight:600;color:var(--muted)}
+.pegel i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+#can svg.dlc{width:100%;max-width:300px;height:auto;display:block;margin:0 auto}
+.dlc-legende{text-align:center;margin:6px 0 0}
+.mini-display{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#d7e3cf;color:#1b2a12;border-radius:10px;padding:8px 14px;margin-top:8px}
+.mini-display b{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:26px}
+.mini-display span{font-size:13px;font-weight:700}
+#can .k-a.on{background:#f7b612;color:#0e192b}#can .k-b.on{background:#34c778;color:#0e192b}#can .k-d.on{background:#f05e4e;color:#0e192b}
+#can button.on{background:var(--roy);color:var(--on-c)}
+#can button.primary{background:var(--roy);color:var(--on-c)}

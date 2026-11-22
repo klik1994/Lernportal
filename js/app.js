@@ -48,6 +48,7 @@
     if (r === 'thema') return show(renderThema(arg));
     if (r === 'bereich') return show(renderBereich(arg));
     if (r === 'ueben') return show(renderUeben());
+    if (r === 'werkstatt') return show(renderWerkstatt());
     return show(renderThemen());
   }
   function show(html) { app.innerHTML = hinweis() + html; }
@@ -247,7 +248,7 @@
       themenNamen.map((t, i) => '<label class="check"><input type="checkbox" data-wahl="' + i + '"> ' + esc(t) + '</label>').join('') +
       '<div class="err" id="err"></div><button class="primary" data-start="uebung">Übungstest starten (bis zu 10 Fragen)</button></div>' +
       '<div><div class="kachel a-yel" style="margin-bottom:16px">' + iconHtml('✓') + '<h3>Wissenstest</h3><p>' + anzahlEingang() + ' Fragen aus allen freigeschalteten Themen, jedes Mal neu gemischt.</p><div class="knoepfe"><button class="primary" data-start="pruefung">Wissenstest starten</button></div></div>' +
-      '<div class="kachel a-tea">' + iconHtml('V') + '<h3>Multimeter-Übung</h3><p>Messen und Fehlersuche am Stromkreis.</p><div class="knoepfe"><a class="btn primary" href="multimeter.html">Übung öffnen</a></div></div></div></div>';
+      '<div class="kachel a-tea">' + iconHtml('V') + '<h3>Werkstatt</h3><p>Multimeter und CAN-Bus-Oszilloskop: messen und Fehler suchen.</p><div class="knoepfe"><a class="btn primary" href="#/werkstatt">Zur Werkstatt</a></div></div></div></div>';
   }
 
   function anbieter() {
@@ -255,6 +256,13 @@
     const feld = k => e[k] ? esc(e[k]) : '<span class="muted">[in der Excel-Datei unter „Einstellungen“ eintragen]</span>';
     const tel = e['Impressum Telefon (freiwillig)'] ? '<br>Telefon: ' + esc(e['Impressum Telefon (freiwillig)']) : '';
     return '<p>' + feld('Impressum Name') + '<br>' + feld('Impressum Anschrift').replace(/\n/g, '<br>') + '<br>E-Mail: ' + feld('Impressum E-Mail') + tel + '</p>';
+  }
+
+  function renderWerkstatt() {
+    return '<p class="eyebrow">Praxis</p><h1>Werkstatt</h1><p class="lead">Übungen zum Messen und zur Fehlersuche, wie in der Werkstatt.</p><div class="grid">' +
+      '<div class="kachel a-yel">' + iconHtml('V') + '<h3>Multimeter</h3><p>Spannung und Widerstand messen, Fehler suchen im einfachen Stromkreis, in der Parallel- und in der Reihenschaltung.</p><div class="knoepfe"><a class="btn primary" href="multimeter.html">Übung öffnen</a></div></div>' +
+      '<div class="kachel a-pur">' + iconHtml('CAN') + '<h3>CAN-Bus-Diagnose</h3><p>CAN-High und CAN-Low am Oszilloskop ansehen, Widerstände am Diagnosestecker messen und Busfehler erkennen.</p><div class="knoepfe"><a class="btn primary" href="can.html">Übung öffnen</a></div></div>' +
+      '</div>';
   }
 
   function renderImpressum() {
