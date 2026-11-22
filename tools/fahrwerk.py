@@ -70,7 +70,7 @@ fahrwerk = [
       <div>{grafik('fg', 600, 220)}
         <div class="card" id="fd-t" style="font-size:16px;font-weight:600;line-height:1.5;margin-top:10px"></div></div>
     </div>''', sid='s-fd', body_cls='body noclick'),
-    folie(T, 'Spur, Sturz und Nachlauf – zum Ausprobieren', f'''    <div class="choice" style="margin-bottom:8px">{btns('g', [('spur', 'Spur (von oben)'), ('sturz', 'Sturz (von vorn)'), ('nl', 'Nachlauf (von der Seite)')])}</div>
+    folie(T, 'Spur, Sturz und Nachlauf – zum Ausprobieren', f'''    <div class="choice" style="margin-bottom:8px">{btns('g', [('spur', 'Spur (von oben)'), ('sturz', 'Sturz (von vorn)'), ('nl', 'Nachlauf (von der Seite)')])}<button class="btn" id="ge-bs" style="--c:var(--tea);display:none">▶ Rad trifft Bordstein</button></div>
     <div class="ctrl"><span style="width:220px">Einstellung: <span class="c" id="ge-n">0°</span></span><input type="range" id="ge-r" min="-3" max="3" step="0.5" value="0"></div>
     <div class="grid2" style="align-items:center;grid-template-columns:1.2fr 1fr;margin-top:8px">
       {geo_svg()}
@@ -157,7 +157,7 @@ fahrwerk_js = '''<script>
   document.getElementById('s-fd').addEventListener('slideshow', start);
 
   // Achsgeometrie
-  let gm = 'spur';
+  let gm = 'spur', dreh = 0, bsT = 0, bsRaf = null;
   const gr = document.getElementById('ge-r');
   function rad(x, y, w, h, rot, cx, cy) { return '<rect x="' + (x - w / 2) + '" y="' + (y - h / 2) + '" width="' + w + '" height="' + h + '" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="4" transform="rotate(' + rot + ' ' + (cx || x) + ' ' + (cy || y) + ')"/>'; }
   function geo() {
@@ -181,21 +181,49 @@ fahrwerk_js = '''<script>
         : a > 0 ? '<b>Positiver Sturz:</b> Die Räder sind oben nach außen geneigt. Der Reifen wird außen stärker abgefahren.'
         : '<b>Sturz 0:</b> Die Räder stehen senkrecht. Bewege den Regler.';
     } else {
-      o += '<line x1="60" y1="260" x2="540" y2="260" stroke="#94a4ba" stroke-width="4"/><circle cx="300" cy="170" r="90" fill="#213552" stroke="#ecf1f8" stroke-width="5"/><circle cx="300" cy="170" r="10" fill="#94a4ba"/>';
+      const cx0 = 210;
+      o += '<line x1="30" y1="260" x2="350" y2="260" stroke="#94a4ba" stroke-width="4"/><circle cx="' + cx0 + '" cy="170" r="90" fill="#213552" stroke="#ecf1f8" stroke-width="5"/><circle cx="' + cx0 + '" cy="170" r="10" fill="#94a4ba"/>';
       const r = (a * k) * Math.PI / 180, dx = Math.tan(r) * 150;
-      o += '<line x1="' + (300 + dx * 0.9) + '" y1="35" x2="' + (300 - dx * 0.6) + '" y2="260" stroke="#ffd34d" stroke-width="5"/>';
-      o += '<circle cx="300" cy="260" r="6" fill="#ecf1f8"/><circle cx="' + (300 - dx * 0.6) + '" cy="260" r="6" fill="#ffd34d"/>';
-      o += '<path d="M120 40 H60 M72 30 L58 40 L72 50" fill="none" stroke="#94a4ba" stroke-width="3"/><text x="130" y="45" font-size="14" font-weight="800" fill="#94a4ba">Fahrtrichtung</text>';
-      o += '<text x="560" y="40" text-anchor="end" font-size="14" font-weight="800" fill="#ffd34d">Lenkachse</text>';
+      o += '<line x1="' + (cx0 + dx * 0.9) + '" y1="35" x2="' + (cx0 - dx * 0.6) + '" y2="260" stroke="#ffd34d" stroke-width="5"/>';
+      o += '<circle cx="' + cx0 + '" cy="260" r="6" fill="#ecf1f8"/><circle cx="' + (cx0 - dx * 0.6) + '" cy="260" r="6" fill="#ffd34d"/>';
+      o += '<path d="M90 40 H30 M42 30 L28 40 L42 50" fill="none" stroke="#94a4ba" stroke-width="3"/><text x="98" y="45" font-size="14" font-weight="800" fill="#94a4ba">Fahrtrichtung</text>';
+      o += '<text x="' + (cx0 + 30) + '" y="30" font-size="14" font-weight="800" fill="#ffd34d">Lenkachse</text>';
+      // Draufsicht
+      const px = 480 - a * 14, py = 170, cxw = 480;
+      o += '<rect x="370" y="56" width="216" height="228" rx="12" fill="#213552" stroke="#94a4ba" stroke-width="2"/><text x="478" y="80" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">von oben</text>';
+      o += '<line x1="385" y1="' + py + '" x2="575" y2="' + py + '" stroke="#94a4ba" stroke-width="1.5" stroke-dasharray="5 5"/>';
+      if (bsT > 0 && bsT < 0.6) o += '<rect x="' + (395 + (1 - Math.min(1, bsT / 0.4)) * 40) + '" y="122" width="26" height="22" rx="3" fill="#94a4ba"/><text x="408" y="114" text-anchor="middle" font-size="12" font-weight="800" fill="#94a4ba">Bordstein</text>';
+      o += '<g transform="rotate(' + (-dreh).toFixed(1) + ' ' + px + ' ' + py + ')"><rect x="' + (cxw - 48) + '" y="' + (py - 14) + '" width="96" height="28" rx="8" fill="#18283f" stroke="#ecf1f8" stroke-width="4"/><circle cx="' + cxw + '" cy="' + py + '" r="6" fill="#ecf1f8"/></g>';
+      o += '<circle cx="' + px + '" cy="' + py + '" r="6" fill="#ffd34d"/>';
+      o += '<text x="478" y="268" text-anchor="middle" font-size="12" font-weight="800" fill="#94a4ba">gelb: Lenkachse · weiß: Reifen</text>';
       t = a > 0 ? '<b>Positiver Nachlauf:</b> Die Lenkachse trifft die Straße <span class="c">vor</span> dem Reifen-Aufstandspunkt. Das Rad wird „gezogen“ wie beim Einkaufswagen: Die Lenkung stellt sich von selbst gerade.'
         : a < 0 ? '<b>Negativer Nachlauf:</b> Die Lenkung stellt sich nicht mehr gerade, das Fahrzeug läuft unruhig. Ungleicher Nachlauf links/rechts: das Fahrzeug zieht zur Seite.'
         : '<b>Nachlauf 0:</b> Die Lenkachse geht genau durch den Aufstandspunkt. Bewege den Regler.';
+      if (bsT > 0) t = (a > 0 ? '<b class="grn">Stoß vom Bordstein:</b> Das Rad wird kurz verdreht. Weil der Reifen <span class="c">hinter</span> der Lenkachse aufsteht, zieht die Seitenkraft am Reifen das Rad wieder gerade – wie beim Einkaufswagen. Die Lenkung bleibt ruhig.'
+          : a < 0 ? '<b class="red">Stoß vom Bordstein:</b> Mit negativem Nachlauf dreht die Seitenkraft das Rad noch weiter weg – die Lenkung schlägt aus, das Fahrzeug wird unruhig.'
+          : '<b class="ora">Stoß vom Bordstein:</b> Ohne Nachlauf fehlt der Hebelarm. Nichts dreht das Rad zurück – der Fahrer muss selbst gegenlenken.')
+        + '<br><span class="muted" style="font-size:15px">Hartes Auffahren kann aber auch Teile verbiegen (Querlenker, Spurstange, Federbein). Dann zieht das Fahrzeug, das Lenkrad steht schief: Achsvermessung, verbogene Teile erneuern – nie richten.</span>';
     }
+    document.getElementById('ge-bs').style.display = gm === 'nl' ? '' : 'none';
     g('ge-g', o); document.getElementById('ge-t').innerHTML = t;
     document.querySelectorAll('#s-ge [data-g]').forEach(b => b.classList.toggle('on', b.dataset.g === gm));
   }
-  gr.addEventListener('input', geo);
-  document.querySelectorAll('#s-ge [data-g]').forEach(b => b.onclick = () => { gm = b.dataset.g; gr.value = gm === 'sturz' ? -1 : 1; geo(); });
+  function bordstein() {
+    const a = +gr.value; let t0 = null;
+    cancelAnimationFrame(bsRaf);
+    const step = ts => {
+      if (t0 === null) t0 = ts;
+      bsT = (ts - t0) / 1000;
+      if (bsT < 0.4) dreh = 18 * bsT / 0.4;
+      else { const u = bsT - 0.4; dreh = a > 0 ? 18 * Math.exp(-u * a * 1.2) : a < 0 ? 18 + 22 * (1 - Math.exp(-u * -a * 0.8)) : 18; }
+      geo();
+      if (bsT < 3) bsRaf = requestAnimationFrame(step);
+    };
+    bsRaf = requestAnimationFrame(step);
+  }
+  document.getElementById('ge-bs').onclick = bordstein;
+  gr.addEventListener('input', () => { cancelAnimationFrame(bsRaf); bsT = 0; dreh = 0; geo(); });
+  document.querySelectorAll('#s-ge [data-g]').forEach(b => b.onclick = () => { gm = b.dataset.g; gr.value = gm === 'sturz' ? -1 : 1; cancelAnimationFrame(bsRaf); bsT = 0; dreh = 0; geo(); });
   gr.value = 1; geo();
 
   // Reifenbezeichnung
