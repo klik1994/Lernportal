@@ -31,7 +31,7 @@ nav a.on{background:var(--roy);color:var(--on-c)}
 main{max-width:1120px;margin:0 auto;padding:14px 20px 24px}
 footer{max-width:1120px;margin:0 auto;padding:16px 20px 28px;font-size:13px;color:var(--muted)}
 footer a{color:var(--muted)}
-h1{font-size:34px;font-weight:900;margin:6px 0 8px;letter-spacing:-.02em;line-height:1.15}
+h1{font-size:34px;font-weight:900;margin:6px 0 8px;letter-spacing:-.02em;line-height:1.15;hyphens:auto;overflow-wrap:break-word;min-width:0}
 h2{font-size:20px;font-weight:800;margin:26px 0 12px}
 h3{font-size:22px;font-weight:800;margin:14px 0 8px;line-height:1.25}
 p{margin:0 0 12px}

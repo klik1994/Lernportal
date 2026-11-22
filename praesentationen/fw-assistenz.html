@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Fahrerassistenzsysteme</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  .rb { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; font-size: 44px; font-weight: 900; margin: 6px 0 14px; }
+  .rb span { cursor: pointer; padding: 4px 12px; border-radius: 12px; background: var(--card); transition: background .2s, color .2s; }
+  .rb span.on { background: var(--c); color: var(--on-c); }
+  html.light svg text[fill="#ffd34d"] { fill: #8a6400; }
+  @media (max-width: 820px), (max-height: 520px) { .rb { font-size: 28px; } .val b { font-size: 14px; hyphens: auto; overflow-wrap: anywhere; } }
+</style>
+</head>
+<body class="t-fw3">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">FAHRWERK UND BREMSEN</div>
+  <div class="symbol" style="font-size:90px">ABS</div>
+  <h1>Fahrerassistenzsysteme</h1>
+  <p>ABS, ESP, Radar, Kamera und Kalibrieren</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">ASSISTENZ</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Wie ABS und ESP arbeiten</li>
+      <li class="step from-left"><span class="num">2</span>Welche Sensoren Assistenzsysteme nutzen</li>
+      <li class="step from-left"><span class="num">3</span>Was ACC, Notbremse und Spurhalteassistent machen</li>
+      <li class="step from-left"><span class="num">4</span>Wann Sensoren kalibriert werden müssen</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" id="s-ab">
+  <span class="tag">ASSISTENZ</span><h2>ABS – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px"><button class="btn ghost on" data-a="ohne">Vollbremsung ohne ABS</button><button class="btn ghost" data-a="mit">Vollbremsung mit ABS</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 600 250" width="600" height="250" style="display:block;margin:0 auto;max-width:100%;height:auto" id="ab-svg">
+      <rect x="0" y="0" width="600" height="250" rx="12" fill="#18283f"/><g id="ab-g"></g></svg>
+      <div class="card" id="ab-t" style="font-size:16px;font-weight:600;line-height:1.5"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ASSISTENZ</span><h2>Aufbau von ABS und ESP</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>Raddrehzahl­sensoren</b><span>an jedem Rad – meist aktive Sensoren mit Magnetring im Radlager</span></div>
+      <div class="val step from-left"><b>Hydraulik­aggregat</b><span>Ventile und Pumpe: Druck halten, abbauen, wieder aufbauen</span></div>
+      <div class="val step from-left"><b>Steuergerät</b><span>vergleicht die Raddrehzahlen und steuert die Ventile</span></div>
+      <div class="val step from-left"><b>nur bei ESP</b><span>Lenkwinkelsensor, Drehratensensor, Querbeschleunigung, Bremsdruck</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-es">
+  <span class="tag">ASSISTENZ</span><h2>ESP – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px"><button class="btn ghost on" data-e="unter">Untersteuern</button><button class="btn ghost" data-e="ueber">Übersteuern</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 640 330" width="640" height="330" style="display:block;margin:0 auto;max-width:100%;height:auto" id="es-svg">
+      <rect x="0" y="0" width="640" height="330" rx="12" fill="#18283f"/>
+      <path d="M340 330 V250 A200 200 0 0 0 140 50 H60" fill="none" stroke="#213552" stroke-width="70"/>
+      <path d="M340 330 V250 A200 200 0 0 0 140 50 H60" fill="none" stroke="#94a4ba" stroke-width="2" stroke-dasharray="10 10"/>
+      <path id="es-ohne" d="" fill="none" stroke="#f05e4e" stroke-width="5"/>
+      <path id="es-mit" d="" fill="none" stroke="#34c778" stroke-width="5"/>
+      <text x="20" y="300" font-size="14" font-weight="800" fill="#f05e4e">ohne ESP</text><text x="20" y="320" font-size="14" font-weight="800" fill="#34c778">mit ESP</text>
+      <g transform="translate(500 90)"><rect x="-40" y="-70" width="80" height="140" rx="22" fill="#213552" stroke="#ecf1f8" stroke-width="3"/>
+        <rect class="es-r" data-r="vl" x="-56" y="-60" width="16" height="36" rx="4" fill="#94a4ba"/><rect class="es-r" data-r="vr" x="40" y="-60" width="16" height="36" rx="4" fill="#94a4ba"/>
+        <rect class="es-r" data-r="hl" x="-56" y="24" width="16" height="36" rx="4" fill="#94a4ba"/><rect class="es-r" data-r="hr" x="40" y="24" width="16" height="36" rx="4" fill="#94a4ba"/>
+        <path d="M0 -60 V-90 M-8 -80 L0 -92 L8 -80" fill="none" stroke="#94a4ba" stroke-width="3"/>
+        <text x="0" y="104" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">ESP bremst</text></g>
+      <text x="500" y="230" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">Linkskurve</text>
+    </svg>
+      <div class="card" id="es-t" style="font-size:16px;font-weight:600;line-height:1.5"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-sn">
+  <span class="tag">ASSISTENZ</span><h2>Die Sensoren – zum Antippen</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px;flex-wrap:wrap"><button class="btn ghost on" data-s="radar">Radar</button><button class="btn ghost" data-s="kamera">Kamera</button><button class="btn ghost" data-s="us">Ultraschall</button><button class="btn ghost" data-s="seite">Radar seitlich/hinten</button></div>
+    <svg viewBox="0 0 640 260" width="640" height="260" style="display:block;margin:0 auto;max-width:100%;height:auto" id="sn-svg">
+      <rect x="0" y="0" width="640" height="260" rx="12" fill="#18283f"/>
+      <g class="sn-f" data-s="radar"><path d="M420 130 L635 90 L635 170 Z" fill="#5b8cff" opacity=".35"/></g>
+      <g class="sn-f" data-s="kamera"><path d="M360 130 L600 40 L600 220 Z" fill="#34c778" opacity=".3"/></g>
+      <g class="sn-f" data-s="us"><path d="M420 85 A60 60 0 0 1 420 175 Z M200 85 A60 60 0 0 0 200 175 Z" fill="#ff8f3f" opacity=".4"/><path d="M425 90 Q490 130 425 170 M195 90 Q130 130 195 170" fill="#ff8f3f" opacity=".4"/></g>
+      <g class="sn-f" data-s="seite"><path d="M210 95 L60 20 L40 70 Z M210 165 L60 240 L40 190 Z" fill="#a07cf5" opacity=".35"/></g>
+      <rect x="200" y="90" width="220" height="80" rx="26" fill="#213552" stroke="#ecf1f8" stroke-width="3"/>
+      <rect x="330" y="100" width="34" height="60" rx="6" fill="#18283f" stroke="#94a4ba" stroke-width="2"/>
+      <path d="M440 130 H470 M460 122 L472 130 L460 138" fill="none" stroke="#94a4ba" stroke-width="3"/>
+    </svg>
+    <div class="card" id="sn-t" style="font-size:16px;font-weight:600;line-height:1.5;margin-top:8px"></div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ASSISTENZ</span><h2>Wichtige Assistenzsysteme</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>ACC</b><span>Abstandsregeltempomat – hält Tempo und Abstand zum Vorderfahrzeug</span></div>
+      <div class="val step from-left"><b>Notbrems­assistent</b><span>warnt und bremst selbst, wenn ein Aufprall droht</span></div>
+      <div class="val step from-left"><b>Spurhalte­assistent</b><span>erkennt die Fahrspur und lenkt sanft zurück</span></div>
+      <div class="val step from-left"><b>Totwinkel­warner</b><span>warnt beim Spurwechsel vor Fahrzeugen neben dir</span></div>
+      <div class="val step from-left"><b>Einparkhilfe</b><span>Ultraschall piept – oder das Auto lenkt selbst ein</span></div>
+    </div>
+    <div class="note step">Assistenzsysteme helfen – verantwortlich bleibt immer der Fahrer.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ASSISTENZ</span><h2>Kalibrieren – wann und wie?</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Wann?</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>nach dem Tausch der Frontscheibe (Kamera)</li><li>nach Achsvermessung oder Arbeiten am Fahrwerk</li><li>nach Aus- und Einbau oder Tausch von Radar, Kamera oder Stoßfänger</li><li>nach einem Unfall</li><li>immer laut Hersteller</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Wie?</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li><b>statisch</b>: mit Kalibriertafel in der Werkstatt – ebener Boden, genauer Abstand, gute Beleuchtung</li><li><b>dynamisch</b>: auf einer Probefahrt nach Vorgabe des Testers</li></ul></div>
+    </div>
+    <div class="warn step" style="margin-top:12px"><b>Reihenfolge</b>Erst die Achsvermessung, dann die Kalibrierung – die Sensoren richten sich nach der Fahrachse aus.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ASSISTENZ</span><h2>ABS und ESP prüfen</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fehlerspeicher lesen<small>welches Rad, welcher Sensor?</small></li>
+      <li class="step">Raddrehzahlen im Messwertblock vergleichen<small>bei Geradeausfahrt müssen alle vier gleich sein</small></li>
+      <li class="step">Aktiven Sensor richtig prüfen<small>Versorgung und Signal mit Oszilloskop oder Messwerten – nie mit dem Ohmmeter</small></li>
+      <li class="step">Magnetring und Geberrad<small>verschmutzt, beschädigt oder falsch eingebaut (Radlager)?</small></li>
+      <li class="step">Nach Arbeiten an Lenkung oder Fahrwerk<small>Lenkwinkelsensor neu einstellen</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ASSISTENZ</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>ABS-Leuchte an</b>Die Bremse funktioniert noch – aber ohne ABS. Fahrzeug bald prüfen.</div>
+      <div class="tip step"><b>Reifen gleich groß</b>Verschiedene Reifengrößen oder stark unterschiedliches Profil können ABS- und ESP-Fehler auslösen.</div>
+      <div class="tip step"><b>Sensoren sauber</b>Schnee, Schmutz oder Aufkleber vor Radar und Kamera stören die Systeme.</div>
+      <div class="warn step"><b>Stoßfänger lackieren</b>Vor dem Radar nur nach Herstellervorgabe lackieren – falsche Lackschichten stören das Radar.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ASSISTENZ</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/fw-assistenz.mp4" poster="videos/fw-assistenz.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ASSISTENZ</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="0"><p>1. Was verhindert ABS?</p>
+      <div class="opts"><button class="opt">Dass die Räder beim Bremsen blockieren</button><button class="opt">Dass der Motor ausgeht</button><button class="opt">Dass die Reifen verschleißen</button></div>
+      <div class="fb">So bleibt das Fahrzeug lenkbar.</div></div>
+    <div class="q" data-correct="2"><p>2. Das Fahrzeug untersteuert in einer Linkskurve. Welches Rad bremst ESP?</p>
+      <div class="opts"><button class="opt">Vorne rechts</button><button class="opt">Hinten rechts</button><button class="opt">Hinten links (kurveninnen)</button></div>
+      <div class="fb">Das dreht das Fahrzeug in die Kurve hinein.</div></div>
+    <div class="q" data-correct="1"><p>3. Welcher Sensor misst beim ACC den Abstand zum Vorderfahrzeug?</p>
+      <div class="opts"><button class="opt">Ultraschall</button><button class="opt">Radar</button><button class="opt">Lenkwinkelsensor</button></div>
+      <div class="fb">Radar misst Abstand und Geschwindigkeit – auch bei Nebel.</div></div>
+    <div class="q" data-correct="0"><p>4. Was kommt zuerst?</p>
+      <div class="opts"><button class="opt">Erst die Achsvermessung, dann die Kalibrierung</button><button class="opt">Erst kalibrieren, dann vermessen</button><button class="opt">Egal</button></div>
+      <div class="fb">Die Sensoren richten sich nach der Fahrachse aus.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">ASSISTENZ</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>ABS: Räder blockieren nicht – lenkbar bleiben</span></li>
+        <li class="step"><span>ESP: bremst einzelne Räder gegen Schleudern</span></li>
+        <li class="step"><span>Radar, Kamera, Ultraschall – sauber halten</span></li>
+        <li class="step"><span>Nach Scheibe, Fahrwerk, Unfall: kalibrieren laut Hersteller</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Fahrerassistenzsysteme" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const g = (id, s) => document.getElementById(id).innerHTML = s;
+  let am = 'ohne', t0 = null, raf = null;
+  const X = t => 40 + t / 5 * 540, Y = v => 210 - v * 1.6;
+  function fz(t) { const T = am === 'ohne' ? 4.6 : 3.7; return t >= T ? 0 : 100 * (1 - t / T); }
+  function rd(t) {
+    if (am === 'ohne') return t < 0.5 ? 100 * (1 - t / 0.5 * 0.15) * (1 - t / 0.5) + fz(t) * 0 + (t < 0.5 ? 0 : 0) : 0;
+    const v = fz(t); if (v <= 0) return 0;
+    const ph = (t * 6) % 1; return v * (0.88 - 0.22 * (ph < 0.5 ? ph * 2 : 2 - ph * 2));
+  }
+  function bild(tm) {
+    let o = '';
+    for (let v = 0; v <= 100; v += 25) o += '<line x1="40" y1="' + Y(v) + '" x2="580" y2="' + Y(v) + '" stroke="#94a4ba" stroke-width="1" opacity=".2"/>';
+    o += '<text x="44" y="22" font-size="14" font-weight="800" fill="#94a4ba">Geschwindigkeit</text><text x="580" y="240" text-anchor="end" font-size="13" font-weight="800" fill="#94a4ba">Zeit →</text>';
+    let a = '', b = '';
+    for (let t = 0; t <= Math.min(tm, 5); t += 0.02) { a += (a ? ' L' : 'M') + X(t).toFixed(1) + ' ' + Y(fz(t)).toFixed(1); b += (b ? ' L' : 'M') + X(t).toFixed(1) + ' ' + Y(am === 'ohne' ? (t < 0.5 ? 100 * (1 - t / 0.5) : 0) : rd(t)).toFixed(1); }
+    o += '<path d="' + a + '" fill="none" stroke="#ecf1f8" stroke-width="4"/><path d="' + b + '" fill="none" stroke="#ffd34d" stroke-width="4"/>';
+    o += '<text x="420" y="22" font-size="14" font-weight="800" fill="#ecf1f8">Fahrzeug</text><text x="510" y="22" font-size="14" font-weight="800" fill="#ffd34d">Rad</text>';
+    g('ab-g', o);
+  }
+  function lauf(ts) { if (t0 === null) t0 = ts; const t = (ts - t0) / 1000 * 1.4; bild(t); if (t < 5) raf = requestAnimationFrame(lauf); }
+  const TX = {
+    ohne: '<b class="red">Ohne ABS:</b> Das Rad <span class="red">blockiert</span> nach kurzer Zeit (gelbe Linie fällt auf 0). Ein blockiertes Rad kann keine Seitenkräfte übertragen – das Fahrzeug <b>lässt sich nicht mehr lenken</b> und rutscht geradeaus.',
+    mit: '<b class="grn">Mit ABS:</b> Das Steuergerät erkennt, dass ein Rad blockieren will. Es baut den Druck kurz ab, hält ihn und baut ihn wieder auf – mehrmals pro Sekunde. Das Rad dreht weiter (gelbe Linie knapp unter dem Fahrzeug): Das Fahrzeug <b>bleibt lenkbar</b>. Das Pedal pulsiert dabei.'
+  };
+  const ab = document.querySelectorAll('#s-ab [data-a]');
+  function abs(m) { am = m; ab.forEach(b => b.classList.toggle('on', b.dataset.a === m)); document.getElementById('ab-t').innerHTML = TX[m]; cancelAnimationFrame(raf); t0 = null; raf = requestAnimationFrame(lauf); }
+  ab.forEach(b => b.onclick = () => abs(b.dataset.a)); abs('ohne');
+  document.getElementById('s-ab').addEventListener('slideshow', () => abs(am));
+
+  const ES = {
+    unter: { r: 'hl', ohne: 'M340 330 V250 Q330 120 270 20', mit: 'M340 330 V250 A200 200 0 0 0 150 52',
+      t: '<b>Untersteuern:</b> Das Fahrzeug schiebt über die Vorderräder nach außen – es fährt eine größere Kurve als gelenkt. ESP bremst das <span class="c">kurveninnere Hinterrad</span> (hier hinten links). Das dreht das Fahrzeug in die Kurve hinein.' },
+    ueber: { r: 'vr', ohne: 'M340 330 V250 Q320 150 230 170 Q190 180 200 230', mit: 'M340 330 V250 A200 200 0 0 0 150 52',
+      t: '<b>Übersteuern:</b> Das Heck bricht aus, das Fahrzeug dreht sich zu stark ein und kann schleudern. ESP bremst das <span class="c">kurvenäußere Vorderrad</span> (hier vorne rechts). Das stabilisiert das Fahrzeug.' }
+  };
+  const eb = document.querySelectorAll('#s-es [data-e]');
+  function esp(m) {
+    const e = ES[m];
+    document.getElementById('es-ohne').setAttribute('d', e.ohne); document.getElementById('es-mit').setAttribute('d', e.mit);
+    document.querySelectorAll('#es-svg .es-r').forEach(r => r.setAttribute('fill', r.dataset.r === e.r ? '#f05e4e' : '#94a4ba'));
+    document.getElementById('es-t').innerHTML = e.t;
+    eb.forEach(b => b.classList.toggle('on', b.dataset.e === m));
+  }
+  eb.forEach(b => b.onclick = () => esp(b.dataset.e)); esp('unter');
+
+  const SN = {
+    radar: '<b>Radar (vorn):</b> misst Abstand und Geschwindigkeit des Vorderfahrzeugs – auch bei Dunkelheit und Nebel. Für ACC und Notbremsassistent. Sitzt hinter dem Emblem oder im Stoßfänger.',
+    kamera: '<b>Kamera (an der Frontscheibe):</b> erkennt Fahrspuren, Verkehrszeichen, Fußgänger und Fahrzeuge. Für Spurhalteassistent, Verkehrszeichenerkennung und Notbremse.',
+    us: '<b>Ultraschall (in den Stoßfängern):</b> misst kurze Abstände beim Einparken – bis wenige Meter.',
+    seite: '<b>Radar seitlich/hinten:</b> überwacht den toten Winkel und den Verkehr von hinten – für Totwinkelwarner und Spurwechselassistent.'
+  };
+  const sb = document.querySelectorAll('#s-sn [data-s]');
+  function sn(k) {
+    document.querySelectorAll('#sn-svg .sn-f').forEach(f => f.style.display = f.dataset.s === k ? '' : 'none');
+    document.getElementById('sn-t').innerHTML = SN[k];
+    sb.forEach(b => b.classList.toggle('on', b.dataset.s === k));
+  }
+  sb.forEach(b => b.onclick = () => sn(b.dataset.s)); sn('radar');
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 17 Themen, 166 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 20 Themen, 190 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
-  assert.strictEqual(r.themen.length, 17);
-  assert.strictEqual(r.fragen.length, 166);
+  assert.strictEqual(r.themen.length, 20);
+  assert.strictEqual(r.fragen.length, 190);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
@@ -245,6 +245,20 @@ test('Echte Inhaltsdatei: Bordnetz mit Präsentationen und Videos, ab 2. Lehrjah
   assert.deepStrictEqual(t.praesentationen.map(p => p.titel), ['Aufbau des Bordnetzes', 'Stromlaufplan und Fehlersuche', 'Starterbatterie', 'Generator', 'Starter']);
   t.praesentationen.forEach(p => assert.ok(fs.existsSync(path.join(__dirname, '..', p.link)), p.link));
   ['bn-aufbau', 'bn-stromlaufplan', 'bn-batterie', 'bn-generator', 'bn-starter'].forEach(n => {
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
+    assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
+  });
+});
+
+test('Echte Inhaltsdatei: Fahrwerk, Bremsanlage, Fahrerassistenzsysteme mit Präsentation und Video', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  [['Fahrwerk', 'fw-fahrwerk'], ['Bremsanlage', 'fw-bremse'], ['Fahrerassistenzsysteme', 'fw-assistenz']].forEach(([name, n]) => {
+    const t = r.themen.find(x => x.name === name);
+    assert.strictEqual(t.bereich, 'Fahrwerk und Bremsen');
+    assert.strictEqual(t.lehrjahr, 2);
+    assert.strictEqual(r.fragen.filter(f => f.thema === name).length, 8);
+    assert.deepStrictEqual(t.praesentationen.map(p => p.link), ['praesentationen/' + n + '.html']);
+    assert.ok(fs.existsSync(path.join(__dirname, '..', 'praesentationen', n + '.html')), n);
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
   });

@@ -2211,3 +2211,111 @@ VIDEOS_MOTOR.update({
     'bn-starter': (PUR, [(title_scene('50', 'Der Starter', 'Startvorgang und Fehlerbilder', PUR, size=90, kicker=KICK11), 5.0),
                          (bn_start, 13.0), (BN_SF, 9.0), (BN_MERKE5, 7.5)]),
 })
+
+
+# ================================================================ FAHRWERK UND BREMSEN
+KICK12 = 'FAHRWERK UND BREMSEN  ·  LERNVIDEO'
+
+
+def fw_feder(d, t, dur):
+    defekt = t > 6
+    tt = t - (6 if defekt else 0.8)
+    z = 0.07 if defekt else 0.35
+    header(d, t, 'FAHRWERK', 'Stoßdämpfer ' + ('defekt' if defekt else 'in Ordnung'), TEA)
+    a = pr(t, 0.2, 0.8)
+    yo = lambda s: 0 if s < 0 else -50 * math.exp(-z * 2 * math.pi * 1.2 * s) * math.cos(2 * math.pi * 1.2 * math.sqrt(1 - z * z) * s)
+    y = yo(tt)
+    line(d, [(80, 520), (420, 520)], MUTED, 5, a)
+    rrect(d, (130, 180 + y, 370, 250 + y), 14, CARD2, a, outline=TXT, width=3)
+    text(d, 250, 215 + y, 'Aufbau', 26, 'Bold', TXT, a, 'mm', bg=CARD2)
+    top, bot, pts = 250 + y, 440, []
+    for i in range(11):
+        pts.append((200 + (0 if i in (0, 10) else (-25 if i % 2 else 25)), top + (bot - top) * i / 10))
+    line(d, pts, YEL, 5, a)
+    rrect(d, (290, 250 + y, 312, 350 + y), 3, MUTED, a)
+    rrect(d, (284, 340, 318, 440), 5, CARD, a, outline=TXT, width=3)
+    circle(d, (250, 465), 55, CARD, a, outline=TXT, width=8)
+    x0, w, h0 = 500, 680, 330
+    rrect(d, (x0, 160, x0 + w, 160 + 2 * (h0 - 160) + 10), 16, CARD, a)
+    line(d, [(x0 + 20, h0), (x0 + w - 20, h0)], MUTED, 2, a, bg=CARD)
+    n = 200
+    p = [(x0 + 20 + (w - 40) * i / n, h0 + 2.4 * yo(i / n * 5)) for i in range(n + 1) if i / n * 5 <= tt]
+    if len(p) > 1:
+        line(d, p, RED if defekt else TEA, 5, a, bg=CARD)
+    caption(d, t, [(0.6, 5.7, 'Dämpfer in Ordnung: kurz nachschwingen, Rad bleibt auf der Straße'), (6.2, dur, 'Dämpfer defekt: langes Nachschwingen –\nlängerer Bremsweg, schlechtere Haftung')], TEA, y=600)
+
+
+FW_RB = values_scene('FAHRWERK', TEA, [], [
+    ('205', 'Reifenbreite in mm'), ('55', 'Flankenhöhe in % der Breite'), ('R 16', 'Radialreifen, Felge 16 Zoll'), ('91 V', 'Tragfähigkeit 615 kg, bis 240 km/h')],
+    note='Mindestprofil gesetzlich 1,6 mm', title='Die Reifenbezeichnung 205/55 R16 91V', vsize=36)
+FW_MERKE1 = merke_scene('FAHRWERK', TEA, ['Feder trägt – Dämpfer bremst das Schwingen', 'Spur, Sturz, Nachlauf laut Hersteller',
+                                          'Verschleißbild verrät die Ursache', 'Nach Lenkungsarbeiten: Achsvermessung'])
+
+
+def fw_hydraulik(d, t, dur):
+    header(d, t, 'BREMSE', 'Hydraulik: gleicher Druck, größere Fläche', RED)
+    a = pr(t, 0.2, 0.8)
+    k = clamp((t - 1.5) / 2)
+    o = (230, 160, 70)
+    rrect(d, (220, 260 + 60 * k, 300, 500), 0, mix(o, 0.6, BG), a)
+    rect(d, (220, 470, 860, 520), mix(o, 0.6, BG), a)
+    rect(d, (700, 300 - 10 * k, 940, 520), mix(o, 0.6, BG), a)
+    line(d, [(214, 140), (214, 526), (946, 526), (946, 240)], TXT, 5, a)
+    line(d, [(306, 140), (306, 464), (694, 464), (694, 240)], TXT, 5, a)
+    rect(d, (222, 244 + 60 * k, 298, 262 + 60 * k), MUTED, a)
+    rect(d, (702, 284 - 10 * k, 938, 302 - 10 * k), MUTED, a)
+    if k > 0:
+        arrow(d, (260, 150 + 60 * k), (260, 236 + 60 * k), YEL, 8, 20, a)
+        arrow(d, (820, 270 - 10 * k), (820, 270 - 10 * k - 140 * k), GRN, 10, 24, a)
+    b = pr(t, 3.5, 4.1)
+    rrect(d, (440, 380, 640, 440), 14, CARD, b); text(d, 540, 410, 'p = 53 bar', 28, 'XB', TXT, b, 'mm', bg=CARD)
+    text(d, 260, 560, '2.000 N', 26, 'XB', YEL, b, 'mm'); text(d, 820, 560, 'ca. 12.000 N', 26, 'XB', GRN, b, 'mm')
+    caption(d, t, [(0.6, 4.4, 'Der Hauptzylinder erzeugt Druck in der Bremsflüssigkeit'), (4.5, dur, 'Großer Sattelkolben = große Spannkraft (Beispielwerte)')], RED, y=630)
+
+
+FW_BF = values_scene('BREMSE', RED, [], [
+    ('2 Kreise', 'fällt einer aus, bremst der andere'), ('DOT 4', 'zieht Wasser – Siedepunkt sinkt'), ('MIN TH', 'Mindestdicke der Scheibe'), ('achsweise', 'Beläge und Scheiben tauschen')],
+    title='Das musst du wissen', vsize=32)
+FW_MERKE2 = merke_scene('BREMSE', RED, ['Gleicher Druck, größere Fläche = größere Kraft', 'Bremsflüssigkeit regelmäßig wechseln',
+                                        'Mindestmaße laut Hersteller', 'Bremsstaub nicht wegblasen'])
+
+
+def fw_abs(d, t, dur):
+    mit = t > 6
+    tt = (t - 6.2 if mit else t - 0.8) * 1.3
+    header(d, t, 'ASSISTENZ', 'Vollbremsung ' + ('mit ABS' if mit else 'ohne ABS'), ROY)
+    a = pr(t, 0.2, 0.8)
+    x0, y0, w, h = 140, 130, 1000, 360
+    rrect(d, (x0 - 20, y0 - 20, x0 + w + 20, y0 + h + 30), 16, CARD, a)
+    T = 3.7 if mit else 4.6
+    fz = lambda s: 0 if s >= T else 1 - s / T
+    def rd(s):
+        if not mit:
+            return 1 - s / 0.5 if s < 0.5 else 0
+        v = fz(s)
+        ph = (s * 6) % 1
+        return v * (0.88 - 0.22 * (ph * 2 if ph < 0.5 else 2 - ph * 2))
+    n = 250
+    pf = [(x0 + w * i / n, y0 + h - h * fz(i / n * 5)) for i in range(n + 1) if i / n * 5 <= tt]
+    pr_ = [(x0 + w * i / n, y0 + h - h * rd(i / n * 5)) for i in range(n + 1) if i / n * 5 <= tt]
+    if len(pf) > 1:
+        line(d, pf, TXT, 5, a, bg=CARD); line(d, pr_, YEL, 5, a, bg=CARD)
+    text(d, x0 + w - 200, y0 + 10, 'Fahrzeug', 22, 'Bold', TXT, a, 'mm', bg=CARD)
+    text(d, x0 + w - 70, y0 + 10, 'Rad', 22, 'Bold', YEL, a, 'mm', bg=CARD)
+    caption(d, t, [(0.6, 5.7, 'Ohne ABS: das Rad blockiert – nicht mehr lenkbar'), (6.2, dur, 'Mit ABS: Druck ab, halten, auf – das Rad dreht weiter,\ndas Fahrzeug bleibt lenkbar')], ROY, y=610)
+
+
+FW_SN = values_scene('ASSISTENZ', ROY, [], [
+    ('Radar', 'Abstand und Geschwindigkeit – ACC, Notbremse'), ('Kamera', 'Spuren, Schilder, Personen'), ('Ultraschall', 'kurze Abstände beim Einparken'), ('Kalibrieren', 'nach Scheibe, Fahrwerk, Unfall')],
+    title='Sensoren und Kalibrieren', vsize=30)
+FW_MERKE3 = merke_scene('ASSISTENZ', ROY, ['ABS: lenkbar bleiben', 'ESP: bremst einzelne Räder', 'Sensoren sauber halten',
+                                           'Erst Achsvermessung, dann kalibrieren'])
+
+VIDEOS_MOTOR.update({
+    'fw-fahrwerk': (TEA, [(title_scene('FW', 'Das Fahrwerk', 'Federung, Dämpfung, Reifen', TEA, size=90, kicker=KICK12), 5.0),
+                          (fw_feder, 11.5), (FW_RB, 9.0), (FW_MERKE1, 7.5)]),
+    'fw-bremse': (RED, [(title_scene('bar', 'Die Bremsanlage', 'Hydraulik und Bremsflüssigkeit', RED, size=80, kicker=KICK12), 5.0),
+                        (fw_hydraulik, 9.0), (FW_BF, 9.0), (FW_MERKE2, 7.5)]),
+    'fw-assistenz': (ROY, [(title_scene('ABS', 'Fahrerassistenzsysteme', 'ABS, ESP, Radar, Kamera', ROY, size=70, kicker=KICK12), 5.0),
+                           (fw_abs, 11.5), (FW_SN, 9.0), (FW_MERKE3, 7.5)]),
+})
