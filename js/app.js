@@ -260,6 +260,7 @@
 
   function renderWerkstatt() {
     return '<p class="eyebrow">Praxis</p><h1>Werkstatt</h1><p class="lead">Übungen zum Messen und zur Fehlersuche, wie in der Werkstatt.</p><div class="grid">' +
+      '<div class="kachel a-roy">' + iconHtml('🔧') + '<h3>Diagnose-Werkstatt</h3><p>Echte Kundenaufträge am Übungsauto: Fehlerspeicher lesen, Istwerte und Stellglieder prüfen, am Schaltplan messen und den Fehler finden.</p><div class="knoepfe"><a class="btn primary" href="diagnose.html">Werkstatt öffnen</a></div></div>' +
       '<div class="kachel a-yel">' + iconHtml('V') + '<h3>Multimeter</h3><p>Spannung und Widerstand messen, Fehler suchen im einfachen Stromkreis, in der Parallel- und in der Reihenschaltung.</p><div class="knoepfe"><a class="btn primary" href="multimeter.html">Übung öffnen</a></div></div>' +
       '<div class="kachel a-pur">' + iconHtml('CAN') + '<h3>CAN-Bus-Diagnose</h3><p>CAN-High und CAN-Low am Oszilloskop ansehen, Widerstände am Diagnosestecker messen und Busfehler erkennen.</p><div class="knoepfe"><a class="btn primary" href="can.html">Übung öffnen</a></div></div>' +
       '<div class="kachel a-tea">' + iconHtml('mA') + '<h3>Ruhestrom-Fehlersuche</h3><p>Batterie über Nacht leer: Ruhestrom richtig messen, Busruhe abwarten und den Stromfresser im Sicherungskasten finden.</p><div class="knoepfe"><a class="btn primary" href="ruhestrom.html">Übung öffnen</a></div></div>' +
