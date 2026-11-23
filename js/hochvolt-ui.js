@@ -10,8 +10,18 @@
   const REGELN = ['Freischalten', 'Gegen Wiedereinschalten sichern', 'Spannungsfreiheit feststellen', 'Erden und kurzschließen (am Fahrzeug meist nicht anzuwenden)', 'Benachbarte, unter Spannung stehende Teile abdecken'];
 
   function neuerAblauf() { liste = []; karten = mischen(H.SCHRITTE.map(s => s.id)); pruefung = null; }
+  // Stapel: erst alle Fälle einmal, dann neu mischen, nie zweimal derselbe hintereinander
+  let stapel = [], letzter = null;
+  function naechsterFall() {
+    if (!stapel.length) {
+      stapel = mischen(H.SZENARIEN.map(s => s.id));
+      if (stapel[0] === letzter && stapel.length > 1) stapel.push(stapel.shift());
+    }
+    letzter = stapel.shift();
+    return letzter;
+  }
   function neueMessung() {
-    m = H.neueMessung(H.SZENARIEN[Math.floor(Math.random() * H.SZENARIEN.length)].id);
+    m = H.neueMessung(naechsterFall());
     anzeige = null; urteil = null; ergebnis = null; urteilFehler = '';
   }
 
@@ -30,7 +40,7 @@
     if (pruefung && pruefung.ok) {
       h += '<div class="meld ok"><b>Alles richtig!</b> So sind die Sicherheitsregeln umgesetzt:<br>' + [1, 2, 3].map(r => '<b>' + r + '. ' + REGELN[r - 1] + ':</b> ' + H.SCHRITTE.filter(s => s.regel === r).map(s => esc(s.text)).join('; ')).join('<br>') +
         '<br><b>Nach der Arbeit</b> werden die Maßnahmen in umgekehrter Reihenfolge wieder aufgehoben.</div>';
-      h += '<div class="seg"><button class="primary" data-teil="messen">Weiter zum Freimessen</button><button data-nochmal="1">Nochmal</button></div>';
+      h += '<div class="seg"><button class="primary" data-start="1">Weiter zum Freimessen</button><button data-nochmal="1">Nochmal</button></div>';
     } else {
       if (pruefung) h += '<div class="meld warn"><b>Noch nicht richtig:</b><ul style="margin:6px 0 0;padding-left:18px">' + pruefung.fehler.map(f => '<li>' + esc(f.text) + '</li>').join('') + '</ul></div>';
       h += '<div class="seg"><button class="primary" data-pruefen="1">Ablauf prüfen</button><button data-nochmal="1">Neu anfangen</button></div>';
@@ -71,6 +81,7 @@
       if (urteilFehler) h += '<p class="meld warn">' + urteilFehler + '</p>';
       h += '<button class="primary" style="width:100%" data-bewerten="1">Urteil prüfen</button></div>';
     }
+    if (!ergebnis || !(ergebnis.richtig || ergebnis.zeigen)) h += '<button style="width:100%;margin-top:8px" data-neumessung="1">Anderes Fahrzeug nehmen</button>';
     return h;
   }
 
@@ -84,7 +95,8 @@
     const b = e.target.closest('button');
     if (!b) return;
     const d = b.dataset;
-    if (d.teil) { teil = d.teil; if (teil === 'messen' && !m) neueMessung(); }
+    if (d.teil) { teil = d.teil; if (teil === 'messen' && (!m || (ergebnis && (ergebnis.richtig || ergebnis.zeigen)))) neueMessung(); }
+    else if (d.start) { teil = 'messen'; neueMessung(); }
     else if (d.nimm) { liste.push(d.nimm); pruefung = null; }
     else if (d.weg) { liste.splice(+d.weg, 1); pruefung = null; }
     else if (d.hoch) { const i = +d.hoch; [liste[i - 1], liste[i]] = [liste[i], liste[i - 1]]; pruefung = null; }

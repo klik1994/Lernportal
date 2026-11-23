@@ -9,7 +9,7 @@ with sync_playwright() as p:
     t = lambda sel: pg.inner_text(sel)
 
     # Ruhestrom: Fehler "handschuh" erzwingen (Index 1)
-    pg.add_init_script("Math.random = () => 0.2")
+    pg.add_init_script("Math.random = () => location.pathname.includes('ruhestrom') ? 0.1 : 0.2")
     pg.goto(base + '/ruhestrom.html'); pg.wait_for_selector('.sk')
     assert 'zwei Tagen' in t('#ruhestrom'), t('#ruhestrom')[:200]
     pg.click('[data-anschluss="parallel"]'); assert 'Kurzschluss' in t('#ruhestrom')
@@ -35,10 +35,17 @@ with sync_playwright() as p:
     for s in ['zuendung', 'stecker', 'schloss', 'schild', 'warten', 'vorher', 'messen', 'nachher', 'doku']:
         pg.click(f'[data-nimm="{s}"]')
     pg.click('[data-pruefen]'); assert 'Alles richtig' in t('#hochvolt')
-    pg.click('[data-teil="messen"]')  # random 0.2 -> Szenario 'frei' (Index 1 = schuetz bei 5 Szenarien? 0.2*5=1)
+    pg.click('[data-start]')
+    gesehen = set()
+    for _ in range(5):
+        pg.click('[data-punkt="quelle"]'); pg.click('[data-punkt="hv+hv-"]'); pg.click('[data-punkt="hv-m"]'); pg.click('[data-punkt="quelle"]')
+        gesehen.add(t('#hochvolt').split('Deine Messungen')[1].split('Dein Urteil')[0])
+        pg.click('text=Anderes Fahrzeug nehmen')
+    assert len(gesehen) == 5, gesehen
+    pg.click('[data-teil="ablauf"]'); pg.click('[data-start]')
     for s in ['quelle', 'hv+hv-', 'hv+m', 'hv-m', 'quelle']:
         pg.click(f'[data-punkt="{s}"]')
-    assert '390 V' in t('#hochvolt'), t('#hochvolt')
+    assert '160 V' in t('#hochvolt'), t('#hochvolt')
     pg.click('[data-urteil="frei"]'); pg.click('[data-bewerten]'); assert 'Leider falsch' in t('#hochvolt')
     pg.click('[data-weiter]'); pg.click('[data-urteil="nicht-frei"]'); pg.click('[data-bewerten]'); assert 'Richtig' in t('#hochvolt')
     pg.screenshot(path=str(shots / 'hv-messen.png'), full_page=True)

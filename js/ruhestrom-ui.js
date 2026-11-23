@@ -7,8 +7,18 @@
   const komma = (x, d) => x.toFixed(d).replace('.', ',');
   const btn = (attr, wert, text, aktiv, cls) => '<button data-' + attr + '="' + wert + '" class="' + (aktiv ? 'on ' : '') + (cls || '') + '">' + text + '</button>';
 
+  let stapel = [], letzter = null;
+  function naechsterFall() {
+    if (!stapel.length) {
+      stapel = R.FEHLER.map(f => f.id);
+      for (let i = stapel.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [stapel[i], stapel[j]] = [stapel[j], stapel[i]]; }
+      if (stapel[0] === letzter && stapel.length > 1) stapel.push(stapel.shift());
+    }
+    letzter = stapel.shift();
+    return letzter;
+  }
   function neuerAuftrag(id) {
-    st = R.neu(id || R.FEHLER[Math.floor(Math.random() * R.FEHLER.length)].id);
+    st = R.neu(id || naechsterFall());
     methode = 'ziehen'; mv = null; antwortPhase = false; wahl = null; ergebnis = null; antwortFehler = '';
   }
 
