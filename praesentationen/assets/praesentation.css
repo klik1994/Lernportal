@@ -52,6 +52,10 @@ body.t-mw1 { --c: var(--ora); --ct: var(--ora-t); }
 body.t-mw2 { --c: var(--pur); --ct: var(--pur-t); }
 body.t-mw3 { --c: var(--blu); --ct: var(--blu-t); }
 body.t-mw4 { --c: var(--grn); --ct: var(--grn-t); }
+body.t-ku1 { --c: var(--yel); --ct: var(--yel-t); }
+body.t-ku2 { --c: var(--tea); --ct: var(--tea-t); }
+body.t-ku3 { --c: var(--roy); --ct: var(--roy-t); }
+body.t-ku4 { --c: var(--red); --ct: var(--red-t); }
 
 /* ---------- Heller Modus ---------- */
 html.light {

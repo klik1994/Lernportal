@@ -44,9 +44,9 @@ test('markiere: ganze Wörter, längster Treffer, jeder Begriff nur einmal, Abk�
   assert.strictEqual(LX.markiere('Lima', L, schon).some(x => x.begriff), false);
 });
 
-test('Echte Inhaltsdatei: Lexikon mit 210 Begriffen, Bereiche wie bei den Themen, keine doppelten Suchwörter', async () => {
+test('Echte Inhaltsdatei: Lexikon mit 235 Begriffen, Bereiche wie bei den Themen, keine doppelten Suchwörter', async () => {
   const r = I.parseInhalte(await X.readXlsx((b => b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength))(fs.readFileSync(path.join(__dirname, '..', 'inhalte', 'Lernportal-Inhalte.xlsx')))));
-  assert.strictEqual(r.lexikon.length, 210);
+  assert.strictEqual(r.lexikon.length, 235);
   const bereiche = new Set(r.themen.map(t => t.bereich));
   r.lexikon.forEach(e => { assert.ok(bereiche.has(e.bereich), e.begriff); assert.ok(e.beispiel, e.begriff); });
   const w = new Map();

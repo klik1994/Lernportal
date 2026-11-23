@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Das Schaltgetriebe – Kraftübertragung</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  .rb { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; font-size: 44px; font-weight: 900; margin: 6px 0 14px; }
+  .rb span { cursor: pointer; padding: 4px 18px; border-radius: 12px; background: var(--card); transition: background .2s, color .2s; }
+  .rb span.on { background: var(--c); color: var(--on-c); }
+  html.light svg text[fill="#ffd34d"] { fill: #8a6400; }
+  @media (max-width: 820px), (max-height: 520px) { .rb { font-size: 30px; } .val b { font-size: 14px; hyphens: auto; overflow-wrap: anywhere; } }
+</style>
+</head>
+<body class="t-ku2">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">KRAFTÜBERTRAGUNG</div>
+  <div class="symbol" style="font-size:140px">i</div>
+  <h1>Das Schaltgetriebe</h1>
+  <p>Übersetzung, Gänge, Aufbau, Synchronisation, Fehler</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHALTGETRIEBE</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Warum ein Fahrzeug ein Getriebe braucht</li>
+      <li class="step from-left"><span class="num">2</span>Wie du eine Übersetzung berechnest</li>
+      <li class="step from-left"><span class="num">3</span>Wie ein Schaltgetriebe aufgebaut ist</li>
+      <li class="step from-left"><span class="num">4</span>Was die Synchronisation macht und welche Fehler es gibt</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHALTGETRIEBE</span><h2>Warum ein Getriebe?</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Das Problem</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>der Motor arbeitet gut nur in einem bestimmten Drehzahlbereich</li><li>beim Anfahren und am Berg braucht das Auto viel Drehmoment</li><li>bei hoher Geschwindigkeit soll die Drehzahl niedrig bleiben</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Die Lösung</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>das Getriebe wandelt Drehzahl und Drehmoment</li><li>kleine Gänge: viel Drehmoment, wenig Geschwindigkeit</li><li>große Gänge: wenig Drehmoment, hohe Geschwindigkeit</li><li>dazu Rückwärtsgang und Leerlauf</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-ue">
+  <span class="tag">SCHALTGETRIEBE</span><h2>Die Übersetzung – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="ctrl"><span style="width:320px">Zähne treibendes Rad z1: <span class="c" id="ue-1n">15</span></span><input type="range" id="ue-1" min="10" max="40" step="1" value="15"></div>
+    <div class="ctrl"><span style="width:320px">Zähne getriebenes Rad z2: <span class="c" id="ue-2n">45</span></span><input type="range" id="ue-2" min="10" max="60" step="1" value="45"></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.2fr 1fr;margin-top:8px">
+      <svg viewBox="0 0 560 300" width="560" height="300" style="display:block;margin:0 auto;max-width:100%;height:auto" id="ue-svg">
+      <rect x="0" y="0" width="560" height="300" rx="12" fill="#18283f"/><g id="ue-g"></g></svg>
+      <div>
+        <div class="grid3" style="gap:8px"><div class="card" style="margin:0"><div class="muted" style="font-size:13px;font-weight:800">ÜBERSETZUNG i</div><div class="lcd2" id="ue-i" style="font-size:20px">3,00</div></div>
+        <div class="card" style="margin:0"><div class="muted" style="font-size:13px;font-weight:800">DREHZAHL n2</div><div class="lcd2" id="ue-n" style="font-size:20px">–</div></div>
+        <div class="card" style="margin:0"><div class="muted" style="font-size:13px;font-weight:800">DREHMOMENT M2</div><div class="lcd2" id="ue-m" style="font-size:20px">–</div></div></div>
+        <div class="card" id="ue-t" style="font-size:16px;font-weight:600;line-height:1.5;margin-top:10px"></div>
+      </div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">i = z2 : z1 · n2 = n1 : i · M2 = M1 · i (ohne Verluste). Antrieb hier: 3.000 1/min und 200 Nm.</p>
+  </div>
+</section>
+
+<section class="slide" id="s-gg">
+  <span class="tag">SCHALTGETRIEBE</span><h2>Die Gänge – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px;flex-wrap:wrap;gap:6px"><button class="btn ghost on" data-g="0">1. Gang</button><button class="btn ghost" data-g="1">2.</button><button class="btn ghost" data-g="2">3.</button><button class="btn ghost" data-g="3">4.</button><button class="btn ghost" data-g="4">5.</button><button class="btn ghost" data-g="5">6.</button><button class="btn ghost" data-g="6">R</button></div>
+    <svg viewBox="0 0 640 230" width="640" height="230" style="display:block;margin:0 auto;max-width:100%;height:auto" id="gg-svg">
+      <rect x="0" y="0" width="640" height="230" rx="12" fill="#18283f"/><g id="gg-g"></g></svg>
+    <div class="card" id="gg-t" style="font-size:16px;font-weight:600;line-height:1.5;margin-top:10px"></div>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">Beispielwerte: Motor 3.000 1/min, Achsantrieb i = 3,9, Reifenumfang 1,95 m.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHALTGETRIEBE</span><h2>Aufbau</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>Wellen</b><span>Antriebswelle (von der Kupplung) und Abtriebswelle (zum Achsantrieb)</span></div>
+      <div class="val step from-left"><b>Zahnradpaare</b><span>immer im Eingriff, schräg verzahnt – das ist leise</span></div>
+      <div class="val step from-left"><b>Losräder</b><span>drehen frei auf der Welle, bis sie geschaltet werden</span></div>
+      <div class="val step from-left"><b>Schaltmuffe</b><span>verbindet das Losrad fest mit der Welle – so wird der Gang eingelegt</span></div>
+      <div class="val step from-left"><b>Rückwärtsgang</b><span>ein Zwischenrad kehrt die Drehrichtung um</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-sy">
+  <span class="tag">SCHALTGETRIEBE</span><h2>Die Synchronisation – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px;flex-wrap:wrap"><button class="btn ghost on" data-y="ok">Synchronring in Ordnung</button><button class="btn ghost" data-y="def">Synchronring verschlissen</button><button class="btn" id="sy-go" style="--c:var(--tea)">▶ Gang einlegen</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.2fr 1fr">
+      <svg viewBox="0 0 560 260" width="560" height="260" style="display:block;margin:0 auto;max-width:100%;height:auto" id="sy-svg">
+      <rect x="0" y="0" width="560" height="260" rx="12" fill="#18283f"/><g id="sy-g"></g></svg>
+      <div class="card" id="sy-t" style="font-size:16px;font-weight:600;line-height:1.5"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-sf">
+  <span class="tag">SCHALTGETRIEBE</span><h2>Fehlerbilder – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px;flex-wrap:wrap;gap:6px"><button class="btn ghost on" data-f="0">Gang kracht beim Schalten</button><button class="btn ghost" data-f="1">Gang springt heraus</button><button class="btn ghost" data-f="2">Heulen beim Fahren</button><button class="btn ghost" data-f="3">Ölverlust</button><button class="btn ghost" data-f="4">Schaltet schwer</button></div>
+    <div class="grid2" style="align-items:start">
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">MÖGLICHE URSACHEN</div><ul class="fe-u" style="font-size:16px;line-height:1.55;padding-left:20px;margin:8px 0 0"></ul></div>
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">SO PRÜFST DU</div><ul class="fe-p" style="font-size:16px;line-height:1.55;padding-left:20px;margin:8px 0 0"></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHALTGETRIEBE</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Getriebeöl</b>Oft Lebensdauerfüllung – bei Undichtigkeit Stand an der Kontrollschraube prüfen (meist bis zur Unterkante). Nur Öl laut Hersteller.</div>
+      <div class="tip step"><b>Schaltung einstellen</b>Schaltseilzüge oder Gestänge nach Herstellervorgabe einstellen, oft mit Arretierstift.</div>
+      <div class="warn step"><b>Aus- und Einbau</b>Getriebe immer mit Getriebeheber abstützen und sichern – es ist schwer.</div>
+      <div class="tip step"><b>Rückfahrlicht</b>Der Rückfahrlichtschalter sitzt meist am Getriebe.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHALTGETRIEBE</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/ku-schaltgetriebe.mp4" poster="videos/ku-schaltgetriebe.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHALTGETRIEBE</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Treibendes Rad 15 Zähne, getriebenes Rad 45 Zähne. Wie groß ist i?</p>
+      <div class="opts"><button class="opt">0,33</button><button class="opt">3</button><button class="opt">60</button></div>
+      <div class="fb">i = z2 : z1 = 45 : 15 = 3.</div></div>
+    <div class="q" data-correct="0"><p>2. Was passiert bei i = 3 mit dem Drehmoment (ohne Verluste)?</p>
+      <div class="opts"><button class="opt">Es wird dreimal so groß</button><button class="opt">Es bleibt gleich</button><button class="opt">Es wird ein Drittel</button></div>
+      <div class="fb">Die Drehzahl wird dafür ein Drittel.</div></div>
+    <div class="q" data-correct="2"><p>3. Was verbindet beim Schalten das Losrad mit der Welle?</p>
+      <div class="opts"><button class="opt">Die Kupplung</button><button class="opt">Das Zwischenrad</button><button class="opt">Die Schaltmuffe</button></div>
+      <div class="fb">Vorher gleicht der Synchronring die Drehzahlen an.</div></div>
+    <div class="q" data-correct="1"><p>4. Ein Gang kracht beim Schalten, obwohl die Kupplung trennt. Was ist wahrscheinlich?</p>
+      <div class="opts"><button class="opt">Getriebeöl zu kalt</button><button class="opt">Synchronring verschlissen</button><button class="opt">Rückfahrlichtschalter defekt</button></div>
+      <div class="fb">Er gleicht die Drehzahlen nicht mehr an.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHALTGETRIEBE</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Getriebe wandelt Drehzahl und Drehmoment</span></li>
+        <li class="step"><span>i = z2 : z1 · n2 = n1 : i · M2 = M1 · i</span></li>
+        <li class="step"><span>Schaltmuffe verbindet Losrad mit Welle</span></li>
+        <li class="step"><span>Synchronring gleicht Drehzahlen an – sonst kracht es</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Schaltgetriebe" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const g = (id, s) => document.getElementById(id).innerHTML = s;
+  const fmt = (v, n) => v.toLocaleString('de-DE', { minimumFractionDigits: n, maximumFractionDigits: n });
+  let w1 = 0;
+  function rad(cx, cy, z, ang, c) {
+    const r = z * 3.2, t = 7; let d = '';
+    for (let i = 0; i < z; i++) {
+      const a0 = (ang + i * 360 / z) * Math.PI / 180, a1 = a0 + Math.PI / z * 0.5, a2 = a0 + Math.PI / z, a3 = a0 + Math.PI / z * 1.5;
+      d += (i ? ' L' : 'M') + (cx + r * Math.cos(a0)) + ' ' + (cy + r * Math.sin(a0)) + ' L' + (cx + (r + t) * Math.cos(a1)) + ' ' + (cy + (r + t) * Math.sin(a1)) + ' L' + (cx + (r + t) * Math.cos(a2)) + ' ' + (cy + (r + t) * Math.sin(a2)) + ' L' + (cx + r * Math.cos(a3)) + ' ' + (cy + r * Math.sin(a3));
+    }
+    return '<path d="' + d + ' Z" fill="#213552" stroke="' + c + '" stroke-width="3"/><circle cx="' + cx + '" cy="' + cy + '" r="8" fill="' + c + '"/><line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + (r - 6) * Math.cos(ang * Math.PI / 180)) + '" y2="' + (cy + (r - 6) * Math.sin(ang * Math.PI / 180)) + '" stroke="' + c + '" stroke-width="4"/>';
+  }
+  function ue() {
+    const z1 = +document.getElementById('ue-1').value, z2 = +document.getElementById('ue-2').value, i = z2 / z1;
+    const r1 = z1 * 3.2, r2 = z2 * 3.2, sc = Math.min(1, 520 / (2 * r1 + 2 * r2 + 40), 250 / (2 * r2 + 20));
+    const c1x = 20 + (r1 + 8), c2x = c1x + r1 + r2 + 7;
+    let o = '<g transform="translate(' + (280 - (c2x + r2 + 8) * sc / 2) + ' ' + 150 + ') scale(' + sc + ') translate(0 0)">';
+    o += rad(c1x, 0, z1, w1, '#ffd34d') + rad(c2x, 0, z2, -w1 / i + 180 / z2, '#1fc8b3') + '</g>';
+    o += '<text x="20" y="28" font-size="14" font-weight="800" fill="#ffd34d">treibend (z1 = ' + z1 + ')</text><text x="540" y="28" text-anchor="end" font-size="14" font-weight="800" fill="#1fc8b3">getrieben (z2 = ' + z2 + ')</text>';
+    g('ue-g', o);
+    document.getElementById('ue-1n').textContent = z1; document.getElementById('ue-2n').textContent = z2;
+    document.getElementById('ue-i').textContent = fmt(i, 2);
+    document.getElementById('ue-n').textContent = fmt(Math.round(3000 / i), 0) + ' 1/min';
+    document.getElementById('ue-m').textContent = fmt(Math.round(200 * i), 0) + ' Nm';
+    document.getElementById('ue-t').innerHTML = i > 1.02 ? '<b>i größer 1 – Übersetzung ins Langsame:</b> Das getriebene Rad dreht <span class="c">langsamer</span>, dafür steigt das <span class="c">Drehmoment</span>. So ist es in den kleinen Gängen.'
+      : i < 0.98 ? '<b>i kleiner 1 – Übersetzung ins Schnelle:</b> Das getriebene Rad dreht schneller, das Drehmoment sinkt. So ist es in den großen „Spargängen“.'
+      : '<b>i = 1:</b> Beide Räder drehen gleich schnell – Drehmoment und Drehzahl bleiben gleich.';
+  }
+  setInterval(() => { w1 = (w1 + 4) % 360; ue(); }, 50);
+  ['ue-1', 'ue-2'].forEach(id => document.getElementById(id).addEventListener('input', ue));
+
+  const IG = [3.77, 2.09, 1.32, 0.97, 0.76, 0.62, 3.6], NA = ['1. Gang', '2. Gang', '3. Gang', '4. Gang', '5. Gang', '6. Gang', 'Rückwärtsgang'];
+  const v = i => 3000 / (i * 3.9) * 1.95 * 0.06;
+  function gg(k) {
+    let o = '';
+    IG.slice(0, 6).forEach((i, n) => {
+      const x = 40 + n * 96, h = v(i) / 150 * 150;
+      o += '<rect x="' + x + '" y="' + (190 - h) + '" width="70" height="' + h + '" rx="6" fill="' + (n === k ? '#1fc8b3' : '#213552') + '" stroke="#ecf1f8" stroke-width="2"/>';
+      o += '<text x="' + (x + 35) + '" y="' + (182 - h) + '" text-anchor="middle" font-size="14" font-weight="900" fill="#ecf1f8">' + Math.round(v(i)) + '</text>';
+      o += '<text x="' + (x + 35) + '" y="212" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">' + (n + 1) + '.</text>';
+    });
+    o += '<text x="20" y="26" font-size="14" font-weight="800" fill="#94a4ba">km/h bei 3.000 1/min</text>';
+    g('gg-g', o);
+    const i = IG[k];
+    document.getElementById('gg-t').innerHTML = '<b>' + NA[k] + ':</b> Getriebe i = ' + fmt(i, 2) + ', gesamt i = ' + fmt(i, 2) + ' · 3,9 = <b>' + fmt(i * 3.9, 1) + '</b>. ' +
+      (k === 6 ? 'Ein <span class="c">Zwischenrad</span> kehrt die Drehrichtung um – das Auto fährt rückwärts, ähnlich langsam wie im 1. Gang.'
+        : 'Bei 3.000 1/min fährt das Auto ca. <span class="c">' + Math.round(v(i)) + ' km/h</span>. ' + (k < 2 ? 'Viel Drehmoment zum Anfahren und am Berg.' : k > 3 ? 'Niedrige Drehzahl bei hoher Geschwindigkeit – spart Kraftstoff.' : ''));
+    document.querySelectorAll('#s-gg [data-g]').forEach(b => b.classList.toggle('on', +b.dataset.g === k));
+  }
+  document.querySelectorAll('#s-gg [data-g]').forEach(b => b.onclick = () => gg(+b.dataset.g)); gg(0);
+
+  // Synchronisation
+  let sy = 'ok', t0 = null, raf = null, nW = 1, nR = 0.45, pha = 0, aw = 0, ar = 0;
+  function syz(state) {
+    let o = '';
+    const ring = (cx, a, c, lab) => '<circle cx="' + cx + '" cy="120" r="70" fill="#213552" stroke="' + c + '" stroke-width="5"/><line x1="' + cx + '" y1="120" x2="' + (cx + 60 * Math.cos(a)) + '" y2="' + (120 + 60 * Math.sin(a)) + '" stroke="' + c + '" stroke-width="6"/><text x="' + cx + '" y="218" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">' + lab + '</text>';
+    o += ring(140, aw, '#ffd34d', 'Welle mit Schaltmuffe') + ring(420, ar, '#1fc8b3', 'Losrad (neuer Gang)');
+    const mx = 220 + (state.muffe || 0) * 80;
+    o += '<rect x="' + mx + '" y="95" width="40" height="50" rx="6" fill="#ffd34d"/><text x="' + (mx + 20) + '" y="88" text-anchor="middle" font-size="12" font-weight="800" fill="#ffd34d">Muffe</text>';
+    o += '<rect x="330" y="100" width="14" height="40" rx="3" fill="' + (state.reib ? '#ff8f3f' : '#94a4ba') + '"/><text x="337" y="160" text-anchor="middle" font-size="12" font-weight="800" fill="#94a4ba">Synchronring</text>';
+    if (state.krach) o += '<text x="280" y="40" text-anchor="middle" font-size="24" font-weight="900" fill="#f05e4e">KRRR!</text>';
+    o += '<text x="140" y="250" text-anchor="middle" font-size="13" font-weight="800" fill="#ffd34d">' + Math.round(nW * 100) + ' %</text><text x="420" y="250" text-anchor="middle" font-size="13" font-weight="800" fill="#1fc8b3">' + Math.round(nR * 100) + ' %</text>';
+    g('sy-g', o);
+  }
+  function step(ts) {
+    if (t0 === null) t0 = ts;
+    const t = (ts - t0) / 1000; let st = {};
+    if (t < 1.2) { st.reib = true; st.muffe = Math.min(1, t / 0.4) * 0.4; nR = sy === 'ok' ? 0.45 + 0.55 * Math.min(1, t / 1.0) : 0.45 + 0.25 * Math.min(1, t / 1.0); }
+    else if (t < 1.8) { st.muffe = 0.4 + 0.6 * Math.min(1, (t - 1.2) / 0.4); st.krach = sy !== 'ok'; if (sy === 'ok') nR = 1; }
+    else { st.muffe = 1; st.krach = sy !== 'ok' && t < 2.4; nR = 1; }
+    aw += nW * 0.25; ar += nR * 0.25; syz(st);
+    document.getElementById('sy-t').innerHTML = t < 1.2 ? '<b>1. Angleichen:</b> Die Schaltmuffe drückt den <span class="ora">Synchronring</span> auf den Reibkegel des Losrads. Die Reibung bringt beide auf die gleiche Drehzahl.'
+      : sy === 'ok' ? '<b class="grn">2. Einrasten:</b> Erst wenn die Drehzahlen gleich sind, gleitet die Schaltmuffe weich über die Verzahnung – der Gang ist drin, leise und ohne Kraft.'
+      : '<b class="red">Synchronring verschlissen:</b> Die Drehzahlen sind noch verschieden, wenn die Muffe einrastet – die Zähne schlagen aufeinander: Es <span class="red">kracht</span>. Getriebe instand setzen.';
+    if (t < 3) raf = requestAnimationFrame(step); else idle();
+  }
+  function idle() { cancelAnimationFrame(raf); raf = requestAnimationFrame(function lp() { aw += nW * 0.25; ar += nR * 0.25; syz({ muffe: nR === 1 ? 1 : 0 }); raf = requestAnimationFrame(lp); }); }
+  function start() { cancelAnimationFrame(raf); t0 = null; nR = 0.45; raf = requestAnimationFrame(step); }
+  document.getElementById('sy-go').onclick = start;
+  document.querySelectorAll('#s-sy [data-y]').forEach(b => b.onclick = () => { sy = b.dataset.y; document.querySelectorAll('#s-sy [data-y]').forEach(x => x.classList.toggle('on', x === b)); nR = 0.45; idle(); document.getElementById('sy-t').innerHTML = 'Tippe auf <b>▶ Gang einlegen</b>.'; });
+  nR = 0.45; idle(); document.getElementById('sy-t').innerHTML = 'Welle und Losrad drehen <b>verschieden schnell</b>. Tippe auf <b>▶ Gang einlegen</b>.';
+  (function () {
+    const FE = [[["Synchronring verschlissen", "Kupplung trennt nicht ganz"], ["Kupplung prüfen (Pedalweg, Hydraulik)", "Kracht nur ein Gang: Synchronisation dieses Gangs"]], [["Schaltmuffe oder Zahnräder verschlissen", "Arretierung defekt", "Motor- oder Getriebelager defekt"], ["Getriebelager prüfen", "Getriebe instand setzen"]], [["Lager oder Verzahnung im Getriebe verschlissen", "zu wenig Getriebeöl"], ["Ölstand prüfen", "Geräusch lastabhängig? Gas geben und Schub vergleichen"]], [["Wellendichtringe an Antriebswellen oder Eingangswelle", "Dichtung am Gehäuse"], ["Getriebe reinigen, Spur verfolgen", "Ölstand an der Kontrollschraube prüfen"]], [["Schaltseile schwergängig oder falsch eingestellt", "Kupplung trennt nicht", "falsches Getriebeöl"], ["Schaltung bei stehendem Motor prüfen", "Seilzüge einstellen laut Hersteller"]]];
+    const s = document.getElementById('s-sf'), fb = s.querySelectorAll('[data-f]');
+    function fe(i) {
+      s.querySelector('.fe-u').innerHTML = FE[i][0].map(x => '<li>' + x + '</li>').join('');
+      s.querySelector('.fe-p').innerHTML = FE[i][1].map(x => '<li>' + x + '</li>').join('');
+      fb.forEach(x => x.classList.toggle('on', +x.dataset.f === i));
+    }
+    fb.forEach(x => x.onclick = () => fe(+x.dataset.f)); fe(0);
+  })();
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

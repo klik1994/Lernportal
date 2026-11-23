@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 24 Themen, 222 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 28 Themen, 254 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
-  assert.strictEqual(r.themen.length, 24);
-  assert.strictEqual(r.fragen.length, 222);
+  assert.strictEqual(r.themen.length, 28);
+  assert.strictEqual(r.fragen.length, 254);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
@@ -273,6 +273,19 @@ test('Echte Inhaltsdatei: Motor und Wartung mit 4 Themen ab 1. Lehrjahr', async 
     assert.strictEqual(r.fragen.filter(f => f.thema === name).length, 8);
     assert.deepStrictEqual(t.praesentationen.map(p => p.link), ['praesentationen/' + n + '.html']);
     ['.html'].forEach(e => assert.ok(fs.existsSync(path.join(__dirname, '..', 'praesentationen', n + e)), n));
+    ['.mp4', '.jpg'].forEach(e => assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + e)), n + e));
+  });
+});
+
+test('Echte Inhaltsdatei: Kraftübertragung mit 4 Themen, Lehrjahr wie im Lehrplan', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  [['Kupplung und Zweimassenschwungrad', 'ku-kupplung', 2], ['Schaltgetriebe', 'ku-schaltgetriebe', 4], ['Automatikgetriebe', 'ku-automatik', 4], ['Achsantrieb und Differenzial', 'ku-achsantrieb', 4]].forEach(([name, n, lj]) => {
+    const t = r.themen.find(x => x.name === name);
+    assert.strictEqual(t.bereich, 'Kraftübertragung');
+    assert.strictEqual(t.lehrjahr, lj);
+    assert.strictEqual(r.fragen.filter(f => f.thema === name).length, 8);
+    assert.deepStrictEqual(t.praesentationen.map(p => p.link), ['praesentationen/' + n + '.html']);
+    assert.ok(fs.existsSync(path.join(__dirname, '..', 'praesentationen', n + '.html')), n);
     ['.mp4', '.jpg'].forEach(e => assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + e)), n + e));
   });
 });

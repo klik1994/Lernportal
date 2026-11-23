@@ -2448,3 +2448,182 @@ VIDEOS_MOTOR.update({
     'mw-wartung': (GRN, [(title_scene('km', 'Wartung und Inspektion', 'Anheben, Kompression, Druckverlust', GRN, size=90, kicker=KICK13), 5.0),
                          (mw_kompr, 11.0), (MW_WA, 9.0), (MW_M4, 7.5)]),
 })
+
+
+# ================================================================ Kraftübertragung
+KICK14 = 'KRAFTÜBERTRAGUNG  ·  LERNVIDEO'
+
+
+def ku_kupplung(d, t, dur):
+    # 0–4 eingekuppelt, 4–6.5 treten, 6.5–9 getreten, 9–12 Schleifpunkt/einkuppeln
+    if t < 4: auf = 0
+    elif t < 6.5: auf = clamp((t - 4) / 1.5)
+    elif t < 9: auf = 1
+    else: auf = 1 - clamp((t - 9) / 2.2)
+    phase = 'eingekuppelt' if auf < 0.05 else ('ausgekuppelt' if auf > 0.95 else 'Schleifpunkt')
+    header(d, t, 'KUPPLUNG', 'Kupplung ' + phase, YEL)
+    a = pr(t, 0.2, 0.8)
+    cy = 340
+    line(d, [(80, cy), (300, cy)], MUTED, 22, a); line(d, [(390, cy), (1180, cy)], MUTED, 18, a)
+    rrect(d, (300, 140, 370, 540), 10, CARD, a, outline=TXT, width=4); text(d, 335, 115, 'Schwungrad', 26, 'Bold', TXT, a, 'mm')
+    lift = auf * 26
+    sx = 376 + lift * 0.4
+    rrect(d, (sx, 170, sx + 20, 510), 5, YEL, a); text(d, sx + 10, 570, 'Kupplungsscheibe', 24, 'Bold', YEL, a, 'mm')
+    dx = 404 + lift
+    rrect(d, (dx, 162, dx + 36, 518), 6, MUTED, a); text(d, dx + 18, 600, 'Druckplatte', 24, 'Bold', MUTED, a, 'mm')
+    fx = 540 - auf * 36
+    line(d, [(dx + 36, 190), (fx, cy - 50)], TXT, 8, a); line(d, [(dx + 36, 490), (fx, cy + 50)], TXT, 8, a)
+    text(d, 560, 180, 'Tellerfeder', 24, 'Bold', TXT, a, 'lm')
+    ax = fx - 4
+    rrect(d, (ax, cy - 55, ax + 48, cy + 55), 10, PUR, a); text(d, ax + 60, cy + 40, 'Ausrücklager', 24, 'Bold', PUR, a, 'lm')
+    ng = 2000 * (1 - auf)
+    rrect(d, (820, 170, 1180, 260), 14, CARD2, a); text(d, 1000, 215, 'Motor 2.000 1/min', 30, 'XB', TXT, a, 'mm', bg=CARD2)
+    rrect(d, (820, 420, 1180, 510), 14, CARD2, a)
+    text(d, 1000, 465, f'Getriebe {int(round(ng, -1)):,}'.replace(',', '.') + ' 1/min', 30, 'XB', YEL, a, 'mm', bg=CARD2)
+    for (x, y, n) in [(140, 250, 2000), (1000, 340, ng)]:
+        ang = math.radians((t * 360 * n / 2000 * 0.8) % 360)
+        circle(d, (x, y), 30, CARD, a, outline=TXT, width=4)
+        line(d, [(x, y), (x + 26 * math.sin(ang), y - 26 * math.cos(ang))], YEL, 6, a)
+    caption(d, t, [(0.6, 3.9, 'Die Tellerfeder presst die Druckplatte – alles dreht gleich schnell'),
+                   (4.2, 8.8, 'Pedal getreten: Das Ausrücklager drückt die Tellerfeder,\ndie Druckplatte hebt ab – Kraftfluss getrennt'),
+                   (9.1, dur, 'Langsam einkuppeln: Am Schleifpunkt rutscht die Scheibe –\nso fährst du sanft an')], YEL, y=655)
+
+
+KU_W1 = values_scene('KUPPLUNG', YEL, [], [
+    ('Rutscht', 'Drehzahl steigt, Auto wird nicht schneller'), ('Trennt nicht', 'Hydraulik prüfen, entlüften'),
+    ('Rupft', 'Belag verölt, Lager oder ZMS defekt'), ('ZMS', 'Spiel messen – laut Hersteller')], title='Fehler erkennen', vsize=30)
+KU_M1 = merke_scene('KUPPLUNG', YEL, ['Anfahren, Schalten, Dämpfen, Schützen', 'Druckplatte presst – Ausrücklager trennt',
+                                      'Immer als Satz tauschen', 'Zweimassenschwungrad mit prüfen'])
+
+
+def _zahnrad(d, c, z, ang, col, a):
+    r = z * 4.2
+    pts = []
+    for i in range(z):
+        a0 = math.radians(ang) + i * 2 * math.pi / z
+        for f, rr in [(0, r), (0.25, r + 11), (0.5, r + 11), (0.75, r)]:
+            aa = a0 + f * 2 * math.pi / z
+            pts.append((c[0] + rr * math.cos(aa), c[1] + rr * math.sin(aa)))
+    poly(d, pts, col, a)
+    circle(d, c, r - 14, CARD, a)
+    circle(d, c, 12, col, a)
+    line(d, [c, (c[0] + (r - 18) * math.cos(math.radians(ang)), c[1] + (r - 18) * math.sin(math.radians(ang)))], col, 7, a)
+
+
+def ku_zahnrad(d, t, dur):
+    header(d, t, 'SCHALTGETRIEBE', 'Die Übersetzung', TEA)
+    a = pr(t, 0.2, 0.8)
+    z1, z2 = 15, 45
+    w = t * 90
+    r1, r2 = z1 * 4.2, z2 * 4.2
+    c1 = (260, 370); c2 = (260 + r1 + r2 + 11, 370)
+    _zahnrad(d, c1, z1, w, YEL, a)
+    _zahnrad(d, c2, z2, -w / 3 + 180 / z2, TEA, a)
+    text(d, c1[0], 270, 'z1 = 15', 30, 'XB', YEL, a, 'mm'); text(d, c2[0], 140, 'z2 = 45', 30, 'XB', TEA, a, 'mm')
+    k = pr(t, 3.5, 4.3)
+    rrect(d, (880, 150, 1220, 520), 18, CARD2, k)
+    for i, (l, v) in enumerate([('i = z2 : z1', '3'), ('n2 = 3.000 : 3', '1.000 1/min'), ('M2 = 200 Nm · 3', '600 Nm')]):
+        kk = pr(t, 4 + i * 1.2, 4.6 + i * 1.2)
+        text(d, 1050, 200 + i * 110, l, 26, 'Bold', MUTED, kk, 'mm', bg=CARD2)
+        text(d, 1050, 240 + i * 110, v, 34, 'XB', TEA, kk, 'mm', bg=CARD2)
+    caption(d, t, [(0.6, 4.5, 'Kleines Rad treibt großes Rad: langsamer, aber mehr Kraft'),
+                   (8.0, dur, 'Im 1. Gang viel Drehmoment – im großen Gang hohe Geschwindigkeit')], TEA, y=655)
+
+
+KU_W2 = values_scene('SCHALTGETRIEBE', TEA, [], [
+    ('Losrad', 'dreht frei auf der Welle'), ('Schaltmuffe', 'verbindet Losrad und Welle'),
+    ('Synchronring', 'gleicht die Drehzahlen an'), ('Rückwärts', 'Zwischenrad dreht die Richtung um')], title='Aufbau und Schalten', vsize=30)
+KU_M2 = merke_scene('SCHALTGETRIEBE', TEA, ['i = z2 : z1', 'n2 = n1 : i  ·  M2 = M1 · i',
+                                            'Schaltmuffe verbindet Losrad mit Welle', 'Kracht es: Synchronring prüfen'])
+
+
+def ku_planet(d, t, dur):
+    case = 0 if t < 5.5 else (1 if t < 10 else 2)
+    names = ['Hohlrad fest – kleiner Gang', 'Zwei Teile verbunden – direkter Gang 1 : 1', 'Träger fest – Rückwärtsgang']
+    header(d, t, 'AUTOMATIKGETRIEBE', 'Planetensatz: ' + names[case], ROY)
+    a = pr(t, 0.2, 0.8)
+    ZS, ZR, ZP = 30, 72, 21
+    if case == 0: ns, nr = 1, 0; nc = ZS / (ZS + ZR)
+    elif case == 1: ns = nr = nc = 1
+    else: ns, nc = 1, 0; nr = -ZS / ZR
+    npl = nc - (ns - nc) * ZS / ZP
+    k = t * 2.2
+    cx, cy, Rs, Rr = 470, 370, 70, 230
+    Rp = (Rr - Rs) / 2; Rc = Rs + Rp
+    circle(d, (cx, cy), Rr + 26, mix(RED, 0.35, CARD) if case == 0 else CARD, a, outline=TEA, width=7)
+    circle(d, (cx, cy), Rr, BG, a)
+    ar = k * nr; circle(d, (cx + (Rr + 13) * math.cos(ar), cy + (Rr + 13) * math.sin(ar)), 10, TEA, a)
+    ac = k * nc
+    carc = RED if case == 2 else PUR
+    for i in range(3):
+        aa = ac + i * 2 * math.pi / 3
+        px, py = cx + Rc * math.cos(aa), cy + Rc * math.sin(aa)
+        line(d, [(cx, cy), (px, py)], carc, 14, a)
+    circle(d, (cx, cy), Rc, None, a, outline=carc, width=12)
+    for i in range(3):
+        aa = ac + i * 2 * math.pi / 3
+        px, py = cx + Rc * math.cos(aa), cy + Rc * math.sin(aa)
+        circle(d, (px, py), Rp - 5, CARD, a, outline=TXT, width=5)
+        ap = k * npl + i
+        line(d, [(px, py), (px + (Rp - 14) * math.cos(ap), py + (Rp - 14) * math.sin(ap))], TXT, 6, a)
+    circle(d, (cx, cy), Rs, CARD, a, outline=YEL, width=7)
+    asn = k * ns; line(d, [(cx, cy), (cx + (Rs - 10) * math.cos(asn), cy + (Rs - 10) * math.sin(asn))], YEL, 7, a)
+    for i, (l, c) in enumerate([('Sonne (Antrieb)', YEL), ('Planetenträger', PUR), ('Hohlrad', TEA)]):
+        circle(d, (820, 200 + i * 60), 14, c, a); text(d, 850, 200 + i * 60, l, 28, 'Bold', TXT, a, 'lm')
+    iv = ['i ≈ 3,4', 'i = 1', 'i ≈ −2,4'][case]
+    rrect(d, (820, 400, 1180, 490), 14, CARD2, a); text(d, 1000, 445, iv, 40, 'XB', ROY, a, 'mm', bg=CARD2)
+    caption(d, t, [(0.6, 5.3, 'Ein Teil wird festgehalten – so entsteht eine Übersetzung'),
+                   (5.7, 9.8, 'Zwei Teile verbunden: Alles dreht als Block'),
+                   (10.2, dur, 'Träger fest: Das Hohlrad dreht rückwärts')], ROY, y=655)
+
+
+KU_W3 = values_scene('AUTOMATIKGETRIEBE', ROY, [], [
+    ('P R N D', 'Starten nur in P oder N'), ('Wandler', 'Anfahren mit Drehmomentverstärkung'),
+    ('Überbrückung', 'beim Fahren ohne Schlupf'), ('Doppelkupplung', 'Schalten ohne Zugkraftunterbrechung')], title='Wählhebel, Wandler, DSG', vsize=30)
+KU_M3 = merke_scene('AUTOMATIKGETRIEBE', ROY, ['Wandler: sanft anfahren, dann überbrücken', 'Planetensatz: ein Teil fest – andere Übersetzung',
+                                               'Ölstand nur nach Herstellervorgabe', 'Abschleppen nur laut Hersteller'])
+
+
+def ku_diff(d, t, dur):
+    kurve = t > 4.5
+    header(d, t, 'ACHSANTRIEB', 'Differenzial ' + ('in der Linkskurve' if kurve else 'geradeaus'), RED)
+    a = pr(t, 0.2, 0.8)
+    if kurve:
+        kk = pr(t, 4.5, 5.3)
+        arrow(d, (760, 160), (520, 160), MUTED, 5, 18, kk); text(d, 640, 125, 'Kurve nach links', 26, 'Bold', MUTED, kk, 'mm')
+    nl, nr = (88, 112) if kurve else (100, 100)
+    line(d, [(250, 400), (1030, 400)], MUTED, 14, a)
+    for (x, n, lab) in [(210, nl, 'innen'), (1070, nr, 'außen')]:
+        rrect(d, (x - 50, 290, x + 50, 510), 20, CARD, a, outline=TXT, width=5)
+        off = (t * n * 1.6) % 55
+        for j in range(4):
+            y = 296 + (off + j * 55) % 210
+            line(d, [(x - 44, y), (x + 44, y)], MUTED, 4, a)
+        text(d, x, 250, f'{n} %', 36, 'XB', YEL, a, 'mm'); text(d, x, 545, lab if kurve else ('links' if x < 640 else 'rechts'), 26, 'Bold', MUTED, a, 'mm')
+    circle(d, (640, 400), 100, CARD, a, outline=PUR, width=7)
+    sp = (nr - nl) / 100 * t * 200
+    for i, y in enumerate([340, 460]):
+        aa = math.radians(sp * (1 if i else -1))
+        circle(d, (640, y), 26, YEL, a)
+        line(d, [(640 - 22 * math.cos(aa), y - 22 * math.sin(aa)), (640 + 22 * math.cos(aa), y + 22 * math.sin(aa))], BG, 5, a)
+    text(d, 640, 535, 'Differenzial', 26, 'Bold', PUR, a, 'mm')
+    caption(d, t, [(0.6, 4.3, 'Geradeaus drehen beide Räder gleich schnell'),
+                   (4.8, dur, 'In der Kurve fährt das äußere Rad den längeren Weg –\ndie Ausgleichsräder lassen es schneller drehen')], RED, y=655)
+
+
+KU_W4 = values_scene('ACHSANTRIEB', RED, [], [
+    ('Achsantrieb', 'i ca. 3 bis 4,5 (Richtwert)'), ('Gesamt', 'i Getriebe · i Achsantrieb'),
+    ('Knacken', 'in Kurven: radseitiges Gelenk'), ('Manschette', 'gerissen? Sofort erneuern')], title='Werte und Fehler', vsize=30)
+KU_M4 = merke_scene('ACHSANTRIEB', RED, ['Front, Heck oder Allrad', 'Differenzial: außen schneller als innen',
+                                         'Rad auf Eis: Sperre oder ESP hilft', 'Allrad: alle Reifen gleich groß'])
+
+VIDEOS_MOTOR.update({
+    'ku-kupplung': (YEL, [(title_scene('K', 'Die Kupplung', 'Treten, trennen, einkuppeln', YEL, size=110, kicker=KICK14), 5.0),
+                          (ku_kupplung, 12.5), (KU_W1, 9.0), (KU_M1, 7.5)]),
+    'ku-schaltgetriebe': (TEA, [(title_scene('i', 'Das Schaltgetriebe', 'Übersetzung und Gänge', TEA, size=120, kicker=KICK14), 5.0),
+                                (ku_zahnrad, 11.0), (KU_W2, 9.0), (KU_M2, 7.5)]),
+    'ku-automatik': (ROY, [(title_scene('D', 'Automatikgetriebe', 'Wandler und Planetensatz', ROY, size=120, kicker=KICK14), 5.0),
+                           (ku_planet, 14.0), (KU_W3, 9.0), (KU_M3, 7.5)]),
+    'ku-achsantrieb': (RED, [(title_scene('Diff', 'Achsantrieb und Differenzial', 'Warum die Räder verschieden drehen', RED, size=90, kicker=KICK14), 5.0),
+                             (ku_diff, 11.0), (KU_W4, 9.0), (KU_M4, 7.5)]),
+})
