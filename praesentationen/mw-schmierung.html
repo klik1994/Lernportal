@@ -61,16 +61,20 @@
       <svg viewBox="0 0 600 320" width="600" height="320" style="display:block;margin:0 auto;max-width:100%;height:auto" id="ol-svg">
       <rect x="0" y="0" width="600" height="320" rx="12" fill="#18283f"/>
       <path d="M60 250 H540 V300 H60 Z" fill="#c9a227" opacity=".35"/><text x="300" y="290" text-anchor="middle" font-size="15" font-weight="800" fill="#ecf1f8">Ölwanne</text>
-      <path id="ol-p" d="M110 270 V200 H180 M240 200 H300 V90 H520 V250 M300 90 V40 M400 90 V140 M460 90 V250" fill="none" stroke="#c9a227" stroke-width="7" stroke-linejoin="round"/>
-      <path id="ol-bp" d="M180 200 Q210 160 240 200" fill="none" stroke="#c9a227" stroke-width="5" stroke-dasharray="6 5" style="display:none"/>
-      <rect x="80" y="196" width="60" height="44" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="110" y="223" text-anchor="middle" font-size="13" font-weight="900" fill="#ecf1f8">Pumpe</text>
-      <rect id="ol-f" x="180" y="176" width="60" height="50" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="210" y="206" text-anchor="middle" font-size="13" font-weight="900" fill="#ecf1f8">Filter</text>
+      <path id="ol-p" d="M110 270 V232 M140 210 H180 M240 210 H300 V90 H520 V250 M300 90 V40 M400 90 V140 M460 90 V250" fill="none" stroke="#c9a227" stroke-width="7" stroke-linejoin="round"/>
+      <path id="ol-bp" d="M160 210 V150 H196 M224 150 H260 V210" fill="none" stroke="#94a4ba" stroke-width="5" stroke-linejoin="round"/>
+      <g id="ol-v"><rect x="196" y="138" width="28" height="24" rx="5" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><circle id="ol-vk" cx="203" cy="150" r="6" fill="#ecf1f8"/><path d="M209 150 l3 -6 l3 12 l3 -12 l3 6" fill="none" stroke="#ecf1f8" stroke-width="2"/></g>
+      <text x="210" y="126" text-anchor="middle" font-size="12" font-weight="800" fill="#ecf1f8">Überströmventil</text>
+      <rect x="80" y="188" width="60" height="44" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="110" y="215" text-anchor="middle" font-size="12" font-weight="900" fill="#ecf1f8">Pumpe</text>
+      <rect id="ol-f" x="180" y="185" width="60" height="50" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="210" y="214" text-anchor="middle" font-size="12" font-weight="900" fill="#ecf1f8">Filter</text>
       <text x="306" y="110" font-size="13" font-weight="800" fill="#94a4ba">Hauptölkanal</text>
       <text x="300" y="30" text-anchor="middle" font-size="13" font-weight="800" fill="#ecf1f8">Nockenwelle</text>
       <text x="400" y="160" text-anchor="middle" font-size="13" font-weight="800" fill="#ecf1f8">Turbolader</text>
       <text x="460" y="236" text-anchor="end" font-size="13" font-weight="800" fill="#ecf1f8">Kurbelwelle</text>
       <circle id="ol-ds" cx="520" cy="60" r="16" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="520" y="30" text-anchor="middle" font-size="12" font-weight="800" fill="#94a4ba">Öldruck-Leuchte</text>
-      <path id="ol-pa" d="M110 268 V200 H300 V90 H520 V248" fill="none" stroke="none"/>
+      <path id="ol-p1" d="M110 268 V234" fill="none" stroke="none"/><path id="ol-p2" d="M141 210 H160" fill="none" stroke="none"/><path id="ol-p3" d="M160 210 H179" fill="none" stroke="none"/>
+      <path id="ol-pv" d="M160 210 V150 H260 V210" fill="none" stroke="none"/>
+      <path id="ol-pa" d="M241 210 H300 V90 H520 V248" fill="none" stroke="none"/>
       <path id="ol-pb" d="M300 92 V40" fill="none" stroke="none"/><path id="ol-pc" d="M400 92 V140" fill="none" stroke="none"/><path id="ol-pd" d="M460 92 V248" fill="none" stroke="none"/>
     </svg>
       <div class="card" id="ol-t" style="font-size:16px;font-weight:600;line-height:1.55"></div>
@@ -208,17 +212,23 @@
 <script>
 (function () {
   const sv = document.getElementById('ol-svg');
-  const F = ['pa', 'pb', 'pc', 'pd'].map(n => Flow(sv, document.getElementById('ol-' + n), { spacing: 24, speed: 60, r: 5, color: '#ffd34d' }));
+  const F = ['p1', 'p2', 'pa', 'pb', 'pc', 'pd'].map(n => Flow(sv, document.getElementById('ol-' + n), { spacing: 24, speed: 60, r: 5, color: '#ffd34d' }));
+  const FF = Flow(sv, document.getElementById('ol-p3'), { spacing: 24, speed: 60, r: 5, color: '#ffd34d' });
+  const FV = Flow(sv, document.getElementById('ol-pv'), { spacing: 24, speed: 60, r: 5, color: '#ffd34d' });
   const OT = {
-    ok: '<b class="grn">Normal:</b> Die Ölpumpe saugt Öl aus der Ölwanne, drückt es durch den <span class="c">Filter</span> in den Hauptölkanal. Von dort geht es zu Kurbelwelle, Nockenwelle, Turbolader und Kettenspanner – und tropft zurück in die Wanne.',
-    filter: '<b class="ora">Filter verstopft:</b> Damit der Motor trotzdem Öl bekommt, öffnet ein <span class="ora">Umgehungsventil</span>. Das Öl fließt dann <b>ungefiltert</b> – Schmutz gelangt an die Lager. Darum Filter bei jedem Ölwechsel erneuern.',
+    ok: '<b class="grn">Normal:</b> Die Ölpumpe saugt Öl aus der Ölwanne, drückt es durch den <span class="c">Filter</span> in den Hauptölkanal. Von dort geht es zu Kurbelwelle, Nockenwelle, Turbolader und Kettenspanner – und tropft zurück in die Wanne. Das <span class="c">Überströmventil</span> neben dem Filter bleibt zu.',
+    filter: '<b class="ora">Filter verstopft:</b> Damit der Motor trotzdem Öl bekommt, öffnet das <span class="ora">Überströmventil</span> (Bypassventil) neben dem Filter. Das Öl fließt dann <b>ungefiltert</b> am Filter vorbei – Schmutz gelangt an die Lager. Darum Filter bei jedem Ölwechsel erneuern.',
     druck: '<b class="red">Öldruck zu niedrig:</b> Die <span class="red">Öldruck-Leuchte</span> geht an. Sofort anhalten und Motor abstellen! Ursachen: zu wenig Öl, falsche Ölsorte, Pumpe oder Lager verschlissen. Ölstand prüfen, Öldruck mit Manometer messen (Wert laut Hersteller).'
   };
   const ob = document.querySelectorAll('#s-ol [data-o]');
   function ol(m) {
+    const v = m === 'filter';
     F.forEach(f => { f.on(true); f.speed = m === 'druck' ? 20 : 60; });
-    document.getElementById('ol-bp').style.display = m === 'filter' ? '' : 'none';
-    document.getElementById('ol-f').setAttribute('fill', m === 'filter' ? '#5a4a20' : '#213552');
+    FF.on(!v); FF.speed = m === 'druck' ? 20 : 60; FV.on(v);
+    document.getElementById('ol-bp').setAttribute('stroke', v ? '#c9a227' : '#94a4ba');
+    document.getElementById('ol-vk').setAttribute('cx', v ? 212 : 203);
+    document.getElementById('ol-f').setAttribute('stroke', v ? '#ff8f3f' : '#ecf1f8');
+    document.getElementById('ol-f').setAttribute('stroke-dasharray', v ? '5 4' : '');
     document.getElementById('ol-ds').setAttribute('fill', m === 'druck' ? '#f05e4e' : '#213552');
     document.getElementById('ol-t').innerHTML = OT[m];
     ob.forEach(b => b.classList.toggle('on', b.dataset.o === m));

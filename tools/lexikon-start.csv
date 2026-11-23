@@ -234,3 +234,4 @@
 "Gleichlaufgelenk","Kraftübertragung","Gelenk, das auch bei Lenkeinschlag gleichmäßig dreht. Radseitig als Kugelgelenk, getriebeseitig als Verschiebegelenk.","Knacken in Kurven: radseitiges Gelenk verschlissen.","Verschiebegelenk"
 "Kardanwelle","Kraftübertragung","Welle vom Getriebe zum Hinterachsgetriebe beim Heck- oder Allradantrieb.","Vibrationen: Mittellager oder Gelenkscheibe prüfen.","Gelenkscheibe"
 "Allradantrieb","Kraftübertragung","Alle Räder werden angetrieben – permanent mit Mittendifferenzial oder zuschaltbar mit Lamellenkupplung.","Alle Reifen gleich groß und mit ähnlichem Profil.","Allrad, 4x4"
+"Überströmventil","Motor und Wartung","Ventil neben dem Ölfilter (Bypassventil). Ist der Filter verstopft, öffnet es, damit der Motor trotzdem Öl bekommt – dann aber ungefiltert.","Darum den Ölfilter bei jedem Ölwechsel erneuern.","Bypassventil, Filterumgehungsventil"

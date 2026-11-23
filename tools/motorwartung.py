@@ -292,16 +292,20 @@ def oel_svg():
     return '''<svg viewBox="0 0 600 320" width="600" height="320" style="display:block;margin:0 auto;max-width:100%;height:auto" id="ol-svg">
       <rect x="0" y="0" width="600" height="320" rx="12" fill="#18283f"/>
       <path d="M60 250 H540 V300 H60 Z" fill="#c9a227" opacity=".35"/><text x="300" y="290" text-anchor="middle" font-size="15" font-weight="800" fill="#ecf1f8">Ölwanne</text>
-      <path id="ol-p" d="M110 270 V200 H180 M240 200 H300 V90 H520 V250 M300 90 V40 M400 90 V140 M460 90 V250" fill="none" stroke="#c9a227" stroke-width="7" stroke-linejoin="round"/>
-      <path id="ol-bp" d="M180 200 Q210 160 240 200" fill="none" stroke="#c9a227" stroke-width="5" stroke-dasharray="6 5" style="display:none"/>
-      <rect x="80" y="196" width="60" height="44" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="110" y="223" text-anchor="middle" font-size="13" font-weight="900" fill="#ecf1f8">Pumpe</text>
-      <rect id="ol-f" x="180" y="176" width="60" height="50" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="210" y="206" text-anchor="middle" font-size="13" font-weight="900" fill="#ecf1f8">Filter</text>
+      <path id="ol-p" d="M110 270 V232 M140 210 H180 M240 210 H300 V90 H520 V250 M300 90 V40 M400 90 V140 M460 90 V250" fill="none" stroke="#c9a227" stroke-width="7" stroke-linejoin="round"/>
+      <path id="ol-bp" d="M160 210 V150 H196 M224 150 H260 V210" fill="none" stroke="#94a4ba" stroke-width="5" stroke-linejoin="round"/>
+      <g id="ol-v"><rect x="196" y="138" width="28" height="24" rx="5" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><circle id="ol-vk" cx="203" cy="150" r="6" fill="#ecf1f8"/><path d="M209 150 l3 -6 l3 12 l3 -12 l3 6" fill="none" stroke="#ecf1f8" stroke-width="2"/></g>
+      <text x="210" y="126" text-anchor="middle" font-size="12" font-weight="800" fill="#ecf1f8">Überströmventil</text>
+      <rect x="80" y="188" width="60" height="44" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="110" y="215" text-anchor="middle" font-size="12" font-weight="900" fill="#ecf1f8">Pumpe</text>
+      <rect id="ol-f" x="180" y="185" width="60" height="50" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="210" y="214" text-anchor="middle" font-size="12" font-weight="900" fill="#ecf1f8">Filter</text>
       <text x="306" y="110" font-size="13" font-weight="800" fill="#94a4ba">Hauptölkanal</text>
       <text x="300" y="30" text-anchor="middle" font-size="13" font-weight="800" fill="#ecf1f8">Nockenwelle</text>
       <text x="400" y="160" text-anchor="middle" font-size="13" font-weight="800" fill="#ecf1f8">Turbolader</text>
       <text x="460" y="236" text-anchor="end" font-size="13" font-weight="800" fill="#ecf1f8">Kurbelwelle</text>
       <circle id="ol-ds" cx="520" cy="60" r="16" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="520" y="30" text-anchor="middle" font-size="12" font-weight="800" fill="#94a4ba">Öldruck-Leuchte</text>
-      <path id="ol-pa" d="M110 268 V200 H300 V90 H520 V248" fill="none" stroke="none"/>
+      <path id="ol-p1" d="M110 268 V234" fill="none" stroke="none"/><path id="ol-p2" d="M141 210 H160" fill="none" stroke="none"/><path id="ol-p3" d="M160 210 H179" fill="none" stroke="none"/>
+      <path id="ol-pv" d="M160 210 V150 H260 V210" fill="none" stroke="none"/>
+      <path id="ol-pa" d="M241 210 H300 V90 H520 V248" fill="none" stroke="none"/>
       <path id="ol-pb" d="M300 92 V40" fill="none" stroke="none"/><path id="ol-pc" d="M400 92 V140" fill="none" stroke="none"/><path id="ol-pd" d="M460 92 V248" fill="none" stroke="none"/>
     </svg>'''
 
@@ -385,17 +389,23 @@ schmierung_js = '''<script src="assets/schaltung.js"></script>
 <script>
 (function () {
   const sv = document.getElementById('ol-svg');
-  const F = ['pa', 'pb', 'pc', 'pd'].map(n => Flow(sv, document.getElementById('ol-' + n), { spacing: 24, speed: 60, r: 5, color: '#ffd34d' }));
+  const F = ['p1', 'p2', 'pa', 'pb', 'pc', 'pd'].map(n => Flow(sv, document.getElementById('ol-' + n), { spacing: 24, speed: 60, r: 5, color: '#ffd34d' }));
+  const FF = Flow(sv, document.getElementById('ol-p3'), { spacing: 24, speed: 60, r: 5, color: '#ffd34d' });
+  const FV = Flow(sv, document.getElementById('ol-pv'), { spacing: 24, speed: 60, r: 5, color: '#ffd34d' });
   const OT = {
-    ok: '<b class="grn">Normal:</b> Die Ölpumpe saugt Öl aus der Ölwanne, drückt es durch den <span class="c">Filter</span> in den Hauptölkanal. Von dort geht es zu Kurbelwelle, Nockenwelle, Turbolader und Kettenspanner – und tropft zurück in die Wanne.',
-    filter: '<b class="ora">Filter verstopft:</b> Damit der Motor trotzdem Öl bekommt, öffnet ein <span class="ora">Umgehungsventil</span>. Das Öl fließt dann <b>ungefiltert</b> – Schmutz gelangt an die Lager. Darum Filter bei jedem Ölwechsel erneuern.',
+    ok: '<b class="grn">Normal:</b> Die Ölpumpe saugt Öl aus der Ölwanne, drückt es durch den <span class="c">Filter</span> in den Hauptölkanal. Von dort geht es zu Kurbelwelle, Nockenwelle, Turbolader und Kettenspanner – und tropft zurück in die Wanne. Das <span class="c">Überströmventil</span> neben dem Filter bleibt zu.',
+    filter: '<b class="ora">Filter verstopft:</b> Damit der Motor trotzdem Öl bekommt, öffnet das <span class="ora">Überströmventil</span> (Bypassventil) neben dem Filter. Das Öl fließt dann <b>ungefiltert</b> am Filter vorbei – Schmutz gelangt an die Lager. Darum Filter bei jedem Ölwechsel erneuern.',
     druck: '<b class="red">Öldruck zu niedrig:</b> Die <span class="red">Öldruck-Leuchte</span> geht an. Sofort anhalten und Motor abstellen! Ursachen: zu wenig Öl, falsche Ölsorte, Pumpe oder Lager verschlissen. Ölstand prüfen, Öldruck mit Manometer messen (Wert laut Hersteller).'
   };
   const ob = document.querySelectorAll('#s-ol [data-o]');
   function ol(m) {
+    const v = m === 'filter';
     F.forEach(f => { f.on(true); f.speed = m === 'druck' ? 20 : 60; });
-    document.getElementById('ol-bp').style.display = m === 'filter' ? '' : 'none';
-    document.getElementById('ol-f').setAttribute('fill', m === 'filter' ? '#5a4a20' : '#213552');
+    FF.on(!v); FF.speed = m === 'druck' ? 20 : 60; FV.on(v);
+    document.getElementById('ol-bp').setAttribute('stroke', v ? '#c9a227' : '#94a4ba');
+    document.getElementById('ol-vk').setAttribute('cx', v ? 212 : 203);
+    document.getElementById('ol-f').setAttribute('stroke', v ? '#ff8f3f' : '#ecf1f8');
+    document.getElementById('ol-f').setAttribute('stroke-dasharray', v ? '5 4' : '');
     document.getElementById('ol-ds').setAttribute('fill', m === 'druck' ? '#f05e4e' : '#213552');
     document.getElementById('ol-t').innerHTML = OT[m];
     ob.forEach(b => b.classList.toggle('on', b.dataset.o === m));
@@ -452,17 +462,22 @@ T = 'WARTUNG'
 
 
 def heben_svg():
-    pts = [('a', 205, 228, 'Aufnahmepunkt vorn'), ('b', 330, 262, 'Ölwanne'), ('c', 640, 228, 'Aufnahmepunkt hinten'), ('d', 430, 232, 'Schweller ohne Markierung'), ('e', 760, 262, 'Hinterachse')]
-    mp = ''.join(f'<g class="mp" data-p="{k}"><circle cx="{x}" cy="{y}" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="{x}" y="{y + 6}" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">{k.upper()}</text></g>'
-                 for k, x, y, _ in pts)
+    pts = [('a', 292, 268), ('b', 84, 222), ('c', 485, 268), ('d', 678, 268), ('e', 822, 266)]
+    mp = ''.join(f'<g class="mp" data-p="{k}" style="cursor:pointer"><circle cx="{x}" cy="{y}" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="{x}" y="{y + 6}" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">{k.upper()}</text></g>'
+                 for k, x, y in pts)
     return f'''<svg viewBox="0 0 960 330" width="960" height="330" style="display:block;margin:0 auto;max-width:100%;height:auto" id="hb-svg">
       <rect x="0" y="0" width="960" height="330" rx="12" fill="#18283f"/>
-      <path d="M60 230 Q70 120 220 110 L340 40 H640 L780 110 Q900 120 910 230 Z" fill="#213552" stroke="#94a4ba" stroke-width="4"/>
+      <path d="M60 236 Q66 130 220 112 L340 42 H640 L780 112 Q900 124 910 236 H818 A58 58 0 0 0 702 236 H268 A58 58 0 0 0 152 236 Z" fill="#213552" stroke="#94a4ba" stroke-width="4"/>
+      <path d="M380 112 V236 M560 112 V236" stroke="#94a4ba" stroke-width="2" opacity=".6"/>
+      <rect x="268" y="230" width="434" height="16" rx="4" fill="#94a4ba"/>
+      <text x="485" y="222" text-anchor="middle" font-size="13" font-weight="800" fill="#94a4ba">Schweller</text>
+      <path d="M284 246 l8 -12 l8 12 Z M670 246 l8 -12 l8 12 Z" fill="#ecf1f8"/>
+      <line x1="760" y1="250" x2="866" y2="272" stroke="#94a4ba" stroke-width="9" stroke-linecap="round"/>
       <circle cx="210" cy="250" r="46" fill="#18283f" stroke="#94a4ba" stroke-width="8"/><circle cx="760" cy="250" r="46" fill="#18283f" stroke="#94a4ba" stroke-width="8"/>
-      <rect x="290" y="236" width="80" height="20" rx="4" fill="#94a4ba" opacity=".7"/>
-      <path d="M190 236 h30 M625 236 h30" stroke="#ecf1f8" stroke-width="4"/>
+      <circle cx="210" cy="250" r="9" fill="#94a4ba"/><circle cx="760" cy="250" r="9" fill="#94a4ba"/>
       {mp}
-      <text x="480" y="315" text-anchor="middle" font-size="15" font-weight="800" fill="#94a4ba">Wo setzt du den Tragarm der Hebebühne an? Wähle A bis E.</text>
+      <text x="20" y="28" font-size="13" font-weight="800" fill="#94a4ba">▲ = Markierung am Schweller</text>
+      <text x="480" y="315" text-anchor="middle" font-size="15" font-weight="800" fill="#94a4ba">Wo setzt du die Tragarme der Hebebühne an? Wähle A bis E.</text>
     </svg>'''
 
 
@@ -533,14 +548,14 @@ wartung_js = '''<script>
 (function () {
   const g = (id, s) => document.getElementById(id).innerHTML = s;
   const HB = {
-    a: '<b class="grn">A – richtig:</b> Aufnahmepunkt am Schweller vorn. Er ist verstärkt und meist markiert (Kerbe, Pfeil oder Dreieck). Genaue Lage laut Hersteller.',
-    c: '<b class="grn">C – richtig:</b> Aufnahmepunkt am Schweller hinten. Gummiauflage verwenden, damit nichts verrutscht oder verkratzt.',
-    b: '<b class="red">B – falsch:</b> Die Ölwanne hält das Gewicht nicht. Sie wird eingedrückt oder reißt – Ölverlust und Motorschaden.',
-    d: '<b class="red">D – falsch:</b> Ohne Markierung ist der Schweller nicht verstärkt. Das Blech knickt ein, das Fahrzeug kann abrutschen.',
+    a: '<b class="grn">A – richtig:</b> Aufnahmepunkt vorn am Schweller, kurz hinter dem Vorderrad. Er ist verstärkt und markiert (Dreieck, Kerbe oder Pfeil). Genaue Lage laut Hersteller.',
+    d: '<b class="grn">D – richtig:</b> Aufnahmepunkt hinten am Schweller, kurz vor dem Hinterrad. Gummiauflage verwenden, damit nichts verrutscht oder verkratzt. Alle vier Tragarme an den Aufnahmepunkten ansetzen.',
+    b: '<b class="red">B – falsch:</b> Der Stoßfänger ist aus Kunststoff und trägt kein Gewicht. Er bricht, das Fahrzeug kann abrutschen.',
+    c: '<b class="red">C – falsch:</b> In der Mitte ist der Schweller nicht verstärkt. Das Blech knickt ein, und der Schwerpunkt passt nicht – das Fahrzeug kann kippen.',
     e: '<b class="red">E – falsch:</b> Achsteile, Lenker und Leitungen sind keine Aufnahmepunkte (außer der Hersteller erlaubt es). Gefahr von Schäden und Abrutschen.'
   };
   function hb(k) {
-    document.querySelectorAll('#hb-svg .mp').forEach(m => m.querySelector('circle').setAttribute('fill', m.dataset.p === k ? ('ac'.includes(k) ? '#2f8a55' : '#a8352b') : '#213552'));
+    document.querySelectorAll('#hb-svg .mp').forEach(m => { const sel = m.dataset.p === k; m.querySelector('circle').setAttribute('fill', sel ? ('ad'.includes(k) ? '#2f8a55' : '#a8352b') : '#213552'); m.querySelector('text').setAttribute('fill', sel ? '#ffffff' : '#ffd34d'); });
     document.querySelectorAll('#s-hb [data-hp]').forEach(b => b.classList.toggle('on', b.dataset.hp === k));
     document.getElementById('hb-t').innerHTML = HB[k];
   }

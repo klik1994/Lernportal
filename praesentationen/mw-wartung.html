@@ -57,12 +57,17 @@
   <div class="body noclick">
     <svg viewBox="0 0 960 330" width="960" height="330" style="display:block;margin:0 auto;max-width:100%;height:auto" id="hb-svg">
       <rect x="0" y="0" width="960" height="330" rx="12" fill="#18283f"/>
-      <path d="M60 230 Q70 120 220 110 L340 40 H640 L780 110 Q900 120 910 230 Z" fill="#213552" stroke="#94a4ba" stroke-width="4"/>
+      <path d="M60 236 Q66 130 220 112 L340 42 H640 L780 112 Q900 124 910 236 H818 A58 58 0 0 0 702 236 H268 A58 58 0 0 0 152 236 Z" fill="#213552" stroke="#94a4ba" stroke-width="4"/>
+      <path d="M380 112 V236 M560 112 V236" stroke="#94a4ba" stroke-width="2" opacity=".6"/>
+      <rect x="268" y="230" width="434" height="16" rx="4" fill="#94a4ba"/>
+      <text x="485" y="222" text-anchor="middle" font-size="13" font-weight="800" fill="#94a4ba">Schweller</text>
+      <path d="M284 246 l8 -12 l8 12 Z M670 246 l8 -12 l8 12 Z" fill="#ecf1f8"/>
+      <line x1="760" y1="250" x2="866" y2="272" stroke="#94a4ba" stroke-width="9" stroke-linecap="round"/>
       <circle cx="210" cy="250" r="46" fill="#18283f" stroke="#94a4ba" stroke-width="8"/><circle cx="760" cy="250" r="46" fill="#18283f" stroke="#94a4ba" stroke-width="8"/>
-      <rect x="290" y="236" width="80" height="20" rx="4" fill="#94a4ba" opacity=".7"/>
-      <path d="M190 236 h30 M625 236 h30" stroke="#ecf1f8" stroke-width="4"/>
-      <g class="mp" data-p="a"><circle cx="205" cy="228" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="205" y="234" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">A</text></g><g class="mp" data-p="b"><circle cx="330" cy="262" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="330" y="268" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">B</text></g><g class="mp" data-p="c"><circle cx="640" cy="228" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="640" y="234" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">C</text></g><g class="mp" data-p="d"><circle cx="430" cy="232" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="430" y="238" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">D</text></g><g class="mp" data-p="e"><circle cx="760" cy="262" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="760" y="268" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">E</text></g>
-      <text x="480" y="315" text-anchor="middle" font-size="15" font-weight="800" fill="#94a4ba">Wo setzt du den Tragarm der Hebebühne an? Wähle A bis E.</text>
+      <circle cx="210" cy="250" r="9" fill="#94a4ba"/><circle cx="760" cy="250" r="9" fill="#94a4ba"/>
+      <g class="mp" data-p="a" style="cursor:pointer"><circle cx="292" cy="268" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="292" y="274" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">A</text></g><g class="mp" data-p="b" style="cursor:pointer"><circle cx="84" cy="222" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="84" y="228" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">B</text></g><g class="mp" data-p="c" style="cursor:pointer"><circle cx="485" cy="268" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="485" y="274" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">C</text></g><g class="mp" data-p="d" style="cursor:pointer"><circle cx="678" cy="268" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="678" y="274" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">D</text></g><g class="mp" data-p="e" style="cursor:pointer"><circle cx="822" cy="266" r="16" fill="#213552" stroke="#ffd34d" stroke-width="4"/><text x="822" y="272" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd34d">E</text></g>
+      <text x="20" y="28" font-size="13" font-weight="800" fill="#94a4ba">▲ = Markierung am Schweller</text>
+      <text x="480" y="315" text-anchor="middle" font-size="15" font-weight="800" fill="#94a4ba">Wo setzt du die Tragarme der Hebebühne an? Wähle A bis E.</text>
     </svg>
     <div class="choice" style="margin-top:8px;flex-wrap:wrap;gap:6px"><button class="btn ghost" data-hp="a">A</button><button class="btn ghost" data-hp="b">B</button><button class="btn ghost" data-hp="c">C</button><button class="btn ghost" data-hp="d">D</button><button class="btn ghost" data-hp="e">E</button></div>
     <div class="card" id="hb-t" style="font-size:16px;font-weight:600;line-height:1.5;margin-top:10px"><b>Tippe auf einen Punkt.</b></div>
@@ -202,14 +207,14 @@
 (function () {
   const g = (id, s) => document.getElementById(id).innerHTML = s;
   const HB = {
-    a: '<b class="grn">A – richtig:</b> Aufnahmepunkt am Schweller vorn. Er ist verstärkt und meist markiert (Kerbe, Pfeil oder Dreieck). Genaue Lage laut Hersteller.',
-    c: '<b class="grn">C – richtig:</b> Aufnahmepunkt am Schweller hinten. Gummiauflage verwenden, damit nichts verrutscht oder verkratzt.',
-    b: '<b class="red">B – falsch:</b> Die Ölwanne hält das Gewicht nicht. Sie wird eingedrückt oder reißt – Ölverlust und Motorschaden.',
-    d: '<b class="red">D – falsch:</b> Ohne Markierung ist der Schweller nicht verstärkt. Das Blech knickt ein, das Fahrzeug kann abrutschen.',
+    a: '<b class="grn">A – richtig:</b> Aufnahmepunkt vorn am Schweller, kurz hinter dem Vorderrad. Er ist verstärkt und markiert (Dreieck, Kerbe oder Pfeil). Genaue Lage laut Hersteller.',
+    d: '<b class="grn">D – richtig:</b> Aufnahmepunkt hinten am Schweller, kurz vor dem Hinterrad. Gummiauflage verwenden, damit nichts verrutscht oder verkratzt. Alle vier Tragarme an den Aufnahmepunkten ansetzen.',
+    b: '<b class="red">B – falsch:</b> Der Stoßfänger ist aus Kunststoff und trägt kein Gewicht. Er bricht, das Fahrzeug kann abrutschen.',
+    c: '<b class="red">C – falsch:</b> In der Mitte ist der Schweller nicht verstärkt. Das Blech knickt ein, und der Schwerpunkt passt nicht – das Fahrzeug kann kippen.',
     e: '<b class="red">E – falsch:</b> Achsteile, Lenker und Leitungen sind keine Aufnahmepunkte (außer der Hersteller erlaubt es). Gefahr von Schäden und Abrutschen.'
   };
   function hb(k) {
-    document.querySelectorAll('#hb-svg .mp').forEach(m => m.querySelector('circle').setAttribute('fill', m.dataset.p === k ? ('ac'.includes(k) ? '#2f8a55' : '#a8352b') : '#213552'));
+    document.querySelectorAll('#hb-svg .mp').forEach(m => { const sel = m.dataset.p === k; m.querySelector('circle').setAttribute('fill', sel ? ('ad'.includes(k) ? '#2f8a55' : '#a8352b') : '#213552'); m.querySelector('text').setAttribute('fill', sel ? '#ffffff' : '#ffd34d'); });
     document.querySelectorAll('#s-hb [data-hp]').forEach(b => b.classList.toggle('on', b.dataset.hp === k));
     document.getElementById('hb-t').innerHTML = HB[k];
   }
