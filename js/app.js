@@ -262,6 +262,9 @@
     return '<p class="eyebrow">Praxis</p><h1>Werkstatt</h1><p class="lead">Übungen zum Messen und zur Fehlersuche, wie in der Werkstatt.</p><div class="grid">' +
       '<div class="kachel a-yel">' + iconHtml('V') + '<h3>Multimeter</h3><p>Spannung und Widerstand messen, Fehler suchen im einfachen Stromkreis, in der Parallel- und in der Reihenschaltung.</p><div class="knoepfe"><a class="btn primary" href="multimeter.html">Übung öffnen</a></div></div>' +
       '<div class="kachel a-pur">' + iconHtml('CAN') + '<h3>CAN-Bus-Diagnose</h3><p>CAN-High und CAN-Low am Oszilloskop ansehen, Widerstände am Diagnosestecker messen und Busfehler erkennen.</p><div class="knoepfe"><a class="btn primary" href="can.html">Übung öffnen</a></div></div>' +
+      '<div class="kachel a-tea">' + iconHtml('mA') + '<h3>Ruhestrom-Fehlersuche</h3><p>Batterie über Nacht leer: Ruhestrom richtig messen, Busruhe abwarten und den Stromfresser im Sicherungskasten finden.</p><div class="knoepfe"><a class="btn primary" href="ruhestrom.html">Übung öffnen</a></div></div>' +
+      '<div class="kachel a-ora">' + iconHtml('HV') + '<h3>Spannungsfreiheit herstellen</h3><p>Hochvolt-Fahrzeug freischalten, gegen Wiedereinschalten sichern und mit dem zweipoligen Spannungsprüfer freimessen.</p><div class="knoepfe"><a class="btn primary" href="hochvolt.html">Übung öffnen</a></div></div>' +
+      '<div class="kachel a-red">' + iconHtml('kN') + '<h3>Bremsenprüfstand</h3><p>Bremskräfte am Rollenprüfstand messen, Bremskraftdifferenz und Abbremsung ausrechnen und den Mangel finden.</p><div class="knoepfe"><a class="btn primary" href="bremse.html">Übung öffnen</a></div></div>' +
       '</div>';
   }
 
