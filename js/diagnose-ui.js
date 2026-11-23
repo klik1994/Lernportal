@@ -173,7 +173,7 @@
       case 'sk': {
         const out = [];
         [['F8', 40], ['F21', 80], ['F22', 120], ['F30', 160]].forEach(([f, y]) => {
-          out.push({ t: 'o', id: 'si:' + f, x: 34, y: y - 12, w: 40, h: 24, l: f });
+          out.push({ t: 'o', id: 'si:' + f, x: 40, y: y - 13, w: 28, h: 26, l: '' });
           out.push({ t: 'p', k: 'B+', x: 94, y, l: 'ein', klein: true });
           out.push({ t: 'p', k: f + '.2', x: 124, y, l: 'aus' });
         });
@@ -193,7 +193,7 @@
         .concat(X('X9', 216, 194, 0, 0).map(h => h.t === 'p' ? Object.assign({}, h, { y: h.k.endsWith('*') ? 174 : 214 }) : h))
         .filter(h => !(h.t === 'p' && h.k.endsWith('*') && h.k.startsWith('X') && false));
       case 'box': {
-        const out = [{ t: 'o', id: 'si:F15', x: 70, y: 86, w: 40, h: 30, l: 'F15' }, { t: 'p', k: 'B+', x: 90, y: 66, l: 'ein' }, { t: 'p', k: 'F15.2', x: 90, y: 136, l: 'aus' },
+        const out = [{ t: 'o', id: 'si:F15', x: 76, y: 88, w: 28, h: 26, l: '' }, { t: 'p', k: 'B+', x: 90, y: 66, l: 'ein' }, { t: 'p', k: 'F15.2', x: 90, y: 136, l: 'aus' },
           { t: 'o', id: 'relais', x: 196, y: 76, w: 64, h: 64, l: '' }];
         if (st.relais.K7) [['30', 210, 90], ['87', 246, 90], ['86', 210, 126], ['85', 246, 126]].forEach(([p, x, y]) => out.push({ t: 'p', k: 'K7.' + p, x, y, l: p }));
         return out;
@@ -217,7 +217,7 @@
 
   function ansichtSvg() {
     const b = D.beobachte(st);
-    let s = '<svg class="auto" viewBox="0 0 360 230" role="img" aria-label="' + esc(TITEL[ansicht]) + '">' + DEFS + zeichne(b);
+    let s = '<svg class="auto" viewBox="0 0 360 230" role="img" aria-label="' + esc(TITEL[ansicht]) + '">' + DiagnoseGrafik.DEFS + DiagnoseGrafik.zeichne(ansicht, st, meta, b);
     hotspots().filter(sichtbar).forEach(h => {
       if (h.t === 'p') {
         const rot = mm.rot === h.k, schw = mm.schwarz === h.k;
@@ -229,7 +229,7 @@
           '<text x="' + h.x + '" y="' + (h.y - 9) + '" text-anchor="middle" font-size="8" font-weight="700" fill="#e6edf6">' + esc(h.l) + '</text></g>';
       } else {
         const id = h.t === 'n' ? 'nav:' + h.id : h.id;
-        s += '<g class="hs" data-obj="' + esc(id) + '" tabindex="0" role="button" aria-label="' + esc(h.l || h.id) + '"><rect x="' + h.x + '" y="' + h.y + '" width="' + h.w + '" height="' + h.h + '" rx="6" fill="transparent" stroke="#5b8cff" stroke-opacity="' + (auswahl === id ? 0.95 : 0.35) + '" stroke-width="' + (auswahl === id ? 2.5 : 1.2) + '" stroke-dasharray="4 3"/>' +
+        s += '<g class="hs" data-obj="' + esc(id) + '" tabindex="0" role="button" aria-label="' + esc(h.l || h.id) + '"><rect x="' + h.x + '" y="' + h.y + '" width="' + h.w + '" height="' + h.h + '" rx="6" fill="transparent" stroke="#7fb0ff" stroke-opacity="' + (auswahl === id ? 0.95 : 0.45) + '" stroke-width="' + (auswahl === id ? 2.5 : 1.2) + '" stroke-dasharray="4 3"/>' +
           (h.l ? '<text x="' + (h.x + h.w / 2) + '" y="' + (h.y + h.h + 10) + '" text-anchor="middle" font-size="9" fill="#9fb7e6">' + esc(h.l) + '</text>' : '') + '</g>';
       }
     });
