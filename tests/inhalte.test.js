@@ -63,10 +63,10 @@ test('parseInhalte: fehlende Blätter -> leere Listen, kein Absturz', () => {
   assert.deepStrictEqual(r.fragen, []);
 });
 
-test('Echte Inhaltsdatei: 20 Themen, 190 gültige Fragen, je Thema >= 5', async () => {
+test('Echte Inhaltsdatei: 24 Themen, 222 gültige Fragen, je Thema >= 5', async () => {
   const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
-  assert.strictEqual(r.themen.length, 20);
-  assert.strictEqual(r.fragen.length, 190);
+  assert.strictEqual(r.themen.length, 24);
+  assert.strictEqual(r.fragen.length, 222);
   r.themen.forEach(t => assert.ok(r.fragen.filter(f => f.thema === t.name).length >= 5, t.name));
   assert.ok(r.themen[0].erklaerung.includes('\n'));
 });
@@ -261,6 +261,19 @@ test('Echte Inhaltsdatei: Fahrwerk, Bremsanlage, Fahrerassistenzsysteme mit Prä
     assert.ok(fs.existsSync(path.join(__dirname, '..', 'praesentationen', n + '.html')), n);
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.mp4')), n);
     assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + '.jpg')), n);
+  });
+});
+
+test('Echte Inhaltsdatei: Motor und Wartung mit 4 Themen ab 1. Lehrjahr', async () => {
+  const r = I.parseInhalte(await X.readXlsx(buf(DATEI)));
+  [['Der Viertaktmotor', 'mw-viertakt'], ['Kurbel- und Ventiltrieb', 'mw-triebwerk'], ['Schmierung und Kühlung', 'mw-schmierung'], ['Wartung und Inspektion', 'mw-wartung']].forEach(([name, n]) => {
+    const t = r.themen.find(x => x.name === name);
+    assert.strictEqual(t.bereich, 'Motor und Wartung');
+    assert.strictEqual(t.lehrjahr, 1);
+    assert.strictEqual(r.fragen.filter(f => f.thema === name).length, 8);
+    assert.deepStrictEqual(t.praesentationen.map(p => p.link), ['praesentationen/' + n + '.html']);
+    ['.html'].forEach(e => assert.ok(fs.existsSync(path.join(__dirname, '..', 'praesentationen', n + e)), n));
+    ['.mp4', '.jpg'].forEach(e => assert.ok(fs.existsSync(path.join(__dirname, '../praesentationen/videos', n + e)), n + e));
   });
 });
 

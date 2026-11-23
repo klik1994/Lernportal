@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Kurbel- und Ventiltrieb – Motor und Wartung</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  .rb { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; font-size: 44px; font-weight: 900; margin: 6px 0 14px; }
+  .rb span { cursor: pointer; padding: 4px 12px; border-radius: 12px; background: var(--card); transition: background .2s, color .2s; }
+  .rb span.on { background: var(--c); color: var(--on-c); }
+  .mp { cursor: pointer; }
+  html.light svg text[fill="#ffd34d"] { fill: #8a6400; }
+  @media (max-width: 820px), (max-height: 520px) { .rb { font-size: 30px; } .val b { font-size: 14px; hyphens: auto; overflow-wrap: anywhere; } }
+</style>
+</head>
+<body class="t-mw2">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTOR UND WARTUNG</div>
+  <div class="symbol" style="font-size:110px">OT</div>
+  <h1>Kurbel- und Ventiltrieb</h1>
+  <p>Kolben, Pleuel, Kurbelwelle, Nockenwelle, Zahnriemen und Kette</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">MOTORMECHANIK</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Welche Teile zum Kurbeltrieb gehören</li>
+      <li class="step from-left"><span class="num">2</span>Wie der Ventiltrieb arbeitet und warum es Ventilspiel gibt</li>
+      <li class="step from-left"><span class="num">3</span>Was Zahnriemen und Steuerkette unterscheidet</li>
+      <li class="step from-left"><span class="num">4</span>Warum die Steuerzeiten stimmen müssen</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MOTORMECHANIK</span><h2>Der Kurbeltrieb</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>Kolben</b><span>nimmt den Verbrennungsdruck auf – mit Kolbenringen</span></div>
+      <div class="val step from-left"><b>Kolbenringe</b><span>2 Verdichtungsringe dichten ab, 1 Ölabstreifring streift Öl von der Zylinderwand</span></div>
+      <div class="val step from-left"><b>Pleuel</b><span>verbindet Kolben (über den Kolbenbolzen) und Kurbelwelle</span></div>
+      <div class="val step from-left"><b>Kurbelwelle</b><span>macht aus der Auf- und Abbewegung eine Drehbewegung</span></div>
+      <div class="val step from-left"><b>Schwungrad</b><span>speichert Schwung, gleicht Stöße aus – oft als Zweimassenschwungrad</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-vs">
+  <span class="tag">MOTORMECHANIK</span><h2>Ventiltrieb und Ventilspiel – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px;flex-wrap:wrap"><button class="btn ghost on" data-v="0">Ventilspiel richtig</button><button class="btn ghost" data-v="1">Ventilspiel zu groß</button><button class="btn ghost" data-v="2">Ventilspiel zu klein</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.2fr 1fr">
+      <svg viewBox="0 0 560 300" width="560" height="300" style="display:block;margin:0 auto;max-width:100%;height:auto" id="vs-svg">
+      <rect x="0" y="0" width="560" height="300" rx="12" fill="#18283f"/><g id="vs-g"></g></svg>
+      <div class="card" id="vs-t" style="font-size:16px;font-weight:600;line-height:1.55"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">Vereinfacht. Ventilspiel einstellen nur nach Herstellerangabe (kalt oder warm gemessen).</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MOTORMECHANIK</span><h2>Zahnriemen oder Steuerkette</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Zahnriemen</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>leise und leicht</li><li><b>muss nach Intervall gewechselt werden</b> (km und Jahre laut Hersteller)</li><li>Spannrolle und Umlenkrollen mit tauschen, oft auch die Wasserpumpe</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Steuerkette</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>sehr haltbar</li><li>kann sich längen – Rasseln beim Kaltstart ist ein Warnzeichen</li><li>hydraulischer Kettenspanner – braucht guten Öldruck und sauberes Öl</li></ul></div>
+    </div>
+    <div class="warn step" style="margin-top:12px"><b>Reißt der Riemen oder springt die Kette über</b>bleiben die Ventile stehen. Bei vielen Motoren schlagen dann die Kolben gegen die offenen Ventile – schwerer Motorschaden.</div>
+  </div>
+</section>
+
+<section class="slide" id="s-sz">
+  <span class="tag">MOTORMECHANIK</span><h2>Steuerzeiten – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px;flex-wrap:wrap"><button class="btn ghost on" data-s="0">Richtig eingestellt</button><button class="btn ghost" data-s="1">Einen Zahn versetzt</button><button class="btn" id="sz-play" style="--c:var(--pur)">⏸ Pause</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.2fr 1fr">
+      <svg viewBox="0 0 520 340" width="520" height="340" style="display:block;margin:0 auto;max-width:100%;height:auto" id="sz-svg">
+      <rect x="0" y="0" width="520" height="340" rx="12" fill="#18283f"/><g id="sz-g"></g></svg>
+      <div class="card" id="sz-t" style="font-size:16px;font-weight:600;line-height:1.55"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MOTORMECHANIK</span><h2>Hydrostößel und Nockenwellenverstellung</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Hydrostößel</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>gleicht das Ventilspiel mit Motoröl selbst aus</li><li>kurzes Klappern direkt nach dem Kaltstart ist oft normal</li><li>klappert es dauerhaft: Ölstand, Öldruck und Ölsorte prüfen</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Nockenwellenverstellung</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>das Steuergerät verdreht die Nockenwelle mit Öldruck über ein Magnetventil</li><li>so passen die Steuerzeiten zu Drehzahl und Last</li><li>Fehler: Fehlerspeicher, Ölqualität, Magnetventil prüfen</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MOTORMECHANIK</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Spezialwerkzeug</b>Steuerzeiten nur mit dem vorgeschriebenen Arretierwerkzeug einstellen.</div>
+      <div class="tip step"><b>Nach der Arbeit</b>Motor von Hand zwei Umdrehungen an der Kurbelwelle durchdrehen und alle Marken erneut prüfen – erst dann starten.</div>
+      <div class="warn step"><b>Zylinderkopfschrauben</b>Oft Dehnschrauben: immer erneuern. Anziehen in vorgeschriebener Reihenfolge mit Drehmoment und Drehwinkel laut Hersteller.</div>
+      <div class="tip step"><b>Kundenhinweis</b>Zahnriemen-Intervall im Serviceheft prüfen – ein überfälliger Riemen ist ein großes Risiko.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MOTORMECHANIK</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mw-triebwerk.mp4" poster="videos/mw-triebwerk.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MOTORMECHANIK</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Welche Aufgabe hat der Ölabstreifring?</p>
+      <div class="opts"><button class="opt">Er dichtet den Brennraum ab</button><button class="opt">Er streift Öl von der Zylinderwand</button><button class="opt">Er kühlt den Kolben</button></div>
+      <div class="fb">Sonst würde Öl in den Brennraum gelangen und verbrennen.</div></div>
+    <div class="q" data-correct="0"><p>2. Wie schnell dreht sich die Nockenwelle im Vergleich zur Kurbelwelle?</p>
+      <div class="opts"><button class="opt">Halb so schnell</button><button class="opt">Gleich schnell</button><button class="opt">Doppelt so schnell</button></div>
+      <div class="fb">Übersetzung 2 : 1 – ein Arbeitsspiel dauert 2 Kurbelwellen-Umdrehungen.</div></div>
+    <div class="q" data-correct="2"><p>3. Was passiert bei zu kleinem Ventilspiel?</p>
+      <div class="opts"><button class="opt">Das Ventil klappert laut</button><button class="opt">Nichts</button><button class="opt">Das Ventil schließt nicht ganz und kann verbrennen</button></div>
+      <div class="fb">Zu großes Spiel: Klappern, das Ventil öffnet zu spät und zu wenig.</div></div>
+    <div class="q" data-correct="1"><p>4. Was tust du nach dem Einstellen der Steuerzeiten?</p>
+      <div class="opts"><button class="opt">Sofort starten</button><button class="opt">Motor von Hand 2 Umdrehungen durchdrehen und Marken prüfen</button><button class="opt">Ölwechsel machen</button></div>
+      <div class="fb">So erkennst du Fehler, bevor Ventile und Kolben Schaden nehmen.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">MOTORMECHANIK</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Kolben – Pleuel – Kurbelwelle: Hub wird Drehung</span></li>
+        <li class="step"><span>Nockenwelle dreht halb so schnell</span></li>
+        <li class="step"><span>Ventilspiel: zu groß klappert, zu klein verbrennt</span></li>
+        <li class="step"><span>Steuerzeiten mit Spezialwerkzeug, danach 2 Umdrehungen prüfen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Kurbel-%20und%20Ventiltrieb" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const g = (id, s) => document.getElementById(id).innerHTML = s;
+  // Ventiltrieb
+  let vm = 0, ph = 0;
+  const SP = [0, 6, -4];
+  const VT = [
+    '<b class="grn">Ventilspiel richtig:</b> Zwischen Nocken und Hebel bleibt ein kleiner Spalt, wenn das Ventil zu ist. Wird der Motor heiß, dehnen sich die Teile aus – das Spiel fängt das auf. Das Ventil schließt immer ganz.',
+    '<b class="ora">Zu groß:</b> Der Nocken muss erst den Spalt überwinden. Es <span class="ora">klappert</span>, das Ventil öffnet <b>später, kürzer und weniger weit</b> – weniger Füllung, weniger Leistung.',
+    '<b class="red">Zu klein:</b> Wird der Motor warm, wächst das Ventil – es <span class="red">schließt nicht mehr ganz</span>. Heißes Gas strömt vorbei: Das Ventil verbrennt, die Kompression sinkt.'
+  ];
+  const kontur = a => { const x = Math.cos(a); return x > 0.55 ? 30 * Math.pow((x - 0.55) / 0.45, 0.8) : 0; };
+  const SPX = [5, 13, -4];
+  function vs() {
+    const sp = SPX[vm], cx = 140, R = 42, cy = 92 - sp, F0 = 92 + R;
+    let d = '';
+    for (let i = 0; i <= 90; i++) { const a = i / 90 * 2 * Math.PI, rr = R + kontur(a - ph); d += (i ? ' L' : 'M') + (cx + rr * Math.sin(a)).toFixed(1) + ' ' + (cy + rr * Math.cos(a)).toFixed(1); }
+    const cam = kontur(-ph), hub = Math.max(0, cam - sp), spalt = Math.max(0, sp - cam);
+    let o = '<path d="' + d + ' Z" fill="#213552" stroke="#ecf1f8" stroke-width="4"/><circle cx="' + cx + '" cy="' + cy + '" r="8" fill="#94a4ba"/>';
+    o += '<text x="214" y="70" font-size="14" font-weight="800" fill="#94a4ba">← Nockenwelle</text>';
+    const ty = F0 + hub;
+    o += '<rect x="' + (cx - 26) + '" y="' + ty + '" width="52" height="18" rx="4" fill="#94a4ba"/>';
+    o += '<line x1="' + cx + '" y1="' + (ty + 18) + '" x2="' + cx + '" y2="' + (ty + 90) + '" stroke="#ecf1f8" stroke-width="7"/>';
+    o += '<rect x="' + (cx - 34) + '" y="' + (ty + 88) + '" width="68" height="10" rx="3" fill="#ecf1f8"/>';
+    const seat = F0 + 98;
+    o += '<path d="M50 ' + seat + ' H' + (cx - 36) + ' M' + (cx + 36) + ' ' + seat + ' H230" stroke="#94a4ba" stroke-width="5"/>';
+    if (spalt > 1) o += '<text x="' + (cx + 34) + '" y="' + (F0 + 2) + '" font-size="13" font-weight="800" fill="#ffd34d">Spalt</text>';
+    if (sp < 0) o += '<text x="' + (cx + 40) + '" y="' + (seat + 24) + '" font-size="13" font-weight="800" fill="#f05e4e">schließt nicht ganz!</text>';
+    o += '<text x="' + (cx - 40) + '" y="' + (seat + 24) + '" text-anchor="end" font-size="14" font-weight="800" fill="#94a4ba">Ventil</text>';
+    let k = '';
+    for (let i = 0; i <= 120; i++) { const a = (i / 120 - 0.5) * 2 * Math.PI, h = Math.max(0, kontur(a) - sp); k += (i ? ' L' : 'M') + (300 + i * 2) + ' ' + (240 - h * 3.5).toFixed(1); }
+    o += '<line x1="300" y1="240" x2="545" y2="240" stroke="#94a4ba" stroke-width="2"/><path d="' + k + '" fill="none" stroke="#a07cf5" stroke-width="4"/>';
+    const pa = ((-ph % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI), mx = 300 + pa / (2 * Math.PI) * 240;
+    o += '<line x1="' + mx + '" y1="110" x2="' + mx + '" y2="245" stroke="#ffd34d" stroke-width="2"/>';
+    o += '<text x="300" y="100" font-size="14" font-weight="800" fill="#94a4ba">Ventilhub</text>';
+    g('vs-g', o);
+  }
+  setInterval(() => { ph = (ph + 0.06) % (2 * Math.PI); vs(); }, 40);
+  document.querySelectorAll('#s-vs [data-v]').forEach(b => b.onclick = () => { vm = +b.dataset.v; document.querySelectorAll('#s-vs [data-v]').forEach(x => x.classList.toggle('on', x === b)); document.getElementById('vs-t').innerHTML = VT[vm]; });
+  document.getElementById('vs-t').innerHTML = VT[0];
+
+  // Steuerzeiten
+  let sm = 0, w = 0, sl = true;
+  const ST = [
+    '<b class="grn">Richtig eingestellt:</b> Die Marken an Kurbelwelle und Nockenwelle stehen genau an ihren Gegenmarken. Das Nockenwellenrad hat doppelt so viele Zähne – es dreht <span class="c">halb so schnell</span>.',
+    '<b class="red">Ein Zahn versetzt:</b> Die Nockenwelle steht um einige Grad falsch. Die Ventile öffnen zu früh oder zu spät: Leistungsverlust, unruhiger Lauf, Fehlerspeicher „Zuordnung Kurbelwelle/Nockenwelle“. Bei mehreren Zähnen können Ventile und Kolben zusammenstoßen.'
+  ];
+  function sz() {
+    const kx = 160, ky = 260, kr = 34, nx = 360, ny = 90, nr = 68, off = sm ? 15 : 0;
+    const ak = w, an = w / 2 + off;
+    let o = '<path d="M' + (kx - kr) + ' ' + ky + ' L' + (nx - nr) + ' ' + ny + ' A' + nr + ' ' + nr + ' 0 0 1 ' + (nx + nr) + ' ' + ny + ' L' + (kx + kr) + ' ' + ky + ' A' + kr + ' ' + kr + ' 0 0 1 ' + (kx - kr) + ' ' + ky + '" fill="none" stroke="#a07cf5" stroke-width="8" stroke-dasharray="6 3"/>';
+    o += '<circle cx="' + kx + '" cy="' + ky + '" r="' + kr + '" fill="#213552" stroke="#ecf1f8" stroke-width="4"/><circle cx="' + nx + '" cy="' + ny + '" r="' + nr + '" fill="#213552" stroke="#ecf1f8" stroke-width="4"/>';
+    const m = (x, y, r, a, c) => { const ra = a * Math.PI / 180; return '<line x1="' + x + '" y1="' + y + '" x2="' + (x + r * Math.sin(ra)) + '" y2="' + (y - r * Math.cos(ra)) + '" stroke="' + c + '" stroke-width="5"/><circle cx="' + (x + (r - 6) * Math.sin(ra)) + '" cy="' + (y - (r - 6) * Math.cos(ra)) + '" r="6" fill="' + c + '"/>'; };
+    o += m(kx, ky, kr - 4, ak, '#ffd34d') + m(nx, ny, nr - 6, an, '#ffd34d');
+    o += '<path d="M' + kx + ' ' + (ky - kr - 16) + ' l-8 -12 h16 Z" fill="#ecf1f8"/><path d="M' + nx + ' ' + (ny - nr - 16) + ' l-8 -12 h16 Z" fill="#ecf1f8"/>';
+    o += '<text x="' + kx + '" y="' + (ky + kr + 26) + '" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">Kurbelwelle</text><text x="' + nx + '" y="' + (ny + nr + 24) + '" text-anchor="middle" font-size="14" font-weight="800" fill="#94a4ba">Nockenwelle</text>';
+    const ok = Math.abs(((ak % 720) + 720) % 720) < 4 || Math.abs(((ak % 720) + 720) % 720 - 720) < 4;
+    if (ok && !sl) o += '<text x="260" y="28" text-anchor="middle" font-size="15" font-weight="900" fill="' + (sm ? '#f05e4e' : '#34c778') + '">' + (sm ? 'Nockenwelle steht neben der Marke!' : 'Beide Marken stehen richtig') + '</text>';
+    g('sz-g', o);
+  }
+  setInterval(() => { if (sl) w = (w + 3) % 720; sz(); }, 40);
+  const sp = document.getElementById('sz-play');
+  sp.onclick = () => { sl = !sl; if (!sl) w = 0; sp.textContent = sl ? '⏸ Pause' : '▶ Weiter'; };
+  document.querySelectorAll('#s-sz [data-s]').forEach(b => b.onclick = () => { sm = +b.dataset.s; sl = false; w = 0; sp.textContent = '▶ Weiter'; document.querySelectorAll('#s-sz [data-s]').forEach(x => x.classList.toggle('on', x === b)); document.getElementById('sz-t').innerHTML = ST[sm]; });
+  document.getElementById('sz-t').innerHTML = ST[0];
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

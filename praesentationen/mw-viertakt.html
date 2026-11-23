@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Der Viertaktmotor – Motor und Wartung</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  .rb { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; font-size: 44px; font-weight: 900; margin: 6px 0 14px; }
+  .rb span { cursor: pointer; padding: 4px 12px; border-radius: 12px; background: var(--card); transition: background .2s, color .2s; }
+  .rb span.on { background: var(--c); color: var(--on-c); }
+  .mp { cursor: pointer; }
+  html.light svg text[fill="#ffd34d"] { fill: #8a6400; }
+  @media (max-width: 820px), (max-height: 520px) { .rb { font-size: 30px; } .val b { font-size: 14px; hyphens: auto; overflow-wrap: anywhere; } }
+</style>
+</head>
+<body class="t-mw1">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTOR UND WARTUNG</div>
+  <div class="symbol" style="font-size:110px">4T</div>
+  <h1>Der Viertaktmotor</h1>
+  <p>Arbeitsweise, Otto und Diesel, Hubraum, Verdichtung, Zündfolge</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">VIERTAKT</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Wie ein Viertaktmotor arbeitet</li>
+      <li class="step from-left"><span class="num">2</span>Was Otto- und Dieselmotor unterscheidet</li>
+      <li class="step from-left"><span class="num">3</span>Wie du Hubraum und Verdichtung berechnest</li>
+      <li class="step from-left"><span class="num">4</span>Was Zündfolge und Zündabstand bedeuten</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" id="s-vt">
+  <span class="tag">VIERTAKT</span><h2>Die vier Takte – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px;flex-wrap:wrap;gap:6px"><button class="btn" id="vt-play" style="--c:var(--ora)">⏸ Pause</button><button class="btn ghost" data-t="0">1 · Ansaugen</button><button class="btn ghost" data-t="1">2 · Verdichten</button><button class="btn ghost" data-t="2">3 · Arbeiten</button><button class="btn ghost" data-t="3">4 · Ausstoßen</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:0.9fr 1.1fr">
+      <svg viewBox="0 0 520 420" width="520" height="420" style="display:block;margin:0 auto;max-width:100%;height:auto" id="vt-svg">
+      <rect x="0" y="0" width="520" height="420" rx="12" fill="#18283f"/><g id="vt-g"></g></svg>
+      <div class="card" id="vt-t" style="font-size:16px;font-weight:600;line-height:1.55"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VIERTAKT</span><h2>Ottomotor und Dieselmotor</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Ottomotor</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li><b>Fremdzündung</b>: die Zündkerze zündet das Gemisch</li><li>Verdichtung ca. 10 : 1 bis 14 : 1</li><li>Luftmenge über die Drosselklappe geregelt</li><li>Kraftstoff: Benzin (auch Gas)</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Dieselmotor</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li><b>Selbstzündung</b>: nur Luft wird so stark verdichtet, dass sie sehr heiß wird – der eingespritzte Diesel entzündet sich von selbst</li><li>Verdichtung ca. 15 : 1 bis 20 : 1</li><li>Leistung über die Einspritzmenge geregelt</li><li>Glühkerzen helfen beim Kaltstart</li></ul></div>
+    </div>
+    <p class="muted" style="font-size:14px">Richtwerte – genaue Werte laut Hersteller.</p>
+  </div>
+</section>
+
+<section class="slide" id="s-hr">
+  <span class="tag">VIERTAKT</span><h2>Hubraum und Verdichtung – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="ctrl"><span style="width:290px">Bohrung d: <span class="c" id="hr-dn">81 mm</span></span><input type="range" id="hr-d" min="65" max="100" step="0.5" value="81"></div>
+    <div class="ctrl"><span style="width:290px">Hub s: <span class="c" id="hr-sn">86,5 mm</span></span><input type="range" id="hr-s" min="65" max="100" step="0.5" value="86.5"></div>
+    <div class="ctrl"><span style="width:290px">Zylinder z: <span class="c" id="hr-zn">4</span></span><input type="range" id="hr-z" min="1" max="8" step="1" value="4"></div>
+    <div class="ctrl"><span style="width:290px">Verdichtungsraum Vc: <span class="c" id="hr-cn">45 cm³</span></span><input type="range" id="hr-c" min="20" max="80" step="1" value="45"></div>
+    <div class="grid3" style="margin-top:12px">
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">HUBRAUM EIN ZYLINDER Vh</div><div class="lcd2" id="hr-vh" style="font-size:26px">–</div></div>
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">GESAMTHUBRAUM VH</div><div class="lcd2" id="hr-VH" style="font-size:26px">–</div></div>
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">VERDICHTUNG ε</div><div class="lcd2" id="hr-e" style="font-size:26px">–</div></div>
+    </div>
+    <div class="card" style="font-size:16px;font-weight:600;line-height:1.6;margin-top:12px">Vh = π/4 · d² · s &nbsp;·&nbsp; VH = Vh · z &nbsp;·&nbsp; ε = (Vh + Vc) : Vc<br><span class="muted">Hubraum: Raum, den der Kolben zwischen UT und OT „verdrängt“. Verdichtungsraum: Raum über dem Kolben im OT.</span></div>
+  </div>
+</section>
+
+<section class="slide" id="s-zf">
+  <span class="tag">VIERTAKT</span><h2>Zündfolge – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px"><button class="btn ghost on" data-z="4">4 Zylinder</button><button class="btn ghost" data-z="6">6 Zylinder (Reihe)</button></div>
+    <svg viewBox="0 0 640 200" width="640" height="200" style="display:block;margin:0 auto;max-width:100%;height:auto" id="zf-svg">
+      <rect x="0" y="0" width="640" height="200" rx="12" fill="#18283f"/><g id="zf-g"></g></svg>
+    <div class="card" id="zf-t" style="font-size:16px;font-weight:600;line-height:1.55;margin-top:10px"></div>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">Übliche Zündfolgen – die genaue Zündfolge steht in den Herstellerunterlagen.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VIERTAKT</span><h2>Leistung und Drehmoment</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>Drehmoment M</b><span>„Drehkraft“ an der Kurbelwelle in Nm – spürbar als Durchzug</span></div>
+      <div class="val step from-left"><b>Leistung P</b><span>in kW: P = M · n : 9550 (M in Nm, n in 1/min)</span></div>
+      <div class="val step from-left"><b>Beispiel</b><span>250 Nm bei 3.000 1/min → 250 · 3000 : 9550 ≈ 79 kW</span></div>
+      <div class="val step from-left"><b>Fahrzeugschein</b><span>P.1 Hubraum in cm³ · P.2 Nennleistung in kW · P.4 Nenndrehzahl</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VIERTAKT</span><h2>Aus der Praxis</h2>
+  <div class="body">
+    <div class="grid2" style="align-content:start">
+      <div class="tip step"><b>Motor von Hand drehen</b>Immer an der Kurbelwelle und nur in Motordrehrichtung – nie über das Nockenwellenrad.</div>
+      <div class="tip step"><b>OT Zylinder 1</b>Für Arbeiten am Steuertrieb gibt es Markierungen oder Arretierwerkzeuge – Vorgaben des Herstellers beachten.</div>
+      <div class="tip step"><b>Zylinder 1</b>Zylinder 1 liegt meist auf der Steuertriebseite (Riemen oder Kette) – laut Hersteller prüfen.</div>
+      <div class="warn step"><b>Heiße Teile</b>Motor, Abgasanlage und Kühlsystem werden sehr heiß. Vor Arbeiten abkühlen lassen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VIERTAKT</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mw-viertakt.mp4" poster="videos/mw-viertakt.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VIERTAKT</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. In welchem Takt sind beide Ventile geschlossen und der Kolben bewegt sich nach unten?</p>
+      <div class="opts"><button class="opt">Ansaugen</button><button class="opt">Arbeiten</button><button class="opt">Ausstoßen</button></div>
+      <div class="fb">Die Verbrennung drückt den Kolben von OT nach UT.</div></div>
+    <div class="q" data-correct="1"><p>2. Wie oft dreht sich die Kurbelwelle bei einem Arbeitsspiel?</p>
+      <div class="opts"><button class="opt">1-mal</button><button class="opt">2-mal (720°)</button><button class="opt">4-mal</button></div>
+      <div class="fb">Die Nockenwelle dreht sich dabei nur einmal.</div></div>
+    <div class="q" data-correct="2"><p>3. Wodurch entzündet sich der Kraftstoff im Dieselmotor?</p>
+      <div class="opts"><button class="opt">Durch die Zündkerze</button><button class="opt">Durch die Glühkerze bei jedem Takt</button><button class="opt">Durch die heiße, stark verdichtete Luft</button></div>
+      <div class="fb">Selbstzündung – die Glühkerze hilft nur beim Kaltstart.</div></div>
+    <div class="q" data-correct="0"><p>4. Welche Zündfolge hat ein Vierzylinder meist?</p>
+      <div class="opts"><button class="opt">1-3-4-2</button><button class="opt">1-2-3-4</button><button class="opt">4-3-2-1</button></div>
+      <div class="fb">Zündabstand 720° : 4 = 180°.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">VIERTAKT</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Ansaugen – Verdichten – Arbeiten – Ausstoßen</span></li>
+        <li class="step"><span>1 Arbeitsspiel = 2 Kurbelwellen-Umdrehungen</span></li>
+        <li class="step"><span>Otto: Fremdzündung · Diesel: Selbstzündung</span></li>
+        <li class="step"><span>ε = (Vh + Vc) : Vc · Zündabstand = 720° : z</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Der%20Viertaktmotor" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script>
+(function () {
+  const g = (id, s) => document.getElementById(id).innerHTML = s;
+  // Vier Takte
+  let th = 0, lauf = true, last = null;
+  const N = ['Ansaugen', 'Verdichten', 'Arbeiten', 'Ausstoßen'];
+  const TX = [
+    '<b>1 · Ansaugen:</b> Der Kolben geht von OT nach UT. Das <span class="c">Einlassventil ist offen</span>, frisches Gemisch (Otto) oder Luft (Diesel) strömt in den Zylinder.',
+    '<b>2 · Verdichten:</b> Beide Ventile sind zu. Der Kolben geht von UT nach OT und <span class="c">verdichtet</span> die Füllung – sie wird warm und steht unter hohem Druck.',
+    '<b>3 · Arbeiten:</b> Kurz vor OT wird gezündet (Otto) bzw. eingespritzt (Diesel). Die Verbrennung drückt den Kolben mit großer Kraft nach unten – <span class="c">nur dieser Takt gibt Arbeit ab</span>.',
+    '<b>4 · Ausstoßen:</b> Das <span class="c">Auslassventil ist offen</span>, der Kolben schiebt das Abgas aus dem Zylinder. Danach beginnt alles von vorn.'
+  ];
+  function zeichne() {
+    const r = 70, L = 170, cx = 210, cy = 330, a = th * Math.PI / 180;
+    const yp = cy - (r * Math.cos(a) + Math.sqrt(L * L - Math.pow(r * Math.sin(a), 2)));
+    const takt = Math.floor((th % 720) / 180), ein = takt === 0, aus = takt === 3, funke = th % 720 > 340 && th % 720 < 380;
+    const top = yp - 10;
+    const gas = takt === 0 || takt === 1 ? '#1fc8b3' : takt === 2 ? (th % 720 < 420 ? '#ff8f3f' : '#c97a3a') : '#7d8796';
+    let o = '';
+    o += '<rect x="150" y="70" width="120" height="' + (top - 70) + '" fill="' + gas + '" opacity=".45"/>';
+    o += '<path d="M146 66 V282 M274 66 V282" stroke="#ecf1f8" stroke-width="6"/><path d="M120 66 H300" stroke="#ecf1f8" stroke-width="6"/>';
+    o += '<path d="M120 40 H160 V66 M300 40 H260 V66" fill="none" stroke="#94a4ba" stroke-width="4"/>';
+    const vi = ein ? 14 : 0, vo = aus ? 14 : 0;
+    o += '<line x1="178" y1="20" x2="178" y2="' + (62 + vi) + '" stroke="#ecf1f8" stroke-width="5"/><rect x="164" y="' + (62 + vi) + '" width="28" height="6" fill="#ecf1f8"/>';
+    o += '<line x1="242" y1="20" x2="242" y2="' + (62 + vo) + '" stroke="#ecf1f8" stroke-width="5"/><rect x="228" y="' + (62 + vo) + '" width="28" height="6" fill="#ecf1f8"/>';
+    o += '<text x="120" y="32" font-size="13" font-weight="800" fill="' + (ein ? '#1fc8b3' : '#94a4ba') + '">Einlass</text><text x="300" y="32" text-anchor="end" font-size="13" font-weight="800" fill="' + (aus ? '#ffd34d' : '#94a4ba') + '">Auslass</text>';
+    o += '<line x1="210" y1="56" x2="210" y2="74" stroke="#94a4ba" stroke-width="4"/>';
+    if (funke) o += '<path d="M210 74 l-8 10 l10 0 l-6 12" fill="none" stroke="#ffd34d" stroke-width="4"/>';
+    o += '<rect x="152" y="' + top + '" width="116" height="52" rx="4" fill="#94a4ba"/><line x1="152" y1="' + (top + 10) + '" x2="268" y2="' + (top + 10) + '" stroke="#18283f" stroke-width="2"/><line x1="152" y1="' + (top + 18) + '" x2="268" y2="' + (top + 18) + '" stroke="#18283f" stroke-width="2"/>';
+    const kx = cx + r * Math.sin(a), ky = cy - r * Math.cos(a);
+    o += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (r + 14) + '" fill="none" stroke="#94a4ba" stroke-width="2" stroke-dasharray="6 6"/>';
+    o += '<line x1="' + cx + '" y1="' + yp + '" x2="' + kx + '" y2="' + ky + '" stroke="#ecf1f8" stroke-width="10" stroke-linecap="round"/>';
+    o += '<line x1="' + cx + '" y1="' + cy + '" x2="' + kx + '" y2="' + ky + '" stroke="#ff8f3f" stroke-width="12" stroke-linecap="round"/><circle cx="' + cx + '" cy="' + cy + '" r="10" fill="#ecf1f8"/>';
+    const yOT = cy - r - L - 10, yUT = cy + r - L - 10;
+    o += '<text x="300" y="' + (yOT + 5) + '" font-size="13" font-weight="800" fill="#94a4ba">OT</text><text x="300" y="' + (yUT + 5) + '" font-size="13" font-weight="800" fill="#94a4ba">UT</text>';
+    o += '<line x1="278" y1="' + yOT + '" x2="296" y2="' + yOT + '" stroke="#94a4ba" stroke-width="2"/><line x1="278" y1="' + yUT + '" x2="296" y2="' + yUT + '" stroke="#94a4ba" stroke-width="2"/>';
+    o += '<text x="345" y="200" font-size="24" font-weight="900" fill="#ff8f3f">' + (takt + 1) + ' · ' + N[takt] + '</text>';
+    o += '<text x="345" y="226" font-size="15" font-weight="800" fill="#94a4ba">' + Math.round(th % 720) + '° Kurbelwinkel</text>';
+    g('vt-g', o);
+    document.getElementById('vt-t').innerHTML = TX[takt] + '<br><span class="muted" style="font-size:15px">Ein Arbeitsspiel = 2 Umdrehungen der Kurbelwelle (720°). Die Nockenwelle dreht nur halb so schnell.</span>';
+  }
+  function tick(ts) { if (last !== null && lauf) th = (th + (ts - last) * 0.12) % 720; last = ts; zeichne(); requestAnimationFrame(tick); }
+  requestAnimationFrame(tick);
+  const pb = document.getElementById('vt-play');
+  pb.onclick = () => { lauf = !lauf; pb.textContent = lauf ? '⏸ Pause' : '▶ Weiter'; };
+  document.querySelectorAll('#s-vt [data-t]').forEach(b => b.onclick = () => { th = +b.dataset.t * 180 + 90; lauf = false; pb.textContent = '▶ Weiter'; });
+
+  // Hubraum
+  const ids = ['d', 's', 'z', 'c'];
+  const fmt = (v, n) => v.toLocaleString('de-DE', { minimumFractionDigits: n, maximumFractionDigits: n });
+  function hr() {
+    const d = +document.getElementById('hr-d').value, s = +document.getElementById('hr-s').value, z = +document.getElementById('hr-z').value, c = +document.getElementById('hr-c').value;
+    const vh = Math.PI / 4 * (d / 10) * (d / 10) * (s / 10);
+    document.getElementById('hr-dn').textContent = fmt(d, d % 1 ? 1 : 0) + ' mm';
+    document.getElementById('hr-sn').textContent = fmt(s, s % 1 ? 1 : 0) + ' mm';
+    document.getElementById('hr-zn').textContent = z;
+    document.getElementById('hr-cn').textContent = c + ' cm³';
+    document.getElementById('hr-vh').textContent = fmt(vh, 0) + ' cm³';
+    document.getElementById('hr-VH').textContent = fmt(vh * z, 0) + ' cm³';
+    document.getElementById('hr-e').textContent = fmt((vh + c) / c, 1) + ' : 1';
+  }
+  ids.forEach(i => document.getElementById('hr-' + i).addEventListener('input', hr)); hr();
+
+  // Zündfolge
+  const ZF = { 4: [1, 3, 4, 2], 6: [1, 5, 3, 6, 2, 4] };
+  let zn = 4, zi = 0;
+  function zf() {
+    const f = ZF[zn], w = 600 / zn; let o = '';
+    for (let i = 1; i <= zn; i++) {
+      const x = 20 + (i - 1) * w, an = f[zi] === i;
+      o += '<rect x="' + (x + 8) + '" y="40" width="' + (w - 16) + '" height="110" rx="12" fill="' + (an ? '#ff8f3f' : '#213552') + '" stroke="#ecf1f8" stroke-width="3"/>';
+      o += '<text x="' + (x + w / 2) + '" y="105" text-anchor="middle" font-size="34" font-weight="900" fill="' + (an ? '#0e192b' : '#ecf1f8') + '">' + i + '</text>';
+    }
+    o += '<text x="320" y="185" text-anchor="middle" font-size="16" font-weight="800" fill="#94a4ba">Zündfolge: ' + f.join(' – ') + '</text>';
+    g('zf-g', o);
+    document.getElementById('zf-t').innerHTML = '<b>' + zn + ' Zylinder:</b> Gerade zündet <span class="c">Zylinder ' + f[zi] + '</span>. Zündabstand = 720° : ' + zn + ' = <b>' + (720 / zn) + '° KW</b>. Die Zündfolge verteilt die Kräfte gleichmäßig auf die Kurbelwelle – der Motor läuft ruhiger.';
+  }
+  setInterval(() => { zi = (zi + 1) % ZF[zn].length; zf(); }, 900);
+  document.querySelectorAll('#s-zf [data-z]').forEach(b => b.onclick = () => { zn = +b.dataset.z; zi = 0; document.querySelectorAll('#s-zf [data-z]').forEach(x => x.classList.toggle('on', x === b)); zf(); });
+  zf();
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

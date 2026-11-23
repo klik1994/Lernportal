@@ -2319,3 +2319,132 @@ VIDEOS_MOTOR.update({
     'fw-assistenz': (ROY, [(title_scene('ABS', 'Fahrerassistenzsysteme', 'ABS, ESP, Radar, Kamera', ROY, size=70, kicker=KICK12), 5.0),
                            (fw_abs, 11.5), (FW_SN, 9.0), (FW_MERKE3, 7.5)]),
 })
+
+
+# ================================================================ MOTOR UND WARTUNG
+KICK13 = 'MOTOR UND WARTUNG  ·  LERNVIDEO'
+MW_N = ['Ansaugen', 'Verdichten', 'Arbeiten', 'Ausstoßen']
+
+
+def mw_takte(d, t, dur):
+    th = max(0.0, (t - 0.8)) * 60 % 720
+    takt = int(th // 180)
+    header(d, t, 'VIERTAKT', 'Die vier Takte', ORA)
+    a = pr(t, 0.2, 0.8)
+    r, L, cx, cy = 80, 200, 400, 560
+    an = math.radians(th)
+    yp = cy - (r * math.cos(an) + math.sqrt(L * L - (r * math.sin(an)) ** 2))
+    top = yp - 12
+    gas = TEA if takt < 2 else (ORA if th < 420 else mix(ORA, 0.5, MUTED)) if takt == 2 else MUTED
+    rect(d, (322, 150, 478, top), mix(gas, 0.45, BG), a)
+    line(d, [(318, 146), (318, 440)], TXT, 7, a); line(d, [(482, 146), (482, 440)], TXT, 7, a); line(d, [(290, 146), (510, 146)], TXT, 7, a)
+    vi, vo = (16 if takt == 0 else 0), (16 if takt == 3 else 0)
+    line(d, [(360, 108), (360, 140 + vi)], TXT, 6, a); rect(d, (342, 140 + vi, 378, 148 + vi), TXT, a)
+    line(d, [(440, 108), (440, 140 + vo)], TXT, 6, a); rect(d, (422, 140 + vo, 458, 148 + vo), TXT, a)
+    text(d, 280, 125, 'Einlass', 22, 'Bold', TEA if takt == 0 else MUTED, a, 'rm'); text(d, 520, 125, 'Auslass', 22, 'Bold', YEL if takt == 3 else MUTED, a, 'lm')
+    if 340 < th < 380:
+        line(d, [(400, 150), (390, 166), (404, 166), (396, 184)], YEL, 5, a)
+    rect(d, (324, top, 476, top + 60), MUTED, a)
+    kx, ky = cx + r * math.sin(an), cy - r * math.cos(an)
+    line(d, [(cx, yp), (kx, ky)], TXT, 12, a)
+    line(d, [(cx, cy), (kx, ky)], ORA, 14, a); circle(d, (cx, cy), 12, TXT, a)
+    rrect(d, (620, 260, 1180, 380), 20, CARD, a)
+    text(d, 900, 300, f'{takt + 1}  ·  {MW_N[takt]}', 44, 'XB', ORA, a, 'mm', bg=CARD)
+    text(d, 900, 350, f'{int(th)}° Kurbelwinkel', 24, 'Bold', MUTED, a, 'mm', bg=CARD)
+    caption(d, t, [(0.6, 6.5, 'Ansaugen – Verdichten – Arbeiten – Ausstoßen'), (6.6, dur, 'Ein Arbeitsspiel = 2 Kurbelwellen-Umdrehungen (720°)')], ORA, y=660)
+
+
+MW_OD = values_scene('VIERTAKT', ORA, [], [
+    ('Otto', 'Fremdzündung mit Zündkerze'), ('ε 10–14', 'Verdichtung Otto – Richtwert'), ('Diesel', 'Selbstzündung in heißer Luft'), ('ε 15–20', 'Verdichtung Diesel – Richtwert')],
+    title='Otto- und Dieselmotor', vsize=36)
+MW_M1 = merke_scene('VIERTAKT', ORA, ['Ansaugen – Verdichten – Arbeiten – Ausstoßen', '2 Umdrehungen pro Arbeitsspiel',
+                                      'Otto: Fremdzündung · Diesel: Selbstzündung', 'ε = (Vh + Vc) : Vc'])
+
+
+def mw_steuer(d, t, dur):
+    falsch = t > 6
+    header(d, t, 'MOTORMECHANIK', 'Steuerzeiten ' + ('– ein Zahn versetzt' if falsch else 'richtig'), PUR)
+    a = pr(t, 0.2, 0.8)
+    w = 0 if (2.5 < t < 5.5 or t > 8.5) else (t * 160) % 720
+    kx, ky, kr, nx, ny, nr = 380, 470, 50, 760, 230, 100
+    line(d, [(kx - kr, ky), (nx - nr, ny)], PUR, 10, a); line(d, [(kx + kr, ky), (nx + nr, ny)], PUR, 10, a)
+    circle(d, (kx, ky), kr, CARD, a, outline=TXT, width=5); circle(d, (nx, ny), nr, CARD, a, outline=TXT, width=5)
+    for (x, y, rr, ang) in [(kx, ky, kr - 8, w), (nx, ny, nr - 10, w / 2 + (15 if falsch else 0))]:
+        ra = math.radians(ang)
+        line(d, [(x, y), (x + rr * math.sin(ra), y - rr * math.cos(ra))], YEL, 7, a)
+        poly(d, [(x - 10, y - rr - 32), (x + 10, y - rr - 32), (x, y - rr - 18)], TXT, a)
+    text(d, kx, ky + kr + 34, 'Kurbelwelle', 24, 'Bold', MUTED, a, 'mm'); text(d, nx + nr + 30, ny - 14, 'Nockenwelle', 24, 'Bold', MUTED, a, 'lm'); text(d, nx + nr + 30, ny + 18, '(halb so schnell)', 22, 'Bold', MUTED, a, 'lm')
+    if w == 0 and t > 2.5:
+        text(d, 640, 600, 'Nockenwelle steht neben der Marke!' if falsch else 'Beide Marken stehen richtig', 30, 'XB', RED if falsch else GRN, a, 'mm')
+    caption(d, t, [(0.6, 5.9, 'Kurbelwelle und Nockenwelle drehen im Verhältnis 2 : 1'), (6.1, dur, 'Ein Zahn versetzt: Leistungsverlust –\nbei mehr Zähnen droht ein Motorschaden')], PUR, y=660)
+
+
+MW_TR = values_scene('MOTORMECHANIK', PUR, [], [
+    ('Kolbenringe', '2 Verdichtungsringe, 1 Ölabstreifring'), ('Ventilspiel', 'zu groß klappert, zu klein verbrennt'), ('Zahnriemen', 'nach Intervall wechseln'), ('Steuerkette', 'Rasseln = Längung')],
+    title='Kurbel- und Ventiltrieb', vsize=30)
+MW_M2 = merke_scene('MOTORMECHANIK', PUR, ['Kolben – Pleuel – Kurbelwelle', 'Nockenwelle dreht halb so schnell',
+                                           'Ventilspiel laut Hersteller', 'Steuerzeiten mit Spezialwerkzeug'])
+
+
+def mw_kuehl(d, t, dur):
+    warm = t > 5.5
+    header(d, t, 'KÜHLUNG', 'Thermostat ' + ('offen – großer Kreislauf' if warm else 'zu – kleiner Kreislauf'), BLU)
+    a = pr(t, 0.2, 0.8)
+    temp = 40 + clamp((t - 0.8) / 5) * 50
+    rrect(d, (440, 260, 720, 480), 20, CARD, a, outline=TXT, width=4); text(d, 580, 370, 'Motor', 34, 'XB', TXT, a, 'mm', bg=CARD)
+    rrect(d, (900, 180, 1080, 520), 12, CARD, a, outline=TXT, width=4); text(d, 990, 550, 'Kühler', 26, 'Bold', TXT, a, 'mm')
+    rrect(d, (140, 170, 300, 240), 12, CARD, a, outline=TXT, width=3); text(d, 220, 270, 'Heizung', 24, 'Bold', TXT, a, 'mm')
+    pk = Path([(440, 300), (380, 300), (380, 205), (300, 205), (140, 205), (100, 205), (100, 440), (440, 440)])
+    pg = Path([(720, 300), (800, 300), (800, 150), (990, 150), (990, 180), (990, 520), (990, 600), (800, 600), (800, 440), (720, 440)])
+    line(d, pk.pts, BLU, 9, a); line(d, pg.pts, BLU if warm else mix(BLU, 0.25, BG), 9, a)
+    rrect(d, (780, 280, 820, 320), 8, GRN if warm else CARD, a, outline=TXT, width=3)
+    text(d, 800, 255, 'Thermostat', 20, 'Bold', MUTED, a, 'mm')
+    flow_dots(d, pk, t, 90, 34, 7, YEL, a)
+    if warm:
+        flow_dots(d, pg, t, 90, 34, 7, YEL, a)
+    rrect(d, (480, 520, 680, 580), 14, CARD2, a); text(d, 580, 550, f'{int(temp)} °C', 32, 'XB', GRN if temp > 85 else BLU, a, 'mm', bg=CARD2)
+    caption(d, t, [(0.6, 5.3, 'Kalt: nur Motor und Heizung – der Motor wird schnell warm'), (5.7, dur, 'Warm: Thermostat öffnet – das Kühlmittel fließt durch den Kühler')], BLU, y=660)
+
+
+MW_OEL = values_scene('SCHMIERUNG', BLU, [], [
+    ('5W', 'Kältewert – je kleiner, desto besser bei Kälte'), ('30', 'Viskosität bei 100 °C'), ('Freigabe', 'vom Hersteller – Pflicht'), ('Ölstand', 'zwischen Min und Max')],
+    title='Motoröl SAE 5W-30', vsize=30)
+MW_M3 = merke_scene('SCHMIERUNG UND KÜHLUNG', BLU, ['Öl: schmieren, kühlen, reinigen, abdichten', 'Immer Herstellerfreigabe beachten',
+                                                    'Thermostat: kalt klein, warm groß', 'Kühlsystem nie heiß öffnen'])
+
+
+def mw_kompr(d, t, dur):
+    oel = t > 6.5
+    header(d, t, 'WARTUNG', 'Kompressionstest' + (' – nach der Ölprobe' if oel else ''), GRN)
+    a = pr(t, 0.2, 0.8)
+    vals = [12.4, 12.6, 11.6 if oel else 8.1, 12.5]
+    x0, y0 = 260, 520
+    line(d, [(x0 - 20, y0), (x0 + 780, y0)], MUTED, 3, a)
+    for i, v in enumerate(vals):
+        k = clamp((t - 0.8 - i * 0.5) / 0.6)
+        h = v * 26 * k
+        x = x0 + i * 200
+        col = RED if v < 10.5 else GRN
+        rrect(d, (x, y0 - h, x + 120, y0), 8, col, a * (1 if k > 0 else 0))
+        if k > 0.9:
+            text(d, x + 60, y0 - h - 26, f'{v:.1f}'.replace('.', ',') + ' bar', 28, 'XB', TXT, a, 'mm')
+        text(d, x + 60, y0 + 30, f'Zylinder {i + 1}', 24, 'Bold', MUTED, a, 'mm')
+    caption(d, t, [(3.0, 6.3, 'Zylinder 3 zu niedrig – jetzt die Ölprobe'), (6.6, dur, 'Wert steigt deutlich: Kolbenringe verschlissen\n(bleibt er niedrig: Ventil undicht)')], GRN, y=650)
+
+
+MW_WA = values_scene('WARTUNG', GRN, [], [
+    ('Anheben', 'nur an Aufnahmepunkten laut Hersteller'), ('Sichern', 'nie unter ungesicherte Last'), ('Druckverlust', 'wo es zischt, sitzt der Fehler'), ('Doku', 'Arbeiten und Teile eintragen')],
+    title='Sicher arbeiten und prüfen', vsize=30)
+MW_M4 = merke_scene('WARTUNG', GRN, ['Wartung erhält – Inspektion prüft', 'Nur an Aufnahmepunkten anheben',
+                                     'Kompression: Unterschied zählt', 'Druckverlust zeigt den Fehlerort'])
+
+VIDEOS_MOTOR.update({
+    'mw-viertakt': (ORA, [(title_scene('4T', 'Der Viertaktmotor', 'Arbeitsweise, Otto und Diesel', ORA, size=90, kicker=KICK13), 5.0),
+                          (mw_takte, 13.0), (MW_OD, 9.0), (MW_M1, 7.5)]),
+    'mw-triebwerk': (PUR, [(title_scene('OT', 'Kurbel- und Ventiltrieb', 'Zahnriemen, Kette, Steuerzeiten', PUR, size=90, kicker=KICK13), 5.0),
+                           (mw_steuer, 11.0), (MW_TR, 9.0), (MW_M2, 7.5)]),
+    'mw-schmierung': (BLU, [(title_scene('°C', 'Schmierung und Kühlung', 'Motoröl und Kühlkreislauf', BLU, size=90, kicker=KICK13), 5.0),
+                            (mw_kuehl, 11.0), (MW_OEL, 9.0), (MW_M3, 7.5)]),
+    'mw-wartung': (GRN, [(title_scene('km', 'Wartung und Inspektion', 'Anheben, Kompression, Druckverlust', GRN, size=90, kicker=KICK13), 5.0),
+                         (mw_kompr, 11.0), (MW_WA, 9.0), (MW_M4, 7.5)]),
+})

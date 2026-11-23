@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e192b">
+<meta name="robots" content="noindex, nofollow">
+<title>Schmierung und Kühlung – Motor und Wartung</title>
+<script>try{var t=localStorage.getItem("lp-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}</script>
+<link rel="stylesheet" href="assets/praesentation.css">
+<style>
+  .symbol { font-size: 80px; }
+  .rb { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; font-size: 44px; font-weight: 900; margin: 6px 0 14px; }
+  .rb span { cursor: pointer; padding: 4px 12px; border-radius: 12px; background: var(--card); transition: background .2s, color .2s; }
+  .rb span.on { background: var(--c); color: var(--on-c); }
+  .mp { cursor: pointer; }
+  html.light svg text[fill="#ffd34d"] { fill: #8a6400; }
+  @media (max-width: 820px), (max-height: 520px) { .rb { font-size: 30px; } .val b { font-size: 14px; hyphens: auto; overflow-wrap: anywhere; } }
+</style>
+</head>
+<body class="t-mw3">
+<div id="stage-wrap"><div id="stage">
+<section class="slide title-slide">
+  <div class="kicker">MOTOR UND WARTUNG</div>
+  <div class="symbol" style="font-size:110px">°C</div>
+  <h1>Schmierung und Kühlung</h1>
+  <p>Motoröl, Ölkreislauf, Kühlkreislauf, Thermostat, Kühlmittel</p>
+  <div class="hint"><span class="desk">Weiter mit → , Leertaste oder Klick</span><span class="mob">Zum Weiterblättern tippen oder wischen</span></div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHMIERUNG UND KÜHLUNG</span><h2>Das lernst du hier</h2>
+  <div class="body">
+    <ul class="goals">
+      <li class="step from-left"><span class="num">1</span>Welche Aufgaben das Motoröl hat und wie der Ölkreislauf arbeitet</li>
+      <li class="step from-left"><span class="num">2</span>Was SAE-Klasse und Herstellerfreigabe bedeuten</li>
+      <li class="step from-left"><span class="num">3</span>Wie der Kühlkreislauf mit Thermostat arbeitet</li>
+      <li class="step from-left"><span class="num">4</span>Wie du Öl und Kühlmittel prüfst</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHMIERUNG UND KÜHLUNG</span><h2>Aufgaben des Motoröls</h2>
+  <div class="body">
+    <div class="values">
+      <div class="val step from-left"><b>Schmieren</b><span>Ölfilm zwischen den Teilen – weniger Reibung und Verschleiß</span></div>
+      <div class="val step from-left"><b>Kühlen</b><span>führt Wärme ab, z. B. vom Kolben und vom Turbolader</span></div>
+      <div class="val step from-left"><b>Reinigen</b><span>nimmt Schmutz und Abrieb auf – der Filter hält ihn fest</span></div>
+      <div class="val step from-left"><b>Abdichten</b><span>hilft den Kolbenringen beim Abdichten</span></div>
+      <div class="val step from-left"><b>Schützen</b><span>vor Korrosion</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-ol">
+  <span class="tag">SCHMIERUNG UND KÜHLUNG</span><h2>Der Ölkreislauf – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:10px;flex-wrap:wrap"><button class="btn ghost on" data-o="ok">Normal</button><button class="btn ghost" data-o="filter">Filter verstopft</button><button class="btn ghost" data-o="druck">Öldruck zu niedrig</button></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr">
+      <svg viewBox="0 0 600 320" width="600" height="320" style="display:block;margin:0 auto;max-width:100%;height:auto" id="ol-svg">
+      <rect x="0" y="0" width="600" height="320" rx="12" fill="#18283f"/>
+      <path d="M60 250 H540 V300 H60 Z" fill="#c9a227" opacity=".35"/><text x="300" y="290" text-anchor="middle" font-size="15" font-weight="800" fill="#ecf1f8">Ölwanne</text>
+      <path id="ol-p" d="M110 270 V200 H180 M240 200 H300 V90 H520 V250 M300 90 V40 M400 90 V140 M460 90 V250" fill="none" stroke="#c9a227" stroke-width="7" stroke-linejoin="round"/>
+      <path id="ol-bp" d="M180 200 Q210 160 240 200" fill="none" stroke="#c9a227" stroke-width="5" stroke-dasharray="6 5" style="display:none"/>
+      <rect x="80" y="196" width="60" height="44" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="110" y="223" text-anchor="middle" font-size="13" font-weight="900" fill="#ecf1f8">Pumpe</text>
+      <rect id="ol-f" x="180" y="176" width="60" height="50" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="210" y="206" text-anchor="middle" font-size="13" font-weight="900" fill="#ecf1f8">Filter</text>
+      <text x="306" y="110" font-size="13" font-weight="800" fill="#94a4ba">Hauptölkanal</text>
+      <text x="300" y="30" text-anchor="middle" font-size="13" font-weight="800" fill="#ecf1f8">Nockenwelle</text>
+      <text x="400" y="160" text-anchor="middle" font-size="13" font-weight="800" fill="#ecf1f8">Turbolader</text>
+      <text x="460" y="236" text-anchor="end" font-size="13" font-weight="800" fill="#ecf1f8">Kurbelwelle</text>
+      <circle id="ol-ds" cx="520" cy="60" r="16" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="520" y="30" text-anchor="middle" font-size="12" font-weight="800" fill="#94a4ba">Öldruck-Leuchte</text>
+      <path id="ol-pa" d="M110 268 V200 H300 V90 H520 V248" fill="none" stroke="none"/>
+      <path id="ol-pb" d="M300 92 V40" fill="none" stroke="none"/><path id="ol-pc" d="M400 92 V140" fill="none" stroke="none"/><path id="ol-pd" d="M460 92 V248" fill="none" stroke="none"/>
+    </svg>
+      <div class="card" id="ol-t" style="font-size:16px;font-weight:600;line-height:1.55"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-rb">
+  <span class="tag">SCHMIERUNG UND KÜHLUNG</span><h2>Die Ölsorte – zum Antippen</h2>
+  <div class="body noclick">
+    <div class="rb" id="rb"><span data-k="0">SAE</span><span data-k="1">5W</span><span>-</span><span data-k="2">30</span></div>
+    <div class="grid2" style="align-items:start">
+      <div class="card" id="rb-t" style="font-size:18px;font-weight:600;line-height:1.5;margin:0"></div>
+      <div class="card" style="margin:0;font-size:16px;line-height:1.55"><b>Herstellerfreigabe ist Pflicht</b><br>Auf dem Gebinde steht z. B. eine Freigabe des Fahrzeugherstellers. Nur Öl mit der vorgeschriebenen Freigabe verwenden – sonst können Motor, Partikelfilter oder Garantie Schaden nehmen.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHMIERUNG UND KÜHLUNG</span><h2>Ölstand prüfen und Ölwechsel</h2>
+  <div class="body">
+    <ol class="steps-list">
+      <li class="step">Fahrzeug eben abstellen<small>Motor warm, abstellen, einige Minuten warten, bis das Öl zurückgelaufen ist</small></li>
+      <li class="step">Ölmessstab ziehen, abwischen, wieder einstecken<small>Ölstand zwischen Min und Max – nie über Max füllen. Manche Fahrzeuge haben nur eine elektronische Anzeige</small></li>
+      <li class="step">Ölwechsel: Altöl ablassen, Ölfilter erneuern<small>Dichtring der Ablassschraube erneuern, Schraube mit Drehmoment laut Hersteller</small></li>
+      <li class="step">Neues Öl mit Freigabe einfüllen<small>Menge laut Hersteller, Motor kurz laufen lassen, Dichtheit und Ölstand prüfen</small></li>
+      <li class="step">Serviceanzeige zurücksetzen<small>Altöl und Filter als Sondermüll entsorgen</small></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide" id="s-kl">
+  <span class="tag">SCHMIERUNG UND KÜHLUNG</span><h2>Der Kühlkreislauf – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="ctrl"><span style="width:330px;white-space:nowrap">Kühlmitteltemperatur: <span class="c" id="kl-n">40 °C</span></span><input type="range" id="kl-r" min="20" max="115" step="1" value="40"></div>
+    <div class="grid2" style="align-items:center;grid-template-columns:1.3fr 1fr;margin-top:8px">
+      <svg viewBox="0 0 600 320" width="600" height="320" style="display:block;margin:0 auto;max-width:100%;height:auto" id="kl-svg">
+      <rect x="0" y="0" width="600" height="320" rx="12" fill="#18283f"/>
+      <rect x="200" y="110" width="170" height="150" rx="14" fill="#213552" stroke="#ecf1f8" stroke-width="4"/><text x="285" y="190" text-anchor="middle" font-size="17" font-weight="900" fill="#ecf1f8">Motor</text>
+      <rect x="440" y="70" width="120" height="200" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="4"/>
+      <path d="M455 90 H545 M455 115 H545 M455 140 H545 M455 165 H545 M455 190 H545 M455 215 H545 M455 240 H545" stroke="#94a4ba" stroke-width="3"/>
+      <text x="500" y="292" text-anchor="middle" font-size="14" font-weight="800" fill="#ecf1f8">Kühler</text>
+      <g id="kl-lf"><circle cx="500" cy="170" r="34" fill="none" stroke="#ffd34d" stroke-width="3" stroke-dasharray="10 8"/></g>
+      <rect x="40" y="50" width="90" height="40" rx="8" fill="#213552" stroke="#ecf1f8" stroke-width="3"/><text x="85" y="118" text-anchor="middle" font-size="13" font-weight="800" fill="#ecf1f8">Heizung (Innenraum)</text>
+      <path id="kl-gr" d="M370 140 H400 V60 H500 V70 M500 270 V300 H400 V230 H370" fill="none" stroke="#28aaf5" stroke-width="7" stroke-linejoin="round"/>
+      <path id="kl-kl" d="M200 140 H170 V70 H140 M30 70 H10 V230 H200" fill="none" stroke="#28aaf5" stroke-width="7" stroke-linejoin="round"/>
+      <rect id="kl-th" x="384" y="120" width="32" height="32" rx="6" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/>
+      <text x="400" y="112" text-anchor="middle" font-size="12" font-weight="800" fill="#94a4ba">Thermostat</text>
+      <circle cx="185" cy="230" r="15" fill="#18283f" stroke="#ecf1f8" stroke-width="3"/><text x="150" y="258" text-anchor="middle" font-size="12" font-weight="800" fill="#94a4ba">Wasserpumpe</text>
+      <path id="kl-fg" d="M370 140 H400 V60 H500 V270 V300 H400 V230 H370" fill="none" stroke="none"/>
+      <path id="kl-fk" d="M200 140 H170 V70 H30 H10 V230 H200" fill="none" stroke="none"/>
+    </svg>
+      <div class="card" id="kl-t" style="font-size:16px;font-weight:600;line-height:1.55"></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">Öffnungs- und Lüftertemperaturen sind Beispielwerte – genaue Werte laut Hersteller.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHMIERUNG UND KÜHLUNG</span><h2>Das Kühlmittel</h2>
+  <div class="body">
+    <div class="grid2" style="align-items:start">
+      <div class="card step"><div class="big" style="font-size:22px">Was ist drin?</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Wasser und Kühlerschutzmittel (Frostschutz und Korrosionsschutz)</li><li>Frostschutz mit dem Refraktometer prüfen – meist bis ca. −25 °C oder tiefer (laut Hersteller)</li><li>nur freigegebenes Kühlmittel verwenden, Sorten nicht mischen</li></ul></div>
+      <div class="card step"><div class="big" style="font-size:22px">Prüfen</div>
+        <ul style="font-size:17px;line-height:1.55;padding-left:20px;margin:8px 0 0"><li>Stand im Ausgleichsbehälter bei kaltem Motor zwischen Min und Max</li><li>Schläuche, Kühler und Wasserpumpe auf Undichtigkeit prüfen</li><li>Dichtheit mit dem Kühlsystem-Prüfgerät (Abdrücken)</li></ul></div>
+    </div>
+    <div class="warn step" style="margin-top:12px"><b>Verbrühungsgefahr</b>Das Kühlsystem steht unter Druck. Den Deckel nie bei heißem Motor öffnen.</div>
+  </div>
+</section>
+
+<section class="slide" id="s-fe">
+  <span class="tag">SCHMIERUNG UND KÜHLUNG</span><h2>Fehler erkennen – zum Ausprobieren</h2>
+  <div class="body noclick">
+    <div class="choice" style="margin-bottom:12px;flex-wrap:wrap;gap:6px"><button class="btn ghost on" data-f="0">Motor wird zu heiß</button><button class="btn ghost" data-f="1">Motor wird nicht warm</button><button class="btn ghost" data-f="2">Öl im Kühlmittel</button><button class="btn ghost" data-f="3">Kühlmittelverlust</button><button class="btn ghost" data-f="4">Ölverlust</button></div>
+    <div class="grid2" style="align-items:start">
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">MÖGLICHE URSACHEN</div><ul id="fe-u" style="font-size:16px;line-height:1.55;padding-left:20px;margin:8px 0 0"></ul></div>
+      <div class="card" style="margin:0"><div class="muted" style="font-size:14px;font-weight:800">SO PRÜFST DU</div><ul id="fe-p" style="font-size:16px;line-height:1.55;padding-left:20px;margin:8px 0 0"></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHMIERUNG UND KÜHLUNG</span><h2>Lernvideo</h2>
+  <div class="body video-box">
+    <video src="videos/mw-schmierung.mp4" poster="videos/mw-schmierung.jpg" controls preload="metadata" playsinline></video>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHMIERUNG UND KÜHLUNG</span><h2>Kurztest</h2>
+  <div class="body quiz" style="gap:12px">
+    <div class="q" data-correct="1"><p>1. Was bedeutet „5W“ bei einem Motoröl 5W-30?</p>
+      <div class="opts"><button class="opt">5 Liter Füllmenge</button><button class="opt">Kältewert: je kleiner, desto besser fließt das Öl bei Kälte</button><button class="opt">5 Jahre haltbar</button></div>
+      <div class="fb">W steht für Winter.</div></div>
+    <div class="q" data-correct="1"><p>2. Wann öffnet das Thermostat den großen Kühlkreislauf?</p>
+      <div class="opts"><button class="opt">Sofort beim Start</button><button class="opt">Wenn der Motor warm ist</button><button class="opt">Nur bei Frost</button></div>
+      <div class="fb">Vorher läuft der kleine Kreislauf – der Motor wird schneller warm.</div></div>
+    <div class="q" data-correct="0"><p>3. Was ist eine mögliche Ursache für Öl im Kühlmittel?</p>
+      <div class="opts"><button class="opt">Zylinderkopfdichtung oder Ölkühler defekt</button><button class="opt">Zu viel Frostschutz</button><button class="opt">Luftfilter verstopft</button></div>
+      <div class="fb">Kühlsystem abdrücken und Zylinderkopfdichtung prüfen.</div></div>
+    <div class="q" data-correct="2"><p>4. Warum öffnest du den Kühlmitteldeckel nicht bei heißem Motor?</p>
+      <div class="opts"><button class="opt">Das Kühlmittel wird sonst schlecht</button><button class="opt">Der Motor geht aus</button><button class="opt">Das System steht unter Druck – Verbrühungsgefahr</button></div>
+      <div class="fb">Erst abkühlen lassen.</div></div>
+    <div class="score">Klicke auf eine Antwort.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">SCHMIERUNG UND KÜHLUNG</span><h2>Zusammenfassung</h2>
+  <div class="body">
+    <div class="merke">
+      <h3>Merke!</h3>
+      <ul>
+        <li class="step"><span>Öl: schmieren, kühlen, reinigen, abdichten, schützen</span></li>
+        <li class="step"><span>SAE 5W-30 – aber immer Herstellerfreigabe beachten</span></li>
+        <li class="step"><span>Thermostat: kalt kleiner, warm großer Kreislauf</span></li>
+        <li class="step"><span>Kühlsystem nie heiß öffnen</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div></div>
+
+<nav id="nav">
+  <a href="../index.html#/thema/Schmierung%20und%20K%C3%BChlung" title="Zurück zum Lernportal">✕<span class="lbl">&nbsp;Zum Lernportal</span></a>
+  <button id="btn-prev" title="Zurück (←)">←</button>
+  <button id="btn-next" title="Weiter (→)">→</button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <button id="btn-theme" title="Heller Modus">☀</button>
+  <button id="btn-fs" title="Vollbild (F)">⛶</button>
+</nav>
+<script src="assets/schaltung.js"></script>
+<script>
+(function () {
+  const sv = document.getElementById('ol-svg');
+  const F = ['pa', 'pb', 'pc', 'pd'].map(n => Flow(sv, document.getElementById('ol-' + n), { spacing: 24, speed: 60, r: 5, color: '#ffd34d' }));
+  const OT = {
+    ok: '<b class="grn">Normal:</b> Die Ölpumpe saugt Öl aus der Ölwanne, drückt es durch den <span class="c">Filter</span> in den Hauptölkanal. Von dort geht es zu Kurbelwelle, Nockenwelle, Turbolader und Kettenspanner – und tropft zurück in die Wanne.',
+    filter: '<b class="ora">Filter verstopft:</b> Damit der Motor trotzdem Öl bekommt, öffnet ein <span class="ora">Umgehungsventil</span>. Das Öl fließt dann <b>ungefiltert</b> – Schmutz gelangt an die Lager. Darum Filter bei jedem Ölwechsel erneuern.',
+    druck: '<b class="red">Öldruck zu niedrig:</b> Die <span class="red">Öldruck-Leuchte</span> geht an. Sofort anhalten und Motor abstellen! Ursachen: zu wenig Öl, falsche Ölsorte, Pumpe oder Lager verschlissen. Ölstand prüfen, Öldruck mit Manometer messen (Wert laut Hersteller).'
+  };
+  const ob = document.querySelectorAll('#s-ol [data-o]');
+  function ol(m) {
+    F.forEach(f => { f.on(true); f.speed = m === 'druck' ? 20 : 60; });
+    document.getElementById('ol-bp').style.display = m === 'filter' ? '' : 'none';
+    document.getElementById('ol-f').setAttribute('fill', m === 'filter' ? '#5a4a20' : '#213552');
+    document.getElementById('ol-ds').setAttribute('fill', m === 'druck' ? '#f05e4e' : '#213552');
+    document.getElementById('ol-t').innerHTML = OT[m];
+    ob.forEach(b => b.classList.toggle('on', b.dataset.o === m));
+  }
+  ob.forEach(b => b.onclick = () => ol(b.dataset.o)); ol('ok');
+
+  const RB = ['<b>SAE</b> = Viskositätsklasse – sagt, wie dick- oder dünnflüssig das Öl ist.', '<b>5W</b> = Kältewert (W = Winter). Je kleiner die Zahl, desto besser fließt das Öl bei Kälte – wichtig beim Kaltstart.', '<b>30</b> = Viskosität bei Betriebstemperatur (100 °C). Je größer, desto dickflüssiger bleibt das Öl, wenn es heiß ist.'];
+  const rs = document.querySelectorAll('#rb [data-k]');
+  function rb(i) { rs.forEach(s => s.classList.toggle('on', +s.dataset.k === i)); document.getElementById('rb-t').innerHTML = RB[i]; }
+  rs.forEach(s => s.onclick = () => rb(+s.dataset.k)); rb(1);
+
+  const ks = document.getElementById('kl-svg');
+  const fg = Flow(ks, document.getElementById('kl-fg'), { spacing: 26, speed: 60, r: 6, color: '#ffd34d' });
+  const fk = Flow(ks, document.getElementById('kl-fk'), { spacing: 26, speed: 60, r: 6, color: '#ffd34d' });
+  const kr = document.getElementById('kl-r');
+  let lfw = 0, lfan = false;
+  function kl() {
+    const t = +kr.value, auf = t >= 87, lf = t >= 100;
+    fk.on(true); fg.on(auf);
+    document.getElementById('kl-gr').style.opacity = auf ? 1 : 0.25;
+    document.getElementById('kl-th').setAttribute('fill', auf ? '#34c778' : '#18283f');
+    lfan = lf;
+    document.getElementById('kl-n').textContent = t + ' °C';
+    const farbe = t < 70 ? '#28aaf5' : t < 105 ? '#34c778' : '#f05e4e';
+    document.getElementById('kl-n').style.color = farbe;
+    document.getElementById('kl-t').innerHTML = !auf ? '<b>Kalter Motor:</b> Das Thermostat ist <span class="c">zu</span>. Das Kühlmittel läuft nur im <b>kleinen Kreislauf</b> (Motor und Heizung) – der Motor wird schnell warm.'
+      : !lf ? '<b>Warmer Motor:</b> Das Thermostat <span class="grn">öffnet</span> (hier ab ca. 87 °C). Jetzt fließt Kühlmittel auch durch den <b>Kühler</b> – großer Kreislauf. Der Fahrtwind kühlt.'
+      : t < 110 ? '<b>Sehr warm:</b> Zusätzlich springt der <span class="c">Lüfter</span> an (hier ab ca. 100 °C) – z. B. im Stau, wenn der Fahrtwind fehlt.'
+      : '<b class="red">Zu heiß!</b> Anhalten, Motor abstellen, abkühlen lassen. Ursachen: zu wenig Kühlmittel, Lüfter oder Thermostat defekt, Kühler verstopft, Wasserpumpe defekt.';
+  }
+  setInterval(() => { if (lfan) { lfw = (lfw + 12) % 360; document.getElementById('kl-lf').setAttribute('transform', 'rotate(' + lfw + ' 500 170)'); document.getElementById('kl-lf').style.opacity = 1; } else document.getElementById('kl-lf').style.opacity = 0.25; }, 40);
+  kr.addEventListener('input', kl); kl();
+
+  const FE = [
+    [['zu wenig Kühlmittel (Undichtigkeit)', 'Thermostat öffnet nicht', 'Lüfter läuft nicht an', 'Kühler außen oder innen zugesetzt', 'Wasserpumpe defekt'], ['Kühlmittelstand (kalt!)', 'Temperatur im Messwertblock', 'Lüfter mit Stellglieddiagnose', 'Kühlsystem abdrücken']],
+    [['Thermostat hängt offen', 'Temperatursensor liefert falschen Wert'], ['Kühlerschlauch nach dem Thermostat fühlen: wird er sofort warm?', 'Temperatur im Messwertblock mit Messgerät vergleichen']],
+    [['Zylinderkopfdichtung defekt', 'Ölkühler (Öl-Wasser-Wärmetauscher) undicht'], ['Kühlmittel ansehen: brauner Schaum?', 'Kühlsystem abdrücken', 'CO-Test am Ausgleichsbehälter (Abgas im Kühlmittel)']],
+    [['undichter Schlauch, Kühler oder Wasserpumpe', 'Zylinderkopfdichtung (weißer Rauch aus dem Auspuff)'], ['Sichtprüfung auf Spuren (weiße oder farbige Kristalle)', 'Kühlsystem abdrücken', 'Druckverlusttest der Zylinder']],
+    [['undichte Dichtungen (Ventildeckel, Ölwanne, Wellendichtringe)', 'Ölverbrauch über Kolbenringe oder Ventilschaftdichtungen (blauer Rauch)', 'Turbolader'], ['Motor reinigen, Kontrastmittel nutzen, Spur nach oben verfolgen', 'Ölverbrauch messen', 'Kompressions- oder Druckverlusttest']]
+  ];
+  const fb = document.querySelectorAll('#s-fe [data-f]');
+  function fe(i) {
+    document.getElementById('fe-u').innerHTML = FE[i][0].map(x => '<li>' + x + '</li>').join('');
+    document.getElementById('fe-p').innerHTML = FE[i][1].map(x => '<li>' + x + '</li>').join('');
+    fb.forEach(x => x.classList.toggle('on', +x.dataset.f === i));
+  }
+  fb.forEach(x => x.onclick = () => fe(+x.dataset.f)); fe(0);
+})();
+</script>
+<script src="assets/praesentation.js"></script>
+</body>
+</html>

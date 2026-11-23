@@ -1,5 +1,5 @@
 const PraesMeta = (() => {
-  const FARBEN = { 't-strom': 'blu', 't-widerstand': 'red', 't-eva': 'pur', 't-sensoren': 'grn', 't-aktoren': 'ora', 't-mm': 'tea', 't-mm2': 'roy', 't-mm3': 'ora', 't-mm4': 'pur', 't-mm5': 'grn', 't-mm6': 'blu', 't-mm7': 'yel', 't-reihe': 'tea', 't-parallel': 'roy', 't-gemischt': 'pur', 't-hv': 'ora', 't-bus': 'tea', 't-bn1': 'yel', 't-bn2': 'roy', 't-bn3': 'grn', 't-bn4': 'ora', 't-bn5': 'pur', 't-fw1': 'tea', 't-fw2': 'red', 't-fw3': 'roy' };
+  const FARBEN = { 't-strom': 'blu', 't-widerstand': 'red', 't-eva': 'pur', 't-sensoren': 'grn', 't-aktoren': 'ora', 't-mm': 'tea', 't-mm2': 'roy', 't-mm3': 'ora', 't-mm4': 'pur', 't-mm5': 'grn', 't-mm6': 'blu', 't-mm7': 'yel', 't-reihe': 'tea', 't-parallel': 'roy', 't-gemischt': 'pur', 't-hv': 'ora', 't-bus': 'tea', 't-bn1': 'yel', 't-bn2': 'roy', 't-bn3': 'grn', 't-bn4': 'ora', 't-bn5': 'pur', 't-fw1': 'tea', 't-fw2': 'red', 't-fw3': 'roy', 't-mw1': 'ora', 't-mw2': 'pur', 't-mw3': 'blu', 't-mw4': 'grn' };
   const ohneTags = s => s.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 
   function parseMeta(html) {
